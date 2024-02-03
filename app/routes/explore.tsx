@@ -20,6 +20,11 @@ import {
     useSubmit,
 } from "@remix-run/react";
 
+import { LoremIpsum } from "react-lorem-ipsum";
+import { loremIpsum } from 'react-lorem-ipsum';
+import { name, surname, username } from 'react-lorem-ipsum';
+
+
 // import {
 //     Dropdown,
 //     DropdownTrigger,
@@ -53,20 +58,20 @@ export default function Index() {
 
     const runs = [ //will be set by loader
         {
-            key: "run_0069",
+            key: "run_69",
             label: "Run 69",
         },
         {
-            key: "Run_0068",
+            key: "run_68",
             label: "Run 68",
         },
         {
-            key: "Run_x",
+            key: "run_x",
             label: "...",
         },
 
     ];
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["run_0069"]));
+    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["run_69"]));
 
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -80,10 +85,10 @@ export default function Index() {
         );
 
     return (
-        <div className="flex items-stretch">
-            <div id="sidebar" className="w-1/5  items-stretch">
+        <div className="flex divide-x divide-doubles">
+            <div id="explore-sidebar" className="w-1/5 items-stretch h-screen overflow-y-auto dark:divide-white divide-black ">
                 <h2 className="text-center underline">iOS Apps</h2>
-                <div id="search-region " className="mt-2">
+                <div id="search-region" className="mt-2">
                     <Form id="search-form"
                         onChange={(event) => {
                             const isFirstSearch = q === null;
@@ -92,16 +97,14 @@ export default function Index() {
                             });
                         }}
                         role="search">
-
-
                         <div className="w-full flex flex-row flex-wrap gap-4">
                             <Input
                                 key="lg"
                                 radius="lg"
                                 name="q"
                                 type="serach"
-                                label="Search"
-                                placeholder="Search"
+                                //label="Search"
+                                placeholder="Search for app by name"
                                 defaultValue={q || ""}
                                 className="max-w-1/5 m-2"
                             />
@@ -111,15 +114,15 @@ export default function Index() {
                             aria-hidden
                             hidden={!searching}
                         />
-                        <div className="flex m-2">
-                            <div className="mr-2">
+                        <div className="flex flex-wrap w-full">                
+                            <div className="m-2">
                                 <Button
                                     variant="bordered"
                                 >
                                     Search
                                 </Button>
                             </div>
-                            <div>
+                            <div className="m-2">
                                 <Dropdown backdrop="blur">
                                     <DropdownTrigger>
                                         <Button
@@ -151,17 +154,29 @@ export default function Index() {
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
+
                         </div>
                     </Form>
                 </div>
                 <div id="results-region" className="mt-2">
+                    <ul className="my-2">
+                        {(() => {
+                            const arr = [];
+                            for (let i = 0; i < 40; i++) {
+                                arr.push(
+                                    <li className="my-2 ml-2">{name()} {surname()}</li>
+                                );
+                            }
+                            return arr;
+                        })()}
+                    </ul>
                 </div>
-            </div>
+            </div >
             <Divider orientation="vertical" />
-            <div id="view-region" className="w-4/5 items-stretch">
+            <div id="view-region" className="w-4/5 items-stretch h-screen overflow-y-aut">
                 <h2 className="text-center underline">View</h2>
 
             </div>
-        </div>
+        </div >
     );
 }

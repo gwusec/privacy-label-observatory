@@ -8,7 +8,7 @@ import { PiGlobeStandLight } from "react-icons/pi";
 
 export default function SiteIcon() {
     const [mounted, setMounted] = useState(false)
-    const { theme, setTheme } = useTheme()
+    const { theme, _ } = useTheme()
 
     useEffect(() => {
         setMounted(true)

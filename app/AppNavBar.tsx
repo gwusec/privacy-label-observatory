@@ -1,14 +1,3 @@
-import type { LinksFunction } from "@remix-run/node";
-import {
-  //Link,
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
-
 import {
   Navbar,
   NavbarBrand,
@@ -53,10 +42,10 @@ export default function AppNavBar() {
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+          <Link color="foreground" href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button as={Link} color="default" href="#" variant="flat">
             Sign Up
           </Button>
         </NavbarItem>
