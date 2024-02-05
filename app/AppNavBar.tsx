@@ -21,11 +21,11 @@ export default function AppNavBar() {
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" underline="hover" href="/">
             Home
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem >
           <Link color="foreground" underline="hover" href="/dashboard" >
             Dashboard
@@ -34,6 +34,11 @@ export default function AppNavBar() {
         <NavbarItem>
           <Link color="foreground" underline="hover" href="/explore">
             Explore
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" underline="hover" href="/explore">
+            Documentation
           </Link>
         </NavbarItem>
       </NavbarContent>
