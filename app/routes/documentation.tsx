@@ -3,7 +3,7 @@ import { LoremIpsum } from "react-lorem-ipsum";
 export default function Index() {
   return (
     <div id="main-text" >
-      <h1> Documentation}</h1>
+      <h1> Documentation</h1>
       <LoremIpsum
         p={5}
       />
