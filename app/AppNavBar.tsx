@@ -9,13 +9,19 @@ import {
 
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import SiteIcon from "./SiteIcon";
+import GWIcon from "./GWIcon";
+
 
 export default function AppNavBar() {
   return (
     <div className="shadow-md shadow-gray-500 dark:shadow-slate-400 mb-5">
     <Navbar >
+
+
       <NavbarBrand>
+
         <Link color="foreground" underline="hover" href="/" >
+          <GWIcon></GWIcon>
           <SiteIcon></SiteIcon>
           <p className="font-bold text-inherit">Privacy Label Observatory</p>
         </Link>
