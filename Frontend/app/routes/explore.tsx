@@ -22,24 +22,23 @@ import {
 } from "@remix-run/react";
 
 
-
 import ExploreSidebar from "../ExploreSidebar";
 
 import {
     Divider
 } from "@nextui-org/react";
 
-export const loader = async ({
-    request,
-}: LoaderFunctionArgs) => {
-    const url = new URL(request.url);
-    const q = url.searchParams.get("q");
-    return json({ q });
+
+
+export const loader = async () => {
+    const list = await fetch(process.env.BACKEND_API + "appList?start=0")
+    const data = await list.json();
+    return json(data)
 };
 
 
 export default function Index() {
-    const { q } = useLoaderData<typeof loader>();
+    const data = useLoaderData<typeof loader>();
     const navigation = useNavigation();
 
     const searching =
@@ -70,10 +69,9 @@ export default function Index() {
     return (
         <div className="flex divide-x divide-doubles">
             <ExploreSidebar
-                q={q}
                 runs={runs}
                 searching={searching}
-
+                app_list = {data}
             />
 
             <Divider orientation="vertical" />

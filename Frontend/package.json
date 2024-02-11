@@ -17,6 +17,7 @@
     "@remix-run/node": "^2.5.1",
     "@remix-run/react": "^2.5.1",
     "@remix-run/serve": "^2.5.1",
+    "dotenv": "^16.4.2",
     "framer-motion": "^11.0.3",
     "isbot": "^4.1.0",
     "next-themes": "^0.2.1",

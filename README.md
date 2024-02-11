@@ -1,38 +1,18 @@
-# Welcome to Remix!
+# Installation Changes
+.env file was created in the frontend, with one variable: 
+```sh
+BACKEND_API = "http://localhost:8080/"
+```
+or whatever port you're using. This is needed to simplify instead of writing the URL for everything
 
-- [Remix Docs](https://remix.run/docs)
-
-## Development
-
-From your terminal:
-
+Backend still has nodemon, running:
 ```sh
 npm run dev
 ```
+will solve that
 
-This starts your app in development mode, rebuilding assets on file changes.
 
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
+# Notes for 2/11
+- Under absolutely no circumstance should you store the URL for the backend in a variable. It messes up the routing
+- Got the app list to actually load on the explore page. 
+- Next on the todo list is to work on pagination for the app list. The backend function already has pagination built in. Just need to implement some arrows in the frontend to do so. 

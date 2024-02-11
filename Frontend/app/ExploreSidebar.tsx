@@ -60,7 +60,8 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
     const q = props.q;
     const runs = props.runs;
     const searching = props.searching;
-    const app_list = props.AppId;
+    const app_list = props.app_list;
+   
     
     const init_label = runs[0]["label"] ? runs[0].label: "None";
 
@@ -148,15 +149,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
             </div>
             <div id="search-results-region" className="mt-2">
                 <ul className="my-2">
-                    {(() => {
-                        const arr = [];
-                        for (let i = 0; i < 40; i++) {
-                            arr.push(
-                                <li className="my-2 ml-2">{name()} {surname()}</li>
-                            );
-                        }
-                        return arr;
-                    })()}
+                    {app_list.map(app => <div>{app.app_name}</div>)}
                 </ul>
             </div>
         </div >
