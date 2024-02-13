@@ -28,17 +28,30 @@ import {
     Divider
 } from "@nextui-org/react";
 
-
-
-export const loader = async () => {
-    const list = await fetch(process.env.BACKEND_API + "appList?start=0")
+export async function loader({
+    request,
+}: LoaderFunctionArgs) {
+    const url = new URL(request.url)
+    const q = url.searchParams.get("page")
+    const list = await fetch(process.env.BACKEND_API + "appList?start=" + q)
     const data = await list.json();
     return json(data)
 };
 
+export async function loaderTwo({
+    request,
+}: LoaderFunctionArgs){
+    const url = new URL(request.url)
+    const q = url.searchParams.get("q")
+    console.log(q);
+    return json({q});
+}
+
 
 export default function Index() {
     const data = useLoaderData<typeof loader>();
+    const { q } = useLoaderData<typeof loaderTwo>();
+    console.log(q);
     const navigation = useNavigation();
 
     const searching =

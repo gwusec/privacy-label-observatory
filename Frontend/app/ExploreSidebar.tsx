@@ -6,6 +6,7 @@ import type {
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Input } from "@nextui-org/react";
+import {HiArrowNarrowRight, HiArrowNarrowLeft} from "react-icons/hi"
 import {
     Form,
     //Link,
@@ -18,6 +19,8 @@ import {
     ScrollRestoration,
     useLoaderData,
     useNavigation,
+    useParams,
+    useSearchParams,
     useSubmit,
 } from "@remix-run/react";
 
@@ -35,6 +38,9 @@ import {
     Button,
     Divider
 } from "@nextui-org/react";
+
+import {loader} from "./routes/explore"
+
 
 
 interface Run{
@@ -61,6 +67,35 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
     const runs = props.runs;
     const searching = props.searching;
     const app_list = props.app_list;
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    //If direction is 0, that means the left was clicked
+    //If direction is 1, that means the right was clicked
+    //Will increment or decrement href based on that
+    const onLeftHandler = () => {
+        const search = searchParams.get("page")
+        var page: number = +search!;
+        page -= 1;
+        const newPage: string = ""+page;
+
+        const params = new URLSearchParams;
+        params.set("page", newPage)
+        setSearchParams(params)
+    }
+
+    const onRightHandler = () => {
+        const search = searchParams.get("page")
+        var page: number = +search!;
+        page += 1;
+        const newPage: string = ""+page;
+
+        const params = new URLSearchParams;
+        params.set("page", newPage)
+        setSearchParams(params)
+    }
+
+    var page = +searchParams.get("page")!;
+
    
     
     const init_label = runs[0]["label"] ? runs[0].label: "None";
@@ -148,8 +183,17 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                 </Form>
             </div>
             <div id="search-results-region" className="mt-2">
+                <div className="flex flex-row">
+                    {page > 0 ?
+                        <HiArrowNarrowLeft className="mx-2 w-full hover:opacity-40" onClick={onLeftHandler}/>
+                    :
+                        null
+                    }
+                    
+                    <HiArrowNarrowRight className="mx-2 w-full hover:opacity-40" onClick={onRightHandler}/>
+                </div>
                 <ul className="my-2">
-                    {app_list.map(app => <div>{app.app_name}</div>)}
+                    {app_list.map(app => <li>{app.app_name}</li>)}
                 </ul>
             </div>
         </div >

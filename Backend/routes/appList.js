@@ -4,7 +4,6 @@ var router = express.Router()
 const client = require("./../client")
 
 router.get("/", function(req, res){
-    console.log("called by " + req)
     start = req.query.start * 20
     
     if(start == undefined){

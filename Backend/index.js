@@ -4,6 +4,7 @@ var cors = require('cors')
 
 var testAPIRouter = require("./routes/testAPI")
 var appListRouter = require("./routes/appList")
+var searchRouter = require("./routes/search")
 const client = require("./client")
 
 const app = express()
@@ -16,6 +17,7 @@ const port = 8080;
 //Allows for us to separate methods by class
 app.use("/testAPI", testAPIRouter)
 app.use("/appList", appListRouter)
+app.use("/search", searchRouter)
 
 
 //helloworld GET
