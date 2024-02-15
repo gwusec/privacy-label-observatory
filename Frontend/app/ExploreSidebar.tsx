@@ -94,6 +94,11 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
         setSearchParams(params)
     }
 
+    const onAppHandler = (appName:String, appId:number) => {
+        console.log(appName + " " + appId)
+        return  
+    }
+
     var page = +searchParams.get("page")!;
 
    
@@ -193,7 +198,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                     <HiArrowNarrowRight className="mx-2 w-full hover:opacity-40" onClick={onRightHandler}/>
                 </div>
                 <ul className="my-2">
-                    {app_list.map(app => <li>{app.app_name}</li>)}
+                    {app_list.map(app => <li className="hover:opacity-40 cursor-pointer" onClick={() => onAppHandler(app.app_name, app.app_id)}>{app.app_name}</li>)}
                 </ul>
             </div>
         </div >

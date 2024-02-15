@@ -87,6 +87,8 @@ export default function Index() {
                 app_list = {data}
             />
 
+            /* Should add a page, like explore sidebar, in order to render the 
+            app that we want to render. Should show the default first app on the list */
             <Divider orientation="vertical" />
             <div id="view-region" className="w-4/5 items-stretch h-screen overflow-y-aut">
                 <h2 className="text-center underline">View</h2>

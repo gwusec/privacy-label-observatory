@@ -19,9 +19,10 @@ router.get("/", function(req, res){
         for(i in r.hits.hits){
             app_name = r.hits.hits[i]._source.app_name
             app_index = r.hits.hits[i]._index
+            app_id = r.hits.hits[i]._source.app_id
             hits.push({
                 "app_name": app_name,
-                "index": app_index
+                "app_id": app_id
             })
         }
         res.json(hits)

@@ -20,7 +20,7 @@ access-control-allow-origin: *
 content-type: application/json; charset=utf-8
 content-length: 1234
 etag: W/"4d2-op7Fxc7SxwDcd6gA6VoXxzJmtGc"
-date: Sun, 11 Feb 2024 18:21:09 GMT
+date: Thu, 15 Feb 2024 19:08:46 GMT
 connection: close
 ###
 GET http://localhost:8080/search?q=k&run=duplicateapp_run1
@@ -73,11 +73,3 @@ Content-Type: application/json
 {
     "app_name": "sen"
 }
-
-HTTP/1.1 200  - OK
-x-powered-by: Express
-content-type: application/json; charset=utf-8
-content-length: 275
-etag: W/"113-sdayCykwuWnLoLwXd6qBZm40Lys"
-date: Thu, 08 Feb 2024 20:06:07 GMT
-connection: close
