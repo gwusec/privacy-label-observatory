@@ -96,7 +96,10 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
 
     const onAppHandler = (appName:String, appId:number) => {
         console.log(appName + " " + appId)
-        return  
+        setSearchParams((prev) => {
+            prev.set("id", ""+appId)
+            return prev
+        })
     }
 
     var page = +searchParams.get("page")!;
