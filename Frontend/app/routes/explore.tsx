@@ -40,19 +40,8 @@ export async function loader({
     return json(data)
 };
 
-export async function loaderTwo({
-    request,
-}: LoaderFunctionArgs){
-    const url = new URL(request.url)
-    const q = url.searchParams.get("q")
-    console.log(q);
-    return json({q});
-}
-
-
 export default function Index() {
     const data = useLoaderData<typeof loader>();
-    const { q } = useLoaderData<typeof loaderTwo>();
     const navigation = useNavigation();
 
     const searching =
@@ -91,10 +80,7 @@ export default function Index() {
             <Divider orientation="vertical" />
             <div id="view-region" className="w-4/5 items-stretch h-screen overflow-y-aut">
                 <h2 className="text-center underline">View</h2>
-                <AppPage
-                    app_name={data[0]["app_name"]}
-                    app_id={data[0]["app_id"]}
-                />
+                <AppPage/>
             </div>
         </div >
     );

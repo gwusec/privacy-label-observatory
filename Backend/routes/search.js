@@ -6,9 +6,12 @@ const client = require("./../client")
 router.get("/", function(req, res){
     q = req.query.q;
     run = req.query.run;
-    if (q == undefined || run == undefined) {
+    if (q == undefined) {
         res.json({ "Error": "Missing parameters" })
         return;
+    }
+    if(run == undefined){
+        run = "duplicateapp_run1"
     }
 
 
