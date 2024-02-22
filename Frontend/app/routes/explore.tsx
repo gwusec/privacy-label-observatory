@@ -1,4 +1,5 @@
 import React from "react";
+
 import type {
     LinksFunction,
     LoaderFunctionArgs,
@@ -32,15 +33,20 @@ import {
 export async function loader({
     request,
 }: LoaderFunctionArgs) {
+
     const url = new URL(request.url)
+    console.log(url)
     const q = url.searchParams.get("page")
     const list = await fetch(process.env.BACKEND_API + "appList?start=" + q)
     const data = await list.json();
-    console.log(data[0])
     return json(data)
 };
 
+
+
+
 export default function Index() {
+
     const data = useLoaderData<typeof loader>();
     const navigation = useNavigation();
 

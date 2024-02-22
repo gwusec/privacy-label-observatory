@@ -1,11 +1,12 @@
 import React from "react";
-
+import { useRef } from 'react';
 import type {
     LinksFunction,
     LoaderFunctionArgs,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Input } from "@nextui-org/react";
+import {loaderTwo} from "./routes/appPage"
 import {HiArrowNarrowRight, HiArrowNarrowLeft} from "react-icons/hi"
 import {
     Form,
@@ -96,6 +97,9 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
 
     const onAppHandler = (appName:String, appId:number) => {
         console.log(appName + " " + appId)
+        const url = new URL(window.location.href)
+        console.log(url.searchParams.get('id'))
+        loaderTwo(url.searchParams.get('id'))
         setSearchParams((prev) => {
             prev.set("id", ""+appId)
             return prev

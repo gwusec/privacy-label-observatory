@@ -4,13 +4,13 @@ Content-Type: application/json
     "app_id": "1529135893"
 }
 
-HTTP/1.1 200  - OK
-x-powered-by: Express
-content-type: application/json; charset=utf-8
-content-length: 1100
-etag: W/"44c-oEuHQ/xXVPtCaecsFK2Jnq7oa+g"
-date: Sat, 03 Feb 2024 17:54:34 GMT
+HTTP/1.1 404  - Not Found
+content-type: text/html; charset=utf-8
+vary: Accept-Encoding
+content-encoding: gzip
+date: Thu, 22 Feb 2024 03:26:26 GMT
 connection: close
+transfer-encoding: chunked
 ###
 GET http://localhost:8080/appList?start=0
 

@@ -30,3 +30,8 @@ react-icons was installed to represent the arrows on the explore sidebar.
 # Notes for 2/19
 - Haven't had time to do a lot of work because of midterms. But idea.
 - Struggled to figure out a suitable way to load apps. However, idea. Have a sample id route loaded in immediately (maybe U Haul or something of the sort) and make that part of the URL. After that, once a user selects an app, replace it. That way, it'll make the logic easier for selecting an app
+
+# Notes for 2/21
+- Finally figured out part of the problem. I don't have a route for app ID in the backend, I was calling search, which has nothing to do with what I'm doing right now.
+- Also of note, I can export the loader and call the loader upon a button request, which will perform the action to update in the other page. 
+- Will need to clean a lot of this code base because after slamming my keyboard, I finally figured out what was going wrong. 
