@@ -31,15 +31,16 @@ interface App{
 
 export async function loaderTwo(id: string | null){
     console.log("Hello")
-    const list = await fetch(process.env.BACKEND_API + "search?=" + id)
+    const list = await fetch(process.env.BACKEND_API + "getApp?id=" + id)
     const data = await list.json();
+    console.log(json(data))
     return json(data)
 }
 
 
 export default function AppPage() {
     const app = useLoaderData<typeof loaderTwo>();
-    console.log(app)
+    const app_name = app["name"]
     return(
         <div>
             <h1>{app["name"]}</h1>

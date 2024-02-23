@@ -5,6 +5,8 @@ var cors = require('cors')
 var testAPIRouter = require("./routes/testAPI")
 var appListRouter = require("./routes/appList")
 var searchRouter = require("./routes/search")
+var getAppRouter = require("./routes/getApp")
+
 const client = require("./client")
 
 const app = express()
@@ -18,6 +20,7 @@ const port = 8080;
 app.use("/testAPI", testAPIRouter)
 app.use("/appList", appListRouter)
 app.use("/search", searchRouter)
+app.use("/getApp", getAppRouter)
 
 
 //helloworld GET

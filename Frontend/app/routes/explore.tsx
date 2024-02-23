@@ -35,7 +35,6 @@ export async function loader({
 }: LoaderFunctionArgs) {
 
     const url = new URL(request.url)
-    console.log(url)
     const q = url.searchParams.get("page")
     const list = await fetch(process.env.BACKEND_API + "appList?start=" + q)
     const data = await list.json();
