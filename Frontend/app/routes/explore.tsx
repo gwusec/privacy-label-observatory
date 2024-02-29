@@ -24,7 +24,6 @@ import {
 
 
 import ExploreSidebar from "../ExploreSidebar";
-import AppPage from "./appPage"
 
 import {
     Divider
@@ -33,7 +32,6 @@ import {
 export async function loader({
     request,
 }: LoaderFunctionArgs) {
-
     const url = new URL(request.url)
     const q = url.searchParams.get("page")
     const list = await fetch(process.env.BACKEND_API + "appList?start=" + q)
@@ -80,13 +78,8 @@ export default function Index() {
                 runs={runs}
                 searching={searching}
                 app_list = {data}
-            />
-
-            <Divider orientation="vertical" />
-            <div id="view-region" className="w-4/5 items-stretch h-screen overflow-y-aut">
-                <h2 className="text-center underline">View</h2>
-                <AppPage/>
-            </div>
+            />  
+            <Outlet/>
         </div >
     );
 }

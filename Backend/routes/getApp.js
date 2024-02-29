@@ -4,6 +4,7 @@ var router = express.Router()
 const client = require("./../client")
 
 router.get("/", function(req, res){
+    console.log("called")
     var app_id = req.query.id;
 
     client.search({

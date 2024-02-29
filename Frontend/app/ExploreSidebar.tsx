@@ -6,11 +6,10 @@ import type {
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Input } from "@nextui-org/react";
-import {loaderTwo} from "./routes/appPage"
 import {HiArrowNarrowRight, HiArrowNarrowLeft} from "react-icons/hi"
 import {
     Form,
-    //Link,
+    Link,
     Links,
     LiveReload,
     Meta,
@@ -102,8 +101,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
             prev.set("id", ""+appId)
             return prev
         })
-        console.log(url.searchParams.get('id'))
-        loaderTwo(url.searchParams.get('id'))
+
     }
 
     var page = +searchParams.get("page")!;
@@ -205,7 +203,12 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                     <HiArrowNarrowRight className="mx-2 w-full hover:opacity-40" onClick={onRightHandler}/>
                 </div>
                 <ul className="my-2">
-                    {app_list.map(app => <li className="hover:opacity-40 cursor-pointer" onClick={() => onAppHandler(app.app_name, app.app_id)}>{app.app_name}</li>)}
+                    {app_list.map(
+                        app => 
+                            <li className="hover:opacity-40 cursor-pointer m-2">
+                                <Link to={'/explore/' + app.app_id + "?page=" + page}>{app.app_name}</Link>
+                            </li>
+                        )}
                 </ul>
             </div>
         </div >

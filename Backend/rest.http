@@ -69,6 +69,17 @@ Content-Type: application/json
 
 }
 ###
+GET http://localhost:8080/getApp?id=1534737793
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+access-control-allow-origin: *
+content-type: application/json; charset=utf-8
+content-length: 51
+etag: W/"33-XZvvftnoxQhW6p3af1uMuyR7lqY"
+date: Fri, 23 Feb 2024 15:11:52 GMT
+connection: close
+###
 POST http://localhost:8080/api/search/app_name
 Content-Type: application/json
 {
