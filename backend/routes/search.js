@@ -11,7 +11,7 @@ router.get("/", function(req, res){
         return;
     }
     if(run == undefined){
-        run = "duplicateapp_run1"
+        run = "run_00001"
     }
 
 

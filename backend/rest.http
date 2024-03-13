@@ -12,15 +12,15 @@ date: Thu, 22 Feb 2024 03:26:26 GMT
 connection: close
 transfer-encoding: chunked
 ###
-GET http://localhost:8080/appList?start=0
+GET http://localhost:8000/appList?start=0
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
-content-length: 1234
-etag: W/"4d2-op7Fxc7SxwDcd6gA6VoXxzJmtGc"
-date: Thu, 15 Feb 2024 19:08:46 GMT
+content-length: 1156
+etag: W/"484-6rD9YfeVlJLzqZoWeUeQq+DXtyU"
+date: Thu, 07 Mar 2024 18:09:00 GMT
 connection: close
 ###
 GET http://localhost:8080/search?q=k&run=duplicateapp_run1
@@ -69,7 +69,7 @@ Content-Type: application/json
 
 }
 ###
-GET http://localhost:8080/getApp?id=1534737793
+GET http://localhost:8000/getApp?id=1534737793
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
