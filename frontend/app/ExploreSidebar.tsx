@@ -94,16 +94,6 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
         setSearchParams(params)
     }
 
-    const onAppHandler = (appName:String, appId:String) => {
-        const url = new URL(window.location.href)
-        console.log(url)
-        setSearchParams((prev) => {
-            prev.set("id", ""+appId)
-            return prev
-        })
-
-    }
-
     var page = +searchParams.get("page")!;
 
    

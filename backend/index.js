@@ -11,7 +11,7 @@ const client = require("./client")
 
 const app = express()
 app.use(cors())
-const port = 8080;
+const port = 8000;
 
 
 
@@ -146,7 +146,7 @@ app.post("/api/search/app_name", function (req, res){
     }
 
     client.search({
-        "index": "duplicateapp_run1",
+        "index": "run_00001",
         "query": {
             "wildcard": {
                 "app_name": {
