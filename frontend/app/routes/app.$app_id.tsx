@@ -9,6 +9,7 @@ export async function loader({params}:LoaderFunctionArgs){
     }
     const app = await fetch(process.env.BACKEND_API + "getApp?id=" + q)
     const data = await app.json()
+    console.log("hello")
     console.log(json(data))
     return(json(data))
 };

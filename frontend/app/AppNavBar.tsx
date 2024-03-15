@@ -38,7 +38,7 @@ export default function AppNavBar() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" underline="hover" href="/explore?page=0">
+          <Link color="foreground" underline="hover" href="/explore?page=0&run=run_00069">
             Explore
           </Link>
         </NavbarItem>
