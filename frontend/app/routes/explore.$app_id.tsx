@@ -46,48 +46,61 @@ interface privLabel{
 
 
 
-export async function loader({params}:LoaderFunctionArgs){
+export async function loader({params, request}:LoaderFunctionArgs){
+    console.log('gets into here')
     const q = params.app_id
+    const url = new URL(request.url)
+    var run = url.searchParams.get("run")
     if(q == undefined){
         return
     }
-    const app = await fetch(process.env.BACKEND_API + "getApp?id=" + q)
+    const app = await fetch(process.env.BACKEND_API + "getApp?id=" + q + "&run=" + run)
     const data = await app.json()
     return(json(data))
 };
 
 export default function App() {
     const data = useLoaderData<typeof loader>();
-    console.log(data)
+    const navigation = useNavigation();
+
+    console.log("hello")
     var app_name = data[0]["app_name"]
     var app_id = data[0]["app_id"]
     var privacy_types:privLabel[] = data[0]["privacy_types"]
+    var image_url = data[0]["image_url"]
+
     //console.log(app_name)
     return(
         <div className="text-center mx-2 pl-10">
-            <h1>{app_name}</h1>
-            <h2>{app_id}</h2>
-            {privacy_types.map(
-                priv =>
-                    <div>
-                        <h3>{priv.privacyTypes}</h3>
-                        <ul>
-                            {priv.dataCategories.map(
-                                category =>
-                                <div className="flex">
-                                <li className="text-lg whitespace-pre">{category.dataCategory}: </li>
-                                {category.dataTypes.map(
-                                    (typ, index) => 
-                                    <div className="text-orange-400 whitespace-pre">
-                                        <p>{typ.data_type}{index !== category.dataTypes.length - 1 && ','} </p>
-                                    </div>
-                                )}
-                                </div> 
+            {navigation.state !== "idle" ? (<div>Loading...</div>) 
+            :   
+            <div>
+                <h1>{app_name}</h1>
+                <h2>{app_id}</h2>
+                <img src={image_url} />
+                {privacy_types.map(
+                    priv =>
+                        <div>
+                            <h3>{priv.privacyTypes}</h3>
+                            <ul>
+                                {priv.dataCategories.map(
+                                    category =>
+                                    <div className="flex">
+                                    <li className="text-lg whitespace-pre">{category.dataCategory}: </li>
+                                    {category.dataTypes.map(
+                                        (typ, index) => 
+                                        <div className="text-orange-400 whitespace-pre">
+                                            <p>{typ.data_type}{index !== category.dataTypes.length - 1 && ','} </p>
+                                        </div>
+                                    )}
+                                    </div> 
 
-                            )}
-                        </ul>
-                    </div>
-            )}
+                                )}
+                            </ul>
+                        </div>
+                )}
+            </div>
+            }
         </div>
     )
 }

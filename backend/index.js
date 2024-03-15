@@ -11,7 +11,7 @@ const client = require("./client")
 
 const app = express()
 app.use(cors())
-const port = 8000;
+const port = 8017;
 
 
 
@@ -36,7 +36,7 @@ var server = app.listen(port, () => {
 //use json encoded bodies
 app.use(express.json())
 
-app.post("/api/runs", function (req, res) {
+app.get("/api/runs", function (req, res) {
     client.cat.indices({
         format: 'json'
     }).then((r) => {
@@ -47,6 +47,8 @@ app.post("/api/runs", function (req, res) {
                 t.push(r[i]["index"]);
             }
         }
+        t.sort()
+        t.reverse()
         res.json(t);
     })
 });

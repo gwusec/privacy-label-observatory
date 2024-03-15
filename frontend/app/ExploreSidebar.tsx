@@ -40,7 +40,7 @@ import {
 } from "@nextui-org/react";
 
 import {loader} from "./routes/explore"
-
+import { useNavigate } from "@remix-run/react";
 
 
 interface Run{
@@ -68,43 +68,75 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
     const searching = props.searching;
     const app_list = props.app_list;
     const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     //If direction is 0, that means the left was clicked
     //If direction is 1, that means the right was clicked
     //Will increment or decrement href based on that
     const onLeftHandler = () => {
-        const search = searchParams.get("page")
+        var search = searchParams.get("page")
+        if(search == null){
+            search = "1"
+        }
         var page: number = +search!;
         page -= 1;
         const newPage: string = ""+page;
 
-        const params = new URLSearchParams;
-        params.set("page", newPage)
-        setSearchParams(params)
+        setSearchParams((searchParams) => {
+            searchParams.set("page", newPage)
+            return searchParams
+        })
     }
 
     const onRightHandler = () => {
-        const search = searchParams.get("page")
+        var search = searchParams.get("page")
+        if(search == null){
+            search = "0"
+        }
         var page: number = +search!;
         page += 1;
         const newPage: string = ""+page;
 
-        const params = new URLSearchParams;
-        params.set("page", newPage)
-        setSearchParams(params)
+        setSearchParams((searchParams) => {
+            searchParams.set("page", newPage)
+            return searchParams
+        })
+    }
+
+    const itemSelect = (key:String) => {
+        console.log("hello")
+        console.log(key)
     }
 
     var page = +searchParams.get("page")!;
-
+    var run = searchParams.get("run")
+    if(page == null){
+        page = 0
+    }
    
     
     const init_label = runs[0]["label"] ? runs[0].label: "None";
 
 
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([init_label]));
+    console.log(selectedKeys)
 
     const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+        () => {
+            let modifiedValue = Array.from(selectedKeys).join(", ").replaceAll("_", " ").replaceAll("0", "");
+            
+            //Added the option to change the query parameter for filtering search
+            const selectedKeyArray = Array.from(selectedKeys);
+            var firstKey = selectedKeyArray[0]
+
+            if(firstKey != "Run 69"){
+                navigate("/explore?page=0&run="+firstKey)
+            }
+  
+ 
+            
+            return modifiedValue;
+        },
         [selectedKeys]
     );
 
@@ -165,6 +197,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                                     selectedKeys={selectedKeys}
                                     onSelectionChange={setSelectedKeys}
                                     items={runs}
+                                    className="max-h-60 overflow-y-auto"
                                 >
                                     {(item) => (
                                         <DropdownItem
@@ -196,7 +229,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                     {app_list.map(
                         app => 
                             <li className="hover:opacity-40 cursor-pointer m-2">
-                                <Link to={'/explore/' + app.app_id + "?page=" + page}>{app.app_name}</Link>
+                                <Link to={'/explore/' + app.app_id + "?page=" + page + "&run="+run}>{app.app_name}</Link>
                             </li>
                         )}
                 </ul>
