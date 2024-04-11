@@ -44,12 +44,28 @@ export async function loader({
     const url = new URL(request.url)
     const q = url.searchParams.get("page")
     var run = url.searchParams.get("run")
+
+    console.log(run)
+    
+    //If there's a search query
+    var search = url.searchParams.get("q")
+    console.log(search)
+
     if(run == null){
         run = "run_00069"
     }
-    console.log(run)
-    const list = await fetch(process.env.BACKEND_API + "appList?start=" + q + "&run=" + run)
-    const data = await list.json();
+
+    var data
+    if(search == null){
+        const list = await fetch(process.env.BACKEND_API + "appList?start=" + q + "&run=" + run)
+        data = await list.json();
+    }
+
+    else{
+        const list = await fetch(process.env.BACKEND_API + "appList?start=" + q + "&run=" + run + "&q=" + search)
+        data = await list.json()
+    }
+
 
     //Loads the runs that the app contains
     const run_list = await fetch(process.env.BACKEND_API + "api/runs")
@@ -79,23 +95,6 @@ export default function Index() {
         new URLSearchParams(navigation.location.search).has(
             "q"
         );
-
-    
-    // const runs = [ //will be set by loader
-    //     {
-    //         key: "run_69",
-    //         label: "Run 69",
-    //     },
-    //     {
-    //         key: "run_68",
-    //         label: "Run 68",
-    //     },
-    //     {
-    //         key: "run_x",
-    //         label: "...",
-    //     },
-
-    // ];
 
     return (
         <div className="flex divide-x divide-doubles">

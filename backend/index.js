@@ -1,16 +1,21 @@
 //express
 const express = require("express");
 var cors = require('cors')
+const bodyParser = require("body-parser")
+
 
 var testAPIRouter = require("./routes/testAPI")
 var appListRouter = require("./routes/appList")
 var searchRouter = require("./routes/search")
 var getAppRouter = require("./routes/getApp")
 
+var translationRouter = require("./utilities/dataTranslation")
+
 const client = require("./client")
 
 const app = express()
 app.use(cors())
+app.use(bodyParser.json())
 const port = 8017;
 
 
@@ -21,6 +26,8 @@ app.use("/testAPI", testAPIRouter)
 app.use("/appList", appListRouter)
 app.use("/search", searchRouter)
 app.use("/getApp", getAppRouter)
+
+app.use("/translateApp", translationRouter)
 
 
 //helloworld GET
