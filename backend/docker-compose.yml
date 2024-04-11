@@ -7,16 +7,17 @@ services:
     environment:
       - discovery.type=single-node
     ports:
-      - 9200:9200 # probably don't want to actually expose these ports on production
-      - 9300:9300
+      - 9400:9400 # probably don't want to actually expose these ports on production
+      - 9500:9500
     volumes:
       - ./es_data:/usr/share/elasticsearch/data
+      - ./es_snapshots:/usr/share/elasticsearch/snapshot
       
   kibana:
     image: docker.elastic.co/kibana/kibana:8.8.2
     container_name: kibana
     ports:
-      - 5601:5601
+      - 5602:5601
     depends_on:
       - elasticsearch
 

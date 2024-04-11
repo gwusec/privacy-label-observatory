@@ -85,3 +85,20 @@ Content-Type: application/json
 {
     "app_name": "sen"
 }
+###
+GET http://localhost:8017/translateApp
+Content-Type: application/json
+
+{
+    "privacy_types": ["大概位置", "裝置 ID", "產品互動", "廣告資料", "效能資料", "當機資料"]
+}
+
+HTTP/1.1 404  - Not Found
+x-powered-by: Express
+access-control-allow-origin: *
+content-security-policy: default-src 'none'
+x-content-type-options: nosniff
+content-type: text/html; charset=utf-8
+content-length: 152
+date: Wed, 03 Apr 2024 12:13:30 GMT
+connection: close

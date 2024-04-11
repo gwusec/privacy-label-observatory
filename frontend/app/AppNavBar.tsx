@@ -14,7 +14,7 @@ import GWIcon from "./GWIcon";
 
 export default function AppNavBar() {
   return (
-    <div className="shadow-md shadow-gray-500 dark:shadow-slate-400 mb-5">
+    <div className="sticky top-0 z-50 shadow-md shadow-gray-500 dark:shadow-slate-400 mb-5">
     <Navbar >
 
 

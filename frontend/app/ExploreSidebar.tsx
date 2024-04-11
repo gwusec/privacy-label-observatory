@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { useRef } from 'react';
 import type {
     LinksFunction,
     LoaderFunctionArgs,
 } from "@remix-run/node";
+import noPhoto from "./resources/no_available_photo.jpg"
 import { json } from "@remix-run/node";
 import { Input } from "@nextui-org/react";
 import {HiArrowNarrowRight, HiArrowNarrowLeft} from "react-icons/hi"
@@ -51,6 +52,7 @@ interface Run{
 interface AppId{
     app_name: string;
     app_id:string; 
+    image_url: string;
 }
 
 interface ExplorerSidebarProps {
@@ -67,8 +69,20 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
     const runs = props.runs;
     const searching = props.searching;
     const app_list = props.app_list;
+
+ 
+
     const [searchParams, setSearchParams] = useSearchParams();
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleInputChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
     const navigate = useNavigate();
+    const navigation = useNavigation();
+
+    console.log(navigation.location)
 
     //If direction is 0, that means the left was clicked
     //If direction is 1, that means the right was clicked
@@ -103,9 +117,11 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
         })
     }
 
-    const itemSelect = (key:String) => {
-        console.log("hello")
-        console.log(key)
+    const handleSearch = () => {
+        setSearchParams((searchParams) => {
+            searchParams.set("q", searchQuery)
+            return searchParams
+        })
     }
 
     var page = +searchParams.get("page")!;
@@ -144,7 +160,9 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
     
     return (
         <div id="explore-sidebar" className="w-1/5 items-stretch h-screen overflow-y-auto dark:divide-white divide-black ">
-            <h2 className="text-center underline">iOS Apps</h2>
+
+            <div>
+            <h2 className="text-center underline">iOS Apps</h2> 
             <div id="search-region" className="mt-2">
                 <Form id="search-form"
                     // onChange={(event) => {
@@ -161,7 +179,9 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                             name="q"
                             type="serach"
                             //label="Search"
+                            onChange={handleInputChange}
                             placeholder="Search for app by name"
+                            value={searchQuery}
                             defaultValue={q || ""}
                             className="max-w-1/5 m-2"
                         />
@@ -175,6 +195,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                         <div className="m-2">
                             <Button
                                 variant="bordered"
+                                onClick={handleSearch}
                             >
                                 Search
                             </Button>
@@ -226,15 +247,26 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                     <HiArrowNarrowRight className="mx-2 w-full hover:opacity-40" onClick={onRightHandler}/>
                 </div>
                 <ul className="my-2">
+                    {navigation.state === "loading" ? (<div className="px-2">Loading</div>) :
+                    <div>
                     {app_list.map(
                         app => 
-                            <li className="hover:opacity-40 cursor-pointer m-2">
-                                <Link to={'/explore/' + app.app_id + "?page=" + page + "&run="+run}>{app.app_name}</Link>
+                            <li className="hover:opacity-40 cursor-pointer m-2 items-center  ">
+                                <Link className="flex items-center py-2" to={'/explore/' + app.app_id + "?page=" + page + "&run="+run}>
+                                    {app.image_url == undefined ? 
+                                    <img className="size-8 rounded-lg" src={noPhoto} />
+                                    :
+                                    <img className="size-8 rounded-lg" src={app.image_url} />
+                                    }
+                                    <p className="pl-1">{app.app_name}</p>
+                                </Link>
                             </li>
                         )}
+                    </div>
+                    }
                 </ul>
             </div>
+            </div>
         </div >
-
-    );
+        );
 }

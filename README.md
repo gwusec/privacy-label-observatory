@@ -13,6 +13,8 @@ will solve that
 
 react-icons was installed to represent the arrows on the explore sidebar. 
 
+papaparse was installed for parsing CSV. 
+
 
 # Notes for 2/11
 - Under absolutely no circumstance should you store the URL for the backend in a variable. It messes up the routing
