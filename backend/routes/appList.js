@@ -14,6 +14,8 @@ router.get("/", function(req, res){
     index = req.query.run
     console.log(index)
 
+
+
     search = req.query.q 
     console.log(search)
 
