@@ -100,7 +100,7 @@ export default function App() {
                 <div key={priv.privacyTypes}>
                     <h3 className="mt-4 text-lg font-bold">{priv.privacyTypes}</h3>
                     <ul className="pl-8">
-                        {priv.dataCategories.map(category =>
+                        {priv.dataCategories.map(category => //every mapping is a loop
                             <div key={category.dataCategory} className="flex p-2">
                                 <li className="text-base text-gray-700">{category.dataCategory}: </li>
                                 <div className="ml-2">
