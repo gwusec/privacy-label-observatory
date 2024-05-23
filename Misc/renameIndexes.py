@@ -11,14 +11,16 @@ def get_indexes(es, pattern):
 def reindex(es, old_index):
     es.indices.delete(index=old_index)
 
-# Define the pattern to match indexes you want to rename
-pattern = "run"
-new_prefix = "run_000"
-index_counter = 1
+# # Define the pattern to match indexes you want to rename
+# pattern = "run"
+# new_prefix = "run_000"
+# index_counter = 1
 
-# Get all indexes matching the pattern
-indexes_to_rename = get_indexes(es, pattern)
+# # Get all indexes matching the pattern
+# indexes_to_rename = get_indexes(es, pattern)
 
-# Loop through each index and rename it
-for old_index in indexes_to_rename:
-    reindex(es, old_index)
+# # Loop through each index and rename it
+# for old_index in indexes_to_rename:
+#     reindex(es, old_index)
+
+reindex(es, "run_00070")
