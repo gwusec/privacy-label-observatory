@@ -104,7 +104,8 @@ export default function App() {
                 <div>
                     <h3 className="mt-4 text-lg font-bold">{priv.privacyTypes}</h3>
                     <ul className="pl-8">
-                        {priv.purposes && priv.purposes.map(purpose =>
+
+                        {priv.purposes && priv.purposes.map(purpose => //every mapping is a loop
                             <div className="flex p-2">
                                 <li className="text-base text-gray-700">{purpose.purpose}: </li>
                                 {purpose.dataCategories && purpose.dataCategories.map(dataCategory => 

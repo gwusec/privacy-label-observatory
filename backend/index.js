@@ -4,10 +4,11 @@ var cors = require('cors')
 const bodyParser = require("body-parser")
 
 
-var testAPIRouter = require("./routes/testAPI")
+var testAPIRouter = require("./routes/testAPI") //establish in file, acts as container for info, declaring
 var appListRouter = require("./routes/appList")
 var searchRouter = require("./routes/search")
 var getAppRouter = require("./routes/getApp")
+var runsRouter = require("./routes/runs")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -22,11 +23,12 @@ const port = 8017;
 
 //TestAPI - this could be used when writing some more of the functions
 //Allows for us to separate methods by class
+//use routre amnd function this the url this the function
 app.use("/testAPI", testAPIRouter)
 app.use("/appList", appListRouter)
 app.use("/search", searchRouter)
 app.use("/getApp", getAppRouter)
-
+app.use("/runs", runsRouter)
 app.use("/translateApp", translationRouter)
 
 
@@ -43,6 +45,7 @@ var server = app.listen(port, () => {
 //use json encoded bodies
 app.use(express.json())
 
+// move to own route - DONE
 app.get("/api/runs", function (req, res) {
     client.cat.indices({
         format: 'json'
@@ -72,6 +75,7 @@ app.post("/api/body/test", function (req, res) {
  }
 
 */
+//
 app.post("/api/search/app_id", function (req, res) {
     var app_id = req.body.app_id;
 
@@ -146,6 +150,7 @@ app.post("/api/get", function (req, res) {
 
 //Search method that takes in a given string and performs matching on similar applications 
 //Prefix and Suffix
+//
 app.post("/api/search/app_name", function (req, res){
     var app_name = req.body.app_name
 
