@@ -29,26 +29,29 @@ import ExploreSidebar from "../ExploreSidebar";
 import {
     Divider
 } from "@nextui-org/react";
-
-interface dataTyp{
-    data_type: String
-}
+import { None } from "framer-motion";
 
 interface dataCat{
     dataCategory: String, 
-    dataTypes: dataTyp[];
+    dataTypes: String[];
+}
+
+interface purpose{
+    purpose: String,
+    identifier: String,
+    dataCategories: dataCat[] | null;
 }
 
 interface privLabel{
-    privacyTypes: String
-    identifier: String
-    dataCategories: dataCat[];
+    privacyTypes: String,
+    identifier: String,
+    dataCategories: dataCat[] | null,
+    purposes: purpose[] | null;
 }
 
 
 
 export async function loader({params, request}:LoaderFunctionArgs){
-    console.log('gets into here')
     const q = params.app_id
     const url = new URL(request.url)
     var run = url.searchParams.get("run")
@@ -66,14 +69,15 @@ export default function App() {
 
     var jsonData = JSON.parse(JSON.stringify(data[0]["json"]))
 
+
+
     const app_name = jsonData["app_name"]
     const app_id = jsonData["app_id"]
     const image_url = data[0]["image_url"]
-    console.log("image")
-    console.log(image_url)
     const privacy_types: privLabel[] = jsonData.privacylabels.privacyDetails;
+    
+    console.log(privacy_types)
 
-    //console.log(app_name)
     return(
     <div className="text-center mx-2 pl-10 w-full">
         <div>
@@ -97,19 +101,23 @@ export default function App() {
                 </div>
             </div>
             {privacy_types.map(priv =>
-                <div key={priv.privacyTypes}>
+                <div>
                     <h3 className="mt-4 text-lg font-bold">{priv.privacyTypes}</h3>
                     <ul className="pl-8">
-                        {priv.dataCategories.map(category => //every mapping is a loop
-                            <div key={category.dataCategory} className="flex p-2">
-                                <li className="text-base text-gray-700">{category.dataCategory}: </li>
-                                <div className="ml-2">
-                                    {category.dataTypes.map((typ, index) =>
-                                        <span key={index} className="inline-block px-2 py-1 text-sm font-semibold text-orange-600 bg-orange-100 rounded-full mr-2">
-                                            {typ.data_type}
-                                        </span>
-                                    )}
-                                </div>
+
+                        {priv.purposes && priv.purposes.map(purpose => //every mapping is a loop
+                            <div className="flex p-2">
+                                <li className="text-base text-gray-700">{purpose.purpose}: </li>
+                                {purpose.dataCategories && purpose.dataCategories.map(dataCategory => 
+                                    <div>
+                                        <li>{dataCategory.dataCategory}</li>
+                                        {dataCategory.dataTypes.map(dataType => 
+                                            <div>
+                                                <li>{dataType}</li>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </ul>
