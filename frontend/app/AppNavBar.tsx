@@ -47,7 +47,12 @@ export default function AppNavBar() {
             Documentation
           </Link>
         </NavbarItem>
-      </NavbarContent>
+        {/* <NavbarItem >
+          <Link color="foreground" underline="hover" href="/wiki" >
+            Wiki
+          </Link>
+        </NavbarItem>
+      </NavbarContent> */}
       <NavbarContent justify="end">
         <NavbarItem>
           <ThemeSwitcher />
