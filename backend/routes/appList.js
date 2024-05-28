@@ -26,13 +26,15 @@ router.get("/", function(req, res){
             "size": 20,
         }).then(async (r) => {
             var hits = []
+            console.log(r.hits.hits)
             for(i in r.hits.hits){
                 app_name = r.hits.hits[i]._source.app_name
+                console.log(app_name)
                 app_index = r.hits.hits[i]._index
                 app_url = r.hits.hits[i].app_url
                 app_url = encodeUrl(r.hits.hits[i]._source.href)
-                image_url = await htmlRequest(decode(app_url))
                 app_id = r.hits.hits[i]._source.app_id
+                image_url = await htmlRequest(decode(app_url))
                 hits.push({
                     "app_name": app_name,
                     "app_id": app_id, 
