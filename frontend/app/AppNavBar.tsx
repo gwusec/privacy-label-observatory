@@ -15,7 +15,7 @@ import GWIcon from "./GWIcon";
 export default function AppNavBar() {
   return (
     <div className="sticky top-0 z-50 shadow-md shadow-gray-500 dark:shadow-slate-400 mb-5">
-    <Navbar >
+      <Navbar >
 
 
       <NavbarBrand>
@@ -53,6 +53,7 @@ export default function AppNavBar() {
           </Link>
         </NavbarItem>
       </NavbarContent> */}
+      </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
           <ThemeSwitcher />
@@ -66,7 +67,7 @@ export default function AppNavBar() {
           </Button>
         </NavbarItem>
       </NavbarContent>
-    </Navbar>
+      </Navbar>
     </div>
   );
 }
