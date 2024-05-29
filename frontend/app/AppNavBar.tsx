@@ -15,7 +15,7 @@ import GWIcon from "./GWIcon";
 export default function AppNavBar() {
   return (
     <div className="sticky top-0 z-50 shadow-md shadow-gray-500 dark:shadow-slate-400 mb-5">
-      <Navbar >
+    <Navbar >
 
 
       <NavbarBrand>
@@ -37,6 +37,11 @@ export default function AppNavBar() {
             Dashboard
           </Link>
         </NavbarItem>
+        {/* <NavbarItem >
+          <Link color="foreground" underline="hover" href="/wiki" >
+            Wiki
+          </Link>
+        </NavbarItem> */}
         <NavbarItem>
           <Link color="foreground" underline="hover" href="/explore?page=0&run=run_00069">
             Explore
@@ -47,12 +52,6 @@ export default function AppNavBar() {
             Documentation
           </Link>
         </NavbarItem>
-        {/* <NavbarItem >
-          <Link color="foreground" underline="hover" href="/wiki" >
-            Wiki
-          </Link>
-        </NavbarItem>
-      </NavbarContent> */}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
@@ -67,7 +66,7 @@ export default function AppNavBar() {
           </Button>
         </NavbarItem>
       </NavbarContent>
-      </Navbar>
+    </Navbar>
     </div>
   );
 }
