@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@syncfusion/ej2-react-layouts": "^25.2.3"
+  }
+}
