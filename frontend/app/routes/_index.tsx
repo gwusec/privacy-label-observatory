@@ -1,14 +1,19 @@
 import { LoremIpsum } from "react-lorem-ipsum";
+import { useEffect } from "react";
+import { useTheme } from "next-themes";
 
 export default function Index() {
+  const { theme } = useTheme();
+
   return (
+    <div className={`${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'}`}>
     <div id="main-text">
       <div className="mb-14">
         <h1 className="text-4xl font-semibold mb-16 text-center">GWU SEC Privacy Label Observatory Wiki</h1>
         <p className="text-xl text-white-700 mb-4 text-center">
           After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels.
         </p>
-        <h2 className="text-2xl text-white-700 mb-10 text-center">
+        <h2 className="text-xl text-white-700 mb-10 text-center">
           We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year.
         </h2>
       <h1 className="text-4xl text-white-700 text-center mb-8 font-semibold">Here is what we found:</h1>
@@ -62,6 +67,7 @@ export default function Index() {
           According to the privacy labels, larger apps collect and track more user data. This may be due to the fact that apps with larger footprints contain additional software libraries for the purpose of collecting data.
         </p>
       </div>
+    </div>
     </div>
   );
 }
