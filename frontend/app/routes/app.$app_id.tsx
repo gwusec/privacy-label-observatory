@@ -52,7 +52,7 @@ export default function App() {
     })
 
     const checkValueInDetails = (value) => {
-        
+        return privDetails.some(detail => detail.identifier === value);
     };
 
     return(
@@ -84,22 +84,40 @@ export default function App() {
 
                     {/* Need to come back to this since currently it's wrong */}
                     <div className="m-4 bg-white rounded-lg shadow w-full text-center" id='duty'>
-                        <h3 className=" ${checkValueInDetails('DATA_USED_TO_TRACK_YOU') ? 'bg-green-200' : ''}">Date Used to Track You</h3> 
+                        {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ? 
+                            <h3 className="bg-green-200">Data Used to Track You</h3> 
+                            :
+                            <div className='bg-red-200'>
+                                
+                                <h3>Data Used to Track You</h3>
+                                <p>No Data</p>
+                            </div>}
                     </div>
 
                     <div className="m-4 bg-white rounded-lg shadow w-full text-center" id='dly'>
-                        <h3 className=" ${checkValueInDetails('DATA_LINKED_TO_YOU') ? 'bg-green-200' : ''}">Date Linked to You</h3>
+                        {checkValueInDetails('DATA_LINKED_TO_YOU') ? 
+                            <h3 className="bg-green-200">Data Linked to You</h3> 
+                            :
+                            <div className="bg-red-200">
+                                
+                                <h3>Data Linked to You</h3>
+                                <p>No Data</p>
+                            </div>}
                     </div>
 
                     <div className="m-4 bg-white rounded-lg shadow w-full text-center" id='dnly'>
                     {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ? 
-                        <h3 className="bg-green-200">Hello</h3> 
+                        <h3 className="bg-green-200">Data Not Linked to You</h3> 
                         :
-                        <h3>Data Not Linked to You</h3>}
+                        <div className='bg-red-200'>
+                            
+                            <h3>Data Not Linked to You</h3>
+                            <p>No Data</p>
+                        </div>}
                     </div>
                 </div>
                 <div>
-                    {activeIndex !== null && activeIndex < privacy_types.length && (
+                    {/* {activeIndex !== null && activeIndex < privacy_types.length && (
                         <div>
                             
                         <div className="bg-white p-4 rounded-lg shadow">
@@ -108,7 +126,7 @@ export default function App() {
                         </div>
 
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>
