@@ -22,8 +22,8 @@ export default function Index() {
       },
       buttons: [
         {
-          text: 'Next',
-          action: tour.next,
+          text: 'Done',
+          action: tour.complete,
         },
       ],
     });
@@ -38,8 +38,8 @@ export default function Index() {
       },
       buttons: [
         {
-          text: 'Next',
-          action: tour.next,
+          text: 'Done',
+          action: tour.complete,
         },
       ],
     });
@@ -54,8 +54,8 @@ export default function Index() {
       },
       buttons: [
         {
-          text: 'Next',
-          action: tour.next,
+          text: 'Done',
+          action: tour.complete,
         },
       ],
     });
@@ -90,6 +90,29 @@ export default function Index() {
 
   return (
     <div id="main-text">
+      <style jsx>{`
+  .shepherd-theme-arrows .shepherd-element {
+    --shepherd-primary: #6C63FF;
+    --shepherd-text-color: #FFFFFF;
+    --shepherd-background: #574BFF;
+    --shepherd-border-radius: 20px; /* More rounded corners */
+    --shepherd-padding: 20px;
+    --shepherd-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .shepherd-button {
+    background-color: var(--shepherd-primary);
+    color: #574BFF;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px; /* More rounded corners for buttons */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .shepherd-button:hover {
+    background-color: #574BFF;
+  }
+`}</style>
+
       <div className="mb-20">
         <h1 className="text-4xl font-semibold mb-16 text-center">GWU SEC Privacy Label Observatory Dashboard</h1>
         <h2 className="text-lg text-white-700 mb-4 text-center">
@@ -108,31 +131,12 @@ export default function Index() {
       <div className="mb-16">
         <h1 className="text-3xl mb-8 text-white-700 text-center">But what are privacy labels?</h1>
         <p className="text-lg text-white-300 font-medium text-center mb-4">Privacy labels are basically nutrition labels, where the app must indicate what data is collected and used compactly.</p>
-        <a href="#track" data-tour-step="track" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Used to Track You</a>
-        <a href="#linked" data-tour-step="linked" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Linked to You</a>
-        <a href="#n_linked" data-tour-step="n_linked" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Not Linked to You</a>
-        <a href="#n_collected" data-tour-step="n_collected" className="text-md text-slate-600 font-medium hover:text-white text-center mb-32 block">Data Not Collected</a>
+        <a data-tour-step="track" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Used to Track You</a>
+        <a data-tour-step="linked" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Linked to You</a>
+        <a data-tour-step="n_linked" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Not Linked to You</a>
+        <a data-tour-step="n_collected" className="text-md text-slate-600 font-medium hover:text-white text-center mb-32 block">Data Not Collected</a>
       </div>
 
-      {/* <div id="track" className="min-h-screen flex items-center justify-center">
-        <h1 className="text-3xl">Data Used to Track You</h1>
-        <p className="text-lg text-slate-600 font-medium text-center mb-4">Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.</p>
-      </div>
-
-      <div id="linked" className="min-h-screen items-center justify-center">
-        <h1 className="text-3xl block">Data Linked to You</h1>
-        <p className="text-lg text-slate-600 font-medium text-center mb-4">Data is collected and is linked to the user’s identity.</p>
-      </div>
-      
-      <div id="n_linked" className="min-h-screen items-center justify-center">
-        <h1 className="text-3xl block">Data Not Linked to You</h1>
-        <p className="text-lg text-slate-600 font-medium text-center mb-4">Data is collected but is de-identified or anonymized and is therefore not linked to the user’s identity.</p>
-      </div>
-      
-      <div id="n_collected" className="min-h-screen flex items-center justify-center">
-        <h1 className="text-3xl">Data Not Collected</h1>
-        <p className="text-lg text-slate-600 font-medium text-center mb-4">When an app adds a label with the Data Not Collected Privacy Type, it states that it does not collect any data from the user, and therefore does not include other Privacy Types.</p>
-      </div> */}
     </div>
   );
 }
