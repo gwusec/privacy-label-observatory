@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import 'shepherd.js/dist/css/shepherd.css';
+// import 'shepherd.js/dist/css/shepherd.css';
 import Shepherd from 'shepherd.js';
 
 export default function Index() {
@@ -90,28 +90,30 @@ export default function Index() {
 
   return (
     <div id="main-text">
-      <style jsx>{`
-  .shepherd-theme-arrows .shepherd-element {
-    --shepherd-primary: #6C63FF;
-    --shepherd-text-color: #FFFFFF;
-    --shepherd-background: #574BFF;
-    --shepherd-border-radius: 20px; /* More rounded corners */
-    --shepherd-padding: 20px;
-    --shepherd-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .shepherd-button {
-    background-color: var(--shepherd-primary);
-    color: #574BFF;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px; /* More rounded corners for buttons */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .shepherd-button:hover {
-    background-color: #574BFF;
-  }
-`}</style>
+      <style jsx>
+        {`
+        .shepherd-theme-arrows .shepherd-element {
+          --shepherd-primary: #6C63FF;
+          --shepherd-text-color: #FFFFFF;
+          --shepherd-background: #574BFF;
+          --shepherd-border-radius: 20px; /* More rounded corners */
+          --shepherd-padding: 20px;
+          --shepherd-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .shepherd-button {
+          background-color: var(--shepherd-primary);
+          color: #574BFF;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 20px; /* More rounded corners for buttons */
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        .shepherd-button:hover {
+          background-color: #574BFF;
+        }
+      `}
+    </style>
 
       <div className="mb-20">
         <h1 className="text-4xl font-semibold mb-16 text-center">GWU SEC Privacy Label Observatory Dashboard</h1>
