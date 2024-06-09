@@ -96,7 +96,7 @@ export default function Index() {
           --shepherd-primary: #6C63FF;
           --shepherd-text-color: #FFFFFF;
           --shepherd-background: #574BFF;
-          --shepherd-border-radius: 20px; /* More rounded corners */
+          --shepherd-border-radius: 20px;
           --shepherd-padding: 20px;
           --shepherd-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -105,7 +105,7 @@ export default function Index() {
           color: #574BFF;
           border: none;
           padding: 8px 16px;
-          border-radius: 20px; /* More rounded corners for buttons */
+          border-radius: 20px;
           cursor: pointer;
           transition: background-color 0.3s ease;
         }
