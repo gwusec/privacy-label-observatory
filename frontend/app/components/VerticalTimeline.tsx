@@ -3,13 +3,13 @@ import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineC
 import { Typography } from '@mui/material';
 var data = require("../../../Misc/dates_and_runs.json")
 
-function VerticalTimeline({privtypes, activeIndex, updateParent, handleClick}) {
+function VerticalTimeline({privtypes, activeIndex, updateParent, handleClick} : {privtypes: any, activeIndex: any, updateParent: any, handleClick: any}) {
   const runRefs = useRef<any[]>([])
   const [mounted, setMounted] = useState(false);
   const [dateMapping, setDateMapping] = useState(JSON.parse(JSON.stringify(data)));
 
   useEffect(() => {
-    runRefs.current = privtypes.map((_, i) => runRefs.current[i] ?? React.createRef());
+    runRefs.current = privtypes.map((_:any, i:any) => runRefs.current[i] ?? React.createRef());
   }, [privtypes]);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function VerticalTimeline({privtypes, activeIndex, updateParent, handleClick}) {
             <TimelineItem key={index} ref={runRefs.current[index]}>
               <TimelineOppositeContent>
                 <Typography variant="body2" color="textSecondary">
-                  {dateMapping.find((obj) => obj.run_number === event.index).date}
+                  {dateMapping.find((obj:any) => obj.run_number === event.index).date}
                 </Typography>
               </TimelineOppositeContent>
               <TimelineSeparator>
