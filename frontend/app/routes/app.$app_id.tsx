@@ -8,6 +8,24 @@ import noPhoto from "../resources/no_available_photo.jpg"
 //CSS and Component for the timeline
 import VerticalTimeline from "~/components/VerticalTimeline";
 
+interface dataCat{
+    dataCategory: String, 
+    dataTypes: String[];
+}
+
+interface purpose{
+    purpose: String,
+    identifier: String,
+    dataCategories: dataCat[] | null;
+}
+
+interface privLabel{
+    privacyTypes: String,
+    identifier: String,
+    dataCategories: dataCat[] | null,
+    purposes: purpose[] | null;
+}
+
 
 export async function loader({params}:LoaderFunctionArgs){
     console.log("running this loader")
@@ -27,7 +45,7 @@ export async function loader({params}:LoaderFunctionArgs){
 
 export default function App() {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [privDetails, setPrivDetails] = useState([]);
+    const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
 
     const handleClick = (event: any, index: number) => {
         console.log("called", index)
@@ -51,7 +69,7 @@ export default function App() {
         console.log("privDetails", privDetails)
     })
 
-    const checkValueInDetails = (value) => {
+    const checkValueInDetails = (value:any) => {
         return privDetails.some(detail => detail.identifier === value);
     };
 
@@ -77,7 +95,7 @@ export default function App() {
                 </div>
             </div>
             <div className="flex">
-                <div className="mt-4 bg-white p-4 rounded-lg shadow w-fit ">
+                <div className="mt-4 bg-white p-4 rounded-lg shadow w-fit dark:bg-slate-800">
                     <VerticalTimeline privtypes={privacy_types} activeIndex={activeIndex} updateParent={updateParent} handleClick={handleClick}/>   
                 </div>
                 <div className='p-2 flex w-full'>
@@ -107,7 +125,21 @@ export default function App() {
 
                     <div className="m-4 bg-white rounded-lg shadow w-full text-center" id='dnly'>
                     {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ? 
-                        <h3 className="bg-green-200">Data Not Linked to You</h3> 
+                        <div>
+                            <h3 className="bg-green-200">Data Not Linked to You</h3>
+                            {privDetails.map(privacy =>
+                            privacy.identifier === "DATA_NOT_LINKED_TO_YOU" ? 
+                            <div>
+                                {privacy.purposes && privacy.purposes.map(purpose => 
+                                    <div>
+                                        <h4 className='text-cyan-400'>{purpose.purpose}</h4>
+                                    </div>
+                                )}
+                            </div> 
+                            : 
+                            <div></div>
+                            )} 
+                        </div>
                         :
                         <div className='bg-red-200'>
                             

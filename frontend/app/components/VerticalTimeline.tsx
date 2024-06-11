@@ -70,7 +70,7 @@ function VerticalTimeline({ privtypes, activeIndex, updateParent, handleClick }:
       <Timeline position="right">
         <TimelineItem>
           <TimelineOppositeContent>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" className='text-black dark:text-white'>
               Start
             </Typography>
           </TimelineOppositeContent>
@@ -82,7 +82,7 @@ function VerticalTimeline({ privtypes, activeIndex, updateParent, handleClick }:
         {privtypes.map((event: any, index: any) => (
           <TimelineItem key={index} ref={runRefs.current[index]}>
             <TimelineOppositeContent>
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="body2" className='text-black dark:text-white'>
                 {dateMapping.find((obj: any) => obj.run_number === event.index)?.date}
               </Typography>
             </TimelineOppositeContent>
