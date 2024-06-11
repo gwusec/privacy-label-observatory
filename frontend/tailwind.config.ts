@@ -9,9 +9,13 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'light-gradient': 'linear-gradient(to bottom, #ffffff, #581D8B)',
-        'dark-gradient': 'linear-gradient(to bottom, #000000, #581D8B 10%, #000000 80%) ',
+        'light-gradient': 'linear-gradient(to bottom, #ffffff, #2b50aa)',
+        'dark-gradient': 'linear-gradient(to bottom, #000000, #2b50aa 10%, #000000 80%) ',
       },
+      colors: {
+        red: '#a31621',
+        grey: '#ced3dc'
+      }
     },
   },
   darkMode: 'class',
