@@ -1,14 +1,16 @@
-import React from "react";
-
+import React, {useState} from "react";
+import { useRef } from 'react';
 import type {
     LinksFunction,
     LoaderFunctionArgs,
 } from "@remix-run/node";
+import noPhoto from "./resources/no_available_photo.jpg"
 import { json } from "@remix-run/node";
 import { Input } from "@nextui-org/react";
+import {HiArrowNarrowRight, HiArrowNarrowLeft} from "react-icons/hi"
 import {
     Form,
-    //Link,
+    Link,
     Links,
     LiveReload,
     Meta,
@@ -18,6 +20,8 @@ import {
     ScrollRestoration,
     useLoaderData,
     useNavigation,
+    useParams,
+    useSearchParams,
     useSubmit,
 } from "@remix-run/react";
 
@@ -36,6 +40,9 @@ import {
     Divider
 } from "@nextui-org/react";
 
+import {loader} from "./routes/explore"
+import { useNavigate } from "@remix-run/react";
+
 
 interface Run{
     key: string;
@@ -45,6 +52,7 @@ interface Run{
 interface AppId{
     app_name: string;
     app_id:string; 
+    image_url: string;
 }
 
 interface ExplorerSidebarProps {
@@ -60,15 +68,91 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
     const q = props.q;
     const runs = props.runs;
     const searching = props.searching;
-    const app_list = props.AppId;
+    const app_list = props.app_list;
+
+ 
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleInputChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const navigate = useNavigate();
+    const navigation = useNavigation();
+
+    console.log(navigation.location)
+
+    //If direction is 0, that means the left was clicked
+    //If direction is 1, that means the right was clicked
+    //Will increment or decrement href based on that
+    const onLeftHandler = () => {
+        var search = searchParams.get("page")
+        if(search == null){
+            search = "1"
+        }
+        var page: number = +search!;
+        page -= 1;
+        const newPage: string = ""+page;
+
+        setSearchParams((searchParams) => {
+            searchParams.set("page", newPage)
+            return searchParams
+        })
+    }
+
+    const onRightHandler = () => {
+        var search = searchParams.get("page")
+        if(search == null){
+            search = "0"
+        }
+        var page: number = +search!;
+        page += 1;
+        const newPage: string = ""+page;
+
+        setSearchParams((searchParams) => {
+            searchParams.set("page", newPage)
+            return searchParams
+        })
+    }
+
+    const handleSearch = () => {
+        setSearchParams((searchParams) => {
+            searchParams.set("q", searchQuery)
+            return searchParams
+        })
+    }
+
+    var page = +searchParams.get("page")!;
+    var run = searchParams.get("run")
+    if(page == null){
+        page = 0
+    }
+   
     
     const init_label = runs[0]["label"] ? runs[0].label: "None";
 
 
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([init_label]));
+    console.log(selectedKeys)
 
     const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+        () => {
+            let modifiedValue = Array.from(selectedKeys).join(", ").replaceAll("_", " ").replaceAll("0", "");
+            
+            //Added the option to change the query parameter for filtering search
+            const selectedKeyArray = Array.from(selectedKeys);
+            var firstKey = selectedKeyArray[0]
+
+            if(firstKey != "Run 69"){
+                navigate("/explore?page=0&run="+firstKey)
+            }
+  
+ 
+            
+            return modifiedValue;
+        },
         [selectedKeys]
     );
 
@@ -76,7 +160,9 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
     
     return (
         <div id="explore-sidebar" className="w-1/5 items-stretch h-screen overflow-y-auto dark:divide-white divide-black ">
-            <h2 className="text-center underline">iOS Apps</h2>
+
+            <div>
+            <h2 className="text-center underline">iOS Apps</h2> 
             <div id="search-region" className="mt-2">
                 <Form id="search-form"
                     // onChange={(event) => {
@@ -93,7 +179,9 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                             name="q"
                             type="serach"
                             //label="Search"
+                            onChange={handleInputChange}
                             placeholder="Search for app by name"
+                            value={searchQuery}
                             defaultValue={q || ""}
                             className="max-w-1/5 m-2"
                         />
@@ -107,6 +195,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                         <div className="m-2">
                             <Button
                                 variant="bordered"
+                                onClick={handleSearch}
                             >
                                 Search
                             </Button>
@@ -129,6 +218,7 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                                     selectedKeys={selectedKeys}
                                     onSelectionChange={setSelectedKeys}
                                     items={runs}
+                                    className="max-h-60 overflow-y-auto"
                                 >
                                     {(item) => (
                                         <DropdownItem
@@ -147,19 +237,36 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                 </Form>
             </div>
             <div id="search-results-region" className="mt-2">
+                <div className="flex flex-row">
+                    {page > 0 ?
+                        <HiArrowNarrowLeft className="mx-2 w-full hover:opacity-40" onClick={onLeftHandler}/>
+                    :
+                        null
+                    }
+                    
+                    <HiArrowNarrowRight className="mx-2 w-full hover:opacity-40" onClick={onRightHandler}/>
+                </div>
                 <ul className="my-2">
-                    {(() => {
-                        const arr = [];
-                        for (let i = 0; i < 40; i++) {
-                            arr.push(
-                                <li className="my-2 ml-2">{name()} {surname()}</li>
-                            );
-                        }
-                        return arr;
-                    })()}
+                    {navigation.state === "loading" ? (<div className="px-2">Loading</div>) :
+                    <div>
+                    {app_list.map(
+                        app => 
+                            <li className="hover:opacity-40 cursor-pointer m-2 items-center  ">
+                                <Link className="flex items-center py-2" to={'/explore/' + app.app_id + "?page=" + page + "&run="+run}>
+                                    {app.image_url == undefined ? 
+                                    <img className="size-8 rounded-lg" src={noPhoto} />
+                                    :
+                                    <img className="size-8 rounded-lg" src={app.image_url} />
+                                    }
+                                    <p className="pl-1">{app.app_name}</p>
+                                </Link>
+                            </li>
+                        )}
+                    </div>
+                    }
                 </ul>
             </div>
+            </div>
         </div >
-
-    );
+        );
 }
