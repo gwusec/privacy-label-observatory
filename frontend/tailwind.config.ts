@@ -14,7 +14,8 @@ export default {
       },
       colors: {
         red: '#a31621',
-        grey: '#ced3dc'
+        grey: '#ced3dc',
+        dred: '#bc0610'
       }
     },
   },
