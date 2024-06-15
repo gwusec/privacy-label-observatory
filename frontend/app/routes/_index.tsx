@@ -24,19 +24,19 @@ const Index: React.FC = () => {
     <div className={`${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'}`}>
       <div id="main-text">
         <div className="mb-14">
-          <h1 className={`text-4xl font-semibold mb-16 text-center ${theme === 'dark' ? 'text-grey' : 'text-red'}`}>GWU SEC Privacy Label Observatory Wiki</h1>
+          <h1 className={`text-4xl font-semibold mb-16 text-center ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>GWU SEC Privacy Label Observatory Wiki</h1>
           <p className="text-xl text-white-700 mb-4 text-center">
             After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels.
           </p>
           <h2 className="text-xl text-white-700 mb-20 text-center">
             We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year.
           </h2>
-          <h1 className={`text-4xl text-white-700 text-center font-semibold  ${theme === 'dark' ? 'text-grey' : 'text-red'}`}>Here is what we found:</h1>
+          <h1 className={`text-4xl text-white-700 text-center font-semibold  ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>Here is what we found:</h1>
         </div>
         <div ref={scrollContainerRef} className="w-full overflow-x-auto snap-x snap-mandatory flex h-screen space-x-80">
           {/* <div className="flex space-x-8"> */}
           <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
-            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-grey' : 'text-red'}`}>
+            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
               Voluntary Update vs. Means to an End:
             </h2>
             <div className="flex flex-col items-end space-y-4">
@@ -57,7 +57,7 @@ const Index: React.FC = () => {
           </div>
           <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
             <div className="flex flex-col items-end space-y-4">
-            <h2 className={`text-2x text-white-600 mb-10 font-bold scroll space-x-16 items-center ${theme === 'dark' ? 'text-grey' : 'text-red'}`}>
+            <h2 className={`text-2x text-white-600 mb-10 font-bold scroll space-x-16 items-center ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
               You get what you do (or don't) pay for:
             </h2>
               <p className="text-lg text-white-700 pl-10 items-center max-w-sm">
@@ -72,7 +72,7 @@ const Index: React.FC = () => {
               </div>
           </div>
           <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
-            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-grey' : 'text-red'}`}>
+            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
               Data collection may have no boundaries:
             </h2>
             <p className="text-lg text-white-700 mb-16 pl-16">
@@ -80,7 +80,7 @@ const Index: React.FC = () => {
             </p>
           </div>
           <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
-            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-grey' : 'text-red'}`}>
+            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
               Larger sized apps:
             </h2>
             <p className="text-lg text-white-700 mb-16 pl-16">
@@ -90,14 +90,14 @@ const Index: React.FC = () => {
         </div>
       </div>
       <button
-        className={`absolute left-0 bottom-3 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-grey hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
+        className={`absolute left-0 bottom-3 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
         style={{ fontSize: '1.5rem', padding: '1.5rem' }}
         onClick={() => scrollTo('prev')}
       >
         &lt;
       </button>
       <button
-        className={`absolute right-0 bottom-3 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-grey hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
+        className={`absolute right-0 bottom-3 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
         style={{ fontSize: '1.5rem', padding: '1.5rem' }}
         onClick={() => scrollTo('next')}
       >
