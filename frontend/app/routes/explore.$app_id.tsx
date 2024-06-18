@@ -33,9 +33,14 @@ import {
 } from "@nextui-org/react";
 import { None } from "framer-motion";
 
+interface dataType{
+  data_category: Number, 
+  data_type: String
+}
+
 interface dataCat{
     dataCategory: String, 
-    dataTypes: String[];
+    dataTypes: dataType[];
 }
 
 interface purpose{
@@ -78,7 +83,7 @@ export default function App() {
     const image_url = data[0]["image_url"]
     const privacy_types: privLabel[] = jsonData.privacylabels.privacyDetails;
     
-    console.log(privacy_types)
+    console.log("privtypes", privacy_types)
 
     return(
     <div className="text-center mx-2 pl-10 w-full">
@@ -105,7 +110,7 @@ export default function App() {
                   <Link to={"/app/" + app_id}><Button>App View</Button></Link>
                 </div>
             </div>
-            {privacy_types.map(priv =>
+            {privacy_types.length > 0 ? privacy_types.map(priv =>
                 <div>
                     <h3 className="mt-6 text-2xl font-bold text-gray-900">{priv.privacyTypes}</h3>
                     <ul className="mt-4 pl-6 list-none space-y-4">
@@ -122,7 +127,7 @@ export default function App() {
                               {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
                                 <div key={dataTypeIndex} className="pl-6 mt-1">
                                   <li className="text-sm text-gray-600 bg-blue-50 rounded-md p-2 border border-blue-100">
-                                    {dataType}
+                                    {dataType.data_type}
                                   </li>
                                 </div>
                               ))}
@@ -130,9 +135,23 @@ export default function App() {
                           ))}
                         </div>
                       ))}
+                      {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                        <div key={dataCategoryIndex} className="pl-4">
+                          <li className="text-base text-gray-700 bg-blue-100 rounded-md p-2 border border-blue-200">
+                            {dataCategory.dataCategory}
+                          </li>
+                          {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                            <div key={dataTypeIndex} className="pl-6 mt-1">
+                              <li className="text-sm text-gray-600 bg-blue-50 rounded-md p-2 border border-blue-100">
+                                {dataType.data_type}
+                              </li>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
                     </ul>
                 </div>
-            )}
+            ) : <h3 className="mt-6 text-2xl font-bold text-gray-900">No Privacy Data Available for this App</h3>}
         </div>
     </div>
     )

@@ -8,10 +8,15 @@ import noPhoto from "../resources/no_available_photo.jpg"
 //CSS and Component for the timeline
 import VerticalTimeline from "~/components/VerticalTimeline";
 
-interface dataCat{
-    dataCategory: String, 
-    dataTypes: String[];
-}
+interface dataType{
+    data_category: Number, 
+    data_type: String
+  }
+  
+  interface dataCat{
+      dataCategory: String, 
+      dataTypes: dataType[];
+  }
 
 interface purpose{
     purpose: String,
@@ -133,6 +138,20 @@ export default function App() {
                                 {privacy.purposes && privacy.purposes.map(purpose => 
                                     <div>
                                         <h4 className='text-cyan-400'>{purpose.purpose}</h4>
+                                        {purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                            <div key={dataCategoryIndex} className="pl-4">
+                                                <li className="text-base text-gray-700 bg-blue-100 rounded-md p-2 border border-blue-200">
+                                                {dataCategory.dataCategory}
+                                                </li>
+                                                {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                <div key={dataTypeIndex} className="pl-6 mt-1">
+                                                    <li className="text-sm text-gray-600 bg-blue-50 rounded-md p-2 border border-blue-100">
+                                                    {dataType.data_type}
+                                                    </li>
+                                                </div>
+                                                ))}
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
                             </div> 
