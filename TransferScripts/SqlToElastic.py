@@ -1,4 +1,5 @@
 import json
+import time
 def transform_old_to_new(old_data):
     # 1. Transform main fields
     transformed_data = {
@@ -56,10 +57,59 @@ def transform_old_to_new(old_data):
             "privacyTypes": privacy_type_mapping[privacy["privacy_type"]],
             "identifier": privacy["privacy_type"],
             "dataCategories": [],
+            "purposes": []
         }
 
-        for purpose in privacy["purposes"]:
-            for data_category in purpose["datacategories"]:
+        if "purposes" in privacy:
+            for purpose in privacy["purposes"]:
+
+                purpose_mapping = {
+                    "APP_FUNCTIONALITY": "App Functionality", 
+                    "ANALYTICS": "Analytics", 
+                    "DEVELOPERS_ADVERTISING": "Developer's Advertising",
+                    "PRODUCT_PERSONALIZATION": "Product Personalization", 
+                    "THIRD_PARTY_ADVERTISING": "Third Party Advertising", 
+                    "OTHER_PURPOSES": "Other Purposes", 
+                }
+
+                new_purpose = {
+                    "identifier": purpose["purpose"],
+                    "purpose": purpose_mapping[purpose["purpose"]],
+                    "dataCategories": []
+                }
+
+                for data_category in purpose["datacategories"]:
+                    data_mapping = {
+                        "CONTACT_INFO": "Contact Info",
+                        "IDENTIFIERS": "Identifiers",
+                        "USAGE_DATA": "Usage Data",
+                        "DIAGNOSTICS": "Diagnostics",
+                        "LOCATION": "Location",
+                        "USER_CONTENT": "User Content",
+                        "PURCHASES": "Purchases",
+                        "FINANCIAL_INFO": "Financial Info",
+                        "OTHER": "Other",
+                        "SEARCH_HISTORY": "Search History",
+                        "CONTACTS": "Contacts",
+                        "HEALTH_AND_FITNESS": "Health and Fitness",
+                        "BROWSING_HISTORY": "Browsing History",
+                        "SENSITIVE_INFO": "Sensitive"
+                    }
+                    data_category_info = {
+                        "dataCategory": data_mapping[data_category["data_category"]],
+                        "dataTypes": [
+                            {
+                                "data_category": int(data_type["data_category"]),
+                                "data_type": data_type["data_type"]
+                            }
+                            for data_type in data_category["datatypes"]
+                        ]
+                    }
+                    new_purpose["dataCategories"].append(data_category_info)
+                new_privacy["purposes"].append(new_purpose)
+            
+        if "datacategories" in privacy:
+            for data_category in privacy["datacategories"]:
                 data_mapping = {
                     "CONTACT_INFO": "Contact Info",
                     "IDENTIFIERS": "Identifiers",
@@ -96,14 +146,13 @@ def transform_old_to_new(old_data):
 
 null = None
 
-def buildDataJson():
-    with open('old.json', 'r') as inputFile:
+def buildDataJson(run):
+    with open(f'./formatted/run{run}.json', 'r') as inputFile:
         new_data = []  # Initialize an empty list to store the transformed data
         count = 0
         # Iterate through each line in the input file
         for line in inputFile:
             old_data_example = json.loads(line)  # Parse each line as a JSON object
-            print(old_data_example)
 
         # Perform your transformation on old_data_example
             transformed_data = transform_old_to_new(old_data_example)
@@ -114,7 +163,7 @@ def buildDataJson():
 
 
 # Open the output file for writing
-    with open('convertedsmallrun5.json', 'w') as outputFile:
+    with open(f'./final/run{run}.json', 'w') as outputFile:
         for item in new_data:
         # Convert the transformed data back to JSON format and write it to the output file
             json.dump(item, outputFile)
@@ -122,4 +171,5 @@ def buildDataJson():
 
     print("Data has been transformed and written")
 
-buildDataJson()
+for i in range(1, 70):
+    buildDataJson(i)
