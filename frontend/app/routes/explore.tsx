@@ -97,6 +97,7 @@ export default function Index() {
         );
 
     return (
+        
         <div className="flex divide-x divide-doubles">
             <ExploreSidebar
                 runs={runs}
