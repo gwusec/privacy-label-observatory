@@ -37,6 +37,11 @@ export default function AppNavBar() {
             Dashboard
           </Link>
         </NavbarItem>
+        {/* <NavbarItem >
+          <Link color="foreground" underline="hover" href="/wiki" >
+            Wiki
+          </Link>
+        </NavbarItem> */}
         <NavbarItem>
           <Link color="foreground" underline="hover" href="/explore?page=0&run=run_00069">
             Explore
