@@ -9,6 +9,7 @@ var appListRouter = require("./routes/appList")
 var searchRouter = require("./routes/search")
 var getAppRouter = require("./routes/getApp")
 var runsRouter = require("./routes/runs")
+var fullAppRouter = require("./routes/getFullApp")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -30,6 +31,7 @@ app.use("/search", searchRouter)
 app.use("/getApp", getAppRouter)
 app.use("/runs", runsRouter)
 app.use("/translateApp", translationRouter)
+app.use("/fullApp", fullAppRouter)
 
 
 //helloworld GET
