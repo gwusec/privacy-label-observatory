@@ -30,12 +30,12 @@ export default function Index() {
 
       <div id="track" class="min-h-screen flex items-center justify-center">
         <h1 class="text-3xl">Data Used to Track You</h1>
-        <p className="text-lg text-slate-600 font-medium text-center mb-4">Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.</p>
+        <p className="text-lg text-slate-600 justify-center font-medium text-center mb-4">Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.</p>
       </div>
 
       <div id="linked" class="min-h-screen items-center justify-center">
         <h1 class="text-3xl block">Data Linked to You</h1>
-        <p className="text-lg text-slate-600 font-medium text-center mb-4">Data is collected and is linked to the user’s identity.</p>
+        <p className="text-lg text-slate-600 justify-center font-medium text-center mb-4">Data is collected and is linked to the user’s identity.</p>
       </div>
       
       <div id="n_linked" class="min-h-screen items-center justify-center">

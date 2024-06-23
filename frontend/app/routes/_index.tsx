@@ -34,70 +34,74 @@ const Index: React.FC = () => {
           <h1 className={`text-4xl text-white-700 text-center font-semibold  ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>Here is what we found:</h1>
         </div>
         <div ref={scrollContainerRef} className="w-full overflow-x-auto snap-x snap-mandatory flex h-screen space-x-80">
-          {/* <div className="flex space-x-8"> */}
-          <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
+          <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-start justify-center">
             <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
               Voluntary Update vs. Means to an End:
             </h2>
             <div className="flex flex-col items-end space-y-4">
-              <p className="text-lg text-white-600 mb-8 max-w-sm items-center space-x-4 pl-16">
+              <p className="text-lg text-white-600 mb-8 max-w-md items-start text-justify space-x-4 pl-16">
                 The increase from 2021 to 2022 is mainly in new apps which are being published, where the privacy label is just an obstacle to the goal of adding an app to the app store.
               </p>
-              <p className="text-lg text-white-600 mb-8 max-w-sm items-center space-x-4 pl-16">
+              <p className="text-lg text-white-600 mb-8 max-w-md items-start text-justify space-x-4 pl-16">
                 Our research found that existing apps that voluntarily updated their privacy labels -- without a version update -- included more details about their data collection practices.
               </p>
-              <p className="text-lg text-white-600 mb-8 max-w-sm items-center space-x-4 pl-16">
+              <p className="text-lg text-white-600 mb-8 max-w-md items-start text-justify space-x-4 pl-16">
                 50% of older apps that added a label with a version update simply stated they don’t collect any data.
               </p>
-              <p className="text-lg text-white-600 mb-8 max-w-sm font-semibold">
+              <p className="text-lg text-white-600 mb-8 max-w-md text-justify font-semibold">
                 This implies more truthfulness in the apps which voluntarily updated their labels.
               </p>
             </div>
             {/* </div> */}
           </div>
-          <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
+          <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-start justify-center space-x-32 pl-40">
             <div className="flex flex-col items-end space-y-4">
-            <h2 className={`text-2x text-white-600 mb-10 font-bold scroll space-x-16 items-center ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
-              You get what you do (or don't) pay for:
-            </h2>
-              <p className="text-lg text-white-700 pl-10 items-center max-w-sm">
+              <h2 className={`text-xl text-white-600 font-bold  text-justify items-start ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+                You get what you do (or don't) pay for:
+              </h2>
+              <p className="text-lg text-white-700 pl-10 text-justify max-w-md">
                 When comparing paid vs. free apps, more free apps report data collection and tracking than those you pay for, perhaps reflecting additional revenue streams from free apps in targeted advertising and/or selling user data.
               </p>
-              <h3 className="text-xl text-white-600 pl-10 font-bold items-center max-w-sm">
+            </div>
+            <div className="flex flex-col items-end space-y-4">
+              <h3 className={`text-xl text-white-600 font-bold text-justify items-start ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                 Data collection in popular free apps:
               </h3>
-              <p className="text-lg text-white-700 pl-10 items-center max-w-sm">
+              <p className="text-lg text-white-700 pl-10 items-center text-justify max-w-md">
                 The large audience increases the surveillance surplus, which may make it harder for app sellers to resist collecting a wider range of data to increase profits. Therefore, popular apps reflect more data collection compared to less popular apps.
               </p>
-              </div>
+            </div>
           </div>
-          <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
-            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+          <div className="snap-start flex-shrink-0 h-screen flex items-start justify-center pl-20">
+            <h2 className={`text-2xl text-white-600 mb-10 font-bold space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
               Data collection may have no boundaries:
             </h2>
-            <p className="text-lg text-white-700 mb-16 pl-16">
+            <p className="text-lg text-white-700 mb-16 text-justify pl-16 max-w-md">
               Many apps with a 4+ or 9+ content rating report tracking data and would be available to children under the content rating guidelines, implying that they are tracking the data of children.
             </p>
           </div>
-          <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
-            <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
-              Larger sized apps:
-            </h2>
-            <p className="text-lg text-white-700 mb-16 pl-16">
-              According to the privacy labels, larger apps collect and track more user data. This may be due to the fact that apps with larger footprints contain additional software libraries for the purpose of collecting data.
-            </p>
+          <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-start justify-start">
+            <div className="flex flex-col">
+              <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll text-justify ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+                Larger sized apps:
+              </h2>
+              <p className="text-lg text-white-700 mb-16 text-justify pl-16 max-w-md">
+                According to the privacy labels, larger apps collect and track more user data. This may be due to the fact that apps with larger footprints contain additional software libraries for the purpose of collecting data.
+              </p>
+            </div>
           </div>
+
         </div>
       </div>
       <button
-        className={`absolute left-0 bottom-3 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
+        className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
         style={{ fontSize: '1.5rem', padding: '1.5rem' }}
         onClick={() => scrollTo('prev')}
       >
         &lt;
       </button>
       <button
-        className={`absolute right-0 bottom-3 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
+        className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
         style={{ fontSize: '1.5rem', padding: '1.5rem' }}
         onClick={() => scrollTo('next')}
       >
