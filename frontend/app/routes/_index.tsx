@@ -24,14 +24,14 @@ const Index: React.FC = () => {
     <div className={`${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'}`}>
       <div id="main-text">
         <div className="mb-14">
-          <h1 className={`text-4xl font-semibold mb-16 text-center ${theme === 'dark' ? 'text-dred' : 'text-dred'}`}>GWUSEC Privacy Label Observatory Wiki</h1>
+          <h1 className={`text-4xl font-bold mb-16 text-center text-dred`}>GWUSEC Privacy Label Observatory Wiki</h1>
           <p className="text-xl text-white-700 mb-4 text-center">
             After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels.
           </p>
           <h2 className="text-xl text-white-700 mb-20 text-center">
             We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year.
           </h2>
-          <h1 className={`text-4xl text-white-700 text-center font-semibold  ${theme === 'dark' ? 'text-dred' : 'text-dred'}`}>Here is what we found:</h1>
+          <h1 className={`text-4xl text-white-700 text-center font-semibold text-dred`}>Here is what we found:</h1>
         </div>
         <div ref={scrollContainerRef} className="w-full overflow-x-auto snap-x snap-mandatory flex  space-x-80">
           <div className="snap-start flex-shrink-0 w-3/4 min-h-screen flex items-start justify-center">
