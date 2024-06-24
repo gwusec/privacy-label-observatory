@@ -36,7 +36,7 @@ export default {
             //light theme layout tokens
           },
           colors: { //light theme colors
-            background: 'linear-gradient(to bottom, #ffffff, #581D8B)',
+            background: '',
             text: '#000000',
           },
         },
@@ -45,7 +45,7 @@ export default {
             // dark theme layout tokens
           },
           colors: {
-            background: 'linear-gradient(to bottom, #000000 5%, #581D8B, #000000)',
+            background: '',
             text: '#ffffff',
           },
         },

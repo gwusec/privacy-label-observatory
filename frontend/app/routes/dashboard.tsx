@@ -102,7 +102,7 @@ export default function Index() {
     --shepherd-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .shepherd-button {
-    color: #5A5A5A;
+    color: #0047AB;
     border: none;
     padding: 8px 16px;
     border-radius: 20px;
