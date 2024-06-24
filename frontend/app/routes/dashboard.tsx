@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import 'shepherd.js/dist/css/shepherd.css';
 import Shepherd from 'shepherd.js';
 
 export default function Index() {
+  const navigate = useNavigate()
+
+  const goToApps=()=>{
+    navigate("/explore?page=0&run=run_00069");
+  }
+
   useEffect(() => {
     const tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -121,7 +128,7 @@ export default function Index() {
           We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year. Explore our database:
         </h2>
         <div className="flex justify-center items-center space-x-4">
-          <button className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Apps</button>
+          <button onClick={() => goToApps()} className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Apps</button>
           <button className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Graphs</button>
         </div>
       </div>
