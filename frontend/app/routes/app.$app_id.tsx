@@ -51,11 +51,20 @@ export async function loader({params}:LoaderFunctionArgs){
 export default function App() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
+    const [expandedColumn, setExpandedColumn] = useState(null);
 
     const handleClick = (event: any, index: number) => {
         console.log("called", index)
         setActiveIndex(index)
     };
+
+    const handleExpand = (column) => {
+        if (expandedColumn === column) {
+          setExpandedColumn(null); // Collapse if already expanded
+        } else {
+          setExpandedColumn(column); // Expand the clicked column
+        }
+      };
 
     const updateParent = (index: number) => {
         setActiveIndex(index)
@@ -79,7 +88,7 @@ export default function App() {
     };
 
     return(
-        <div>
+        <div className='h-full'>
             <div className="flex items-center">
                 {image_url == undefined ?
                 <img
@@ -100,67 +109,76 @@ export default function App() {
                 </div>
             </div>
             <div className="flex">
-                <div className="mt-4 bg-white p-4 rounded-lg shadow w-fit dark:bg-slate-800">
+                <div className="mt-4 bg-white p-4 rounded-lg shadow h-fit ml-2 w-fit dark:bg-slate-800">
                     <VerticalTimeline privtypes={privacy_types} activeIndex={activeIndex} updateParent={updateParent} handleClick={handleClick}/>   
                 </div>
                 <div className='p-2 flex w-full'>
 
                     {/* Need to come back to this since currently it's wrong */}
-                    <div className="m-4 bg-white rounded-lg shadow w-full text-center" id='duty'>
+                    <div className={`m-4 bg-white rounded-lg shadow w-full text-center ${expandedColumn === 'column1' || expandedColumn === null ? 'block' : 'hidden'}`} id='duty'>
+                        <button onClick={() => handleExpand('column1')} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg focus:outline-none">
+                                {expandedColumn === 'column1' ? 'Shrink' : 'Expand'}
+                        </button>
                         {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ? 
                             <h3 className="bg-green-200">Data Used to Track You</h3> 
                             :
-                            <div className='bg-red-200'>
+                            <div className='bg-red'>
                                 
                                 <h3>Data Used to Track You</h3>
                                 <p>No Data</p>
                             </div>}
                     </div>
 
-                    <div className="m-4 bg-white rounded-lg shadow w-full text-center" id='dly'>
+                    <div  className={`m-4 bg-white rounded-lg shadow w-full text-center ${expandedColumn === 'column2' || expandedColumn === null ? 'block' : 'hidden'}`} id='dly'>
+                        <button onClick={() => handleExpand('column2')} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg focus:outline-none">
+                            {expandedColumn === 'column2' ? 'Shrink' : 'Expand'}
+                        </button>
                         {checkValueInDetails('DATA_LINKED_TO_YOU') ? 
                             <h3 className="bg-green-200">Data Linked to You</h3> 
                             :
-                            <div className="bg-red-200">
+                            <div className="bg-red">
                                 
                                 <h3>Data Linked to You</h3>
                                 <p>No Data</p>
                             </div>}
                     </div>
 
-                    <div className="m-4 bg-white rounded-lg shadow w-full text-center" id='dnly'>
+                    <div  className={`m-4 bg-white rounded-lg shadow w-full text-center transition ${expandedColumn === 'column3' || expandedColumn === null ? 'block' : 'hidden'}`} id='dnly'>
+                        <button onClick={() => handleExpand('column3')} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg focus:outline-none">
+                            {expandedColumn === 'column3' ? 'Shrink' : 'Expand'}
+                        </button>
                     {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ? 
                         <div>
                             <h3 className="bg-green-200">Data Not Linked to You</h3>
-                            {privDetails.map(privacy =>
-                            privacy.identifier === "DATA_NOT_LINKED_TO_YOU" ? 
-                            <div>
-                                {privacy.purposes && privacy.purposes.map(purpose => 
-                                    <div>
-                                        <h4 className='text-cyan-400'>{purpose.purpose}</h4>
-                                        {purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                            <div key={dataCategoryIndex} className="pl-4">
-                                                <li className="text-base text-gray-700 bg-blue-100 rounded-md p-2 border border-blue-200">
-                                                {dataCategory.dataCategory}
-                                                </li>
-                                                {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                <div key={dataTypeIndex} className="pl-6 mt-1">
-                                                    <li className="text-sm text-gray-600 bg-blue-50 rounded-md p-2 border border-blue-100">
-                                                    {dataType.data_type}
-                                                    </li>
-                                                </div>
-                                                ))}
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div> 
+                            {privDetails.map(priv =>
+                            priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? 
+                            <ul className="mt-4 pl-6 list-none space-y-4">
+                      {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
+                        <div key={purposeIndex} className="space-y-2">
+                          <li className="text-lg text-gray-800 font-semibold">
+                            {purpose.purpose}
+                            </li>
+                            {purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                <div key={dataCategoryIndex} className="p-2">
+                                <li className="text-base text-gray-700 rounded-md p-2 border border-blue-200">
+                                {dataCategory.dataCategory}:
+                                {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                    <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                    {dataType.data_type}
+                                    </span>
+                                ))}
+                                </li>
+                            </div>
+                            ))}
+                            </div>
+                            ))}
+                        </ul>
                             : 
                             <div></div>
                             )} 
                         </div>
                         :
-                        <div className='bg-red-200'>
+                        <div className='bg-red'>
                             
                             <h3>Data Not Linked to You</h3>
                             <p>No Data</p>

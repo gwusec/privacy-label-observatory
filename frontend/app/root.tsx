@@ -51,7 +51,7 @@ export default function App() {
         <NextUIProvider navigate={navigate}>
           <NextThemesProvider attribute="class" defaultTheme="dark">
             <AppNavBar />
-            <div id="main-body" className="bg-gradient-to-b dark:from-black  dark:to-gray-900  h-screen from-white to-gray-100">
+            <div id="main-body" className="bg-gradient-to-b dark:from-black  dark:to-gray-900 from-white to-gray-100">
             <Outlet />
             </div>
             <ScrollRestoration />

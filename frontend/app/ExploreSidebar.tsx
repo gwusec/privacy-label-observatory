@@ -250,8 +250,8 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                     {navigation.state === "loading" ? (<div className="px-2">Loading</div>) :
                     <div>
                     {app_list.map(
-                        app => 
-                            <li className="hover:opacity-40 cursor-pointer m-2 items-center  ">
+                        (app, appIndex) => 
+                            <li className={`hover:opacity-40 cursor-pointer m-2 items-center ${appIndex === app_list!.length-1 ? 'pb-40' : ''}`}>
                                 <Link className="flex items-center py-2" to={'/explore/' + app.app_id + "?page=" + page + "&run="+run}>
                                     {app.image_url == undefined ? 
                                     <img className="size-8 rounded-lg" src={noPhoto} />
