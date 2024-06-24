@@ -15,9 +15,9 @@ export default {
         'dark-gradient': 'linear-gradient(to bottom, #000000 50%, #5A5A5A) ',
       },
       colors: {
-        red: '#a31621',
+        red: '#0047AB',
         grey: '#5A5A5A',
-        dred: '#bc0610',
+        dred: '#0047AB',
         blue: '#2b50aa'
       }
     },
