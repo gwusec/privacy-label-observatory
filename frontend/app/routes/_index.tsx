@@ -94,14 +94,14 @@ const Index: React.FC = () => {
         </div>
       </div>
       <button
-        className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
+        className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-white hover:bg-red'}`}
         style={{ fontSize: '1.5rem', padding: '1.5rem' }}
         onClick={() => scrollTo('prev')}
       >
         &lt;
       </button>
       <button
-        className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-grey hover:bg-red'}`}
+        className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-red hover:text-red hover:bg-grey' : 'text-red hover:text-white hover:bg-red'}`}
         style={{ fontSize: '1.5rem', padding: '1.5rem' }}
         onClick={() => scrollTo('next')}
       >
