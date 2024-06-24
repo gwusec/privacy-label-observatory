@@ -33,7 +33,7 @@ const Index: React.FC = () => {
           </h2>
           <h1 className={`text-4xl text-white-700 text-center font-semibold  ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>Here is what we found:</h1>
         </div>
-        <div ref={scrollContainerRef} className="w-full overflow-x-auto snap-x snap-mandatory flex h-screen space-x-80">
+        <div ref={scrollContainerRef} className="w-full snap-x snap-mandatory flex h-screen space-x-80 overflow-hidden">
           {/* <div className="flex space-x-8"> */}
           <div className="snap-start flex-shrink-0 w-3/4 h-screen flex items-center justify-center">
             <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
