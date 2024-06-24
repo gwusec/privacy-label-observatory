@@ -104,8 +104,6 @@ const Index: React.FC = () => {
         &gt;
       </button>
     </div>
-    }
-    </>
   );
 };
 
