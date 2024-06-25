@@ -11,13 +11,14 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'light-gradient': 'linear-gradient(to bottom, #ffffff, #2b50aa)',
-        'dark-gradient': 'linear-gradient(to bottom, #000000, #2b50aa 10%, #000000 80%) '
+        'light-gradient': 'linear-gradient(to bottom, #ffffff 40%, #5A5A5A)',
+        'dark-gradient': 'linear-gradient(to bottom, #000000 50%, #5A5A5A) ',
       },
       colors: {
-        red: '#a31621',
-        grey: '#ced3dc',
-        dred: '#bc0610'
+        red: '#0047AB',
+        grey: '#5A5A5A',
+        dred: '#0047AB',
+        blue: '#2b50aa'
       }
     },
   },
@@ -52,3 +53,4 @@ export default {
     }),
   ],
 } satisfies Config;
+ 

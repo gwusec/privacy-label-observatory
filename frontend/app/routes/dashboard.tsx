@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import 'shepherd.js/dist/css/shepherd.css';
+import { useTheme } from "next-themes";
 import Shepherd from 'shepherd.js';
 
 export default function Index() {
@@ -94,33 +95,34 @@ export default function Index() {
     });
 
   }, []);
-
+  const { theme } = useTheme();
   return (
-    <div id="main-text">
-      <style jsx>
-        {`
-        .shepherd-theme-arrows .shepherd-element {
-          --shepherd-primary: #6C63FF;
-          --shepherd-text-color: #FFFFFF;
-          --shepherd-background: #574BFF;
-          --shepherd-border-radius: 20px;
-          --shepherd-padding: 20px;
-          --shepherd-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .shepherd-button {
-          background-color: var(--shepherd-primary);
-          color: #574BFF;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 20px;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-        }
-        .shepherd-button:hover {
-          background-color: #574BFF;
-        }
-      `}
-    </style>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'}`}>
+      <div id="main-text">
+      <style jsx>{`
+  .shepherd-theme-arrows .shepherd-element {
+    --shepherd-primary: #6C63FF;
+    --shepherd-text-color: #FFFFFF;
+    --shepherd-background: #574BFF;
+    --shepherd-border-radius: 20px;
+    --shepherd-padding: 20px;
+    --shepherd-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .shepherd-button {
+    color: #0047AB;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .shepherd-button:hover {
+    background-color: #a31621;
+    color: #ffffff; /* Change text color on hover */
+  }
+`}</style>
+
+
 
       <div className="mb-20">
         <h1 className="text-4xl font-semibold mb-16 text-center">GWU SEC Privacy Label Observatory Dashboard</h1>
@@ -130,22 +132,23 @@ export default function Index() {
         <div className="flex justify-center items-center space-x-4">
           <button onClick={() => goToApps()} className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Apps</button>
           <button className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Graphs</button>
+          </div>
         </div>
-      </div>
-      <div className="mb-16">
-        <p className="text-lg text-white-700 mb-16 text-center">
-          After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels. The various choices made by developers of apps are reflected here, whether it be underreporting data or reporting well, and the reasons behind each.
-        </p>
-      </div>
-      <div className="mb-16">
-        <h1 className="text-3xl mb-8 text-white-700 text-center">But what are privacy labels?</h1>
-        <p className="text-lg text-white-300 font-medium text-center mb-4">Privacy labels are basically nutrition labels, where the app must indicate what data is collected and used compactly.</p>
-        <a data-tour-step="track" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Used to Track You</a>
-        <a data-tour-step="linked" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Linked to You</a>
-        <a data-tour-step="n_linked" className="text-md text-slate-600 font-medium hover:text-white text-center mb-4 block">Data Not Linked to You</a>
-        <a data-tour-step="n_collected" className="text-md text-slate-600 font-medium hover:text-white text-center mb-32 block">Data Not Collected</a>
-      </div>
+        <div className="mb-16">
+          <p className="text-lg text-white-700 mb-16 text-center">
+            After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels. The various choices made by developers of apps are reflected here, whether it be underreporting data or reporting well, and the reasons behind each.
+          </p>
+        </div>
+        <div className="mb-16">
+          <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>But what are privacy labels?</h1>
+          <p className="text-lg text-white-300 font-medium text-center mb-4">Privacy labels are basically nutrition labels, where the app must indicate what data is collected and used compactly.</p>
+          <a data-tour-step="track" className={`text-md font-medium hover:text-white text-center mb-4 block  ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>Data Used to Track You</a>
+          <a data-tour-step="linked" className={`text-md font-medium hover:text-white text-center mb-4 block  ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>Data Linked to You</a>
+          <a data-tour-step="n_linked" className={`text-md font-medium hover:text-white text-center mb-4 block  ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>Data Not Linked to You</a>
+          <a data-tour-step="n_collected" className={`text-md font-medium hover:text-white text-center mb-32 block  ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>Data Not Collected</a>
+        </div>
 
+      </div>
     </div>
   );
 }
