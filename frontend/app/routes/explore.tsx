@@ -97,7 +97,8 @@ export default function Index() {
         );
 
     return (
-        <div className="flex divide-x divide-doubles">
+        
+        <div className="flex divide-x divide-doubles overflow-hidden">
             <ExploreSidebar
                 runs={runs}
                 searching={searching}

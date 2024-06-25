@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import 'shepherd.js/dist/css/shepherd.css';
 import { useTheme } from "next-themes";
 import Shepherd from 'shepherd.js';
 
 export default function Index() {
+  const navigate = useNavigate()
+
+  const goToApps=()=>{
+    navigate("/explore?page=0&run=run_00069");
+  }
+
   useEffect(() => {
     const tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -117,14 +124,14 @@ export default function Index() {
 
 
 
-        <div className="mb-20" >
-          <h1 className={`text-4xl font-semibold mb-16 text-center ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>GWUSEC Privacy Label Observatory Dashboard</h1>
-          <h2 className="text-lg text-white-700 mb-4 text-center">
-            We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year. Explore our database:
-          </h2>
-          <div className="flex justify-center items-center space-x-4">
-            <button className={`px-4 py-1 text-lg font-semibold rounded-full border ${theme === 'dark' ? 'border-red bg-red hover:text-red hover:bg-black' : 'text-red hover:text-white hover:bg-red border-red'}`}>the Apps</button>
-            <button className={`px-4 py-1 text-lg font-semibold rounded-full border ${theme === 'dark' ? 'border-red bg-red hover:text-red hover:bg-black' : 'text-red hover:text-white hover:bg-red border-red'}`}>the Graphs</button>
+      <div className="mb-20">
+        <h1 className="text-4xl font-semibold mb-16 text-center">GWU SEC Privacy Label Observatory Dashboard</h1>
+        <h2 className="text-lg text-white-700 mb-4 text-center">
+          We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year. Explore our database:
+        </h2>
+        <div className="flex justify-center items-center space-x-4">
+          <button onClick={() => goToApps()} className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Apps</button>
+          <button className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Graphs</button>
           </div>
         </div>
         <div className="mb-16">

@@ -31,4 +31,4 @@ def reindex(es, old_index):
 
 # for i in range (1, 70):
 #     reindex(es, i)
-reindex(es, "newnewrun_00001")
+reindex(es, "run_00070")
