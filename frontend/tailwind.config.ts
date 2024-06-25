@@ -11,13 +11,14 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'light-gradient': 'linear-gradient(to bottom, #ffffff, #2b50aa)',
-        'dark-gradient': 'linear-gradient(to bottom, #000000, #2b50aa 10%, #000000 80%) ',
+        'light-gradient': 'linear-gradient(to bottom, #ffffff 40%, #5A5A5A)',
+        'dark-gradient': 'linear-gradient(to bottom, #000000 50%, #5A5A5A) ',
       },
       colors: {
-        red: '#a31621',
-        grey: '#ced3dc',
-        dred: '#bc0610'
+        red: '#0047AB',
+        grey: '#5A5A5A',
+        dred: '#0047AB',
+        blue: '#2b50aa'
       }
     },
   },
@@ -35,7 +36,7 @@ export default {
             //light theme layout tokens
           },
           colors: { //light theme colors
-            background: 'linear-gradient(to bottom, #ffffff, #581D8B)',
+            background: 'linear-gradient(to bottom)',
             text: '#000000',
           },
         },
@@ -44,7 +45,7 @@ export default {
             // dark theme layout tokens
           },
           colors: {
-            background: 'linear-gradient(to bottom, #000000 5%, #581D8B, #000000)',
+            background: 'linear-gradient(to bottom)',
             text: '#ffffff',
           },
         },
