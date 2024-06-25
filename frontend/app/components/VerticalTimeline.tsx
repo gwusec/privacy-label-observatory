@@ -66,7 +66,7 @@ function VerticalTimeline({ privtypes, activeIndex, updateParent, handleClick }:
   }
 
   return (
-    <div className='max-h-96 scrollbar-hide overflow-y-auto' ref={containerRef}>
+    <div className='max-h-96 border scrollbar-hide overflow-y-auto' ref={containerRef}>
       <Timeline position="right">
         <TimelineItem>
           <TimelineOppositeContent>

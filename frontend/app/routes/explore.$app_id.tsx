@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { Button } from "@nextui-org/react";
 
@@ -76,6 +76,8 @@ export default function App() {
 
     var jsonData = JSON.parse(JSON.stringify(data[0]["json"]))
 
+    const [expandedCategories, setExpandedCategories] = useState({});
+
 
 
     const app_name = jsonData["app_name"]
@@ -110,8 +112,9 @@ export default function App() {
                   <Link to={"/app/" + app_id}><Button>App View</Button></Link>
                 </div>
             </div>
+            <div className="flex flexbox">
             {privacy_types.length > 0 ? privacy_types.map(priv =>
-                <div>
+                <div className="border-2 m-2 w-96 h-fit overflow-y-auto">
                     <h3 className="mt-6 text-2xl font-bold text-gray-900">{priv.privacyTypes}</h3>
                     <ul className="mt-4 pl-6 list-none space-y-4">
                       {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
@@ -120,38 +123,35 @@ export default function App() {
                             {purpose.purpose}
                           </li>
                           {purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                            <div key={dataCategoryIndex} className="pl-4">
-                              <li className="text-base text-gray-700 bg-blue-100 rounded-md p-2 border border-blue-200">
-                                {dataCategory.dataCategory}
-                              </li>
+                            <div key={dataCategoryIndex} className="p-2">
+                            <li className="text-base text-gray-700 rounded-md p-2 border border-blue-200">
+                              {dataCategory.dataCategory}:
                               {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                <div key={dataTypeIndex} className="pl-6 mt-1">
-                                  <li className="text-sm text-gray-600 bg-blue-50 rounded-md p-2 border border-blue-100">
-                                    {dataType.data_type}
-                                  </li>
-                                </div>
+                                <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                  {dataType.data_type}
+                                </span>
                               ))}
-                            </div>
+                            </li>
+                          </div>
                           ))}
                         </div>
                       ))}
                       {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                        <div key={dataCategoryIndex} className="pl-4">
-                          <li className="text-base text-gray-700 bg-blue-100 rounded-md p-2 border border-blue-200">
-                            {dataCategory.dataCategory}
+                        <div key={dataCategoryIndex} className="p-2">
+                          <li className="text-base text-gray-700 rounded-md p-2 border border-blue-200">
+                            {dataCategory.dataCategory}: 
+                            {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                  {dataType.data_type}
+                                </span>
+                            ))}
                           </li>
-                          {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                            <div key={dataTypeIndex} className="pl-6 mt-1">
-                              <li className="text-sm text-gray-600 bg-blue-50 rounded-md p-2 border border-blue-100">
-                                {dataType.data_type}
-                              </li>
-                            </div>
-                          ))}
                         </div>
                       ))}
                     </ul>
                 </div>
             ) : <h3 className="mt-6 text-2xl font-bold text-gray-900">No Privacy Data Available for this App</h3>}
+            </div>
         </div>
     </div>
     )
