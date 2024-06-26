@@ -1,8 +1,11 @@
 import useEffect from 'react';
 import { useTheme } from "next-themes";
 import React, { useRef } from 'react';
+import { useNavigation } from '@remix-run/react';
+import { FaSpinner } from 'react-icons/fa';
 
 const Index: React.FC = () => {
+  const {state} = useNavigation()
   const { theme } = useTheme();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -21,6 +24,12 @@ const Index: React.FC = () => {
   };
 
   return (
+    <>
+    {state === "loading" ?
+    <div className="z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/4 h-2/4">
+        <FaSpinner className="animate-spin" size={72}/>
+    </div>
+    :
     <div className={`${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'}`}>
       <div id="main-text">
         <div className="mb-14">
@@ -109,6 +118,8 @@ const Index: React.FC = () => {
         &gt;
       </button>
     </div>
+    }
+    </>
   );
 };
 
