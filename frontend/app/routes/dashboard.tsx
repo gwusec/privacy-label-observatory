@@ -4,11 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "next-themes";
 import Shepherd from 'shepherd.js';
 
+import { FaSpinner } from "react-icons/fa";
+import { useNavigation } from "@remix-run/react";
+
 export default function Index() {
   const navigate = useNavigate()
+  const {state} = useNavigation()
 
   const goToApps=()=>{
     navigate("/explore?page=0&run=run_00069");
+  }
+
+  const goToGraphs=()=>{
+    navigate("/graphs");
   }
 
   useEffect(() => {
@@ -97,6 +105,12 @@ export default function Index() {
   }, []);
   const { theme } = useTheme();
   return (
+    <>
+    {state === "loading" ?
+    <div className="z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/4 h-2/4">
+        <FaSpinner className="animate-spin" size={72}/>
+    </div>
+    :
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'}`}>
       <div id="main-text">
       <style jsx>{`
@@ -131,7 +145,7 @@ export default function Index() {
         </h2>
         <div className="flex justify-center items-center space-x-4">
           <button onClick={() => goToApps()} className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Apps</button>
-          <button className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Graphs</button>
+          <button onClick={() => goToGraphs()} className="px-4 py-1 text-lg font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">the Graphs</button>
           </div>
         </div>
         <div className="mb-16">
@@ -150,5 +164,7 @@ export default function Index() {
 
       </div>
     </div>
+    }
+    </>
   );
 }

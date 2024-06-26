@@ -89,7 +89,7 @@ export default function App() {
     };
 
     return(
-        <div className='h-full'>
+        <div className='h-screen'>
             <div className="flex items-center">
                 {image_url == undefined ?
                 <img
@@ -121,7 +121,37 @@ export default function App() {
                             {expandedColumn === 'column1' ? <MdFullscreenExit onClick={() => handleExpand('column1')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column1')} size={28}/>}
                         </div>
                         {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ? 
-                            <h3 className="">Data Used to Track You</h3> 
+                            <div>
+                                <h3 className="">Data Used to Track You</h3> 
+                                {privDetails.map(priv =>
+                                    priv.identifier === "DATA_USED_TO_TRACK_YOU" ? 
+                                    <ul className="mt-4 pl-6 list-none space-y-4">
+                                        {expandedColumn === null && 
+                                            <div>
+                                                The following data may be collected and linked to your identity:
+                                            </div>
+                                        }
+                                        {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                            <div key={dataCategoryIndex} className="space-y-2">
+                                            <li className="text-lg text-gray-800 font-semibold">
+                                                {dataCategory.dataCategory}
+                                                </li>
+                                                {expandedColumn === 'column1' && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                    <div key={dataCategoryIndex} className="p-2">
+                                                    <li className="text-base text-gray-700 rounded-md p-2 border border-blue-200">
+                                                        <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                                            {dataType.data_type}
+                                                        </span>
+                                                    </li>
+                                                </div>
+                                                ))}
+                                                </div>
+                                                ))}
+                                    </ul>
+                                        : 
+                                    <div></div>
+                                    )} 
+                            </div>
                             :
                             <div className=''>
                                 
@@ -135,7 +165,40 @@ export default function App() {
                             {expandedColumn === 'column2' ? <MdFullscreenExit onClick={() => handleExpand('column2')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column2')} size={28}/>}
                         </div>    
                         {checkValueInDetails('DATA_LINKED_TO_YOU') ? 
-                            <h3 className="">Data Linked to You</h3> 
+                            <div>
+                                <h3 className="">Data Linked to You</h3>
+                                {privDetails.map(priv =>
+                                    priv.identifier === "DATA_LINKED_TO_YOU" ? 
+                                    <ul className="mt-4 pl-6 list-none space-y-4">
+                                        {expandedColumn === null && 
+                                            <div>
+                                                The following data may be collected and linked to your identity:
+                                            </div>
+                                        }
+                                        {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
+                                            <div key={purposeIndex} className="space-y-2">
+                                            <li className="text-lg text-gray-800 font-semibold">
+                                                {purpose.purpose}
+                                                </li>
+                                                {expandedColumn === 'column2' && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                                    <div key={dataCategoryIndex} className="p-2">
+                                                    <li className="text-base text-gray-700 rounded-md p-2 border border-blue-200">
+                                                    {dataCategory.dataCategory}:
+                                                    {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                        <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                                        {dataType.data_type}
+                                                        </span>
+                                                    ))}
+                                                    </li>
+                                                </div>
+                                                ))}
+                                                </div>
+                                                ))}
+                                    </ul>
+                                        : 
+                                    <div></div>
+                                    )} 
+                            </div>
                             :
                             <div className="">
                                 
@@ -184,7 +247,10 @@ export default function App() {
                             )} 
                         </div>
                         :
-                        <div className='bg-red'> 
+                        <div > 
+                            <div className='flex justify-end'>    
+                                {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column3')} size={28}/>}
+                            </div>
                             <h3>Data Not Linked to You</h3>
                             <p>No Data</p>
                         </div>}
