@@ -114,7 +114,7 @@ export default function App() {
             </div>
             <div className="flex flexbox">
             {privacy_types.length > 0 ? privacy_types.map(priv =>
-                <div className="border-2 m-2 w-96 h-fit overflow-y-auto">
+                <div className="border-2 m-2 w-96 h-fit max-h-96 overflow-y-auto">
                     <h3 className="mt-6 text-2xl font-bold text-gray-900">{priv.privacyTypes}</h3>
                     <ul className="mt-4 pl-6 list-none space-y-4">
                       {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (

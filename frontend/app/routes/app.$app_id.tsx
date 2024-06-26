@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import noPhoto from "../resources/no_available_photo.jpg"
 
 //CSS and Component for the timeline
@@ -116,13 +117,13 @@ export default function App() {
 
                     {/* Need to come back to this since currently it's wrong */}
                     <div className={`m-4 bg-white rounded-lg shadow w-full text-center ${expandedColumn === 'column1' || expandedColumn === null ? 'block' : 'hidden'}`} id='duty'>
-                        <button onClick={() => handleExpand('column1')} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg focus:outline-none">
-                                {expandedColumn === 'column1' ? 'Shrink' : 'Expand'}
-                        </button>
+                        <div className='flex justify-end'>
+                            {expandedColumn === 'column1' ? <MdFullscreenExit onClick={() => handleExpand('column1')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column1')} size={28}/>}
+                        </div>
                         {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ? 
-                            <h3 className="bg-green-200">Data Used to Track You</h3> 
+                            <h3 className="">Data Used to Track You</h3> 
                             :
-                            <div className='bg-red'>
+                            <div className=''>
                                 
                                 <h3>Data Used to Track You</h3>
                                 <p>No Data</p>
@@ -130,56 +131,60 @@ export default function App() {
                     </div>
 
                     <div  className={`m-4 bg-white rounded-lg shadow w-full text-center ${expandedColumn === 'column2' || expandedColumn === null ? 'block' : 'hidden'}`} id='dly'>
-                        <button onClick={() => handleExpand('column2')} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg focus:outline-none">
-                            {expandedColumn === 'column2' ? 'Shrink' : 'Expand'}
-                        </button>
+                        <div className='flex justify-end'>
+                            {expandedColumn === 'column2' ? <MdFullscreenExit onClick={() => handleExpand('column2')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column2')} size={28}/>}
+                        </div>    
                         {checkValueInDetails('DATA_LINKED_TO_YOU') ? 
-                            <h3 className="bg-green-200">Data Linked to You</h3> 
+                            <h3 className="">Data Linked to You</h3> 
                             :
-                            <div className="bg-red">
+                            <div className="">
                                 
                                 <h3>Data Linked to You</h3>
                                 <p>No Data</p>
                             </div>}
                     </div>
 
-                    <div  className={`m-4 bg-white rounded-lg shadow w-full text-center transition ${expandedColumn === 'column3' || expandedColumn === null ? 'block' : 'hidden'}`} id='dnly'>
-                        <button onClick={() => handleExpand('column3')} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg focus:outline-none">
-                            {expandedColumn === 'column3' ? 'Shrink' : 'Expand'}
-                        </button>
+                <div className={`m-4 bg-white rounded-lg shadow max-h-96 overflow-y-auto w-full text-center transition ${expandedColumn === 'column3' || expandedColumn === null ? 'block' : 'hidden'}`} id='dnly'>
                     {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ? 
                         <div>
-                            <h3 className="bg-green-200">Data Not Linked to You</h3>
+                            <div className='flex justify-end'>    
+                                {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column3')} size={28}/>}
+                            </div>
+                            <h3>Data Not Linked to You</h3>
                             {privDetails.map(priv =>
                             priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? 
                             <ul className="mt-4 pl-6 list-none space-y-4">
-                      {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
-                        <div key={purposeIndex} className="space-y-2">
-                          <li className="text-lg text-gray-800 font-semibold">
-                            {purpose.purpose}
-                            </li>
-                            {purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                <div key={dataCategoryIndex} className="p-2">
-                                <li className="text-base text-gray-700 rounded-md p-2 border border-blue-200">
-                                {dataCategory.dataCategory}:
-                                {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                    <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
-                                    {dataType.data_type}
-                                    </span>
-                                ))}
-                                </li>
-                            </div>
-                            ))}
-                            </div>
-                            ))}
-                        </ul>
-                            : 
+                                {expandedColumn === null && 
+                                    <div>
+                                        The following data may be collected but it is not linked to your identity:
+                                    </div>
+                                }
+                                {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
+                                    <div key={purposeIndex} className="space-y-2">
+                                    <li className="text-lg text-gray-800 font-semibold">
+                                        {purpose.purpose}
+                                        </li>
+                                        {expandedColumn === 'column3' && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                            <div key={dataCategoryIndex} className="p-2">
+                                            <li className="text-base text-gray-700 rounded-md p-2 border border-blue-200">
+                                            {dataCategory.dataCategory}:
+                                            {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                                {dataType.data_type}
+                                                </span>
+                                            ))}
+                                            </li>
+                                        </div>
+                                        ))}
+                                        </div>
+                                        ))}
+                            </ul>
+                                : 
                             <div></div>
                             )} 
                         </div>
                         :
-                        <div className='bg-red'>
-                            
+                        <div className='bg-red'> 
                             <h3>Data Not Linked to You</h3>
                             <p>No Data</p>
                         </div>}
