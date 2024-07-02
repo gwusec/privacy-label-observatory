@@ -23,7 +23,7 @@ router.get('/', async function(req, res){
             }
           }
     }).then(async (r) => {
-        dnc["Data Not Collected"] = r["count"]
+        dnc["not_collected"] = r["count"]
     })
 
     await client.count({
