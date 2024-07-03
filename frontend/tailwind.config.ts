@@ -7,6 +7,7 @@ export default {
   content: [
     './app/**/*.{js,jsx,ts,tsx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -15,15 +16,16 @@ export default {
         'dark-gradient': 'linear-gradient(to bottom, #000000 50%, #5A5A5A) ',
       },
       colors: {
-        red: '#0047AB',
+        red: '#000000',
         grey: '#5A5A5A',
-        dred: '#0047AB',
-        blue: '#2b50aa'
+        dred: '#ffffff',
+        blue: '#0047AB'
       }
     },
   },
   darkMode: 'class',
   plugins: [
+    require('flowbite/plugin'),
     nextui({
       prefix: 'nextui',
       addCommonColors: false,
