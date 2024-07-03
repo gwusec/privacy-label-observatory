@@ -53,7 +53,7 @@ const Index: React.FC = () => {
             </div>
             <div ref={scrollContainerRef} className="w-full snap-x snap-mandatory flex space-x-80 overflow-hidden mb-16">
               <div className="snap-start flex-shrink-0 w-3/4 flex items-start justify-center">
-                <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+                <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll space-x-16 pl-40 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                   Voluntary Update vs. Means to an End:
                 </h2>
                 <div className="items-start">
@@ -71,33 +71,33 @@ const Index: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="snap-start flex-shrink-0 w-3/4 flex items-center justify-center space-x-32 pl-40">
+              <div className="snap-start flex-shrink-0 w-3/4 flex items-center justify-center space-x-32 pl-60">
                 <div className="flex flex-col items-end space-y-4 mb-5">
-                  <h2 className={`text-2xl text-white-600 font-bold text-justify items-start ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+                  <h2 className={`text-2xl text-white-600 font-bold text-justify items-start mb-4 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                     You get what you do (or don't) pay for:
                   </h2>
-                  <p className="text-lg text-white-700 pl-10 text-justify max-w-md">
+                  <p className="text-lg text-white-700 text-justify max-w-lg">
                     When comparing paid vs. free apps, more free apps report data collection and tracking than those you pay for, perhaps reflecting additional revenue streams from free apps in targeted advertising and/or selling user data.
                   </p>
                 </div>
-                <div className="flex flex-col items-end space-y-4">
-                  <h3 className={`text-2xl text-white-600 font-bold text-justify items-start ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+                <div className="flex flex-col items-end space-y-4 pl-12">
+                  <h3 className={`text-2xl text-white-600 font-bold text-justify items-start mb-4 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                     Data collection in popular free apps:
                   </h3>
-                  <p className="text-lg text-white-700 pl-10 text-justify max-w-md">
+                  <p className="text-lg text-white-700 text-justify max-w-lg">
                     The large audience increases the surveillance surplus, which may make it harder for app sellers to resist collecting a wider range of data to increase profits. Therefore, popular apps reflect more data collection compared to less popular apps.
                   </p>
                 </div>
               </div>
               <div className="snap-start flex-shrink-0 flex items-center justify-center pl-20">
-                <h2 className={`text-2xl text-white-600 mb-10 font-bold space-x-16 mb-40 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+                <h2 className={`text-2xl text-white-600 mb-10 font-bold space-x-16 mb-40 ml-20 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                   Data collection may have no boundaries:
                 </h2>
                 <p className="text-lg text-white-700 mb-16 text-justify pl-16 max-w-md">
                   Many apps with a 4+ or 9+ content rating report tracking data and would be available to children under the content rating guidelines, implying that they are tracking the data of children.
                 </p>
               </div>
-              <div className="snap-start flex-shrink-0 w-3/4 flex items-center justify-start">
+              <div className="snap-start flex-shrink-0 w-3/4 flex items-center justify-start pl-20">
                 <div className="flex flex-col">
                   <h2 className={`text-2xl text-white-600 mb-10 font-bold scroll text-justify ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                     Larger sized apps:
