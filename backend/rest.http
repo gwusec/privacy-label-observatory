@@ -20,7 +20,7 @@ access-control-allow-origin: *
 content-type: application/json; charset=utf-8
 content-length: 164
 etag: W/"a4-3+mOWvyIq80NNfCXCXyjKmY3eTY"
-date: Mon, 01 Jul 2024 15:46:07 GMT
+date: Wed, 03 Jul 2024 16:45:49 GMT
 connection: close
 ###
 GET http://localhost:8017/appList?start=0
