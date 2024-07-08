@@ -161,6 +161,7 @@ app.post("/api/get", function (req, res) {
 //
 app.post("/api/search/app_name", function (req, res){
     var app_name = req.body.app_name
+    console.log("here")
 
     if (app_name == undefined){
         res.json({ "Error": "app_id required" })
