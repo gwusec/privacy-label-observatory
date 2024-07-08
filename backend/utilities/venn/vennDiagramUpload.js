@@ -152,11 +152,7 @@ async function getData() {
 
     data = {
         "json": json,
-        "date": date,
-        "sets": sets, 
-        "combinations": combinations,
-        "set": set, 
-        "combination": combination
+        "date": date
     }
 
 async function uploadData(indexName, document) {
