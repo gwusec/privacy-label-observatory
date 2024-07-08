@@ -53,6 +53,11 @@ export default function AppNavBar() {
           </Link>
         </NavbarItem>
         <NavbarItem>
+          <Link color="foreground" underline="hover" href="/search">
+            Search
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
           <Link color="foreground" underline="hover" href="/">
             Documentation
           </Link>
