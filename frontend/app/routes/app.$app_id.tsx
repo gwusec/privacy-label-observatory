@@ -8,6 +8,7 @@ import noPhoto from "../resources/no_available_photo.jpg"
 
 //CSS and Component for the timeline
 import VerticalTimeline from "~/components/VerticalTimeline";
+import HorizontalTimeline from '~/components/HorizontalTimeline';
 
 interface dataType{
     data_category: Number, 
@@ -268,6 +269,10 @@ export default function App() {
                         </div>
                     )} */}
                 </div>
+
+            </div>
+            <div className='pt-4'>
+                <HorizontalTimeline data={data}/>
             </div>
         </div>
     )
