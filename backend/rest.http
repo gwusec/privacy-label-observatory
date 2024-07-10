@@ -30,9 +30,6 @@ date: Thu, 11 Jul 2024 16:06:19 GMT
 server: Apache/2.4.56 (Debian)
 content-length: 273
 connection: close
-content-type: text/html; charset=iso-8859-1
-
-
 ###
 POST http://localhost:3000/api/search/app_id
 Content-Type: application/json
@@ -42,19 +39,13 @@ Content-Type: application/json
     "app_id": "1529135893"
 }
 
-
-
-
-
-HTTP/1.1 404  - Not Found
-content-type: text/html; charset=utf-8
-vary: Accept-Encoding
-content-encoding: gzip
-date: Thu, 11 Jul 2024 16:06:20 GMT
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 1110
+etag: W/"456-quOufe7lKu4sn8O7OPvwN2NO2fk"
+date: Sat, 03 Feb 2024 17:55:16 GMT
 connection: close
-transfer-encoding: chunked
-
-
 ###
 GET http://localhost:8017/runs
 
@@ -74,22 +65,6 @@ Content-Type: application/json
     "run_id": "run_00069"
 
 }
-
-
-
-
-
-
-
-
-HTTP/1.1 404  - Not Found
-date: Thu, 11 Jul 2024 16:06:24 GMT
-server: Apache/2.4.56 (Debian)
-content-length: 273
-connection: close
-content-type: text/html; charset=iso-8859-1
-
-
 ###
 GET http://localhost:8017/getApp?id=1588684626
 
@@ -107,50 +82,29 @@ Content-Type: application/json
 {
     "app_name": "sen"
 }
-
-
-
-
-
-
-
-HTTP/1.1 404  - Not Found
-date: Thu, 11 Jul 2024 16:06:29 GMT
-server: Apache/2.4.56 (Debian)
-content-length: 273
-connection: close
-content-type: text/html; charset=iso-8859-1
-
-
 ###
-GET http://localhost:8017/translateApp
-Content-Type: application/json
-{
-    "privacy_types": ["大概位置", "裝置 ID", "產品互動", "廣告資料", "效能資料", "當機資料"]
-}
-
-
-
-
+date: Wed, 03 Apr 2024 12:13:30 GMT
+connection: close
+###
+GET http://localhost:8017/appList?start=0&run=run_00069
+>>>>>>> 1f41877 (Made a lot of changes to the horizontal timeline)
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
-content-length: 2
-etag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
-date: Thu, 11 Jul 2024 16:06:31 GMT
+content-length: 5947
+etag: W/"173b-CxGMEZQSI3Mw5nqvVTDCUey+F5s"
+date: Thu, 23 May 2024 16:02:46 GMT
 connection: close
-
-
 ###
-GET http://localhost:8017/appList?q=pro
+GET http://localhost:8017/search?q="pro"
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
-content-length: 1123
-etag: W/"463-Eg+7r2OIfkSWv4jnEDdoKZPSzGU"
-date: Thu, 11 Jul 2024 16:06:12 GMT
+content-length: 250
+etag: W/"fa-kNKTDTGDLAEXTU8VWwhzwosPIkA"
+date: Wed, 10 Jul 2024 15:15:19 GMT
 connection: close
