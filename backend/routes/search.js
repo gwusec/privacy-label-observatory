@@ -11,7 +11,7 @@ router.get("/", function(req, res){
         return;
     }
     if(run == undefined){
-        run = "run_00001"
+        run = "run_000*"
     }
 
 
@@ -22,7 +22,7 @@ router.get("/", function(req, res){
                 "app_name": q
             }
         },
-        "size": 40
+        "size": 5
     }).then((r) => {
         var hits = []
         for(i in r.hits.hits){
