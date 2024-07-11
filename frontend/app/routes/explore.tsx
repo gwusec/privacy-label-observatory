@@ -44,7 +44,7 @@ export async function loader({
     const url = new URL(request.url)
     const q = url.searchParams.get("page")
     var run = url.searchParams.get("run")
-
+    
     console.log(run)
     
     //If there's a search query
@@ -88,7 +88,7 @@ export default function Index() {
     const array = useLoaderData<typeof loader>();
     const data = array[0];
     const runs = array[1];
-    const navigation = useNavigation();
+    const navigation = useNavigation(); //navigation?
 
     const searching =
         navigation.location &&
