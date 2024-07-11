@@ -149,7 +149,6 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                 navigate("/explore?page=0&run="+firstKey)
             }
   
- 
             
             return modifiedValue;
         },

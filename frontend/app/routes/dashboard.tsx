@@ -12,7 +12,7 @@ export default function Index() {
   const {state} = useNavigation()
 
   const goToApps=()=>{
-    navigate("/explore?page=0&run=run_00069");
+    navigate("/search");
   }
 
   const goToGraphs=()=>{
