@@ -22,7 +22,7 @@ router.get("/", function(req, res){
                 "app_name": q
             }
         },
-        "size": 5
+        "size": 20
     }).then((r) => {
         var hits = []
         for(i in r.hits.hits){
