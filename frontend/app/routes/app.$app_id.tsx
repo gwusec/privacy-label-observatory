@@ -271,9 +271,6 @@ export default function App() {
                 </div>
 
             </div>
-            <div className='pt-4'>
-                <HorizontalTimeline data={data}/>
-            </div>
         </div>
     )
 }
