@@ -3,19 +3,16 @@ import { Box, Stepper, Step, StepLabel, Button, StepConnector, stepConnectorClas
 var data = require("../../../Misc/dates_and_runs.json");
 
 // { privtypes, activeIndex, updateParent, handleClick }: { privtypes: any, activeIndex: any, updateParent: any, handleClick: any }
-function HorizontalTimeline({data}:{data:any}) {
+function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick }: { privtypes: any, activeIndex: any, updateParent: any, handleClick: any }) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [mounted, setMounted] = useState(false);
-
-    const privDates = data[1]["privacy"]
-    console.log("timeline", privDates)
-
+    console.log("priv", privtypes)
     const runRefs = useRef<any[]>([]);
 
     useEffect(() => {
-      runRefs.current = privDates.map((_: any, i: any) => runRefs.current[i] = React.createRef());
+      runRefs.current = privtypes.map((_: any, i: any) => runRefs.current[i] = React.createRef());
       console.log("refs", runRefs)
-    }, [privDates]);
+    }, [privtypes]);
 
     const scrollToStep = (stepIndex: number) => {
       console.log("index called", stepIndex)
@@ -34,14 +31,16 @@ function HorizontalTimeline({data}:{data:any}) {
         setActiveStep((prevActiveStep) => {
             const nextStep = prevActiveStep + 1;
             scrollToStep(nextStep);
+            updateParent(nextStep);
             return nextStep;
         });
     };
 
     const handleSkip = () => {
       setActiveStep((prevActiveStep) => {
-        const nextStep = privDates.length - 1;
-        scrollToStep(privDates.length-1);
+        const nextStep = privtypes.length - 1;
+        scrollToStep(privtypes.length-1);
+        updateParent(nextStep);
         return nextStep;
       });
     }
@@ -50,6 +49,7 @@ function HorizontalTimeline({data}:{data:any}) {
       setActiveStep((prevActiveStep) => {
           const prevStep = prevActiveStep - 1;
           scrollToStep(prevStep);
+          updateParent(prevStep)
           return prevStep;
       });
     };
@@ -66,10 +66,10 @@ function HorizontalTimeline({data}:{data:any}) {
     return (
         <div className='w-full'>
         <Stepper className='overflow-x-scroll scrollbar-hide' activeStep={activeStep}>
-          {privDates.map((data:any, index:number) => {
+          {privtypes.map((data:any, index:number) => {
             return (
               <Step ref={runRefs.current[index]} className='' key={index}>
-                <StepLabel className=''>{data.index}</StepLabel>
+                <StepLabel onClick={() => handleClick(data, index)} className=''>{data.index}</StepLabel>
               </Step>
             );
           })}
@@ -86,13 +86,13 @@ function HorizontalTimeline({data}:{data:any}) {
             <Box sx={{ flex: "1 1 auto" }} />
             <Button
               onClick={handleSkip}
-              disabled={activeStep === privDates.length - 1}
+              disabled={activeStep === privtypes.length - 1}
             >
               Skip to End
             </Button>
             <Button
               onClick={handleNext}
-              disabled={activeStep === privDates.length - 1}
+              disabled={activeStep === privtypes.length - 1}
             >
               Next
             </Button>

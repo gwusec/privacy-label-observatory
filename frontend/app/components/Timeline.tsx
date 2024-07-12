@@ -72,7 +72,7 @@ export default function Timeline({data}:{data:any}) {
     };
 
     return(
-        <div className='h-screen'>
+        <div className=' '>
             <div className="flex items-center">
                 {image_url == undefined ?
                 <img
@@ -93,9 +93,6 @@ export default function Timeline({data}:{data:any}) {
                 </div>
             </div>
             <div className="flex">
-                <div className="mt-4 bg-white p-4 rounded-lg shadow h-fit ml-2 w-fit dark:bg-slate-800">
-                    <VerticalTimeline privtypes={privacy_types} activeIndex={activeIndex} updateParent={updateParent} handleClick={handleClick}/>   
-                </div>
                 <div className='p-2 flex w-full'>
 
                     {/* Need to come back to this since currently it's wrong */}
@@ -252,6 +249,11 @@ export default function Timeline({data}:{data:any}) {
                     )} */}
                 </div>
 
+            </div>
+            <div className="flex justify-center items-center">
+                <div className="mt-4 bg-white p-4 justify-center rounded-lg shadow h-fit ml-2 w-fit dark:bg-slate-800">
+                    <HorizontalTimeline privtypes={privacy_types} activeIndex={activeIndex} updateParent={updateParent} handleClick={handleClick}/>
+                </div>
             </div>
         </div>
     )

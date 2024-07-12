@@ -85,11 +85,11 @@ export default function Search() {
                             </div>
                         </Form>
                     </div>
-                    <div className='pt-20 w-full'>
-                    <Outlet />
-                    </div>
+                    
                 </div>
-
+                <div className='pt-40 w-full'>
+                <Outlet />
+                </div>
             </div>
 
         </div>

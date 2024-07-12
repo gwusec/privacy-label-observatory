@@ -22,7 +22,7 @@ export default function searchApp(){
 
     const data = useLoaderData<typeof loader>();
     return(
-        <div>
+        <div className='items-start'>
             <Timeline data={data}/>
         </div>
     )
