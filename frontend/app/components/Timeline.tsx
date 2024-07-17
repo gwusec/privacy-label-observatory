@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from "next-themes";
+
 
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
@@ -54,6 +56,7 @@ export default function Timeline({data}:{data:any}) {
     const updateParent = (index: number) => {
         setActiveIndex(index)
     }
+    const { theme } = useTheme();
     
 
     console.log(data)
@@ -73,7 +76,7 @@ export default function Timeline({data}:{data:any}) {
 
     return(
         <div className=' '>
-            <div className="flex items-center">
+            <div className="ml-10 flex">
                 {image_url == undefined ?
                 <img
                     className="w-40 h-40 rounded-xl m-4"
@@ -87,16 +90,16 @@ export default function Timeline({data}:{data:any}) {
 
                 />  
                 }
-                <div className="m-2">
-                    <h1 className="text-xl font-bold">{app_name}</h1>
-                    <h2 className="text-sm text-gray-500">{app_id}</h2>
+                <div className="ml-10 m-2 items-start mt-6">
+                    <h1 className="text-2xl font-bold">{app_name}</h1>
+                    <h2 className="text-sm text-gray-500">id: {app_id}</h2>
                 </div>
             </div>
             <div className="flex">
                 <div className='p-2 flex w-full'>
 
                     {/* Need to come back to this since currently it's wrong */}
-                    <div className={`m-4 bg-white rounded-lg shadow w-full text-center ${expandedColumn === 'column1' || expandedColumn === null ? 'block' : 'hidden'}`} id='duty'>
+                    <div className={`m-4 rounded-lg w-full text-center p-4 shadow-md ${theme === 'dark' ? 'text-white bg-neutral-800 hover:text-red hover:bg-neutral-200' : 'text-red bg-neutral-300 hover:text-white hover:bg-neutral-700'} transform transition duration-200 hover:scale-105 ${expandedColumn === 'column1' || expandedColumn === null ? 'block' : 'hidden'}`} id='duty'>
                         <div className='flex justify-end'>
                             {expandedColumn === 'column1' ? <MdFullscreenExit onClick={() => handleExpand('column1')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column1')} size={28}/>}
                         </div>
@@ -140,7 +143,7 @@ export default function Timeline({data}:{data:any}) {
                             </div>}
                     </div>
 
-                    <div  className={`m-4 bg-white rounded-lg shadow w-full text-center ${expandedColumn === 'column2' || expandedColumn === null ? 'block' : 'hidden'}`} id='dly'>
+                    <div  className={`m-4 rounded-lg w-full text-center p-4 shadow-md ${theme === 'dark' ? 'text-white bg-neutral-800 hover:text-red hover:bg-neutral-200' : 'text-red bg-neutral-300 hover:text-white hover:bg-neutral-700'} transform transition duration-200 hover:scale-105  ${expandedColumn === 'column2' || expandedColumn === null ? 'block' : 'hidden'}`} id='dly'>
                         <div className='flex justify-end'>
                             {expandedColumn === 'column2' ? <MdFullscreenExit onClick={() => handleExpand('column2')} size={28}/> : <MdFullscreen onClick={() => handleExpand('column2')} size={28}/>}
                         </div>    
@@ -187,7 +190,7 @@ export default function Timeline({data}:{data:any}) {
                             </div>}
                     </div>
 
-                <div className={`m-4 bg-white rounded-lg shadow max-h-96 overflow-y-auto w-full text-center transition ${expandedColumn === 'column3' || expandedColumn === null ? 'block' : 'hidden'}`} id='dnly'>
+                <div className={`m-4 rounded-lg w-full text-center p-4 shadow-md ${theme === 'dark' ? 'text-white bg-neutral-800 hover:text-red hover:bg-neutral-200' : 'text-red bg-neutral-300 hover:text-white hover:bg-neutral-700'} transform transition duration-200 hover:scale-105  ${expandedColumn === 'column3' || expandedColumn === null ? 'block' : 'hidden'}`} id='dnly'>
                     {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ? 
                         <div>
                             <div className='flex justify-end'>    
