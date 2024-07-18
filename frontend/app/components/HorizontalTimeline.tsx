@@ -6,12 +6,12 @@ import { useTheme } from "next-themes";
 
 const theme = useTheme();
 const CustomStepLabel = styled(StepLabel)(({ theme, active }) => ({
-  '& .MuiStepLabel-label': {
-      color: theme === 'dark' ? (active ? 'blue' : 'white') : (active ? 'blue' : 'grey'),
-  },
-  '& .MuiStepIcon-root': {
-      color: theme === 'dark' ? (active ? 'blue' : 'white') : (active ? 'blue' : 'grey'),
-  },
+    '& .MuiStepLabel-label': {
+        color: active ? 'blue' : 'grey', 
+    },
+    '& .MuiStepIcon-root': {
+        color: active ? 'blue' : 'grey', 
+    },
 }));
 
 function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick }: { privtypes: any, activeIndex: any, updateParent: any, handleClick: any }) {
