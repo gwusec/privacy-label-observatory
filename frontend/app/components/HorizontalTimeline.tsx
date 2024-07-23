@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Stepper, Step, StepLabel, Button, styled } from '@mui/material';
 var data = require("../../../Misc/dates_and_runs.json");
-import { useTheme } from "next-themes";
 
 
-const theme = useTheme();
-const CustomStepLabel = styled(StepLabel)(({ theme, active }) => ({
+const CustomStepLabel = styled(StepLabel)(({ active }) => ({
     '& .MuiStepLabel-label': {
         color: active ? 'blue' : 'grey', 
     },
@@ -83,7 +81,7 @@ function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick 
                 ))}
             </Stepper>
             <div>
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Box sx={{ display: "flex", flexDirection: "row", pt: 2}}>
                     <Button
                         disabled={activeStep === 0}
                         onClick={handleBack}
