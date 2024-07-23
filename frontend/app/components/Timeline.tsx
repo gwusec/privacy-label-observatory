@@ -95,11 +95,23 @@ export default function Timeline({ data }: { data: any }) {
                     <h2 className="text-sm text-gray-500">id: {app_id}</h2>
                 </div>
             </div>
-            <div className="flex justify-center items-center">
-                <div className="mb-4 justify-center rounded-lg h-fit ml-2 w-fit">
-                    <HorizontalTimeline privtypes={privacy_types} activeIndex={activeIndex} updateParent={updateParent} handleClick={handleClick} />
-                </div>
-            </div>
+            <div
+  className={`flex justify-center items-center `}
+>
+  <div className={`mb-4 rounded-lg h-fit ml-2 w-fit ${
+    theme === 'dark'
+      ? 'mt-4  bg-neutral-300 p-4 rounded-lg shadow'
+      : ''
+  }`}>
+    <HorizontalTimeline
+      privtypes={privacy_types}
+      activeIndex={activeIndex}
+      updateParent={updateParent}
+      handleClick={handleClick}
+    />
+  </div>
+</div>
+
             <div className="flex">
                 <div className='p-2 flex w-full'>
 
@@ -140,12 +152,12 @@ export default function Timeline({ data }: { data: any }) {
                                             }
                                             {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
                                                 <div key={dataCategoryIndex} className="space-y-2">
-                                                    <li className="text-lg text-gray-800 font-semibold">
+                                                    <li className="text-lg font-semibold">
                                                         {dataCategory.dataCategory}
                                                     </li>
                                                     {expandedColumn === 'column1' && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
                                                         <div key={dataCategoryIndex} className="p-2">
-                                                            <li className="text-base text-gray-700 rounded-md p-2">
+                                                            <li className="text-base rounded-md p-2">
                                                                 <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
                                                                     {dataType.data_type}
                                                                 </span>
@@ -203,12 +215,12 @@ export default function Timeline({ data }: { data: any }) {
                                             }
                                             {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
                                                 <div key={purposeIndex} className="space-y-2">
-                                                    <li className="text-lg text-gray-800 font-semibold">
+                                                    <li className="text-lg font-semibold">
                                                         {purpose.purpose}
                                                     </li>
                                                     {expandedColumn === 'column2' && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
                                                         <div key={dataCategoryIndex} className="p-2">
-                                                            <li className="text-base text-gray-700 rounded-md p-2 ">
+                                                            <li className="text-base rounded-md p-2 ">
                                                                 {dataCategory.dataCategory}:
                                                                 {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
                                                                     <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
