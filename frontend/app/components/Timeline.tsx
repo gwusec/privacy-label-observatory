@@ -98,9 +98,9 @@ export default function Timeline({ data }: { data: any }) {
             <div
   className={`flex justify-center items-center `}
 >
-  <div className={`mb-4 rounded-lg h-fit ml-2 w-fit ${
+  <div className={` p-4 mb-4 rounded-lg h-fit ml-2 w-fit ${
     theme === 'dark'
-      ? 'mt-4  bg-neutral-300 p-4 rounded-lg shadow'
+      ? 'bg-neutral-300 rounded-lg shadow'
       : ''
   }`}>
     <HorizontalTimeline
