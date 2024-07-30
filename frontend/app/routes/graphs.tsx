@@ -27,7 +27,7 @@ export default function Graphs(){
         
         <div className="h-screen p-2">
             <h1>Graphs</h1>
-            <VennDiagram/>
+            <VennDiagram />
         </div>
         }
         </>
