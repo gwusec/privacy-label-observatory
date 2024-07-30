@@ -4,9 +4,6 @@ Content-Type: application/json
     "app_id": "1529135893"
 }
 
-
-
-
 HTTP/1.1 404  - Not Found
 content-type: text/html; charset=utf-8
 vary: Accept-Encoding
@@ -14,8 +11,17 @@ content-encoding: gzip
 date: Tue, 21 May 2024 14:42:22 GMT
 connection: close
 transfer-encoding: chunked
+###
+GET http://localhost:8017/venn
 
-
+HTTP/1.1 200  - OK
+x-powered-by: Express
+access-control-allow-origin: *
+content-type: application/json; charset=utf-8
+content-length: 164
+etag: W/"a4-3+mOWvyIq80NNfCXCXyjKmY3eTY"
+date: Wed, 03 Jul 2024 16:45:49 GMT
+connection: close
 ###
 GET http://localhost:8017/appList?start=0
 
@@ -27,8 +33,6 @@ content-length: 3596
 etag: W/"e0c-YnJdBJdG02eYq0Y17CDkjivQVaw"
 date: Thu, 23 May 2024 16:02:34 GMT
 connection: close
-
-
 ###
 GET http://localhost:8080/search?q=k&run=duplicateapp_run1
 
@@ -40,8 +44,6 @@ content-length: 119
 etag: W/"77-+kUo5t4eekEW43PAEgJC/KjBLK8"
 date: Tue, 13 Feb 2024 20:42:13 GMT
 connection: close
-
-
 ###
 POST http://localhost:3000/api/search/app_id
 Content-Type: application/json
@@ -51,9 +53,6 @@ Content-Type: application/json
     "app_id": "1529135893"
 }
 
-
-
-
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
@@ -61,8 +60,6 @@ content-length: 1110
 etag: W/"456-quOufe7lKu4sn8O7OPvwN2NO2fk"
 date: Sat, 03 Feb 2024 17:55:16 GMT
 connection: close
-
-
 ###
 GET http://localhost:8017/runs
 
@@ -74,8 +71,6 @@ content-length: 829
 etag: W/"33d-aV+3Cm0gLPJ6T6jfVYKxuxDWJY4"
 date: Fri, 15 Mar 2024 15:15:42 GMT
 connection: close
-
-
 ###
 POST http://localhost:8080/api/get/
 Content-Type: application/json
@@ -84,13 +79,6 @@ Content-Type: application/json
     "run_id": "run_00069"
 
 }
-
-
-
-
-
-
-
 ###
 GET http://localhost:8017/getApp?id=1588684626
 
@@ -102,29 +90,18 @@ content-length: 2
 etag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
 date: Fri, 15 Mar 2024 15:31:27 GMT
 connection: close
-
-
 ###
 POST http://localhost:8080/api/search/app_name
 Content-Type: application/json
 {
     "app_name": "sen"
 }
-
-
-
-
-
-
 ###
 GET http://localhost:8017/translateApp
 Content-Type: application/json
 {
     "privacy_types": ["大概位置", "裝置 ID", "產品互動", "廣告資料", "效能資料", "當機資料"]
 }
-
-
-
 
 HTTP/1.1 404  - Not Found
 x-powered-by: Express
