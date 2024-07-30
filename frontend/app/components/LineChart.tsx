@@ -1,5 +1,4 @@
-// src/components/LineChart.tsx
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -22,12 +21,22 @@ interface LineChartProps {
 }
 
 const LineChart: React.FC<LineChartProps> = ({ data }) => {
-  // Ensure all datasets are available
+  const chartRef = useRef<ChartJS | null>(null);
+
+  useEffect(() => {
+    return () => {
+      // Cleanup function to destroy the chart instance when the component unmounts
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
+  }, []);
+
   const hasData = (dataset: DataItem[]) => dataset && dataset.length > 0;
 
-  // Transform data into format suitable for Chart.js
   const chartData = {
-    labels: (data.DATA_USED_TO_TRACK_YOU || []).map(item => item.key.toString()), // Assuming all datasets have the same keys
+    labels: (data.DATA_USED_TO_TRACK_YOU || []).map(item => item.key.toString()),
     datasets: [
       {
         label: 'Total Apps',
@@ -83,7 +92,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         tension: 0.1,
         pointRadius: 0,
       },
-    ].filter(dataset => dataset.data.length > 0), // Filter out empty datasets
+    ].filter(dataset => dataset.data.length > 0),
   };
 
   const options = {
@@ -101,9 +110,14 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         },
       },
     },
+    plugins: {
+      datalabels: {
+        display: false, // Disable the data labels
+      },
+    },
   };
 
-  return <Line data={chartData} options={options} />;
+  return <Line data={chartData} options={options} ref={chartRef} />;
 };
 
 export default LineChart;

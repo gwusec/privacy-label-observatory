@@ -11,6 +11,9 @@ var getAppRouter = require("./routes/getApp")
 var runsRouter = require("./routes/runs")
 var fullAppRouter = require("./routes/getFullApp")
 var vennRouter = require("./routes/getVenn")
+var longitudeRouter = require("./routes/longitude")
+var ratiosRouter = require("./routes/figure5")
+
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -34,6 +37,10 @@ app.use("/runs", runsRouter)
 app.use("/translateApp", translationRouter)
 app.use("/fullApp", fullAppRouter)
 app.use("/venn", vennRouter)
+app.use("/longitude", longitudeRouter)
+app.use("/ratios", ratiosRouter)
+
+
 
 
 //helloworld GET
