@@ -74,7 +74,7 @@ function VennDiagrams(){
 
 
     return (
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row w-full bg-slate-400 p-5 justify-center">
             <VennDiagram
                 sets={sets}
                 combinations={combinations}
