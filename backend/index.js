@@ -12,6 +12,7 @@ var runsRouter = require("./routes/runs")
 var fullAppRouter = require("./routes/getFullApp")
 var vennRouter = require("./routes/getVenn")
 var totalRouter = require("./routes/totals")
+var graph16Router = require("./routes/graph_16")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -20,7 +21,7 @@ const client = require("./client")
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
-const port = 8017;
+const port = 9000;
 
 
 
@@ -36,6 +37,7 @@ app.use("/translateApp", translationRouter)
 app.use("/fullApp", fullAppRouter)
 app.use("/venn", vennRouter)
 app.use("/total", totalRouter)
+app.use("/graph16", graph16Router)
 
 
 //helloworld GET
