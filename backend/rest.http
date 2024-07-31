@@ -130,7 +130,18 @@ HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
+content-length: 390
+etag: W/"186-9+nAUJpNn6d8LLyfs6b57gwOb1g"
+date: Wed, 31 Jul 2024 14:46:47 GMT
+connection: close
+###
+GET http://localhost:8017/graph14Helper
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+access-control-allow-origin: *
+content-type: application/json; charset=utf-8
 content-length: 7
 etag: W/"7-ofL7/ixK2BdJzQOAtzUpXQb50MQ"
-date: Wed, 31 Jul 2024 14:44:32 GMT
+date: Wed, 31 Jul 2024 15:00:40 GMT
 connection: close
