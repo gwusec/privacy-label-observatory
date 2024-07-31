@@ -14,6 +14,8 @@ var vennRouter = require("./routes/getVenn")
 var totalRouter = require("./routes/totals")
 var graph16Router = require("./routes/graph_16")
 var helperRouter = require("./routes/graph_16_helper")
+var graph14Router = require("./routes/graph_14")
+var graph14Helper = require("./routes/graph_14_helper")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -40,6 +42,8 @@ app.use("/venn", vennRouter)
 app.use("/total", totalRouter)
 app.use("/graph16", graph16Router)
 app.use("/helper", helperRouter)
+app.use("/graph14", graph14Router)
+app.use("/graph14helper", graph14Helper)
 
 
 //helloworld GET
