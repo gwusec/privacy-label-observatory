@@ -108,12 +108,23 @@ HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
-content-length: 5947
-etag: W/"173b-CxGMEZQSI3Mw5nqvVTDCUey+F5s"
-date: Thu, 23 May 2024 16:02:46 GMT
+content-length: 5574
+etag: W/"15c6-BudZ4i2zWk4foVU6D/Qd3wH25xs"
+date: Wed, 31 Jul 2024 13:59:45 GMT
 connection: close
 ###
-GET http://localhost:9000/graph16
+GET http://localhost:8017/helper?name=dnc
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+access-control-allow-origin: *
+content-type: application/json; charset=utf-8
+content-length: 73
+etag: W/"49-8ydqB+by2XXEY4f2WJEgjLaztsg"
+date: Wed, 31 Jul 2024 14:31:29 GMT
+connection: close
+###
+GET http://localhost:8017/graph16
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
@@ -121,5 +132,5 @@ access-control-allow-origin: *
 content-type: application/json; charset=utf-8
 content-length: 7
 etag: W/"7-ofL7/ixK2BdJzQOAtzUpXQb50MQ"
-date: Tue, 30 Jul 2024 21:29:09 GMT
+date: Wed, 31 Jul 2024 14:44:32 GMT
 connection: close
