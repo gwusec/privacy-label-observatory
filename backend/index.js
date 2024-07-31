@@ -13,6 +13,7 @@ var fullAppRouter = require("./routes/getFullApp")
 var vennRouter = require("./routes/getVenn")
 var totalRouter = require("./routes/totals")
 var graph16Router = require("./routes/graph_16")
+var helperRouter = require("./routes/graph_16_helper")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -21,7 +22,7 @@ const client = require("./client")
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
-const port = 9000;
+const port = 8017;
 
 
 
@@ -38,6 +39,7 @@ app.use("/fullApp", fullAppRouter)
 app.use("/venn", vennRouter)
 app.use("/total", totalRouter)
 app.use("/graph16", graph16Router)
+app.use("/helper", helperRouter)
 
 
 //helloworld GET
