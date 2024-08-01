@@ -9,16 +9,7 @@ import {lab} from "d3-color"
 
 import { extractSets, generateCombinations, VennDiagram } from '@upsetjs/react';
 
-export async function loader({params}: LoaderFunctionArgs){
-    const venn = await fetch(process.env.BACKEND_API + "venn")
-    const data = await venn.json()
-    return json(data)
-}
-
-
-function VennDiagrams(){
-    const data = useLoaderData<typeof loader>();
-    console.log("VennDiagram", data)
+function VennDiagrams({ data }: { data: any }){
 
     const mapping = {
         'Data Not Collected': data['not_collected'],
