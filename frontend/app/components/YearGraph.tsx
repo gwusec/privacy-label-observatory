@@ -34,6 +34,26 @@ const generateLabels = (length:number) => {
     return labels.reverse()
 }
 
+const createSampleData = (years:any, dataset:any, total:any, label:any, backgroundColor:any) => ({
+    labels: years,
+    datasets: [
+        {
+            label: 'Total Apps',
+            data: total,
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+        },
+        {
+            label: label,
+            data: dataset,
+            backgroundColor: backgroundColor,
+            borderColor: backgroundColor,
+            borderWidth: 1,
+        }
+    ],
+});
+
 function YearGraph({data}:{data:any}){
     const years = generateLabels(Object.keys(data["totals"]).length)
     console.log("years", years)
@@ -43,25 +63,12 @@ function YearGraph({data}:{data:any}){
     const tracked = data["duty"]
     const collected = data["dnc"]
 
-    const sampleData = {
-        labels: years,
-        datasets: [
-            {
-                label: 'Total Apps',
-                data: total,
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-            },
-            {
-                label: 'Data Not Collected',
-                data: collected,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
-            }
-        ],
-    };
+    const sampleDatasets = [
+        createSampleData(years, data["dlty"], total, 'Linked Apps', 'rgba(54, 162, 235, 0.5)'),
+        createSampleData(years, data["dnlty"], total, 'Not Linked Apps', 'rgba(255, 206, 86, 0.5)'),
+        createSampleData(years, data["duty"], total, 'Tracked Apps', 'rgba(75, 192, 192, 0.5)'),
+        createSampleData(years, data["dnc"], total, 'Collected Apps', 'rgba(153, 102, 255, 0.5)'),
+    ];
 
     const options = {
         responsive: true,
@@ -113,14 +120,20 @@ function YearGraph({data}:{data:any}){
 
     return(
         <div className="w-full p-4 bg-slate-200">
-            <h2 className="text-lg font-semibold mb-4">Grouped Bar Chart</h2>
-            <div className="flex flex-row gap-4 h-52 w-fit">
-                {data && <Bar data={sampleData} options={options} />}
-                {data && <Bar data={sampleData} options={options2} />}
-                {data && <Bar data={sampleData} options={options2} />}
-                {data && <Bar data={sampleData} options={options2} />}
-            </div>
+        <h2 className="text-lg font-semibold mb-4">Grouped Bar Chart</h2>
+        <div className="flex flex-row gap-4 w-full">
+            {sampleDatasets.map((sampleData, index) => (
+                <div key={index} className="w-full h-[300px]"> {/* Adjust width and height as needed */}
+                    {index === 0 ? (
+                        <Bar data={sampleData} options={options} />
+                    ) : (
+                        <Bar data={sampleData} options={options2} />
+                    )}
+                </div>
+            ))}
         </div>
+    </div>
+    
     )
 }
 
