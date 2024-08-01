@@ -25,6 +25,7 @@ export default function Graphs(){
     const percentage = data[1]
     const dates = data[2]
     console.log(data)
+
     return(
         <>
         {state === "loading" ?
