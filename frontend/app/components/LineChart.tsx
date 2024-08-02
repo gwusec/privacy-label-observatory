@@ -22,6 +22,7 @@ interface LineChartProps {
 
 const LineChart: React.FC<LineChartProps> = ({ data }) => {
   const chartRef = useRef<ChartJS | null>(null);
+  // console.log(data)
 
   useEffect(() => {
     return () => {
