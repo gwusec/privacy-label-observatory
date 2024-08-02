@@ -1,3 +1,5 @@
+// File path: /routes/graphs.jsx
+
 import React from "react";
 import { useNavigation } from "@remix-run/react";
 import { FaSpinner } from "react-icons/fa";
@@ -5,18 +7,23 @@ import { json, LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import LineChart from '~/components/LineChart';
 import Ratios from '~/components/Ratios';
+import MatrixChart from '~/components/MatrixChart';
 
 export const loader: LoaderFunction = async () => {
     const response = await fetch('http://localhost:8017/longitude');
     const data = await response.json();
     const response2 = await fetch('http://localhost:8017/ratios');
     const data2 = await response2.json();
-    return json({ data, data2 });
+    const response3 = await fetch('http://localhost:8017/matrix');
+    const data3 = await response3.json();
+//   console.log(JSON.stringify(data3, null, 2))
+    
+    return json({ data, data2, data3 });
 };
 
 export default function Graphs() {
     const { state } = useNavigation();
-    const { data, data2 } = useLoaderData();
+    const { data, data2, data3 } = useLoaderData();
 
     return (
         <>
@@ -25,8 +32,8 @@ export default function Graphs() {
                     <FaSpinner className="animate-spin" size={72} />
                 </div>
                 :
-                    <div style={{ width: '80%', margin: '0 auto' }}>
-                <div>
+                <div style={{ width: '80%', margin: '0 auto' }}>
+                    <div>
                         <h1>Longitude Data Chart</h1>
                         <LineChart data={data} />
                         <h3>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
@@ -46,7 +53,16 @@ export default function Graphs() {
                         </div>
                     </div>
                     <h3>The ratios of the six Purposes for the Data Used to Track You, Data Linked to You and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.</h3>
-
+                    <div className="flex flex-row space-x-4 mt-10 mb-10">
+                        <div className="flex flex-col items-center w-1/2">
+                            <h1 className="text-center mb-4">Matrix Chart: Data Linked to You</h1>
+                            <MatrixChart data={data3.DATA_LINKED_TO_YOU} />
+                        </div>
+                        {/*{/* <div className="flex flex-col items-center w-1/2">
+                            <h1 className="text-center mb-4">Matrix Chart: Data Not Linked to You</h1>
+                            <MatrixChart data={data3.DATA_NOT_LINKED_TO_YOU} />
+                        </div> */} 
+                    </div>
                 </div>
             }
         </>
