@@ -65,7 +65,6 @@ const MatrixChart = ({ data }) => {
                         text: 'Data Categories'
                     },
                     ticks: {
-                        display: false,
                         autoSkip: false,
                         maxRotation: 45,
                         minRotation: 45
