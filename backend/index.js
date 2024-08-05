@@ -14,8 +14,11 @@ var vennRouter = require("./routes/getVenn")
 var longitudeRouter = require("./routes/longitude")
 var ratiosRouter = require("./routes/figure5")
 var matrixRouter = require("./routes/figure6")
-
-
+var totalRouter = require("./routes/totals")
+var graph16Router = require("./routes/graph_16")
+var helperRouter = require("./routes/graph_16_helper")
+var graph14Router = require("./routes/graph_14")
+var graph14Helper = require("./routes/graph_14_helper")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -43,7 +46,11 @@ app.use("/longitude", longitudeRouter)
 app.use("/ratios", ratiosRouter)
 app.use("/matrix", matrixRouter)
 
-
+app.use("/total", totalRouter)
+app.use("/graph16", graph16Router)
+app.use("/helper", helperRouter)
+app.use("/graph14", graph14Router)
+app.use("/graph14helper", graph14Helper)
 
 
 //helloworld GET
@@ -167,6 +174,7 @@ app.post("/api/get", function (req, res) {
 //
 app.post("/api/search/app_name", function (req, res){
     var app_name = req.body.app_name
+    console.log("here")
 
     if (app_name == undefined){
         res.json({ "Error": "app_id required" })
