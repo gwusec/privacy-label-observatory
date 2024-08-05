@@ -61,7 +61,7 @@ export default function Index() {
           <FaSpinner className="animate-spin" size={72} />
         </div>
         :
-        <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'}`}>
+        <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'} overflow-hidden`}>
           <div id="main-text">
 
             <div className="mb-20">
@@ -74,7 +74,7 @@ export default function Index() {
                 {/* <button onClick={() => goToGraphs()} className={`px-4 py-1 text-lg font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>the Graphs</button> */}
               </div>
 
-              <div style={{ width: '80%', margin: '0 auto' }}>
+              <div style={{ width: '80%',  margin: '0 auto' }}>
                     <div className="mb-10 mt-10">
                         <h1 className="text-center font-bold">Longitude Data Chart</h1>
                             <LineChart data={longitude} />
@@ -110,8 +110,8 @@ export default function Index() {
                               <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
                           </div>
                       </div>
-                      <h3>The ratios of of Data Categories by the reported Purpose for the Data Linked to You (orange) and Data Not Linked
-to You (blue) Privacy Types.</h3>
+                      <h3>The ratios of of Data Categories by the reported Purpose for the Data Linked to You and Data Not Linked
+to You Privacy Types.</h3>
                     </div>
                     <div className="mb-10"> 
                         <h1 className="text-center  font-bold" >Venn Diagram</h1>
@@ -121,17 +121,16 @@ of the four Privacy Types. Data Not Collected is mutually
 exclusive to the other three Privacy Types</h3>
                     </div>
                     <div className="mb-10">
-                      <h1>Percentage Graph</h1>
+                      <h1 className="text-center font-bold" >Data Collected per Payment Method</h1>
                         <PercentageGraph data={percentage} />
-                        <h3 className="mt-5">The ratios of app costs for each of the four Privacy Types. The denominator is the number of apps with the designated
-app cost that have a privacy label. Free apps are more likely than paid apps to collect data, including data used to track and
+                        <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
 linked to users.</h3>
                     </div>
 
                     <div className="mb-10">
-                      <h1>Year Graph</h1> 
+                    <h1 className="text-center  font-bold" >Years vs Type of Apps</h1>
                         <YearGraph data={dates} />
-                        <h3 className="mt-5">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
+                        <h3 className="">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
 number of apps with privacy labels released in that year. </h3>
                         </div>
                 </div>

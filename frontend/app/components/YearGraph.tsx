@@ -119,8 +119,7 @@ function YearGraph({data}:{data:any}){
     
 
     return(
-        <div className="w-full p-4 bg-slate-200">
-        <h2 className="text-lg font-semibold mb-4">Grouped Bar Chart</h2>
+        <div className="w-full p-4">
         <div className="flex flex-row gap-4 w-full">
             {sampleDatasets.map((sampleData, index) => (
                 <div key={index} className="w-full h-[300px]"> {/* Adjust width and height as needed */}
