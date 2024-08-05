@@ -1,9 +1,6 @@
 var express = require("express")
 var router = express.Router()
 
-var express = require("express")
-var router = express.Router()
-
 const client = require("./../client")
 
 router.get('/', async function(req, res){
@@ -26,7 +23,7 @@ router.get('/', async function(req, res){
             }
           }
     }).then(async (r) => {
-        dnc["Data Not Collected"] = r["count"]
+        dnc["not_collected"] = r["count"]
     })
 
     await client.count({

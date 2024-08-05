@@ -4,7 +4,10 @@ Content-Type: application/json
     "app_id": "1529135893"
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 HTTP/1.1 404  - Not Found
 content-type: text/html; charset=utf-8
 vary: Accept-Encoding
@@ -12,8 +15,6 @@ content-encoding: gzip
 date: Tue, 23 Jul 2024 14:26:48 GMT
 connection: close
 transfer-encoding: chunked
-
-
 ###
 GET http://localhost:8017/appList?start=0
 
@@ -21,16 +22,21 @@ HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
+<<<<<<< HEAD
 content-length: 4585
 etag: W/"11e9-ltKBHK9ySaqzSx9h1j9mw3hv99Y"
 date: Tue, 23 Jul 2024 14:26:55 GMT
+=======
+content-length: 4668
+etag: W/"123c-ZvmBMELdQ4id4kC+dhpolrMTFJg"
+date: Thu, 11 Jul 2024 16:06:16 GMT
+>>>>>>> main
 connection: close
-
-
 ###
 GET http://localhost:8080/search?q=k&run=duplicateapp_run1
 
 HTTP/1.1 404  - Not Found
+<<<<<<< HEAD
 date: Tue, 23 Jul 2024 14:26:57 GMT
 server: Apache/2.4.56 (Debian)
 content-length: 273
@@ -38,6 +44,12 @@ connection: close
 content-type: text/html; charset=iso-8859-1
 
 
+=======
+date: Thu, 11 Jul 2024 16:06:19 GMT
+server: Apache/2.4.56 (Debian)
+content-length: 273
+connection: close
+>>>>>>> main
 ###
 POST http://localhost:3000/api/search/app_id
 Content-Type: application/json
@@ -47,6 +59,7 @@ Content-Type: application/json
     "app_id": "1529135893"
 }
 
+<<<<<<< HEAD
 
 HTTP/1.1 404  - Not Found
 content-type: text/html; charset=utf-8
@@ -57,6 +70,15 @@ connection: close
 transfer-encoding: chunked
 
 
+=======
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 1110
+etag: W/"456-quOufe7lKu4sn8O7OPvwN2NO2fk"
+date: Sat, 03 Feb 2024 17:55:16 GMT
+connection: close
+>>>>>>> main
 ###
 GET http://localhost:8017/runs
 
@@ -66,10 +88,12 @@ access-control-allow-origin: *
 content-type: application/json; charset=utf-8
 content-length: 853
 etag: W/"355-OXsNfuOR6kfuJS10EDtOJ2OZkY0"
+<<<<<<< HEAD
 date: Tue, 23 Jul 2024 14:27:01 GMT
+=======
+date: Thu, 11 Jul 2024 16:06:22 GMT
+>>>>>>> main
 connection: close
-
-
 ###
 POST http://localhost:8080/api/get/
 Content-Type: application/json
@@ -78,6 +102,7 @@ Content-Type: application/json
     "run_id": "run_00069"
 
 }
+<<<<<<< HEAD
 
 HTTP/1.1 404  - Not Found
 date: Tue, 23 Jul 2024 14:27:03 GMT
@@ -87,6 +112,8 @@ connection: close
 content-type: text/html; charset=iso-8859-1
 
 
+=======
+>>>>>>> main
 ###
 GET http://localhost:8017/getApp?id=1588684626
 
@@ -96,16 +123,19 @@ access-control-allow-origin: *
 content-type: application/json; charset=utf-8
 content-length: 1815
 etag: W/"717-jzPYwrZ3tAM/oV98sBwDouqarkk"
+<<<<<<< HEAD
 date: Tue, 23 Jul 2024 14:27:05 GMT
+=======
+date: Thu, 11 Jul 2024 16:06:27 GMT
+>>>>>>> main
 connection: close
-
-
 ###
 POST http://localhost:8080/api/search/app_name
 Content-Type: application/json
 {
     "app_name": "sen"
 }
+<<<<<<< HEAD
 
 HTTP/1.1 404  - Not Found
 date: Tue, 23 Jul 2024 14:27:07 GMT
@@ -124,11 +154,23 @@ connection: close
 GET http://localhost:8017/appList?start=0&run=run_00069
 >>>>>>> 1f41877 (Made a lot of changes to the horizontal timeline)
 
+=======
+###
+GET http://localhost:8017/translateApp
+Content-Type: application/json
+{
+    "privacy_types": ["大概位置", "裝置 ID", "產品互動", "廣告資料", "效能資料", "當機資料"]
+}
+
+###
+GET http://localhost:8017/graph14Helper?index=dnc
+>>>>>>> main
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
+<<<<<<< HEAD
 content-length: 5616
 etag: W/"15f0-DYGmQ+oBI45tAiIRbRwZ8KRaAR0"
 date: Tue, 23 Jul 2024 14:27:19 GMT
@@ -137,12 +179,26 @@ connection: close
 
 ###
 http://localhost:8017/longitude
+=======
+content-length: 182
+etag: W/"b6-D/Kj9KglvadFkpSJhrofBJeUY4E"
+date: Wed, 31 Jul 2024 20:39:16 GMT
+connection: close
+###
+GET http://localhost:8017/graph14
+>>>>>>> main
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 access-control-allow-origin: *
 content-type: application/json; charset=utf-8
+<<<<<<< HEAD
 content-length: 11701
 etag: W/"2db5-tD6QVlJsPe8Tid/SkVPoRm94Zx8"
 date: Tue, 23 Jul 2024 14:34:00 GMT
+=======
+content-length: 962
+etag: W/"3c2-Jp6LIjxMRLDhQM87pVPcxRgV6vo"
+date: Wed, 31 Jul 2024 20:44:21 GMT
+>>>>>>> main
 connection: close
