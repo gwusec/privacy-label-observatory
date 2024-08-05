@@ -4,10 +4,12 @@ import React, { useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import { color } from 'chart.js/helpers';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-Chart.register(...registerables, MatrixController, MatrixElement);
+Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabels);
 
 const MatrixChart = ({ data }) => {
+    console.log("data passed in:", data)
     const chartRef = useRef(null);
     const canvasRef = useRef(null);
     
@@ -31,8 +33,8 @@ const MatrixChart = ({ data }) => {
     
         const matrixData = data.flatMap((d, row) =>
             d.dataCategories.map((dc, col) => ({
-                x: col,
-                y: row,
+                x: dc.dataCategory,
+                y: d.purpose,
                 v: dc.percentage
             }))
         );
@@ -43,13 +45,13 @@ const MatrixChart = ({ data }) => {
             datasets: [{
                 label: 'Heat Map',
                 data: matrixData,
-                backgroundColor: (ctx) => {
+                backgroundColor: (ctx:any) => {
                     const value = ctx.dataset.data[ctx.dataIndex].v;
                     const alpha = (value / 100).toFixed(2);
                     return `rgba(0, 100, 255, ${alpha})`;
                 },
-                width: (ctx) => ctx.chart.chartArea.width / dataCategories.length,
-                height: (ctx) => ctx.chart.chartArea.height / purposes.length,
+                width: (ctx:any) => ctx.chart.chartArea.width / dataCategories.length,
+                height: (ctx:any) => ctx.chart.chartArea.height / purposes.length,
             }]
         };
     
@@ -63,6 +65,7 @@ const MatrixChart = ({ data }) => {
                         text: 'Data Categories'
                     },
                     ticks: {
+                        display: false,
                         autoSkip: false,
                         maxRotation: 45,
                         minRotation: 45
@@ -79,17 +82,21 @@ const MatrixChart = ({ data }) => {
                         autoSkip: false,
                         maxRotation: 0,
                         minRotation: 0
-                    }
+                    },
                 }
             },
             plugins: {
                 legend: false,
+                datalabels: {
+                    display: false,
+                },
                 tooltip: {
                     displayColors: false,
+                    display: false,
                     callbacks: {
-                        label: (context) => {
+                        label: (context:any) => {
                             const { x, y, raw } = context;
-                            return `${y}: ${x}, ${raw.v}`;
+                            return `${raw.v}%`;
                         }
                     }
                 }

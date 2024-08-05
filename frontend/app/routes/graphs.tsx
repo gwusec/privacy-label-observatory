@@ -58,10 +58,10 @@ export default function Graphs() {
                             <h1 className="text-center mb-4">Matrix Chart: Data Linked to You</h1>
                             <MatrixChart data={data3.DATA_LINKED_TO_YOU} />
                         </div>
-                        {/*{/* <div className="flex flex-col items-center w-1/2">
+                        <div className="flex flex-col items-center w-1/2">
                             <h1 className="text-center mb-4">Matrix Chart: Data Not Linked to You</h1>
                             <MatrixChart data={data3.DATA_NOT_LINKED_TO_YOU} />
-                        </div> */} 
+                        </div> 
                     </div>
                 </div>
             }
