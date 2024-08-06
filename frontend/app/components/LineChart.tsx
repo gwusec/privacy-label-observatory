@@ -21,12 +21,11 @@ interface LineChartProps {
 }
 
 const LineChart: React.FC<LineChartProps> = ({ data }) => {
+  console.log(data);
   const chartRef = useRef<ChartJS | null>(null);
-  // console.log(data)
 
   useEffect(() => {
     return () => {
-      // Cleanup function to destroy the chart instance when the component unmounts
       if (chartRef.current) {
         chartRef.current.destroy();
         chartRef.current = null;
@@ -36,12 +35,20 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
 
   const hasData = (dataset: DataItem[]) => dataset && dataset.length > 0;
 
+  const labels = (data.DATA_USED_TO_TRACK_YOU || []).map(item => item.key.toString());
+
+  const getData = (dataset: DataItem[]) => {
+    const dataMap = new Map<number, number>();
+    dataset.forEach(item => dataMap.set(item.key, item.doc_count));
+    return labels.map(label => dataMap.get(Number(label)) || 0);
+  };
+
   const chartData = {
-    labels: (data.DATA_USED_TO_TRACK_YOU || []).map(item => item.key.toString()),
+    labels: labels,
     datasets: [
       {
         label: 'Total Apps',
-        data: hasData(data.ALL_APPS) ? data.ALL_APPS.map(item => item.doc_count) : [],
+        data: getData(data.ALL_APPS),
         borderColor: 'rgba(255, 159, 64, 1)',
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
         borderWidth: 1,
@@ -50,7 +57,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       },
       {
         label: 'Compliant Apps',
-        data: hasData(data.EXISTS_PRIVACY_LABELS) ? data.EXISTS_PRIVACY_LABELS.map(item => item.doc_count) : [],
+        data: getData(data.EXISTS_PRIVACY_LABELS),
         borderColor: 'rgba(255, 99, 132, 1)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderWidth: 1,
@@ -59,7 +66,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       },
       {
         label: 'Data Not Collected',
-        data: hasData(data.DATA_NOT_COLLECTED) ? data.DATA_NOT_COLLECTED.map(item => item.doc_count) : [],
+        data: getData(data.DATA_NOT_COLLECTED),
         borderColor: 'rgba(255, 206, 86, 1)',
         backgroundColor: 'rgba(255, 206, 86, 0.2)',
         borderWidth: 1,
@@ -68,7 +75,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       },
       {
         label: 'Data Not Linked to You',
-        data: hasData(data.DATA_NOT_LINKED_TO_YOU) ? data.DATA_NOT_LINKED_TO_YOU.map(item => item.doc_count) : [],
+        data: getData(data.DATA_NOT_LINKED_TO_YOU),
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderWidth: 1,
@@ -77,7 +84,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       },
       {
         label: 'Data Linked to You',
-        data: hasData(data.DATA_LINKED_TO_YOU) ? data.DATA_LINKED_TO_YOU.map(item => item.doc_count) : [],
+        data: getData(data.DATA_LINKED_TO_YOU),
         borderColor: 'rgba(153, 102, 255, 1)',
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
         borderWidth: 1,
@@ -86,7 +93,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       },
       {
         label: 'Data Used to Track You',
-        data: data.DATA_USED_TO_TRACK_YOU.map(item => item.doc_count),
+        data: getData(data.DATA_USED_TO_TRACK_YOU),
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 1,
@@ -113,7 +120,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
     },
     plugins: {
       datalabels: {
-        display: false, // Disable the data labels
+        display: false,
       },
     },
   };
