@@ -16,6 +16,7 @@ function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick 
     const [activeStep, setActiveStep] = useState(0);
     const [mounted, setMounted] = useState(false);
     const runRefs = useRef<any[]>([]);
+    const [dateMapping, setDateMapping] = useState(JSON.parse(JSON.stringify(data)));
 
     useEffect(() => {
         runRefs.current = privtypes.map((_: any, i: any) => runRefs.current[i] = React.createRef());
@@ -75,7 +76,7 @@ function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick 
                             onClick={() => handleClick(data, index)}
                             active={index === activeStep}
                         >
-                            {data.index}
+                            {dateMapping.find((obj: any) => obj.run_number === data.index)?.date}
                         </CustomStepLabel>
                     </Step>
                 ))}
