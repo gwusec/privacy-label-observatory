@@ -5,11 +5,12 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useMemo } from "react";
 import { useState } from "react";
-import {lab} from "d3-color"
+import { useTheme } from "next-themes";
 
 import { extractSets, generateCombinations, VennDiagram } from '@upsetjs/react';
 
 function VennDiagrams({ data }: { data: any }){
+    const { theme } = useTheme();
 
     const mapping = {
         'Data Not Collected': data['not_collected'],
@@ -65,22 +66,24 @@ function VennDiagrams({ data }: { data: any }){
 
 
     return (
-        <div className="flex flex-row w-full bg-slate-400 p-5 justify-center">
+        <div className="flex flex-row w-full bg-inherit p-5 justify-center">
             <VennDiagram
                 sets={sets}
                 combinations={combinations}
+                theme={theme === 'dark' ? 'dark' : 'light'}
                 width={780}
                 height={400}
                 exportButtons={false}
-                className="z-10"
+                className="z-10 bg-inherit"
             />
             <VennDiagram
                 sets={set}
                 combinations={combination}
-                width={780}
-                height={400}
+                width={400}
+                height={200}
+                theme={theme === 'dark' ? 'dark' : 'light'}
                 exportButtons={false}
-                className="-ml-52"
+                className="w-fit -ml-28 bg-inherit"
             />
         </div>
     );

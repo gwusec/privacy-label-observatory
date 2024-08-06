@@ -8,7 +8,7 @@ router.get('/', async function(req, res){
     var dnc = {}
 
     
-    await client.count({
+    await client.count({ 
         "query": {
             "bool": {
               "must": [

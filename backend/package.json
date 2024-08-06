@@ -12,10 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "@elastic/elasticsearch": "^8.11.0",
-    "axios": "^1.7.2",
     "@upsetjs/react": "^1.11.0",
-    "axios": "^1.7.2",
+    "axios": "^1.7.3",
     "body-parser": "^1.20.2",
+    "chart.js": "^4.4.3",
+    "chartjs-chart-matrix": "^2.0.1",
     "child_process": "^1.0.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
