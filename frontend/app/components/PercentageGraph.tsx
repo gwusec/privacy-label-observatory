@@ -92,37 +92,10 @@ export default function PercentageGraph ({data}:{data:any}) {
         ],
     };
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top' as const,
-            },
-            datalabels: {
-                display: true,
-                align: 'end',
-                anchor: 'start',
-                color: '#000',
-                formatter: (value: number) => `${value}%`, // Format the label
-                font: {
-                    weight: 'bold'
-                },
-            },
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: 100,
-                ticks: {
-                    callback: (value: number) => `${value}%`,
-                },
-            },
-        },
-    };
-
     const options2 = {
         responsive: true,
         plugins: {
+            
             legend: {
                 position: 'top' as const,
             },
@@ -156,10 +129,9 @@ export default function PercentageGraph ({data}:{data:any}) {
 
 
     return (
-        <div className="w-full p-4 bg-slate-200">
-        <h2 className="text-lg font-semibold mb-4">PercentageGraph</h2>
-        <div className='flex flex-row gap-4 h-52'>
-                {chartData && <Bar data={chartData} options={options} />}
+        <div className="w-2/6 items-start pr-20 pt-10">
+        <div className='flex flex-row gap-1'>
+                {chartData && <Bar data={chartData} options={options2} />}
                 {chartData2 && <Bar data={chartData2} options={options2} />}
                 {chartData3 && <Bar data={chartData3} options={options2} />}
                 {chartData4 && <Bar data={chartData4} options={options2} />}
