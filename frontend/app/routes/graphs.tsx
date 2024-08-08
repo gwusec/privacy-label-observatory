@@ -41,6 +41,7 @@ export default function Graphs(){
     const longitude = data[3]
     const ratios = data[4]
     const matrix = data[5]
+    console.log("longitude", longitude)
 
 
     return (
