@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Stepper, Step, StepLabel, Button, styled } from '@mui/material';
-var data = require("../../../Misc/dates_and_runs.json");
+var data = require("../../../backend/Misc/dates_and_runs.json");
 
 
 const CustomStepLabel = styled(StepLabel)(({ active }) => ({

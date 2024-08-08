@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
 import { Typography } from '@mui/material';
-var data = require("../../../Misc/dates_and_runs.json");
+var data = require("../../../backend/Misc/dates_and_runs.json");
 
 function VerticalTimeline({ privtypes, activeIndex, updateParent, handleClick }: { privtypes: any, activeIndex: any, updateParent: any, handleClick: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
