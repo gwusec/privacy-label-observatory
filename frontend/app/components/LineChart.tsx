@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
+import { useTheme } from 'next-themes';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -22,6 +23,7 @@ interface LineChartProps {
 
 const LineChart: React.FC<LineChartProps> = ({ data }) => {
   console.log("LineChart",data);
+  const {theme} = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
 
   useEffect(() => {
@@ -112,12 +114,18 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
           display: true,
           text: 'Run Number',
         },
+        grid : {
+          color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9'
+        }
       },
       y: {
         title: {
           display: true,
           text: 'Number of Apps',
         },
+        grid: {
+          color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9'
+        }
       },
     },
     plugins: {
