@@ -9,6 +9,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import { useTheme } from 'next-themes';
 
 ChartJS.register(
     CategoryScale,
@@ -34,14 +35,14 @@ const generateLabels = (length:number) => {
     return labels.reverse()
 }
 
-const createSampleData = (years:any, dataset:any, total:any, label:any, backgroundColor:any) => ({
+const createSampleData = (years:any, dataset:any, total:any, label:any, backgroundColor:any, theme:any) => ({
     labels: years,
     datasets: [
         {
             label: 'Total Apps',
             data: total,
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: theme === 'light' ? 'rgba(227, 222, 225, 0.8)' : 'rgba(106, 106, 106, 0.8)',
+            borderColor: theme === 'light' ? 'rgba(227, 222, 225, 0.8)' : 'rgba(106, 106, 106, 0.8)',
             borderWidth: 1,
         },
         {
@@ -55,19 +56,22 @@ const createSampleData = (years:any, dataset:any, total:any, label:any, backgrou
 });
 
 function YearGraph({data}:{data:any}){
+    const {theme} = useTheme();
     const years = generateLabels(Object.keys(data["totals"]).length)
     console.log("years", years)
     const total = data["totals"]
+    console.log("data", data)
     const linked = data["dlty"]
+
     const not_linked = data["dnlty"]
     const tracked = data["duty"]
     const collected = data["dnc"]
 
     const sampleDatasets = [
-        createSampleData(years, data["dlty"], total, 'Linked Apps', 'rgba(54, 162, 235, 0.5)'),
-        createSampleData(years, data["dnlty"], total, 'Not Linked Apps', 'rgba(255, 206, 86, 0.5)'),
-        createSampleData(years, data["duty"], total, 'Tracked Apps', 'rgba(75, 192, 192, 0.5)'),
-        createSampleData(years, data["dnc"], total, 'Collected Apps', 'rgba(153, 102, 255, 0.5)'),
+        createSampleData(years, data["dnc"], total, 'Data Not Collected', 'rgba(255, 206, 86, 1)',  theme),
+        createSampleData(years, data["dnlty"], total, 'Data Not Linked', 'rgba(54, 162, 235, 1)', theme),
+        createSampleData(years, data["dlty"], total, 'Data Linked', 'rgba(153, 102, 255, 1)', theme),
+        createSampleData(years, data["duty"], total, 'Data Used to Track', 'rgba(75, 192, 192, 1)', theme),
     ];
 
     const options = {
@@ -105,9 +109,7 @@ function YearGraph({data}:{data:any}){
                 stacked: false,
                 beginAtZero: true,
                 ticks: {
-                    display: false,
-                    stepSize: 20, // Optional: Sets step size, depending on your data range
-                    maxTicksLimit: 10, // Limit the number of tick marks
+                    display: false
                 },
                 grid: {
                     drawTicks: true, // Ensures tick marks are drawn

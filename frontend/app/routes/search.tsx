@@ -1,9 +1,16 @@
 import { useTheme } from 'next-themes';
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Links, Meta, Scripts, ScrollRestoration, useLoaderData, useSubmit } from "@remix-run/react";
+import { Form, Links, Meta, Scripts, ScrollRestoration, useFetcher, useLoaderData, useSubmit } from "@remix-run/react";
 import { useState, useRef, useEffect } from 'react';
 import { Link, Outlet } from '@remix-run/react';
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [{
+    title: "Search",
+  }];
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
     // Loads the list of apps first
@@ -26,6 +33,7 @@ export default function Search() {
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const submit = useSubmit();
+    const fetcher = useFetcher();
 
     // Close the dropdown when clicking outside
     useEffect(() => {
@@ -54,7 +62,9 @@ export default function Search() {
                     <div className={`flex flex-col items-center shadow-lg rounded-lg p-4 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
                         <h1 className="text-2xl font-bold mb-4">IOS Apps</h1>
                         <Form id="search-form" onChange={(event) =>
-                            submit(event.currentTarget)
+                            submit(event.currentTarget, {
+                                replace: true
+                            })
                         }
                             role="search" className="w-full flex flex-col items-center">
                             <input
@@ -73,7 +83,7 @@ export default function Search() {
                                     <ul className={`absolute top-full left-0 right-0 mt-2 border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto  ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'}`}>
                                         {data.map((app:any, index:any) => (
                                             <li key={index} className={`px-4 py-2 cursor-pointer ${theme === 'dark' ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                                                <Link to={'/search/' + app.app_id}>
+                                                <Link to={'/app/' + app.app_id}>
                                                     {app.app_name}
                                                 </Link>
 

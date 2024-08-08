@@ -13,6 +13,7 @@ import {
 import { LoaderFunction, LoaderFunctionArgs, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { useTheme } from "next-themes";
 
 
 ChartJS.register(
@@ -26,6 +27,7 @@ ChartJS.register(
 );
 
 export default function PercentageGraph ({data}:{data:any}) {   
+    const { theme } = useTheme();
     console.log(data)
     const track = [data["duty_free_no_app"], data["duty_free_in_app"], data["duty_paid_no_app"], data["duty_paid_in_app"]]
     const not_linked = [data["dnlty_free_no_app"], data["dnlty_free_in_app"], data["dnlty_paid_no_app"], data["dnlty_paid_in_app"]]
@@ -40,8 +42,8 @@ export default function PercentageGraph ({data}:{data:any}) {
             {
                 label: 'Data Not Collected',
                 data: collected,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
                 borderWidth: 1,
             }
         ],
@@ -55,8 +57,8 @@ export default function PercentageGraph ({data}:{data:any}) {
             {
                 label: 'Data Not Linked to You',
                 data: not_linked,
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
             }
         ],
@@ -70,8 +72,8 @@ export default function PercentageGraph ({data}:{data:any}) {
             {
                 label: 'Data Linked to You',
                 data: linked,
-                backgroundColor: 'rgba(255, 159, 64, 0.5)',
-                borderColor: 'rgb(255, 159, 64)',
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
                 borderWidth: 1,
             }
         ],
@@ -85,8 +87,8 @@ export default function PercentageGraph ({data}:{data:any}) {
             {
                 label: 'Data Used to Track You',
                 data: track,
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             }
         ],
@@ -103,7 +105,7 @@ export default function PercentageGraph ({data}:{data:any}) {
                 display: true,
                 align: 'end',
                 anchor: 'start',
-                color: '#000',
+                color: theme === 'dark' ? '#FFF' : '#000',
                 formatter: (value: number) => `${value}%`, // Format the label
                 font: {
                     weight: 'bold'
