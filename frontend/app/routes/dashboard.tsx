@@ -15,6 +15,14 @@ import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import PercentageGraph from "~/components/PercentageGraph";
 
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [{
+    title: "Dashboard",
+  }];
+};
+
 export async function loader({params}: LoaderFunctionArgs){
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()

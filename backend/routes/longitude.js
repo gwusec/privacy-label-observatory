@@ -84,18 +84,17 @@ router.get('/', async function(req, res) {
         runNumberToDateMap[run.run_number] = run.date;
     });
 
+
     // Replace run numbers with dates in results
     for (const key in results) {
         results[key] = results[key].map(item => {
             // Determine the length of the key and apply padding accordingly
             const runNumberLength = item.key.toString().length;
-            console.log(item.key)
-            console.log(runNumberLength)
             let formattedRunNumber;
             
             if (item.key < 10) {
-                // If the key length is 4, pad to 4 digits (for run_0001)
-                formattedRunNumber = `run_${String(item.key).padStart(4, '0')}`;
+                // If the key length is 4, pad to 4 digits (for run_00001)
+                formattedRunNumber = `run_${String(item.key).padStart(5, '0')}`;
             } else {
                 // If the key length is 5, pad to 5 digits (for run_00011)
                 formattedRunNumber = `run_${String(item.key).padStart(5, '0')}`;

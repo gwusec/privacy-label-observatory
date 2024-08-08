@@ -5,7 +5,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
 interface DataItem {
-  key: number;
+  key: string;
   doc_count: number;
 }
 
@@ -21,7 +21,7 @@ interface LineChartProps {
 }
 
 const LineChart: React.FC<LineChartProps> = ({ data }) => {
-  console.log(data);
+  console.log("LineChart",data);
   const chartRef = useRef<ChartJS | null>(null);
 
   useEffect(() => {
@@ -36,11 +36,13 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
   const hasData = (dataset: DataItem[]) => dataset && dataset.length > 0;
 
   const labels = (data.DATA_USED_TO_TRACK_YOU || []).map(item => item.key.toString());
+  console.log('labels', labels)
 
   const getData = (dataset: DataItem[]) => {
-    const dataMap = new Map<number, number>();
+    const dataMap = new Map<string, number>();
     dataset.forEach(item => dataMap.set(item.key, item.doc_count));
-    return labels.map(label => dataMap.get(Number(label)) || 0);
+    const result = labels.map(label => dataMap.get(label) || 0);
+    return result
   };
 
   const chartData = {

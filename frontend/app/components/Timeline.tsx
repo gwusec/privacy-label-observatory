@@ -3,7 +3,7 @@ import { useTheme } from "next-themes";
 
 
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import noPhoto from "../resources/no_available_photo.jpg"
@@ -11,6 +11,8 @@ import noPhoto from "../resources/no_available_photo.jpg"
 //CSS and Component for the timeline
 import VerticalTimeline from "~/components/VerticalTimeline";
 import HorizontalTimeline from '~/components/HorizontalTimeline';
+import { Button } from '@nextui-org/react';
+
 
 interface dataType {
     data_category: Number,
@@ -36,6 +38,7 @@ interface privLabel {
 }
 
 export default function Timeline({ data }: { data: any }) {
+    const navigate = useNavigate()
     const [activeIndex, setActiveIndex] = useState(0);
     const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
     const [expandedColumn, setExpandedColumn] = useState(null);
@@ -43,6 +46,10 @@ export default function Timeline({ data }: { data: any }) {
     const handleClick = (event: any, index: number) => {
         console.log("called", index)
         setActiveIndex(index)
+    };
+
+    const handleButton = () => {
+        navigate("/search")
     };
 
     const handleExpand = (column: any) => {
@@ -92,7 +99,8 @@ export default function Timeline({ data }: { data: any }) {
                 }
                 <div className="ml-10 m-2 items-start mt-6">
                     <h1 className="text-2xl font-bold">{app_name}</h1>
-                    <h2 className="text-sm text-gray-500">id: {app_id}</h2>
+                    <h2 className="text-sm text-gray-500">App ID: {app_id}</h2>
+                    <Button onClick={handleButton}>Return to Search</Button>
                 </div>
             </div>
             <div
