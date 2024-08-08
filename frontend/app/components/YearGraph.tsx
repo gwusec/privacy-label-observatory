@@ -34,14 +34,14 @@ const generateLabels = (length:number) => {
     return labels.reverse()
 }
 
-const createSampleData = (years:any, dataset:any, total:any, label:any, backgroundColor:any) => ({
+const createSampleData = (years:any, dataset:any, total:any, label:any, backgroundColor:any, borderColor: any) => ({
     labels: years,
     datasets: [
         {
             label: 'Total Apps',
             data: total,
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(227, 222, 225, 0.8)',
+            borderColor: 'rgba(227, 222, 225, 0.8)',
             borderWidth: 1,
         },
         {
@@ -66,10 +66,10 @@ function YearGraph({data}:{data:any}){
     const collected = data["dnc"]
 
     const sampleDatasets = [
-        createSampleData(years, data["dlty"], total, 'Linked Apps', 'rgba(54, 162, 235, 0.5)'),
-        createSampleData(years, data["dnlty"], total, 'Not Linked Apps', 'rgba(255, 206, 86, 0.5)'),
-        createSampleData(years, data["duty"], total, 'Tracked Apps', 'rgba(75, 192, 192, 0.5)'),
-        createSampleData(years, data["dnc"], total, 'Collected Apps', 'rgba(153, 102, 255, 0.5)'),
+        createSampleData(years, data["dnc"], total, 'Data Not Collected', 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 0.2)'),
+        createSampleData(years, data["dnlty"], total, 'Data Not Linked', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 0.2)'),
+        createSampleData(years, data["dlty"], total, 'Data Linked', 'rgba(153, 102, 255, 1)', 'rgba(153, 102, 255, 0.2)'),
+        createSampleData(years, data["duty"], total, 'Data Used to Track', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 0.2)'),
     ];
 
     const options = {
@@ -107,9 +107,7 @@ function YearGraph({data}:{data:any}){
                 stacked: false,
                 beginAtZero: true,
                 ticks: {
-                    display: false,
-                    stepSize: 20, // Optional: Sets step size, depending on your data range
-                    maxTicksLimit: 10, // Limit the number of tick marks
+                    display: false
                 },
                 grid: {
                     drawTicks: true, // Ensures tick marks are drawn
