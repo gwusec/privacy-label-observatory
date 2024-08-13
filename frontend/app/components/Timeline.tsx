@@ -13,6 +13,11 @@ import VerticalTimeline from "~/components/VerticalTimeline";
 import HorizontalTimeline from '~/components/HorizontalTimeline';
 import { Button } from '@nextui-org/react';
 
+//Iconography 
+import linked from "../resources/linked.svg"
+import not_linked from "../resources/not_linked.svg"
+import track from "../resources/track.svg"
+
 
 interface dataType {
     data_category: Number,
@@ -42,6 +47,7 @@ export default function Timeline({ data }: { data: any }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
     const [expandedColumn, setExpandedColumn] = useState(null);
+    const [allColumns, expandAllColumns] = useState(false);
 
     const handleClick = (event: any, index: number) => {
         console.log("called", index)
@@ -59,6 +65,15 @@ export default function Timeline({ data }: { data: any }) {
             setExpandedColumn(column); // Expand the clicked column
         }
     };
+
+    const expandAll = () => {
+        if (allColumns === false) {
+            expandAllColumns(true); // Collapse if already expanded
+        } else {
+            expandAllColumns(false); // Expand the clicked column
+        }
+    };
+
 
     const updateParent = (index: number) => {
         setActiveIndex(index)
@@ -82,7 +97,7 @@ export default function Timeline({ data }: { data: any }) {
     };
 
     return (
-        <div className=' '>
+        <div className=''>
             <div className="ml-10 flex">
                 {image_url == undefined ?
                     <img
@@ -100,32 +115,34 @@ export default function Timeline({ data }: { data: any }) {
                 <div className="ml-10 m-2 items-start mt-6">
                     <h1 className="text-2xl font-bold">{app_name}</h1>
                     <h2 className="text-sm text-gray-500">App ID: {app_id}</h2>
-                    <Button onClick={handleButton}>Return to Search</Button>
+
                 </div>
             </div>
             <div
-  className={`flex justify-center items-center `}
->
-  <div className={` p-4 mb-4 rounded-lg h-fit ml-2 w-fit ${
-    theme === 'dark'
-      ? 'bg-neutral-300 rounded-lg shadow'
-      : ''
-  }`}>
-    <HorizontalTimeline
-      privtypes={privacy_types}
-      activeIndex={activeIndex}
-      updateParent={updateParent}
-      handleClick={handleClick}
-    />
-  </div>
-</div>
-
+                className={`flex justify-center items-center `}
+            >
+                <div className={` p-4 mb-4 rounded-lg h-fit ml-2 w-fit ${theme === 'dark'
+                    ? 'bg-neutral-300 rounded-lg shadow'
+                    : ''
+                    }`}>
+                    <HorizontalTimeline
+                        privtypes={privacy_types}
+                        activeIndex={activeIndex}
+                        updateParent={updateParent}
+                        handleClick={handleClick}
+                    />
+                </div>
+            </div>
+            <div className='flex flex-row justify-between items-end mr-4'>
+                <Button className='ml-6' onClick={handleButton}>Return to Search</Button>
+                <Button onClick={() => expandAll()} className={`text-cyan-500  ${theme === 'dark' ? 'bg-black' : 'bg-white'} font-medium`}>View {allColumns ? 'Less' : 'More'}</Button>
+            </div>
             <div className="flex">
                 <div className='p-2 flex w-full'>
 
                     {/* Need to come back to this since currently it's wrong */}
                     <div
-                        className={`m-4 rounded-lg w-full text-center p-4 shadow-md 
+                        className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
                 ${theme === 'dark' && expandedColumn != 'column1' ?
                                 'text-white bg-neutral-800' :
                                 'text-red bg-neutral-300'} 
@@ -149,7 +166,10 @@ export default function Timeline({ data }: { data: any }) {
                         </div>
                         {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ?
                             <div>
-                                <h3 className="">Data Used to Track You</h3>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={track} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Used to Track You</h3>
+                                </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
                                         <ul className="mt-4 pl-6 list-none space-y-4">
@@ -182,13 +202,16 @@ export default function Timeline({ data }: { data: any }) {
                             :
                             <div className=''>
 
-                                <h3>Data Used to Track You</h3>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={track} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Used to Track You</h3>
+                                </div>
                                 <p>No Data</p>
                             </div>}
                     </div>
 
                     <div
-                        className={`m-4 rounded-lg w-full text-center p-4 shadow-md 
+                        className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
                 ${theme === 'dark' && expandedColumn != 'column2' ?
                                 'text-white bg-neutral-800' :
                                 'text-red bg-neutral-300'} 
@@ -212,29 +235,34 @@ export default function Timeline({ data }: { data: any }) {
                         </div>
                         {checkValueInDetails('DATA_LINKED_TO_YOU') ?
                             <div>
-                                <h3 className="">Data Linked to You</h3>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Linked to You</h3>
+                                </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_LINKED_TO_YOU" ?
-                                        <ul className="mt-4 pl-6 list-none space-y-4">
+                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}`}>
                                             {expandedColumn === null &&
                                                 <div>
                                                     The following data may be collected and linked to your identity:
                                                 </div>
                                             }
                                             {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
-                                                <div key={purposeIndex} className="space-y-2">
+                                                <div key={purposeIndex} className={`space-y-2`}>
                                                     <li className="text-lg font-semibold">
                                                         {purpose.purpose}
                                                     </li>
                                                     {expandedColumn === 'column2' && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
                                                         <div key={dataCategoryIndex} className="p-2">
-                                                            <li className="text-base rounded-md p-2 ">
+                                                            <li className="text-base rounded-md p-2  flex flex-col">
                                                                 {dataCategory.dataCategory}:
-                                                                {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                    <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
-                                                                        {dataType.data_type}
-                                                                    </span>
-                                                                ))}
+                                                                <div className=''>
+                                                                    {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                        <span key={dataTypeIndex} className='text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                                                            {dataType.data_type}
+                                                                        </span>
+                                                                    ))}
+                                                                </div>
                                                             </li>
                                                         </div>
                                                     ))}
@@ -248,13 +276,16 @@ export default function Timeline({ data }: { data: any }) {
                             :
                             <div className="">
 
-                                <h3>Data Linked to You</h3>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Linked to You</h3>
+                                </div>
                                 <p>No Data</p>
                             </div>}
                     </div>
 
                     <div
-                        className={`m-4 rounded-lg w-full text-center p-4 shadow-md 
+                        className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
                 ${theme === 'dark' && expandedColumn != 'column3' ?
                                 'text-white bg-neutral-800' :
                                 'text-red bg-neutral-300'} 
@@ -278,7 +309,10 @@ export default function Timeline({ data }: { data: any }) {
                                 <div className='flex justify-end'>
                                     {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
                                 </div>
-                                <h3>Data Not Linked to You</h3>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={not_linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Not Linked to You</h3>
+                                </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_NOT_LINKED_TO_YOU" ?
                                         <ul className="mt-4 pl-6 list-none space-y-4">
@@ -316,7 +350,10 @@ export default function Timeline({ data }: { data: any }) {
                                 <div className='flex justify-end'>
                                     {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
                                 </div>
-                                <h3>Data Not Linked to You</h3>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={not_linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Not Linked to You</h3>
+                                </div>
                                 <p>No Data</p>
                             </div>}
                     </div>
@@ -335,6 +372,7 @@ export default function Timeline({ data }: { data: any }) {
                 </div>
 
             </div>
+
         </div>
     )
 }
