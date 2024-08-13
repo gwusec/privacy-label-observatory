@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useRef } from 'react';
 // import 'shepherd.js/dist/css/shepherd.css';
 import { useTheme } from "next-themes";
 import Shepherd from 'shepherd.js';
@@ -23,7 +24,7 @@ export const meta: MetaFunction = () => {
   }];
 };
 
-export async function loader({params}: LoaderFunctionArgs){
+export async function loader({ params }: LoaderFunctionArgs) {
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
   const percentage = await fetch(process.env.BACKEND_API + "graph16")
@@ -43,15 +44,16 @@ export async function loader({params}: LoaderFunctionArgs){
 }
 
 export default function Index() {
+  const refs = useRef([]);
   const navigate = useNavigate()
   const { state } = useNavigation()
-    const data = useLoaderData<typeof loader>();
-    const vennDiagram = data[0]
-    const percentage = data[1]
-    const dates = data[2]
-    const longitude = data[3]
-    const ratios = data[4]
-    const matrix = data[5]
+  const data = useLoaderData<typeof loader>();
+  const vennDiagram = data[0]
+  const percentage = data[1]
+  const dates = data[2]
+  const longitude = data[3]
+  const ratios = data[4]
+  const matrix = data[5]
 
   const goToApps = () => {
     navigate("/search");
@@ -60,6 +62,13 @@ export default function Index() {
   const goToGraphs = () => {
     navigate("/graphs");
   }
+
+  const handleScroll = (index) => {
+    refs.current[index]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  };
 
   const { theme } = useTheme();
   return (
@@ -71,68 +80,75 @@ export default function Index() {
         :
         <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark' : 'bg-light'} overflow-hidden`}>
           <div id="main-text">
-
             <div>
-              <div style={{ width: '80%',  margin: '0 auto' }}>
-                    <div className="mb-20 mt-10">
-                        <h1 className="text-center font-bold">Longitude Data Chart</h1>
-                            <LineChart data={longitude} />
-                        <h3>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
-                    </div>
-                    <div className="mb-20">
-                      <h1 className="text-center font-bold">Purpose Chart</h1>
-                      <div className="flex flex-row space-x-4 mt-10 mb-20">
-                          <div className="flex flex-col items-center w-1/3">
-                              <h1 className="text-center">Data Used to Track You</h1>
-                              <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} />
-                          </div>
-                          <div className="flex flex-col items-center w-1/3">
-                              <h1 className="text-center">Data Linked to You</h1>
-                              <Ratios data={ratios.DATA_LINKED_TO_YOU} />
-                          </div>
-                          <div className="flex flex-col items-center w-1/3">
-                              <h1 className="text-center">Data Not Linked to You</h1>
-                              <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} />
-                          </div>
-                      </div>
-                      <h3>The ratios of the six Purposes for the Data Used to Track You, Data Linked to You and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.</h3>
-                    </div>
-                    <div className="mb-20">
-                      <h1 className="text-center font-bold">Matrix Charts</h1>
-                        <div className="flex flex-row space-x-4">
-                            <div className="flex flex-col items-center w-1/2">
-                                <h1 className="text-center">Data Linked to You</h1>
-                                <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
-                            </div>
-                            <div className="flex flex-col items-center w-1/2">
-                                <h1 className="text-center">Data Not Linked to You</h1>
-                                <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
-                            </div>
-                        </div>
-                        <h4>The ratios of of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
-                            to You (right) Privacy Types.</h4>
-                    </div>
-                    <div className="mb-20"> 
-                        <h1 className="text-center  font-bold" >Venn Diagram</h1>
-                        <VennDiagram data={vennDiagram}/>
-                        <h3 className="mt-5">A Venn diagram of the number of apps in each
-of the four Privacy Types. Data Not Collected is mutually
-exclusive to the other three Privacy Types</h3>
-                    </div>
-                    <div className="mb-20">
-                      <h1 className="text-center font-bold" >Data Collected per Payment Method</h1>
-                        <PercentageGraph data={percentage} />
-                        <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
-linked to users.</h3>
-                    </div>
-
-                    <div className="mb-20">
-                    <h1 className="text-center  font-bold" >Years vs Type of Apps</h1>
-                        <YearGraph data={dates} />
-                        <h3 className="">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
-number of apps with privacy labels released in that year. </h3>
-                        </div>
+            <div className="fixed left-0 top-20 flex flex-col space-y-4 p-4 items-start">
+                <button onClick={() => handleScroll(0)} className={`px-2 py-1 text-md font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>App Privacy Trends</button>
+                <button onClick={() => handleScroll(1)} className={`px-2 py-1 text-md font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>Purpose Ratios</button>
+                <button onClick={() => handleScroll(2)} className={`px-2 py-1 text-md font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>Data Category Ratios</button>
+                <button onClick={() => handleScroll(3)} className={`px-2 py-1 text-md font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>Privacy Type Overlap</button>
+                <button onClick={() => handleScroll(4)} className={`px-2 py-1 text-md font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>App Cost Ratios</button>
+                <button onClick={() => handleScroll(5)} className={`px-2 py-1 text-md font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>Yearly App Releases</button>
+              </div>
+              <div style={{ width: '80%', margin: '0 auto' }}>
+                <div className="mb-20 mt-10" ref={(el) => (refs.current[0] = el)}>
+                  <h1 className="text-center font-bold">Annual Trends in App Privacy Compliance</h1>
+                  <LineChart data={longitude} />
+                  <h3>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
                 </div>
+                <div className="mb-20" ref={(el => (refs.current[1] = el))}>
+                  <h1 className="text-center font-bold">Purpose Distribution Across Privacy Types</h1>
+                  <div className="flex flex-row space-x-4 mt-10 mb-20">
+                    <div className="flex flex-col items-center w-1/3">
+                      <h1 className="text-center">Data Used to Track You</h1>
+                      <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} />
+                    </div>
+                    <div className="flex flex-col items-center w-1/3">
+                      <h1 className="text-center">Data Linked to You</h1>
+                      <Ratios data={ratios.DATA_LINKED_TO_YOU} />
+                    </div>
+                    <div className="flex flex-col items-center w-1/3">
+                      <h1 className="text-center">Data Not Linked to You</h1>
+                      <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} />
+                    </div>
+                  </div>
+                  <h3>The ratios of the six Purposes for the Data Used to Track You, Data Linked to You and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.</h3>
+                </div>
+                <div className="mb-20" ref={(el => (refs.current[2] = el))}>
+                  <h1 className="text-center font-bold">Data Category Ratios by Privacy Type</h1>
+                  <div className="flex flex-row space-x-4">
+                    <div className="flex flex-col items-center w-1/2">
+                      <h1 className="text-center">Data Linked to You</h1>
+                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
+                    </div>
+                    <div className="flex flex-col items-center w-1/2">
+                      <h1 className="text-center">Data Not Linked to You</h1>
+                      <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
+                    </div>
+                  </div>
+                  <h4>The ratios of of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
+                    to You (right) Privacy Types.</h4>
+                </div>
+                <div className="mb-20" ref={(el => (refs.current[3] = el))}>
+                  <h1 className="text-center  font-bold" >Overlap of Apps by Privacy Type</h1>
+                  <VennDiagram data={vennDiagram} />
+                  <h3 className="mt-5">A Venn diagram of the number of apps in each
+                    of the four Privacy Types. Data Not Collected is mutually
+                    exclusive to the other three Privacy Types</h3>
+                </div>
+                <div className="mb-20" ref={(el => (refs.current[4] = el))}>
+                  <h1 className="text-center font-bold" >App Costs vs. Privacy Practices</h1>
+                  <PercentageGraph data={percentage} />
+                  <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
+                    linked to users.</h3>
+                </div>
+
+                <div className="mb-20" ref={(el => (refs.current[5] = el))}>
+                  <h1 className="text-center font-bold" >Yearly App Releases with Privacy Labels</h1>
+                  <YearGraph data={dates} />
+                  <h3 className="">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
+                    number of apps with privacy labels released in that year. </h3>
+                </div>
+              </div>
             </div>
 
           </div>
