@@ -79,12 +79,15 @@ export default function Index() {
             <div className="mb-20">
               <h1 className="text-4xl font-semibold mb-16 text-center">GWU SEC Privacy Label Observatory Dashboard</h1>
               <h2 className="text-lg text-white-700 mb-4 text-center">
-                We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year. Explore our database:
+                We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year.
               </h2>
-              <div className="flex justify-center items-center space-x-4">
-                <button onClick={() => goToApps()} className={`px-4 py-1 text-lg font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>the Apps</button>
-                <button onClick={() => goToGraphs()} className={`px-4 py-1 text-lg font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>the Graphs</button>
-                <button onClick={() => goToInfo()} className={`px-4 py-1 text-lg font-semibold rounded-full border ${theme === 'dark' ? 'text-dred hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red border-black'}`}>the Research</button>
+              <h2 className="text-xl text-white-700 mb-4 mt-5 text-center">
+                Explore our database:
+              </h2>
+              <div className="flex justify-center items-center space-x-10 mt-20">
+              < button onClick={() => goToApps()}className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>the Apps</button>
+                <button onClick={() => goToGraphs()} className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>the Graphs</button>
+                <button onClick={() => goToInfo()} className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>the Research</button>
               </div>
               </div>
 
