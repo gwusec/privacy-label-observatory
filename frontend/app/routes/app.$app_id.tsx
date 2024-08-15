@@ -300,7 +300,7 @@ export default function searchApp(){
     const data = useLoaderData<typeof loader>();
     console.log("data", data)
     return(
-        <div className={`items-start h-screen`}>
+        <div className={`items-start min-h-screen h-full`}>
             <Timeline data={data}/>
         </div>
     )

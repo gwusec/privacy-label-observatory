@@ -10,6 +10,7 @@ import {
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import SiteIcon from "./SiteIcon";
 import GWIcon from "./GWIcon";
+import UICIcon from "./UICLogo";
 
 
 export default function AppNavBar() {
@@ -22,6 +23,7 @@ export default function AppNavBar() {
 
         <Link color="foreground" underline="hover" href="/" >
           <GWIcon></GWIcon>
+          <UICIcon></UICIcon>
           <SiteIcon></SiteIcon>
           <p className="font-bold text-inherit">Privacy Label Observatory</p>
         </Link>

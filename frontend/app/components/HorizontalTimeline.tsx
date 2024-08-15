@@ -13,10 +13,16 @@ const CustomStepLabel = styled(StepLabel)(({ active }) => ({
 }));
 
 function equal(obj1: any, obj2: any){
+    
+    if(obj1.privacyDetails.length == 0){
+        return obj2.privacyDetails.length == 0;
+    }
+    
     let obj1Fields = obj1.privacyDetails[0]
     let obj2Fields = obj2.privacyDetails[0]
 
     console.log('obj1Fields', obj1Fields)
+
 
     if(obj1Fields.identifier != obj2Fields.identifier){
         return false;
@@ -49,6 +55,8 @@ function findChanges(runs: any){
     for(let i=0; i<runs.length-1; i++){
         const currentRun = runs[i];
         const nextRun = runs[i + 1];
+        console.log("currentRun", currentRun)
+        console.log("nextRun", nextRun)
         if (!equal(currentRun.privacy_types, nextRun.privacy_types)) {
             console.log(`Change detected between run ${currentRun.index} and run ${nextRun.index}`);
             // You can log the differences or handle them as needed
