@@ -59,6 +59,7 @@ export default function Timeline({ data }: { data: any }) {
     };
 
     const handleExpand = (column: any) => {
+        expandAllColumns(false)
         if (expandedColumn === column) {
             setExpandedColumn(null); // Collapse if already expanded
         } else {
@@ -67,6 +68,7 @@ export default function Timeline({ data }: { data: any }) {
     };
 
     const expandAll = () => {
+        setExpandedColumn(null);
         if (allColumns === false) {
             expandAllColumns(true); // Collapse if already expanded
         } else {
@@ -172,26 +174,29 @@ export default function Timeline({ data }: { data: any }) {
                                 </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
-                                        <ul className="mt-4 pl-6 list-none space-y-4">
-                                            {expandedColumn === null &&
+                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
+                                            {expandedColumn === null && allColumns === false &&
                                                 <div>
                                                     The following data may be collected and linked to your identity:
                                                 </div>
                                             }
                                             {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                                <div key={dataCategoryIndex} className="space-y-2">
-                                                    <li className="text-lg font-semibold">
-                                                        {dataCategory.dataCategory}
-                                                    </li>
-                                                    {expandedColumn === 'column1' && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                        <div key={dataCategoryIndex} className="p-2">
-                                                            <li className="text-base rounded-md p-2">
-                                                                <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
-                                                                    {dataType.data_type}
-                                                                </span>
-                                                            </li>
-                                                        </div>
-                                                    ))}
+                                                <div className='flex flex-wrap justify-center'>
+                                                    <div key={dataCategoryIndex} className="space-y-2">
+                                                        <li className="text-lg font-semibold">
+                                                            {dataCategory.dataCategory}
+                                                        </li>
+
+                                                        {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                            <div key={dataCategoryIndex} className="p-2">
+                                                                <li className="text-base rounded-md p-2">
+                                                                    <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                                                        {dataType.data_type}
+                                                                    </span>
+                                                                </li>
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             ))}
                                         </ul>
@@ -206,7 +211,7 @@ export default function Timeline({ data }: { data: any }) {
                                     <img src={track} alt="" className="w-8 h-8" />
                                     <h3 className="text-lg">Data Used to Track You</h3>
                                 </div>
-                                <p>No Data</p>
+                                <p>No Data Collected</p>
                             </div>}
                     </div>
 
@@ -241,8 +246,8 @@ export default function Timeline({ data }: { data: any }) {
                                 </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_LINKED_TO_YOU" ?
-                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}`}>
-                                            {expandedColumn === null &&
+                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
+                                            {expandedColumn === null && allColumns === false &&
                                                 <div>
                                                     The following data may be collected and linked to your identity:
                                                 </div>
@@ -252,11 +257,11 @@ export default function Timeline({ data }: { data: any }) {
                                                     <li className="text-lg font-semibold">
                                                         {purpose.purpose}
                                                     </li>
-                                                    {expandedColumn === 'column2' && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                                    {(expandedColumn === 'column2' || allColumns === true) && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
                                                         <div key={dataCategoryIndex} className="p-2">
                                                             <li className="text-base rounded-md p-2  flex flex-col">
                                                                 {dataCategory.dataCategory}:
-                                                                <div className=''>
+                                                                <div className='flex flex-wrap justify-center'>
                                                                     {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
                                                                         <span key={dataTypeIndex} className='text-sm px-2 m-1 rounded-full border border-orange-400'>
                                                                             {dataType.data_type}
@@ -280,7 +285,7 @@ export default function Timeline({ data }: { data: any }) {
                                     <img src={linked} alt="" className="w-8 h-8" />
                                     <h3 className="text-lg">Data Linked to You</h3>
                                 </div>
-                                <p>No Data</p>
+                                <p>No Data Collected</p>
                             </div>}
                     </div>
 
@@ -315,8 +320,8 @@ export default function Timeline({ data }: { data: any }) {
                                 </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_NOT_LINKED_TO_YOU" ?
-                                        <ul className="mt-4 pl-6 list-none space-y-4">
-                                            {expandedColumn === null &&
+                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
+                                            {expandedColumn === null && allColumns === false &&
                                                 <div>
                                                     The following data may be collected but it is not linked to your identity:
                                                 </div>
@@ -326,15 +331,17 @@ export default function Timeline({ data }: { data: any }) {
                                                     <li className="text-lg font-semibold ">
                                                         {purpose.purpose}
                                                     </li>
-                                                    {expandedColumn === 'column3' && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                                        <div key={dataCategoryIndex} className="p-2">
+                                                    {(expandedColumn === 'column3' || allColumns === true) && purpose.dataCategories && purpose.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                                        <div key={dataCategoryIndex} className="p-2 ">
                                                             <li className={`text-base rounded-md p-2`}>
                                                                 {dataCategory.dataCategory}:
-                                                                {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                    <span key={dataTypeIndex} className={`inline-block text-sm px-2 m-1 rounded-full border border-orange-400`}>
-                                                                        {dataType.data_type}
-                                                                    </span>
-                                                                ))}
+                                                                <div className='flex flex-wrap justify-center'>
+                                                                    {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                        <span key={dataTypeIndex} className={`inline-block text-sm px-2 m-1 rounded-full border border-orange-400`}>
+                                                                            {dataType.data_type}
+                                                                        </span>
+                                                                    ))}
+                                                                </div>
                                                             </li>
                                                         </div>
                                                     ))}
@@ -354,7 +361,7 @@ export default function Timeline({ data }: { data: any }) {
                                     <img src={not_linked} alt="" className="w-8 h-8" />
                                     <h3 className="text-lg">Data Not Linked to You</h3>
                                 </div>
-                                <p>No Data</p>
+                                <p>No Data Collected</p>
                             </div>}
                     </div>
                 </div>
