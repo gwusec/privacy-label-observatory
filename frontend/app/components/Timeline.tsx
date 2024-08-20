@@ -174,7 +174,7 @@ export default function Timeline({ data }: { data: any }) {
                                 </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
-                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
+                                        <ul className={`mt-4 pl-6 list-none ${expandedColumn === null && allColumns ===false ? 'space-y-4' : ''} ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
                                             {expandedColumn === null && allColumns === false &&
                                                 <div>
                                                     The following data may be collected and linked to your identity:
@@ -182,7 +182,7 @@ export default function Timeline({ data }: { data: any }) {
                                             }
                                             {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
                                                 <div className='flex flex-wrap justify-center'>
-                                                    <div key={dataCategoryIndex} className="space-y-2">
+                                                    <div key={dataCategoryIndex} className="">
                                                         <li className="text-lg font-semibold">
                                                             {dataCategory.dataCategory}
                                                         </li>
@@ -246,14 +246,14 @@ export default function Timeline({ data }: { data: any }) {
                                 </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_LINKED_TO_YOU" ?
-                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
+                                        <ul className={`mt-4 pl-6 list-none ${expandedColumn === null && allColumns ===false ? 'space-y-4' : ''} ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
                                             {expandedColumn === null && allColumns === false &&
                                                 <div>
                                                     The following data may be collected and linked to your identity:
                                                 </div>
                                             }
                                             {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
-                                                <div key={purposeIndex} className={`space-y-2`}>
+                                                <div key={purposeIndex} className={``}>
                                                     <li className="text-lg font-semibold">
                                                         {purpose.purpose}
                                                     </li>
@@ -263,7 +263,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                 {dataCategory.dataCategory}:
                                                                 <div className='flex flex-wrap justify-center'>
                                                                     {dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                        <span key={dataTypeIndex} className='text-sm px-2 m-1 rounded-full border border-orange-400'>
+                                                                        <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
                                                                             {dataType.data_type}
                                                                         </span>
                                                                     ))}
@@ -320,14 +320,14 @@ export default function Timeline({ data }: { data: any }) {
                                 </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_NOT_LINKED_TO_YOU" ?
-                                        <ul className={`mt-4 pl-6 list-none space-y-4 ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
+                                        <ul className={`mt-4 pl-6 list-none ${expandedColumn === null && allColumns ===false ? 'space-y-4' : ''} ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
                                             {expandedColumn === null && allColumns === false &&
                                                 <div>
                                                     The following data may be collected but it is not linked to your identity:
                                                 </div>
                                             }
                                             {priv.purposes && priv.purposes.map((purpose, purposeIndex) => (
-                                                <div key={purposeIndex} className="space-y-2">
+                                                <div key={purposeIndex} className="">
                                                     <li className="text-lg font-semibold ">
                                                         {purpose.purpose}
                                                     </li>
