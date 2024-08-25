@@ -27,9 +27,11 @@ export async function loader({ params }: LoaderFunctionArgs) {
     const ratios = await response2.json();
     const response3 = await fetch('http://localhost:8017/matrix');
     const matrix = await response3.json();
+    const response4 = await fetch('http://localhost:8017/figure7');
+    const privacyTypes = await response4.json();
 
 
-    return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix]
+    return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes]
 }
 
 export default function Graphs() {
@@ -41,7 +43,8 @@ export default function Graphs() {
     const longitude = data[3]
     const ratios = data[4]
     const matrix = data[5]
-    console.log("longitude", longitude)
+    const privacyTypes = data[6];
+    console.log("hiiii\n" + privacyTypes)
 
 
     return (
@@ -104,6 +107,11 @@ export default function Graphs() {
                         <YearGraph data={dates} />
                         <h4>The number of apps released during a given year for each of the four Privacy Types. The gray bars show the total
                             number of apps with privacy labels released in that year. </h4>
+                    </div>
+                    <div className="mb-20">
+                        <h1>Privacy Types Data Chart</h1>
+                        <PrivacyTypesChart data={privacyTypes} />
+                        <h4>Comparison of the data categories across different privacy types.</h4>
                     </div>
                 </div>
             }
