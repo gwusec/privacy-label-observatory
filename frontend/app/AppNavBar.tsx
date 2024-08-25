@@ -42,23 +42,23 @@ export default function AppNavBar() {
             Wiki
           </Link>
         </NavbarItem> */}
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" underline="hover" href="/graphs">
             Graphs
           </Link>
-        </NavbarItem>
-        <NavbarItem>
+        </NavbarItem> */}
+        {/* <NavbarItem>
           <Link color="foreground" underline="hover" href="/explore?page=0&run=run_00069">
             Explore
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem>
           <Link color="foreground" underline="hover" href="/search">
             Search
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" underline="hover" href="/">
+          <Link color="foreground" underline="hover" href="/documentation">
             Documentation
           </Link>
         </NavbarItem>
