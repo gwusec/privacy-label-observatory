@@ -57,7 +57,7 @@ export default function Search() {
 
     return (
         <div className='h-screen'>
-            <div className={`${theme === 'dark' ? 'bg-dark-gradient' : 'bg-light-gradient'} min-h-screen flex justify-center`}>
+            <div className={`min-h-screen flex justify-center`}>
                 <div className="absolute top-20 w-full max-w-lg mx-auto p-4">
                     <div className={`flex flex-col items-center shadow-lg rounded-lg p-4 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
                         <h1 className="text-2xl font-bold mb-4">IOS Apps</h1>
