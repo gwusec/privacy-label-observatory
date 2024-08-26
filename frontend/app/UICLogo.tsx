@@ -1,10 +1,10 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-import logoBlack from "./resources/gw_blk.png"
-import logoWhite from "./resources/gw_wht.png"
+import logoBlack from "./resources/uic_black.png"
+import logoWhite from "./resources/uic_white.png"
 
-export default function GWIcon(){
+export default function UICIcon(){
     const [mounted, setMounted] = useState(false)
     const { theme } = useTheme()
 
