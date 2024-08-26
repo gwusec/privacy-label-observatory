@@ -275,7 +275,7 @@
 //     )
 // }
 
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button } from '@nextui-org/react';
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
@@ -300,7 +300,7 @@ export default function searchApp(){
     const data = useLoaderData<typeof loader>();
     console.log("data", data)
     return(
-        <div className='items-start h-screen'>
+        <div className={`items-start min-h-screen h-full`}>
             <Timeline data={data}/>
         </div>
     )
