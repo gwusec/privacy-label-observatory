@@ -11,9 +11,10 @@ interface DataTypesData {
 
 interface DataTypesProps {
   data: DataTypesData[];
+  color: string;
 }
 
-const DataTypesChart: React.FC<DataTypesProps> = ({ data }) => {
+const DataTypesChart: React.FC<DataTypesProps> = ({ data, color }) => {
     console.log(data);
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstanceRef = useRef<Chart | null>(null);
@@ -34,8 +35,8 @@ const DataTypesChart: React.FC<DataTypesProps> = ({ data }) => {
           datasets: [{
             label: 'Data Linked to You',
             data: percentages,
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: color,
+            borderColor: color,
             borderWidth: 1,
             barThickness: 15, // Adjust thickness of bars
             categoryPercentage: 0.7, // Space between bars (0.5 - 1.0)
