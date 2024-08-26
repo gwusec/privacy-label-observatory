@@ -11,9 +11,10 @@ interface PrivacyTypesData {
 
 interface PrivacyTypesProps {
   data: PrivacyTypesData[];
+  color: string;
 }
 
-const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data }) => {
+const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data, color }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstanceRef = useRef<Chart | null>(null);
 
@@ -33,8 +34,8 @@ const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data }) => {
           datasets: [{
             label: 'Data Linked to You',
             data: percentages,
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: color,
+            borderColor: color,
             borderWidth: 1,
             barThickness: 15, // Adjust thickness of bars
             categoryPercentage: 0.7, // Space between bars (0.5 - 1.0)

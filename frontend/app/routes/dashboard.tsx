@@ -112,16 +112,16 @@ export default function Index() {
                   <h1 className="text-center font-bold">Purpose Distribution Across Privacy Types</h1>
                   <div className="flex flex-row space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-1/3">
-                      <h1 className="text-center">Data Used to Track You</h1>
-                      <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} />
+                      <h1 className="text-center">Data Not Linked to You</h1>
+                      <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)"/>
                     </div>
                     <div className="flex flex-col items-center w-1/3">
                       <h1 className="text-center">Data Linked to You</h1>
-                      <Ratios data={ratios.DATA_LINKED_TO_YOU} />
+                      <Ratios data={ratios.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)"/>
                     </div>
                     <div className="flex flex-col items-center w-1/3">
-                      <h1 className="text-center">Data Not Linked to You</h1>
-                      <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} />
+                      <h1 className="text-center">Data Used to Track You</h1>
+                      <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)"/>
                     </div>
                   </div>
                   <h3>The ratios of the six Purposes for the Data Used to Track You, Data Linked to You and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.</h3>
@@ -130,13 +130,13 @@ export default function Index() {
                   <h1 className="text-center font-bold">Data Category Ratios by Privacy Type</h1>
                   <div className="flex flex-row space-x-4">
                     <div className="flex flex-col items-center w-1/2">
-                      <h1 className="text-center">Data Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
-                    </div>
-                    <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Not Linked to You</h1>
                       <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
                     </div>
+                    <div className="flex flex-col items-center w-1/2">
+                      <h1 className="text-center">Data Linked to You</h1>
+                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
+                    </div>   
                   </div>
                   <h4>The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
                     to You (right) Privacy Types.</h4>
@@ -165,16 +165,16 @@ export default function Index() {
                   <h1 className="text-center font-bold" >Ratio of Data Categories for Each Privacy Type</h1>
                   <div className="flex flex-row space-x-4 mt-10">
                     <div className="flex flex-col items-center w-1/3">
-                      <h1 className="text-center">Data Used to Track You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} />
+                      <h1 className="text-center">Data Not Linked to You</h1>
+                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
                     </div>
                     <div className="flex flex-col items-center w-1/3">
                       <h1 className="text-center">Data Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} />
+                      <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
                     </div>
                     <div className="flex flex-col items-center w-1/3">
-                      <h1 className="text-center">Data Not Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} />
+                      <h1 className="text-center">Data Used to Track You</h1>
+                      <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
                     </div>
                   </div>
                     <h3 className="mt-5">The ratios of the 14 Data Categories for each of
@@ -185,16 +185,16 @@ export default function Index() {
                   <h1 className="text-center font-bold" >Ratio of Data Types for Each Privacy Type</h1>
                   <div className="flex flex-row space-x-4 mt-10">
                     <div className="flex flex-col items-center w-1/3">
-                      <h1 className="text-center">Data Used to Track You</h1>
-                      <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} />
+                      <h1 className="text-center">Data Not Linked to You</h1>
+                      <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)"/>
                     </div>
                     <div className="flex flex-col items-center w-1/3">
                       <h1 className="text-center">Data Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} />
+                      <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
                     </div>
                     <div className="flex flex-col items-center w-1/3">
-                      <h1 className="text-center">Data Not Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} />
+                      <h1 className="text-center">Data Used to Track You</h1>
+                      <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
                     </div>
                   </div>
                     <h3 className="mt-5">The ratios of the 32 Data Types for each of three

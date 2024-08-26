@@ -11,9 +11,10 @@ interface RatioData {
 
 interface RatiosProps {
   data: RatioData[];
+  color: string;
 }
 
-const Ratios: React.FC<RatiosProps> = ({ data }) => {
+const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstanceRef = useRef<Chart | null>(null); // Ref to store the chart instance
 
@@ -35,8 +36,8 @@ const Ratios: React.FC<RatiosProps> = ({ data }) => {
           datasets: [{
             label: 'Data Linked to You',
             data: percentages,
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: color,
+            borderColor: color,
             borderWidth: 1,
             barThickness: 15
           }]
