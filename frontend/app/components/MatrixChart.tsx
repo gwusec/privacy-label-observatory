@@ -95,7 +95,7 @@ const MatrixChart = ({ data }) => {
                     callbacks: {
                         label: (context:any) => {
                             const { x, y, raw } = context;
-                            return `${raw.v}%`;
+                            return `${raw.v.toFixed(2)}%`;
                         }
                     }
                 }

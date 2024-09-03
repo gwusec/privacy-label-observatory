@@ -11,6 +11,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import SiteIcon from "./SiteIcon";
 import GWIcon from "./GWIcon";
 import UICIcon from "./UICLogo";
+import RichIcon from "./resources/shield_ur.svg"
 
 
 export default function AppNavBar() {
@@ -27,6 +28,9 @@ export default function AppNavBar() {
           </div>
         <div className="mr-2">
           <UICIcon></UICIcon>
+          </div>
+          <div className="mr-2">
+            <img src={RichIcon} alt="" className="w-12 h-12"/>
           </div>
           <SiteIcon></SiteIcon>
           <p className="font-bold text-inherit">Privacy Label Observatory</p>
