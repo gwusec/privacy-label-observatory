@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 // import 'shepherd.js/dist/css/shepherd.css';
 import { useTheme } from "next-themes";
 import Shepherd from 'shepherd.js';
@@ -53,6 +53,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function Index() {
   const refs = useRef([]);
   const navigate = useNavigate()
+  const [activeButton, setActiveButton] = useState(null);
   const { state } = useNavigation()
   const data = useLoaderData<typeof loader>();
   const vennDiagram = data[0]
@@ -74,7 +75,8 @@ export default function Index() {
     navigate("/graphs");
   }
 
-  const handleScroll = (index) => {
+  const handleScroll = (index: any) => {
+    setActiveButton(index);
     refs.current[index]?.scrollIntoView({
       behavior: 'smooth',
       block: 'center'
@@ -85,7 +87,7 @@ export default function Index() {
   return (
     <>
       {state === "loading" ?
-        <div className="z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/4 h-2/4">
+        <div className="fixed inset-0 flex items-center justify-center z-50">
           <FaSpinner className="animate-spin" size={72} />
         </div>
         :
@@ -93,14 +95,14 @@ export default function Index() {
           <div id="main-text">
             <div>
               <div className="fixed left-0 top-20 flex flex-col space-y-4 p-4 items-start">
-                <button onClick={() => handleScroll(0)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>App Privacy Trends</button>
-                <button onClick={() => handleScroll(1)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Purpose Ratios</button>
-                <button onClick={() => handleScroll(2)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Category Ratios</button>
-                <button onClick={() => handleScroll(3)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Privacy Type Overlap</button>
-                <button onClick={() => handleScroll(4)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>App Cost Ratios</button>
-                <button onClick={() => handleScroll(5)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Yearly App Releases</button>
-                <button onClick={() => handleScroll(6)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Categories</button>
-                <button onClick={() => handleScroll(7)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Types</button>
+                <button onClick={() => handleScroll(0)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 0 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>App Privacy Trends</button>
+                <button onClick={() => handleScroll(1)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 1 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Purpose Ratios</button>
+                <button onClick={() => handleScroll(2)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 2 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Category Ratios</button>
+                <button onClick={() => handleScroll(3)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 3 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Privacy Type Overlap</button>
+                <button onClick={() => handleScroll(4)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 4 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>App Cost Ratios</button>
+                <button onClick={() => handleScroll(5)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 5 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Yearly App Releases</button>
+                <button onClick={() => handleScroll(6)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 6 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Categories</button>
+                <button onClick={() => handleScroll(7)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${activeButton === 7 ? 'underline' : ''} ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Types</button>
               </div>
               <div style={{ width: '80%', margin: '0 auto' }}>
                 <div className="mb-20 mt-10" ref={(el) => (refs.current[0] = el)}>
