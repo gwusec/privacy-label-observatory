@@ -6,6 +6,7 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import { color } from 'chart.js/helpers';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+
 Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabels);
 
 const MatrixChart = ({ data }) => {
@@ -40,7 +41,7 @@ const MatrixChart = ({ data }) => {
         );
     
         console.log("Matrix data:", matrixData);
-    
+        //Save as file
         const chartData = {
             datasets: [{
                 label: 'Heat Map',
@@ -56,6 +57,14 @@ const MatrixChart = ({ data }) => {
         };
     
         const options = {
+            animation: {
+                onComplete: function () {
+                  if(chartRef.current){
+                    console.log("Base64ImageMatrix", chartRef.current.toBase64Image());
+                  }
+          
+                },
+              },
             scales: {
                 x: {
                     type: 'category',
@@ -118,6 +127,7 @@ const MatrixChart = ({ data }) => {
                 data: chartData,
                 options: options
             });
+            
         } else {
             console.log("Canvas context is not available");
         }

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
 import { useTheme } from 'next-themes';
+import html2canvas from 'html2canvas';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -135,7 +136,10 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
     },
   };
 
-  return <Line data={chartData} options={options} ref={chartRef} />;
+
+  return  <Line data={chartData} options={options} ref={chartRef} />
+
+  
 };
 
 export default LineChart;
