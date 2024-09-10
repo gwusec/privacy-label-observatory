@@ -8,6 +8,7 @@ import {
 } from "@nextui-org/react";
 
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import React, {useEffect, useState} from "react";
 import SiteIcon from "./SiteIcon";
 import GWIcon from "./GWIcon";
 import UICIcon from "./UICLogo";
@@ -15,53 +16,34 @@ import RichIcon from "./resources/shield_ur.svg"
 
 
 export default function AppNavBar() {
+  
+
+
+
   return (
     <div className="sticky top-0 z-50 shadow-md shadow-gray-500 dark:shadow-slate-400 mb-5">
     <Navbar >
-
-
       <NavbarBrand>
-
         <Link color="foreground" underline="hover" href="/" >
-        <div className="mr-2">
+        <div className="invisible sm:visible sm:mr-2">
           <GWIcon></GWIcon>
           </div>
-        <div className="mr-2">
+        <div className="invisible sm:visible sm:mr-2">
           <UICIcon></UICIcon>
           </div>
-          <div className="mr-2">
-            <img src={RichIcon} alt="" className="w-12 h-12"/>
+          <div className="invisible sm:visible sm:mr-2">
+            <img src={RichIcon} alt="" className="sm:w-12 sm:h-12 size-12"/>
           </div>
           <SiteIcon></SiteIcon>
           <p className="font-bold text-inherit">Privacy Label Observatory</p>
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {/* <NavbarItem>
-          <Link color="foreground" underline="hover" href="/">
-            Home
-          </Link>
-        </NavbarItem> */}
         <NavbarItem >
           <Link color="foreground" underline="hover" href="/dashboard" >
             Dashboard
           </Link>
         </NavbarItem>
-        {/* <NavbarItem >
-          <Link color="foreground" underline="hover" href="/wiki" >
-            Wiki
-          </Link>
-        </NavbarItem> */}
-        {/* <NavbarItem>
-          <Link color="foreground" underline="hover" href="/graphs">
-            Graphs
-          </Link>
-        </NavbarItem> */}
-        {/* <NavbarItem>
-          <Link color="foreground" underline="hover" href="/explore?page=0&run=run_00069">
-            Explore
-          </Link>
-        </NavbarItem> */}
         <NavbarItem>
           <Link color="foreground" underline="hover" href="/search">
             Search
