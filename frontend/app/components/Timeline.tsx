@@ -209,36 +209,66 @@ export default function Timeline({ data }: { data: any }) {
                                     </div>
                                     {privDetails.map(priv =>
                                         priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
-                                            <ul className={`mt-4 pl-6 list-none ${expandedColumn === null && allColumns === false ? 'space-y-4' : ''} ${expandedColumn === null ? '' : 'grid grid-cols-4'}  ${allColumns === false ? '' : 'grid grid-cols-2'}`}>
+                                            <div>
                                                 {expandedColumn === null && allColumns === false &&
                                                     <div>
                                                         The following data may be collected and linked to your identity:
                                                     </div>
                                                 }
-                                                {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                                    <div className='flex flex-wrap justify-center'>
-                                                        <div key={dataCategoryIndex} className="">
-                                                            <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                <img
-                                                                    src={getIconPath(dataCategory.dataCategory)}
-                                                                    className='w-6 h-6'
-                                                                />
-                                                                {dataCategory.dataCategory}
-                                                            </li>
+                                                <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
 
-                                                            {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                <div key={dataCategoryIndex} className="p-2">
-                                                                    <li className="text-base rounded-md p-2">
-                                                                        <span key={dataTypeIndex} className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'>
-                                                                            {dataType.data_type}
-                                                                        </span>
-                                                                    </li>
+                                                    {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                                        <div className={`flex flex-wrap justify-center ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'} `}>
+                                                            <div key={dataCategoryIndex}>
+                                                                <li className="text-lg font-semibold flex items-center justify-center text-center space-x-2">
+                                                                    {expandedColumn === null && allColumns === false &&
+                                                                        <img
+                                                                            src={getIconPath(dataCategory.dataCategory)}
+                                                                            className='w-6 h-6'
+                                                                        />
+                                                                    }
+
+                                                                    {dataCategory.dataCategory}
+                                                                </li>
+                                                                <div className='flex flex-wrap justify-start gap-1'>
+                                                                    {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                        <div key={dataCategoryIndex} className="p-2">
+                                                                            <li className="text-base rounded-md p-2 flex flex-col">
+                                                                                <span
+                                                                                    key={dataTypeIndex}
+                                                                                    className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'
+                                                                                >
+                                                                                    {dataType.data_type}
+                                                                                </span>
+                                                                            </li>
+
+                                                                        </div>
+                                                                        /*
+                                                                        <div key={dataCategoryIndex} className="p-2">
+        <li className="text-base rounded-md p-2 flex flex-col">
+            {dataCategory.dataCategory}:
+    
+            <div className="flex flex-wrap justify-start gap-1">
+                {dataCategory.dataTypes &&
+                    dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                        <span
+                            key={dataTypeIndex}
+                            className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
+                        >
+                            {dataType.data_type}
+                        </span>
+                    ))}
+            </div>
+        </li>
+    </div>
+                                                                         */
+                                                                    ))}
                                                                 </div>
-                                                            ))}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                ))}
-                                            </ul>
+                                                    ))}
+                                                </ul>
+                                            </div>
                                             :
                                             <div></div>
                                     )}
@@ -285,73 +315,70 @@ export default function Timeline({ data }: { data: any }) {
                                     </div>
                                     {privDetails.map((priv) =>
                                         priv.identifier === "DATA_LINKED_TO_YOU" ? (
-                                            <ul
-                                                className={`mt-4 pl-6 list-none ${expandedColumn === null && allColumns === false ? "space-y-4" : ""
-                                                    } ${expandedColumn === null ? "" : "grid grid-cols-4"} ${allColumns === false ? "" : "grid grid-cols-2"
-                                                    }`}
-                                            >
+                                            <div>
                                                 {expandedColumn === null && allColumns === false && (
                                                     <div>
                                                         The following data may be collected but it is not linked to your
                                                         identity:
                                                     </div>
                                                 )}
-                                                {(() => {
-                                                    // Create a Set to hold all unique data categories across all purposes
-                                                    const allUniqueCategories = new Set();
+                                                <ul
+                                                    className={`mt-4 pl-6 list-none ${allColumns === false ? "" : "grid grid-cols-2"} ${expandedColumn === null ? "" : "grid grid-cols-4"} `}
+                                                >
 
-                                                    // Collect all unique data categories when not expanded
-                                                    priv.purposes!.forEach((purpose) => {
-                                                        purpose.dataCategories!.forEach((category) =>
-                                                            allUniqueCategories.add(category.dataCategory)
-                                                        );
-                                                    });
+                                                    {(() => {
+                                                        // Create a Set to hold all unique data categories across all purposes
+                                                        const allUniqueCategories = new Set();
 
-                                                    console.log("allUniqueCategories", allUniqueCategories);
+                                                        // Collect all unique data categories when not expanded
+                                                        priv.purposes!.forEach((purpose) => {
+                                                            purpose.dataCategories!.forEach((category) =>
+                                                                allUniqueCategories.add(category.dataCategory)
+                                                            );
+                                                        });
 
-                                                    if (expandedColumn === null && allColumns === false) {
-                                                        return (
-                                                            <ul className='flex flex-col space-y-2'>
-                                                                {/* Convert Set to Array and map over it to display unique categories */}
-                                                                {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                    <li className="text-lg font-semibold flex justify-center items-center space-x-2">
-                                                                        <img
-                                                                            src={getIconPath(dataCategory)}
-                                                                            className='w-6 h-6'
-                                                                        />
-                                                                        {dataCategory}
-                                                                    </li>
+                                                        console.log("allUniqueCategories", allUniqueCategories);
+
+                                                        if (expandedColumn === null && allColumns === false) {
+                                                            return (
+                                                                <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
+                                                                    {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                        <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                            <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                            {dataCategory}
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            );
+                                                        }
+
+                                                        // Render purposes, data categories, and data types when expanded
+                                                        return priv.purposes!.map((purpose, purposeIndex) => (
+                                                            <div key={purposeIndex}>
+                                                                <li className="text-lg font-semibold">{purpose.purpose}</li>
+                                                                {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
+                                                                    <div key={dataCategoryIndex} className="p-2">
+                                                                        <li className="text-base rounded-md p-2 flex flex-col">
+                                                                            {dataCategory.dataCategory}:
+                                                                            <div className="flex flex-wrap justify-center">
+                                                                                {dataCategory.dataTypes &&
+                                                                                    dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                                        <span
+                                                                                            key={dataTypeIndex}
+                                                                                            className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
+                                                                                        >
+                                                                                            {dataType.data_type}
+                                                                                        </span>
+                                                                                    ))}
+                                                                            </div>
+                                                                        </li>
+                                                                    </div>
                                                                 ))}
-                                                            </ul>
-                                                        );
-                                                    }
-
-                                                    // Render purposes, data categories, and data types when expanded
-                                                    return priv.purposes!.map((purpose, purposeIndex) => (
-                                                        <div key={purposeIndex}>
-                                                            <li className="text-lg font-semibold">{purpose.purpose}</li>
-                                                            {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
-                                                                <div key={dataCategoryIndex} className="p-2">
-                                                                    <li className="text-base rounded-md p-2 flex flex-col">
-                                                                        {dataCategory.dataCategory}:
-                                                                        <div className="flex flex-wrap justify-center">
-                                                                            {dataCategory.dataTypes &&
-                                                                                dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                                    <span
-                                                                                        key={dataTypeIndex}
-                                                                                        className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
-                                                                                    >
-                                                                                        {dataType.data_type}
-                                                                                    </span>
-                                                                                ))}
-                                                                        </div>
-                                                                    </li>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    ));
-                                                })()}
-                                            </ul>
+                                                            </div>
+                                                        ));
+                                                    })()}
+                                                </ul>
+                                            </div>
                                         ) : (
                                             <div></div>
                                         )
@@ -399,73 +426,72 @@ export default function Timeline({ data }: { data: any }) {
                                     </div>
                                     {privDetails.map((priv) =>
                                         priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? (
-                                            <ul
-                                                className={`mt-4 pl-6 list-none ${expandedColumn === null && allColumns === false ? "space-y-4" : ""
-                                                    } ${expandedColumn === null ? "" : "grid grid-cols-4"} ${allColumns === false ? "" : "grid grid-cols-2"
-                                                    }`}
-                                            >
+                                            <div>
                                                 {expandedColumn === null && allColumns === false && (
                                                     <div>
                                                         The following data may be collected but it is not linked to your
                                                         identity:
                                                     </div>
                                                 )}
-                                                {(() => {
-                                                    // Create a Set to hold all unique data categories across all purposes
-                                                    const allUniqueCategories = new Set();
+                                                <ul
+                                                    className={`mt-4 pl-6 list-none ${expandedColumn === null ? "" : "grid grid-cols-4"} 
+                                                ${allColumns === false ? "" : "grid grid-cols-2"
+                                                        }`}
+                                                >
 
-                                                    // Collect all unique data categories when not expanded
-                                                    priv.purposes!.forEach((purpose) => {
-                                                        purpose.dataCategories!.forEach((category) =>
-                                                            allUniqueCategories.add(category.dataCategory)
-                                                        );
-                                                    });
+                                                    {(() => {
+                                                        // Create a Set to hold all unique data categories across all purposes
+                                                        const allUniqueCategories = new Set();
 
-                                                    console.log("allUniqueCategories", allUniqueCategories);
+                                                        // Collect all unique data categories when not expanded
+                                                        priv.purposes!.forEach((purpose) => {
+                                                            purpose.dataCategories!.forEach((category) =>
+                                                                allUniqueCategories.add(category.dataCategory)
+                                                            );
+                                                        });
 
-                                                    if (expandedColumn === null && allColumns === false) {
-                                                        return (
-                                                            <ul className='flex flex-col space-y-2'>
-                                                                {/* Convert Set to Array and map over it to display unique categories */}
-                                                                {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                    <li className="text-lg font-semibold flex justify-center items-center space-x-2">
-                                                                        <img
-                                                                            src={getIconPath(dataCategory)}
-                                                                            className='w-6 h-6'
-                                                                        />
-                                                                        {dataCategory}
-                                                                    </li>
+                                                        console.log("allUniqueCategories", allUniqueCategories);
+
+                                                        if (expandedColumn === null && allColumns === false) {
+                                                            return (
+                                                                <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
+                                                                    {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                        <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                            <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                            {dataCategory}
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            );
+                                                        }
+
+                                                        // Render purposes, data categories, and data types when expanded
+                                                        return priv.purposes!.map((purpose, purposeIndex) => (
+                                                            <div key={purposeIndex}>
+                                                                <li className="text-lg font-semibold">{purpose.purpose}</li>
+                                                                {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
+                                                                    <div key={dataCategoryIndex} className="p-2">
+                                                                        <li className="text-base rounded-md p-2 flex flex-col">
+                                                                            {dataCategory.dataCategory}:
+                                                                            <div className="flex flex-wrap justify-center">
+                                                                                {dataCategory.dataTypes &&
+                                                                                    dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                                        <span
+                                                                                            key={dataTypeIndex}
+                                                                                            className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
+                                                                                        >
+                                                                                            {dataType.data_type}
+                                                                                        </span>
+                                                                                    ))}
+                                                                            </div>
+                                                                        </li>
+                                                                    </div>
                                                                 ))}
-                                                            </ul>
-                                                        );
-                                                    }
-
-                                                    // Render purposes, data categories, and data types when expanded
-                                                    return priv.purposes!.map((purpose, purposeIndex) => (
-                                                        <div key={purposeIndex}>
-                                                            <li className="text-lg font-semibold">{purpose.purpose}</li>
-                                                            {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
-                                                                <div key={dataCategoryIndex} className="p-2">
-                                                                    <li className="text-base rounded-md p-2 flex flex-col">
-                                                                        {dataCategory.dataCategory}:
-                                                                        <div className="flex flex-wrap justify-center">
-                                                                            {dataCategory.dataTypes &&
-                                                                                dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                                    <span
-                                                                                        key={dataTypeIndex}
-                                                                                        className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
-                                                                                    >
-                                                                                        {dataType.data_type}
-                                                                                    </span>
-                                                                                ))}
-                                                                        </div>
-                                                                    </li>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    ));
-                                                })()}
-                                            </ul>
+                                                            </div>
+                                                        ));
+                                                    })()}
+                                                </ul>
+                                            </div>
                                         ) : (
                                             <div></div>
                                         )
