@@ -23,35 +23,10 @@ export const meta: MetaFunction = () => {
   }];
 };
 
-export async function loader({params}: LoaderFunctionArgs){
-  const venn = await fetch(process.env.BACKEND_API + "venn")
-  const vennDiagramData = await venn.json()
-  const percentage = await fetch(process.env.BACKEND_API + "graph16")
-  const percentageData = await percentage.json()
-  const dates = await fetch(process.env.BACKEND_API + "graph14")
-  const dateJson = await dates.json()
-
-  const response = await fetch('http://localhost:8017/longitude');
-  const longitude = await response.json();
-  const response2 = await fetch('http://localhost:8017/ratios');
-  const ratios = await response2.json();
-  const response3 = await fetch('http://localhost:8017/matrix');
-  const matrix = await response3.json();
-
-
-  return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix]
-}
-
 export default function Index() {
   const navigate = useNavigate()
   const { state } = useNavigation()
-    const data = useLoaderData<typeof loader>();
-    const vennDiagram = data[0]
-    const percentage = data[1]
-    const dates = data[2]
-    const longitude = data[3]
-    const ratios = data[4]
-    const matrix = data[5]
+
 
   const goToApps = () => {
     navigate("/search");
