@@ -1,6 +1,6 @@
 // File path: /routes/graphs.jsx
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@remix-run/react";
 import { FaSpinner } from "react-icons/fa";
 import LineChart from '~/components/LineChart';
@@ -44,7 +44,12 @@ export default function Graphs() {
     const ratios = data[4]
     const matrix = data[5]
     const privacyTypes = data[6];
-    console.log("hiiii\n" + privacyTypes)
+
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const handleToggleExpand = () => {
+        setIsExpanded(!isExpanded);
+    };
 
 
     return (
@@ -58,6 +63,12 @@ export default function Graphs() {
                     <div className="mb-20">
                         <h1>Longitude Data Chart</h1>
                         <LineChart data={longitude} />
+                        <button
+                            onClick={handleToggleExpand}
+                            className="px-4 py-2 bg-blue-500 text-white rounded"
+                        >
+                            {isExpanded ? 'Exit Fullscreen' : 'Expand'}
+                        </button>
                         <h4>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h4>
                     </div>
                     <div className="mb-20">

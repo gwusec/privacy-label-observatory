@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
 import { useTheme } from 'next-themes';
+import html2canvas from 'html2canvas';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -55,7 +56,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         data: getData(data.ALL_APPS),
         borderColor: 'rgba(255, 159, 64, 1)',
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
-        borderWidth: 1,
+        borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
       },
@@ -64,7 +65,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         data: getData(data.EXISTS_PRIVACY_LABELS),
         borderColor: 'rgba(255, 99, 132, 1)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderWidth: 1,
+        borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
       },
@@ -73,7 +74,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         data: getData(data.DATA_NOT_COLLECTED),
         borderColor: 'rgba(255, 206, 86, 1)',
         backgroundColor: 'rgba(255, 206, 86, 0.2)',
-        borderWidth: 1,
+        borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
       },
@@ -82,7 +83,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         data: getData(data.DATA_NOT_LINKED_TO_YOU),
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderWidth: 1,
+        borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
       },
@@ -91,7 +92,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         data: getData(data.DATA_LINKED_TO_YOU),
         borderColor: 'rgba(153, 102, 255, 1)',
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
-        borderWidth: 1,
+        borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
       },
@@ -100,7 +101,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         data: getData(data.DATA_USED_TO_TRACK_YOU),
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderWidth: 1,
+        borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
       },
@@ -135,7 +136,10 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
     },
   };
 
-  return <Line data={chartData} options={options} ref={chartRef} />;
+
+  return  <Line data={chartData} options={options} ref={chartRef} />
+
+  
 };
 
 export default LineChart;
