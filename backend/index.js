@@ -9,6 +9,18 @@ var appListRouter = require("./routes/appList")
 var searchRouter = require("./routes/search")
 var getAppRouter = require("./routes/getApp")
 var runsRouter = require("./routes/runs")
+var fullAppRouter = require("./routes/getFullApp")
+var vennRouter = require("./routes/getVenn")
+var longitudeRouter = require("./routes/longitude")
+var ratiosRouter = require("./routes/figure5")
+var figure7Router = require("./routes/figure7")
+var figure8Router = require("./routes/figure8")
+var matrixRouter = require("./routes/figure6")
+var totalRouter = require("./routes/totals")
+var graph16Router = require("./routes/graph_16")
+var helperRouter = require("./routes/graph_16_helper")
+var graph14Router = require("./routes/graph_14")
+var graph14Helper = require("./routes/graph_14_helper")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -30,6 +42,19 @@ app.use("/search", searchRouter)
 app.use("/getApp", getAppRouter)
 app.use("/runs", runsRouter)
 app.use("/translateApp", translationRouter)
+app.use("/fullApp", fullAppRouter)
+app.use("/venn", vennRouter)
+app.use("/longitude", longitudeRouter)
+app.use("/ratios", ratiosRouter)
+app.use("/matrix", matrixRouter)
+
+app.use("/total", totalRouter)
+app.use("/graph16", graph16Router)
+app.use("/helper", helperRouter)
+app.use("/graph14", graph14Router)
+app.use("/figure7", figure7Router)
+app.use("/figure8", figure8Router)
+app.use("/graph14helper", graph14Helper)
 
 
 //helloworld GET
@@ -153,6 +178,7 @@ app.post("/api/get", function (req, res) {
 //
 app.post("/api/search/app_name", function (req, res){
     var app_name = req.body.app_name
+    console.log("here")
 
     if (app_name == undefined){
         res.json({ "Error": "app_id required" })

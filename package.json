@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@syncfusion/ej2-react-layouts": "^25.2.3",
+    "axios": "^1.7.2",
+    "chart.js": "^4.4.3",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-swipeable": "^7.0.1"
+  }
+}

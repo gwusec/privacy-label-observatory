@@ -1,0 +1,107 @@
+import { useTheme } from 'next-themes';
+import { json } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { Form, Links, Meta, Scripts, ScrollRestoration, useFetcher, useLoaderData, useSubmit } from "@remix-run/react";
+import { useState, useRef, useEffect } from 'react';
+import { Link, Outlet } from '@remix-run/react';
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [{
+    title: "Search",
+  }];
+};
+
+export async function loader({ request }: LoaderFunctionArgs) {
+    // Loads the list of apps first
+    const url = new URL(request.url);
+    // If there's a search query
+    const q = url.searchParams.get("q");
+    let data = [];
+
+    if (q) {
+        const list = await fetch(process.env.BACKEND_API + "search?q=" + q);
+        data = await list.json();
+    }
+
+    return json({ data, q });
+}
+
+export default function Search() {
+    const { theme } = useTheme();
+    const { data, q } = useLoaderData<typeof loader>();
+    const [isFocused, setIsFocused] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const submit = useSubmit();
+    const fetcher = useFetcher();
+
+    // Close the dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+                setIsFocused(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        const searchField = document.getElementById("q");
+        if (searchField instanceof HTMLInputElement) {
+            searchField.value = q || "";
+        }
+    }, [q]);
+
+    return (
+        <div className='h-screen'>
+            <div className={`min-h-screen flex justify-center`}>
+                <div className="absolute top-20 w-full max-w-lg mx-auto p-4">
+                    <div className={`flex flex-col items-center shadow-lg rounded-lg p-4 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+                        <h1 className="text-2xl font-bold mb-4">IOS Apps</h1>
+                        <Form id="search-form" onChange={(event) =>
+                            submit(event.currentTarget, {
+                                replace: true
+                            })
+                        }
+                            role="search" className="w-full flex flex-col items-center">
+                            <input
+                                
+                                id="q"
+                                aria-label="Search apps"
+                                placeholder="Search apps"
+                                type="search"
+                                name="q"
+                                defaultValue={q || ""}
+                                className="px-4 py-2 border border-gray-300 rounded-md w-full text-black"
+                                onFocus={() => setIsFocused(true)}
+                            />
+                            <div ref={inputRef}>
+                                {isFocused && data.length > 0 && (
+                                    <ul className={`absolute top-full left-0 right-0 mt-2 border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto  ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'}`}>
+                                        {data.map((app:any, index:any) => (
+                                            <li key={index} className={`px-4 py-2 cursor-pointer ${theme === 'dark' ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                                <Link to={'/app/' + app.app_id}>
+                                                    {app.app_name}
+                                                </Link>
+
+                                            </li>
+                                            
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        </Form>
+                    </div>
+                    
+                </div>
+                <div className='pt-40 w-full'>
+                <Outlet />
+                </div>
+            </div>
+
+        </div>
+    );
+}

@@ -1,29 +1,30 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { Button } from '@nextui-org/react';
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import Timeline from '~/components/Timeline';
 
 export async function loader({params}:LoaderFunctionArgs){
+    console.log("running this loader")
     const q = params.app_id
+    console.log(q)
     if(q == undefined){
         return
     }
-    const app = await fetch(process.env.BACKEND_API + "getApp?id=" + q)
+
+    const app = await fetch(process.env.BACKEND_API + "fullApp?id=" + q)
     const data = await app.json()
-    console.log("hello")
-    console.log(json(data))
     return(json(data))
 };
 
-export default function App() {
+export default function searchApp(){
+
     const data = useLoaderData<typeof loader>();
-    console.log(data)
-    var app_name = data[0]["app_name"]
-    var app_id = data[0]["app_id"]
-    //console.log(app_name)
+    console.log("data", data)
     return(
-        <div className="text-center mx-2">
-            <h1>{app_name}</h1>
-            <p>{app_id}</p>
+        <div className={`items-start min-h-screen h-full`}>
+            <Timeline data={data}/>
         </div>
     )
 }
