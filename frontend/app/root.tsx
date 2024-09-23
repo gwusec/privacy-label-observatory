@@ -18,6 +18,7 @@ import {
 
 import stylesheet from "~/tailwind.css";
 import AppNavBar from "./AppNavBar";
+import Footer from "./components/Footer";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -47,12 +48,15 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex flex-col">
         <NextUIProvider navigate={navigate}>
           <NextThemesProvider attribute="class" defaultTheme="dark">
             <AppNavBar />
-            <div id="main-body" className="bg-gradient-to-b dark:from-black  dark:to-gray-900  h-screen from-white to-gray-100">
+            <div id="main-body" className="bg-gradient-to-b dark:from-black  dark:to-gray-900 from-white to-gray-100">
             <Outlet />
+            </div>
+            <div className="block lg:hidden fixed bottom-0 w-full">
+              <Footer />
             </div>
             <ScrollRestoration />
             <Scripts />

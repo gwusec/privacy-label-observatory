@@ -12,14 +12,14 @@ export default function GWIcon(){
         setMounted(true)
     } , [] )
 
-    if(!mounted) return (<img src={logoBlack} className="max-h-8 mr-2"/>)
+    if(!mounted) return (<img src={logoBlack} className="max-h-10 mr-2"/>)
 
     return(
         <div>
             {theme === 'dark' ?
-                <img src={logoWhite} className="max-h-8 mr-2"/>
+                <img src={logoWhite} className="max-h-10 mr-2"/>
                 :
-                <img src={logoBlack} className="max-h-8 mr-2"/>}
+                <img src={logoBlack} className="max-h-10 mr-2"/>}
         </div>
     );
 

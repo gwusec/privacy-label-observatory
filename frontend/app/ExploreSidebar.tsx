@@ -28,7 +28,7 @@ import {
 import { LoremIpsum } from "react-lorem-ipsum";
 import { loremIpsum } from 'react-lorem-ipsum';
 import { name, surname, username } from 'react-lorem-ipsum';
-
+import { FaSpinner } from "react-icons/fa";
 
 import {
     Dropdown,
@@ -149,7 +149,6 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                 navigate("/explore?page=0&run="+firstKey)
             }
   
- 
             
             return modifiedValue;
         },
@@ -247,11 +246,15 @@ export default function ExploreSidebar(props: ExplorerSidebarProps){
                     <HiArrowNarrowRight className="mx-2 w-full hover:opacity-40" onClick={onRightHandler}/>
                 </div>
                 <ul className="my-2">
-                    {navigation.state === "loading" ? (<div className="px-2">Loading</div>) :
+                    {navigation.state === "loading" ? (    
+                    <div className="py-2 flex justify-center">
+                        <FaSpinner className="animate-spin " size={28}/>
+                    </div>
+                    ) :
                     <div>
-                    {app_list.map(
-                        app => 
-                            <li className="hover:opacity-40 cursor-pointer m-2 items-center  ">
+                    {app_list!.map(
+                        (app, appIndex) => 
+                            <li className={`hover:opacity-40 cursor-pointer m-2 items-center ${appIndex === app_list!.length-1 ? 'pb-40' : ''}`}>
                                 <Link className="flex items-center py-2" to={'/explore/' + app.app_id + "?page=" + page + "&run="+run}>
                                     {app.image_url == undefined ? 
                                     <img className="size-8 rounded-lg" src={noPhoto} />

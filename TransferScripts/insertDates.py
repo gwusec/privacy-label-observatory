@@ -7,6 +7,7 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class AppleElasticSearchHandler:
+    #determines url, password, username
     def __init__(self, server_url, index_name, username, password):
         self.es = Elasticsearch([server_url], http_auth=(username, password), verify_certs=False)
         self.index_name = index_name
@@ -15,7 +16,7 @@ class AppleElasticSearchHandler:
         res = self.es.count(index=self.index_name)
         return res
     
-    def create_index(self):
+    def create_index(self): #based on the mappings, schema
         apple_mapping = {
             "mappings": {
                 "properties": {
@@ -32,7 +33,7 @@ class AppleElasticSearchHandler:
         except Exception as e:
             print(e)
 
-    def stream_and_update(self, filename):
+    def stream_and_update(self, filename): #upload into elasticsearch
     #"""Streams data from a JSON file and sends updates to Elasticsearch line by line."""
         with open(filename, 'r') as file:
             data = json.load(file)

@@ -1,25 +1,31 @@
 import type { Config } from 'tailwindcss';
 const { nextui } = require('@nextui-org/react');
 
+
+
 export default {
   content: [
     './app/**/*.{js,jsx,ts,tsx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
       backgroundImage: {
-        'light-gradient': 'linear-gradient(to bottom, #ffffff, #2b50aa)',
-        'dark-gradient': 'linear-gradient(to bottom, #000000, #2b50aa 10%, #000000 80%) ',
+        'light-gradient': 'linear-gradient(to bottom, #ffffff 40%, #5A5A5A)',
+        'dark-gradient': 'linear-gradient(to bottom, #000000 50%, #5A5A5A) ',
       },
       colors: {
-        red: '#a31621',
-        grey: '#ced3dc'
+        red: '#000000',
+        grey: '#5A5A5A',
+        dred: '#ffffff',
+        blue: '#0047AB'
       }
     },
   },
   darkMode: 'class',
   plugins: [
+    require('flowbite/plugin'),
     nextui({
       prefix: 'nextui',
       addCommonColors: false,
@@ -32,7 +38,7 @@ export default {
             //light theme layout tokens
           },
           colors: { //light theme colors
-            background: 'linear-gradient(to bottom, #ffffff, #581D8B)',
+            background: '#ffffff',
             text: '#000000',
           },
         },
@@ -41,7 +47,7 @@ export default {
             // dark theme layout tokens
           },
           colors: {
-            background: 'linear-gradient(to bottom, #000000 5%, #581D8B, #000000)',
+            background: '#000000',
             text: '#ffffff',
           },
         },
@@ -49,3 +55,4 @@ export default {
     }),
   ],
 } satisfies Config;
+ 
