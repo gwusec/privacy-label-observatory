@@ -88,6 +88,13 @@ app.get("/api/runs", function (req, res) {
     })
 });
 
+app.post('/api/some-endpoint', (req, res) => {
+    const data = req.body;
+    console.log("received");
+    // Perform some action with the data
+    res.json({ message: 'Data received successfully', receivedData: data });
+  });
+
 app.post("/api/body/test", function (req, res) {
     res.json(req.body);
 });
