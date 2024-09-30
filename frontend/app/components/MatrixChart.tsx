@@ -5,6 +5,7 @@ import { color } from 'chart.js/helpers';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'tailwindcss/tailwind.css'; // Assuming you're using Tailwind for responsiveness
 
+
 Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabels);
 
 const MatrixChart = ({ data }) => {
@@ -28,7 +29,6 @@ const MatrixChart = ({ data }) => {
                 v: dc.percentage
             }))
         );
-
         const chartData = {
             datasets: [{
                 label: 'Heat Map',
@@ -46,6 +46,14 @@ const MatrixChart = ({ data }) => {
         const options = {
             responsive: true,
             maintainAspectRatio: false, // Important for flexible height
+            animation: {
+                onComplete: function () {
+                  if(chartRef.current){
+                    console.log("Base64ImageMatrix", chartRef.current.toBase64Image());
+                  }
+          
+                },
+              },
             scales: {
                 x: {
                     type: 'category',
@@ -83,8 +91,8 @@ const MatrixChart = ({ data }) => {
                     displayColors: false,
                     callbacks: {
                         label: (context:any) => {
-                            const { raw } = context;
-                            return `${raw.v}%`;
+                            const { x, y, raw } = context;
+                            return `${raw.v.toFixed(2)}%`;
                         }
                     }
                 }
@@ -106,6 +114,9 @@ const MatrixChart = ({ data }) => {
                 data: chartData,
                 options: options
             });
+            
+        } else {
+            console.log("Canvas context is not available");
         }
 
         return () => {

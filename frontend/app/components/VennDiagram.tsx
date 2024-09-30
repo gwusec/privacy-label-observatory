@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 
 import { extractSets, generateCombinations, VennDiagram } from '@upsetjs/react';
+import { VennDiagramFontSizes } from "@upsetjs/react";
 
 function VennDiagrams({ data }: { data: any }){
     const { theme } = useTheme();
@@ -64,14 +65,21 @@ function VennDiagrams({ data }: { data: any }){
         combination.cardinality = mapping[combination.name]
     })
 
+    const fontSizes:VennDiagramFontSizes = {
+        valueLabel: '14px'
+    };
+
 
     return (
         <div className="flex flex-row w-full bg-inherit p-5 justify-center">
             <VennDiagram
                 sets={sets}
+                padding={10}
                 combinations={combinations}
                 theme={theme === 'dark' ? 'dark' : 'light'}
                 width={780}
+                strokeColor="blue"
+                fontSizes={fontSizes}
                 height={400}
                 exportButtons={false}
                 className="z-10 bg-inherit"
@@ -81,6 +89,8 @@ function VennDiagrams({ data }: { data: any }){
                 combinations={combination}
                 width={400}
                 height={200}
+                strokeColor="rgba(255, 206, 86, 1)"
+                fontSizes={fontSizes}
                 theme={theme === 'dark' ? 'dark' : 'light'}
                 exportButtons={false}
                 className="w-fit -ml-28 bg-inherit"
