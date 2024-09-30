@@ -3,6 +3,8 @@ import { useRef } from 'react';
 // import 'shepherd.js/dist/css/shepherd.css';
 import { useTheme } from "next-themes";
 import Shepherd from 'shepherd.js';
+import { useState } from 'react';
+
 
 import { FaSpinner } from "react-icons/fa";
 import { useNavigation } from "@remix-run/react";
@@ -45,181 +47,225 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const privacyTypes = await response4.json();
   const response5 = await fetch('http://localhost:8017/figure8');
   const dataTypes = await response5.json();
+  const response6 = await fetch('http://localhost:8017/figure13');
+  const appGenre = await response6.json();
 
-
-  return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes]
+  return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre]
 }
 
-export default function Index() {
-  const refs = useRef([]);
-  const navigate = useNavigate()
-  const { state } = useNavigation()
-  const data = useLoaderData<typeof loader>();
-  const vennDiagram = data[0]
-  const percentage = data[1]
-  const dates = data[2]
-  const longitude = data[3]
-  const ratios = data[4]
-  const matrix = data[5]
-  const privacyTypes = data[6];
-  const dataTypes = data[7];
+
+  export default function Index() {
+    const refs = useRef([]);
+    const navigate = useNavigate()
+    const { state } = useNavigation()
+    const data = useLoaderData<typeof loader>();
+    const vennDiagram = data[0]
+    const percentage = data[1]
+    const dates = data[2]
+    const longitude = data[3]
+    const ratios = data[4]
+    const matrix = data[5]
+    const privacyTypes = data[6];
+    const dataTypes = data[7];
+    const appGenre = data[8];
+    
+    const [isOpen, setIsOpen] = useState(false); // Add toggleMenu here
+      
+    const handleScroll = (index) => {
+      refs.current[index]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    };
+  
+    const toggleMenu = () => {
+      setIsOpen(!isOpen);
+    };
+
+    const goToApps = () => {
+      navigate("/search");
+    }
+
+    const goToGraphs = () => {
+      navigate("/graphs");
+    }
 
 
-
-  const goToApps = () => {
-    navigate("/search");
-  }
-
-  const goToGraphs = () => {
-    navigate("/graphs");
-  }
-
-  const handleScroll = (index) => {
-    refs.current[index]?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
-    });
-  };
-
-  const { theme } = useTheme();
-  return (
+    const { theme } = useTheme();
+    
+    return (
     <>
-      {state === "loading" ?
-        <div className="z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/4 h-2/4">
-          <FaSpinner className="animate-spin" size={72} />
-        </div>
-        :
-        <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark' : 'bg-light'} overflow-hidden`}>
-          <div id="main-text">
-            <div>
-              <div className="fixed left-0 top-20 flex flex-col space-y-4 p-4 items-start">
-                <button onClick={() => handleScroll(0)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>App Privacy Trends</button>
-                <button onClick={() => handleScroll(1)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Purpose Ratios</button>
-                <button onClick={() => handleScroll(2)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Category Ratios</button>
-                <button onClick={() => handleScroll(3)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Privacy Type Overlap</button>
-                <button onClick={() => handleScroll(4)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>App Cost Ratios</button>
-                <button onClick={() => handleScroll(5)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Yearly App Releases</button>
-                <button onClick={() => handleScroll(6)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Categories</button>
-                <button onClick={() => handleScroll(7)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Types</button>
+        {state === "loading" ?
+          <div className="z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/4 h-2/4">
+            <FaSpinner className="animate-spin" size={72} />
+          </div>
+          :
+          <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark' : 'bg-light'} overflow-hidden`}>
+            <div className="fixed left-0 top-50 p-4">
+              <button
+                onClick={toggleMenu}
+                className={`px-4 py-2 text-lg font-bold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black text-white border border-slate-800' : 'bg-white text-black border-black'
+                  }`}
+              >Graph Navigation</button>
               </div>
-              <div style={{ width: '80%', margin: '0 auto' }}>
-                <div className="mb-20 mt-10 w-full md:w-4/5 mx-auto px-4" ref={(el) => (refs.current[0] = el)}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl">Annual Trends in App Privacy Compliance</h1>
-                  <LineChart data={longitude} />
-                  <h3 className="mt-10 text-sm md:text-base">A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
-                </div>
-                <div className="mb-20" ref={el => (refs.current[1] = el)}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl">Purpose Distribution Across Privacy Types</h1>
+              <div id="main-text">
+                <div>
+                <div
+        className={`transition-all duration-300 ease-in-out overflow-hidden ${
+          isOpen ? 'fixed left-0 top-50 flex flex-col space-y-4 p-4 items-start' : 'max-h-0 opacity-0'
+        } mt-4 space-y-4`}
+      >
+                    <button onClick={() => handleScroll(0)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>App Privacy Trends</button>
+                    <button onClick={() => handleScroll(1)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Purpose Ratios</button>
+                    <button onClick={() => handleScroll(2)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Category Ratios</button>
+                    <button onClick={() => handleScroll(3)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Privacy Type Overlap</button>
+                    <button onClick={() => handleScroll(4)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>App Cost Ratios</button>
+                    <button onClick={() => handleScroll(5)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Yearly App Releases</button>
+                    <button onClick={() => handleScroll(6)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Categories</button>
+                    <button onClick={() => handleScroll(7)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>Data Types</button>
+                    <button onClick={() => handleScroll(8)} className={`px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-black'}`}>App Genres</button>
+                  </div>
+                  <div style={{ width: '80%', margin: '0 auto' }}>
+                    <div className="mb-20 mt-10 w-full md:w-4/5 mx-auto px-4" ref={(el) => (refs.current[0] = el)}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl">Annual Trends in App Privacy Compliance</h1>
+                      <LineChart data={longitude} />
+                      <h3 className="mt-10 text-sm md:text-base">A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
+                    </div>
+                    <div className="mb-20" ref={el => (refs.current[1] = el)}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl">Purpose Distribution Across Privacy Types</h1>
 
-                  <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
-                    <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
+                          <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                        </div>
+
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
+                          <Ratios data={ratios.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                        </div>
+
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
+                          <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                        </div>
+
+                      </div>
+
+                      <h3 className="text-sm md:text-base">
+                        The ratios of the six Purposes for the Data Used to Track You, Data Linked to You,
+                        and Data Not Linked to You Privacy Types. The denominator is the number of apps
+                        in the specific Privacy Type.
+                      </h3>
                     </div>
 
-                    <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <Ratios data={ratios.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                    <div className="mb-20" ref={(el => (refs.current[2] = el))}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl">Data Category Ratios by Privacy Type</h1>
+                      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
+                        <div className="flex flex-col items-center w-full md:w-1/2">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
+                          <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/2">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
+                          <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
+                        </div>
+                      </div>
+                      <h4 className="text-sm md:text-base">The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
+                        to You (right) Privacy Types.</h4>
                     </div>
-                    
-                    <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                    <div className="mb-20" ref={(el => (refs.current[3] = el))}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl" >Overlap of Apps by Privacy Type</h1>
+                      <VennDiagram data={vennDiagram} />
+                      <h3 className="text-sm md:text-base">A Venn diagram of the number of apps in each
+                        of the four Privacy Types. Data Not Collected is mutually
+                        exclusive to the other three Privacy Types</h3>
+                    </div>
+                    <div className="mb-20" ref={(el => (refs.current[4] = el))}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl" >App Costs vs. Privacy Practices</h1>
+                      <PercentageGraph data={percentage} />
+                      <h3 className="text-sm md:text-base">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
+                        linked to users.</h3>
+                    </div>
+
+                    <div className="mb-20" ref={(el => (refs.current[5] = el))}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl" >Yearly App Releases with Privacy Labels</h1>
+                      <YearGraph data={dates} />
+                      <h3 className="text-sm md:text-base">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
+                        number of apps with privacy labels released in that year. </h3>
+                    </div>
+                    <div className="mb-20" ref={(el => (refs.current[6] = el))}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
+                      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
+
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
+                          <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
+                          <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
+                          <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm md:text-base">The ratios of the 14 Data Categories for each of
+                        three Privacy Types. The denominator is the number of apps
+                        in the specific Privacy Type.</h3>
+                    </div>
+                    <div className="mb-20" ref={(el => (refs.current[7] = el))}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Types for Each Privacy Type</h1>
+                      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
+                          <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
+                          <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/3">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
+                          <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm md:text-base">The ratios of the 32 Data Types for each of three
+                        Privacy Types. The denominator is the number of apps in the
+                        specific Privacy Type.</h3>
+                    </div>
+                    <div className="mb-20" ref={(el => (refs.current[8] = el))}>
+                      <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
+                      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
+                        <div className="flex flex-col items-center w-full md:w-1/4">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
+                          <DataTypesChart data={appGenre.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/4">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
+                          <DataTypesChart data={appGenre.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/4">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
+                          <DataTypesChart data={appGenre.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                        </div>
+                        <div className="flex flex-col items-center w-full md:w-1/4">
+                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Collected</h1>
+                          <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
+                        with the designated app store genre that have a privacy label. This includes only apps placed in the top in genre categories.</h3>
                     </div>
 
                   </div>
-
-                  <h3 className="text-sm md:text-base">
-                    The ratios of the six Purposes for the Data Used to Track You, Data Linked to You,
-                    and Data Not Linked to You Privacy Types. The denominator is the number of apps
-                    in the specific Privacy Type.
-                  </h3>
-                </div>
-
-                <div className="mb-20" ref={(el => (refs.current[2] = el))}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl">Data Category Ratios by Privacy Type</h1>
-                  <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
-                  <div className="flex flex-col items-center w-full md:w-1/2">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
-                    </div>
-                    <div className="flex flex-col items-center w-full md:w-1/2">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
-                    </div>
-                  </div>
-                  <h4 className="text-sm md:text-base">The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
-                    to You (right) Privacy Types.</h4>
-                </div>
-                <div className="mb-20" ref={(el => (refs.current[3] = el))}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl" >Overlap of Apps by Privacy Type</h1>
-                  <VennDiagram data={vennDiagram} />
-                  <h3 className="text-sm md:text-base">A Venn diagram of the number of apps in each
-                    of the four Privacy Types. Data Not Collected is mutually
-                    exclusive to the other three Privacy Types</h3>
-                </div>
-                <div className="mb-20" ref={(el => (refs.current[4] = el))}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl" >App Costs vs. Privacy Practices</h1>
-                  <PercentageGraph data={percentage} />
-                  <h3 className="text-sm md:text-base">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
-                    linked to users.</h3>
-                </div>
-
-                <div className="mb-20" ref={(el => (refs.current[5] = el))}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl" >Yearly App Releases with Privacy Labels</h1>
-                  <YearGraph data={dates} />
-                  <h3 className="text-sm md:text-base">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
-                    number of apps with privacy labels released in that year. </h3>
-                </div>
-                <div className="mb-20" ref={(el => (refs.current[6] = el))}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
-                  <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
-
-                  <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
-                    </div>
-                    <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
-                    </div>
-                    <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
-                    </div>
-                  </div>
-                  <h3 className="text-sm md:text-base">The ratios of the 14 Data Categories for each of
-                    three Privacy Types. The denominator is the number of apps
-                    in the specific Privacy Type.</h3>
-                </div>
-                <div className="mb-20" ref={(el => (refs.current[7] = el))}>
-                  <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Types for Each Privacy Type</h1>
-                  <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
-                  <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
-                    </div>
-                    <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
-                    </div>
-                    <div className="flex flex-col items-center w-full md:w-1/3">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
-                    </div>
-                  </div>
-                  <h3 className="text-sm md:text-base">The ratios of the 32 Data Types for each of three
-                    Privacy Types. The denominator is the number of apps in the
-                    specific Privacy Type.</h3>
                 </div>
 
               </div>
             </div>
-
-          </div>
-        </div>
       }
-    </>
+          </>
   );
 }
 
