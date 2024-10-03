@@ -158,16 +158,16 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
 
   return (
     <div className="flex items-center justify-center w-full">
-      {isExpanded && (
+      {/* {isExpanded && (
         <button
           className="text-2xl mx-4 p-2 rounded-full"
         //onClick={() => handleArrowClick('left')}
         >
           ←
         </button>
-      )}
+      )} */}
       <Line data={chartData} options={options} ref={chartRef} />
-      {isExpanded && (
+      {/* {isExpanded && (
         <button
           className="text-2xl mx-4 p-2 rounded-full"
         //onClick={() => handleArrowClick('right')}
@@ -179,7 +179,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       <button type="submit">
         Click me to send request to Express
       </button>
-    </fetcher.Form>
+    </fetcher.Form> */}
     </div>
   );
 
