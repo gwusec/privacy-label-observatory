@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from "next-themes";
 import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import the plugin
 
@@ -12,9 +13,10 @@ interface RatioData {
 interface RatiosProps {
   data: RatioData[];
   color: string;
+  theme: string | undefined;
 }
 
-const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
+const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstanceRef = useRef<Chart | null>(null); // Ref to store the chart instance
 
@@ -82,7 +84,7 @@ const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
               }
             },
             datalabels: {
-              color: 'black',
+              color: theme === 'dark' ? 'white' : 'black',
               anchor: 'end',
               align: 'end',
               formatter: (value) => `${value}%`, // Append '%' to data labels
@@ -100,7 +102,7 @@ const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
         chartInstanceRef.current = null;
       }
     };
-  }, [data]);
+  }, [data, theme]);
 
   return <canvas ref={chartRef} />;
 };
