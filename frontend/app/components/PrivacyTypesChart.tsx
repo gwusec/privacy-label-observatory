@@ -12,9 +12,10 @@ interface PrivacyTypesData {
 interface PrivacyTypesProps {
   data: PrivacyTypesData[];
   color: string;
+  theme: string | undefined;
 }
 
-const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data, color }) => {
+const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data, color, theme }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstanceRef = useRef<Chart | null>(null);
 
@@ -85,7 +86,7 @@ const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data, color }) => {
               }
             },
             datalabels: {
-              color: 'black',
+              color: theme === 'dark' ? 'white' : 'black',
               anchor: 'end',
               align: 'end',
               formatter: (value) => `${value}%`, // Append '%' to data labels
@@ -103,7 +104,7 @@ const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data, color }) => {
         chartInstanceRef.current = null;
       }
     };
-  }, [data]);
+  }, [data, theme]);
 
   return <canvas ref={chartRef} style={{ width: '600px', height: '400px' }} />;
 };
