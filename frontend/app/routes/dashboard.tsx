@@ -184,11 +184,11 @@ export default function Index() {
                   <div className="flex flex-row space-x-4">
                     <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Not Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
+                      <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," />
                     </div>
                     <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
+                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255,"/>
                     </div>
                   </div>
                   <h4>The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
@@ -214,50 +214,6 @@ export default function Index() {
                   <h3 className="">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
                     number of apps with privacy labels released in that year. </h3>
                 </div>
-                <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={(el => (refs.current[6] = el))}>
-                  <h1 className="text-center font-bold" >Ratio of Data Categories for Each Privacy Type</h1>
-                  <div className="flex flex-row space-x-4 mt-10">
-                    <div className="flex flex-col items-center w-1/3">
-                      <h1 className="text-center">Data Not Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
-                    </div>
-                  </div>
-
-                    <div className="mb-20" ref={(el => (refs.current[2] = el))}>
-                      <h1 className="text-center font-bold text-xl md:text-2xl">Data Category Ratios by Privacy Type</h1>
-                      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
-                        <div className="flex flex-col items-center w-full md:w-1/2">
-                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                          <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} />
-                        </div>
-                        <div className="flex flex-col items-center w-full md:w-1/2">
-                          <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                          <MatrixChart data={matrix.DATA_LINKED_TO_YOU} />
-                        </div>
-                      </div>
-                      <h4 className="text-sm md:text-base">The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
-                        to You (right) Privacy Types.</h4>
-                    </div>
-                    <div className="mb-20" ref={(el => (refs.current[3] = el))}>
-                      <h1 className="text-center font-bold text-xl md:text-2xl" >Overlap of Apps by Privacy Type</h1>
-                      <VennDiagram data={vennDiagram} />
-                      <h3 className="text-sm md:text-base">A Venn diagram of the number of apps in each
-                        of the four Privacy Types. Data Not Collected is mutually
-                        exclusive to the other three Privacy Types</h3>
-                    </div>
-                    <div className="mb-20" ref={(el => (refs.current[4] = el))}>
-                      <h1 className="text-center font-bold text-xl md:text-2xl" >App Costs vs. Privacy Practices</h1>
-                      <PercentageGraph data={percentage} />
-                      <h3 className="text-sm md:text-base">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
-                        linked to users.</h3>
-                    </div>
-
-                    <div className="mb-20" ref={(el => (refs.current[5] = el))}>
-                      <h1 className="text-center font-bold text-xl md:text-2xl" >Yearly App Releases with Privacy Labels</h1>
-                      <YearGraph data={dates} />
-                      <h3 className="text-sm md:text-base">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
-                        number of apps with privacy labels released in that year. </h3>
-                    </div>
                     <div className="mb-20" ref={(el => (refs.current[6] = el))}>
                       <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
                       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
@@ -322,7 +278,6 @@ export default function Index() {
                       <h3 className="text-sm md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
                         with the designated app store genre that have a privacy label. This includes only apps placed in the top in genre categories.</h3>
                     </div>
-                    </div>
                   </div>
                 </div>
             </div>
@@ -330,5 +285,4 @@ export default function Index() {
           </>
   );
 }
-
 
