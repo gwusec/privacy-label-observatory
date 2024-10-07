@@ -8,7 +8,7 @@ import 'tailwindcss/tailwind.css'; // Assuming you're using Tailwind for respons
 
 Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabels);
 
-const MatrixChart = ({ data }) => {
+const MatrixChart = ({ data, color }) => {
     const chartRef = useRef(null);
     const canvasRef = useRef(null);
     
@@ -36,7 +36,7 @@ const MatrixChart = ({ data }) => {
                 backgroundColor: (ctx:any) => {
                     const value = ctx.dataset.data[ctx.dataIndex].v;
                     const alpha = (value / 100).toFixed(2);
-                    return `rgba(0, 100, 255, ${alpha})`;
+                    return `${color} ${alpha})`;
                 },
                 width: (ctx:any) => ctx.chart.chartArea.width / dataCategories.length,
                 height: (ctx:any) => ctx.chart.chartArea.height / purposes.length,
