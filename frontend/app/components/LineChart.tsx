@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
 import { useTheme } from 'next-themes';
@@ -8,6 +8,34 @@ import { useFetcher } from '@remix-run/react';
 import { json } from '@remix-run/node';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
+
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    // Function to update window size
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    // Add event listener on mount
+    window.addEventListener('resize', handleResize);
+
+    // Call handleResize initially to set the initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); 
+
+  return windowSize;
+}
 
 interface DataItem {
   key: string;
@@ -33,7 +61,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
   const fetcher = useFetcher();
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
-
+  const { width, height } = useWindowSize();
   useEffect(() => {
     return () => {
       if (chartRef.current) {
@@ -43,16 +71,12 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     };
   }, []);
 
-  const hasData = (dataset: DataItem[]) => dataset && dataset.length > 0;
-
   const labels = (data.DATA_USED_TO_TRACK_YOU || []).map(item => item.key.toString());
-  console.log('labels', labels)
 
   const getData = (dataset: DataItem[]) => {
     const dataMap = new Map<string, number>();
     dataset.forEach(item => dataMap.set(item.key, item.doc_count));
-    const result = labels.map(label => dataMap.get(label) || 0);
-    return result
+    return labels.map(label => dataMap.get(label) || 0);
   };
 
   const chartData = {
@@ -63,7 +87,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         data: getData(data.ALL_APPS),
         borderColor: 'rgba(255, 159, 64, 1)',
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
-        borderWidth: 3,
+        borderWidth: 3,  // Thicker line
         tension: 0.1,
         pointRadius: 0,
       },
@@ -108,8 +132,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         data: getData(data.DATA_USED_TO_TRACK_YOU),
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderWidth: 3,
-        tension: 0.1,
+        borderWidth: 3,        tension: 0.1,
         pointRadius: 0,
       },
     ].filter(dataset => dataset.data.length > 0),
@@ -125,11 +148,21 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
 
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         title: {
           display: true,
-          text: 'Run Number',
+          text: 'Run Date',
+        },
+        ticks: {
+          font: {
+            size: {width} < 768 ? 10 : 12,  // Smaller font size for mobile
+          },
+        },
+        grid: {
+          color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
         },
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9'
@@ -140,9 +173,14 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
           display: true,
           text: 'Number of Apps',
         },
+        ticks: {
+          font: {
+            size: {width} < 768 ? 10 : 12,  // Smaller font size for mobile
+          },
+        },
         grid: {
-          color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9'
-        }
+          color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
+        },
       },
     },
     plugins: {
@@ -150,9 +188,12 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         display: false,
       },
     },
+    elements: {
+      line: {
+        borderWidth: {width} < 768 ? 2 : 3,  // Thicker lines for larger screens
+      },
+    },
   };
-
-
   console.log(base64Image);
 
 
@@ -183,7 +224,12 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     </div>
   );
 
-
+                 
+  return (
+    <div className="w-full h-96 md:h-96">
+      <Line data={chartData} options={options} ref={chartRef} />
+    </div>
+  );
 };
 
 export default LineChart;
