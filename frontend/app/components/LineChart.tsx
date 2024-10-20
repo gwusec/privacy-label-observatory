@@ -3,6 +3,9 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
 import { useTheme } from 'next-themes';
 import html2canvas from 'html2canvas';
+import { animate } from 'framer-motion';
+import { useFetcher } from '@remix-run/react';
+import { json } from '@remix-run/node';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -48,9 +51,14 @@ interface LineChartProps {
     DATA_NOT_COLLECTED: DataItem[];
     DATA_LINKED_TO_YOU: DataItem[];
   };
+  isExpanded: boolean;
 }
 
-const LineChart: React.FC<LineChartProps> = ({ data }) => {
+
+
+const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
+  console.log("LineChart", data);
+  const fetcher = useFetcher();
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
   const { width, height } = useWindowSize();
@@ -130,7 +138,16 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
     ].filter(dataset => dataset.data.length > 0),
   };
 
+  let base64Image = null;
   const options = {
+    animation: {
+      onComplete: function () {
+        if (chartRef.current) {
+          console.log("LineChartImage", chartRef.current.toBase64Image());
+        }
+
+      },
+    },
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -147,6 +164,9 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
         },
+        grid: {
+          color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9'
+        }
       },
       y: {
         title: {
@@ -174,7 +194,37 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       },
     },
   };
-                               
+  console.log(base64Image);
+
+
+  return (
+    <div className="flex items-center justify-center w-full">
+      {/* {isExpanded && (
+        <button
+          className="text-2xl mx-4 p-2 rounded-full"
+        //onClick={() => handleArrowClick('left')}
+        >
+          ←
+        </button>
+      )} */}
+      <Line data={chartData} options={options} ref={chartRef} />
+      {/* {isExpanded && (
+        <button
+          className="text-2xl mx-4 p-2 rounded-full"
+        //onClick={() => handleArrowClick('right')}
+        >
+          →
+        </button>
+      )}
+       <fetcher.Form method="post">
+      <button type="submit">
+        Click me to send request to Express
+      </button>
+    </fetcher.Form> */}
+    </div>
+  );
+
+                 
   return (
     <div className="w-full h-96 md:h-96">
       <Line data={chartData} options={options} ref={chartRef} />
