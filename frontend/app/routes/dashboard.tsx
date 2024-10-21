@@ -14,6 +14,7 @@ import VennDiagram from "~/components/VennDiagram";
 import YearGraph from "~/components/YearGraph"
 import PrivacyTypesChart from "~/components/PrivacyTypesChart"
 import DataTypesChart from "~/components/DataTypesChart"
+import LongitudeChart from "~/components/LongitudeChart";
 
 
 import { LoaderFunctionArgs, json } from "@remix-run/node";
@@ -98,7 +99,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const dates = await fetch(process.env.BACKEND_API + "graph14")
   const dateJson = await dates.json()
 
-  const response = await fetch('http://localhost:8017/longitude');
+  const response = await fetch('http://localhost:8017/longUpdated');
   const longitude = await response.json();
   const response2 = await fetch('http://localhost:8017/ratios');
   const ratios = await response2.json();
@@ -206,7 +207,7 @@ export default function Index() {
                   ref={(el) => (refs.current[0] = el)}
                 >
                   <h1 className="text-center font-bold">Annual Trends in App Privacy Compliance</h1>
-                  <LineChart data={longitude} isExpanded={isPopupOpen} />
+                  <LongitudeChart data={longitude} isExpanded={isPopupOpen} />
                   <h3 className={``}>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
                   <button
                     onClick={handleOpenPopup}
