@@ -6,7 +6,6 @@ import html2canvas from 'html2canvas';
 import { animate } from 'framer-motion';
 import { useFetcher } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import { FaTruckMonster } from 'react-icons/fa';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -38,29 +37,30 @@ function useWindowSize() {
   return windowSize;
 }
 
-interface DataItem {
-  key: string;
-  doc_count: number;
-}
+interface RunData {
+    date: string;
+    values: {
+      ALL_APPS: number;
+      EXISTS_PRIVACY_LABELS: number;
+      DATA_USED_TO_TRACK_YOU: number;
+      DATA_LINKED_TO_YOU: number;
+      DATA_NOT_COLLECTED: number;
+      DATA_NOT_LINKED_TO_YOU: number;
+    };
+  }
+  
+  interface LineChartProps {
+    data: RunData[];
+    isExpanded: boolean;
+  }
 
-interface LineChartProps {
-  data: {
-    DATA_USED_TO_TRACK_YOU: DataItem[];
-    EXISTS_PRIVACY_LABELS: DataItem[];
-    ALL_APPS: DataItem[];
-    DATA_NOT_LINKED_TO_YOU: DataItem[];
-    DATA_NOT_COLLECTED: DataItem[];
-    DATA_LINKED_TO_YOU: DataItem[];
-  };
-  isExpanded: boolean;
-}
 
 
-
-const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
+const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
+  console.log("Longitude Chart", data);
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
-  const { width, height } = useWindowSize();
+
   useEffect(() => {
     return () => {
       if (chartRef.current) {
@@ -70,12 +70,25 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     };
   }, []);
 
-  const labels = (data.DATA_USED_TO_TRACK_YOU || []).map(item => item.key.toString());
+  let labels:String[] = []
 
-  const getData = (dataset: DataItem[]) => {
-    const dataMap = new Map<string, number>();
-    dataset.forEach(item => dataMap.set(item.key, item.doc_count));
-    return labels.map(label => dataMap.get(label) || 0);
+  for (var key in data){
+    if(key != "id"){
+        console.log(data[key]["date"])
+        labels.push(data[key]["date"])
+    }
+  }
+
+  const getData = (key: keyof RunData["values"]) => {
+    let map:number[] = []
+    for (var val in data){
+        if(val != "id"){
+            console.log(data[val]["values"]["ALL_APPS"])
+            map.push(data[val]["values"][key]);
+        }
+
+    }
+    return map;
   };
 
   const chartData = {
@@ -83,7 +96,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     datasets: [
       {
         label: 'Total Apps',
-        data: getData(data.ALL_APPS),
+        data: getData("ALL_APPS"),
         borderColor: 'rgba(255, 159, 64, 1)',
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
         borderWidth: 3,  // Thicker line
@@ -92,7 +105,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
       {
         label: 'Compliant Apps',
-        data: getData(data.EXISTS_PRIVACY_LABELS),
+        data: getData("EXISTS_PRIVACY_LABELS"),
         borderColor: 'rgba(255, 99, 132, 1)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderWidth: 3,
@@ -101,7 +114,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
       {
         label: 'Data Not Collected',
-        data: getData(data.DATA_NOT_COLLECTED),
+        data: getData("DATA_NOT_COLLECTED"),
         borderColor: 'rgba(255, 206, 86, 1)',
         backgroundColor: 'rgba(255, 206, 86, 0.2)',
         borderWidth: 3,
@@ -110,7 +123,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
       {
         label: 'Data Not Linked to You',
-        data: getData(data.DATA_NOT_LINKED_TO_YOU),
+        data: getData("DATA_NOT_LINKED_TO_YOU"),
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderWidth: 3,
@@ -119,7 +132,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
       {
         label: 'Data Linked to You',
-        data: getData(data.DATA_LINKED_TO_YOU),
+        data: getData("DATA_LINKED_TO_YOU"),
         borderColor: 'rgba(153, 102, 255, 1)',
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
         borderWidth: 3,
@@ -128,7 +141,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
       {
         label: 'Data Used to Track You',
-        data: getData(data.DATA_USED_TO_TRACK_YOU),
+        data: getData("DATA_USED_TO_TRACK_YOU"),
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 3,        tension: 0.1,
@@ -137,28 +150,14 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     ].filter(dataset => dataset.data.length > 0),
   };
 
-  let base64Image = null;
   const options = {
-    animation: {
-      onComplete: function () {
-        if (chartRef.current) {
-          console.log("LineChartImage", chartRef.current.toBase64Image());
-        }
-
-      },
-    },
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         title: {
           display: true,
           text: 'Run Date',
-        },
-        ticks: {
-          font: {
-            size: {width} < 768 ? 10 : 12,  // Smaller font size for mobile
-          },
         },
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
@@ -168,11 +167,6 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         title: {
           display: true,
           text: 'Number of Apps',
-        },
-        ticks: {
-          font: {
-            size: {width} < 768 ? 10 : 12,  // Smaller font size for mobile
-          },
         },
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
@@ -184,41 +178,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         display: false,
       },
     },
-    elements: {
-      line: {
-        borderWidth: {width} < 768 ? 2 : 3,  // Thicker lines for larger screens
-      },
-    },
   };
-  console.log(base64Image);
-
-
-  // return (
-  //   <div className="flex items-center justify-center w-full">
-  //     {/* {isExpanded && (
-  //       <button
-  //         className="text-2xl mx-4 p-2 rounded-full"
-  //       //onClick={() => handleArrowClick('left')}
-  //       >
-  //         ←
-  //       </button>
-  //     )} */}
-  //     <Line data={chartData} options={options} ref={chartRef} />
-  //     {/* {isExpanded && (
-  //       <button
-  //         className="text-2xl mx-4 p-2 rounded-full"
-  //       //onClick={() => handleArrowClick('right')}
-  //       >
-  //         →
-  //       </button>
-  //     )}
-  //      <fetcher.Form method="post">
-  //     <button type="submit">
-  //       Click me to send request to Express
-  //     </button>
-  //   </fetcher.Form> */}
-  //   </div>
-  // );
 
                  
   return (
@@ -228,4 +188,4 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
   );
 };
 
-export default LineChart;
+export default LongitudeChart;
