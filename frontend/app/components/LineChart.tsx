@@ -59,7 +59,6 @@ interface LineChartProps {
 
 const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
   console.log("LineChart", data);
-  const fetcher = useFetcher();
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
   const { width, height } = useWindowSize();
@@ -165,9 +164,6 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
         },
-        grid: {
-          color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9'
-        }
       },
       y: {
         title: {
@@ -198,32 +194,32 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
   console.log(base64Image);
 
 
-  return (
-    <div className="flex items-center justify-center w-full">
-      {/* {isExpanded && (
-        <button
-          className="text-2xl mx-4 p-2 rounded-full"
-        //onClick={() => handleArrowClick('left')}
-        >
-          ←
-        </button>
-      )} */}
-      <Line data={chartData} options={options} ref={chartRef} />
-      {/* {isExpanded && (
-        <button
-          className="text-2xl mx-4 p-2 rounded-full"
-        //onClick={() => handleArrowClick('right')}
-        >
-          →
-        </button>
-      )}
-       <fetcher.Form method="post">
-      <button type="submit">
-        Click me to send request to Express
-      </button>
-    </fetcher.Form> */}
-    </div>
-  );
+  // return (
+  //   <div className="flex items-center justify-center w-full">
+  //     {/* {isExpanded && (
+  //       <button
+  //         className="text-2xl mx-4 p-2 rounded-full"
+  //       //onClick={() => handleArrowClick('left')}
+  //       >
+  //         ←
+  //       </button>
+  //     )} */}
+  //     <Line data={chartData} options={options} ref={chartRef} />
+  //     {/* {isExpanded && (
+  //       <button
+  //         className="text-2xl mx-4 p-2 rounded-full"
+  //       //onClick={() => handleArrowClick('right')}
+  //       >
+  //         →
+  //       </button>
+  //     )}
+  //      <fetcher.Form method="post">
+  //     <button type="submit">
+  //       Click me to send request to Express
+  //     </button>
+  //   </fetcher.Form> */}
+  //   </div>
+  // );
 
                  
   return (
