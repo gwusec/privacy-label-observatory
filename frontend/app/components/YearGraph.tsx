@@ -58,9 +58,7 @@ const createSampleData = (years:any, dataset:any, total:any, label:any, backgrou
 function YearGraph({data}:{data:any}){
     const {theme} = useTheme();
     const years = generateLabels(Object.keys(data["totals"]).length)
-    console.log("years", years)
     const total = data["totals"]
-    console.log("data", data)
     const linked = data["dlty"]
 
     const not_linked = data["dnlty"]
