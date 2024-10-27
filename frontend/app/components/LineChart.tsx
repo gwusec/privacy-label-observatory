@@ -142,7 +142,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     animation: {
       onComplete: function () {
         if (chartRef.current) {
-          console.log("LineChartImage", chartRef.current.toBase64Image());
+          
         }
 
       },
@@ -190,7 +190,6 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
     },
   };
-  console.log(base64Image);
 
 
   // return (
