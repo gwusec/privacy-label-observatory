@@ -38,6 +38,7 @@ function useWindowSize() {
 }
 
 interface RunData {
+    index: string;
     date: string;
     values: {
       ALL_APPS: number;
@@ -57,6 +58,7 @@ interface RunData {
 
 
 const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
+  console.log("updated");
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
   useEffect(() => {
@@ -72,7 +74,7 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
 
   for (var key in data){
     if(key != "id"){
-        labels.push(data[key]["date"])
+        labels.push(data[key]["index"])
     }
   }
 
