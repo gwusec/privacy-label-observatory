@@ -49,7 +49,7 @@ const MatrixChart = ({ data, color }) => {
             animation: {
                 onComplete: function () {
                   if(chartRef.current){
-                    console.log("Base64ImageMatrix", chartRef.current.toBase64Image());
+                    
                   }
           
                 },
@@ -116,7 +116,7 @@ const MatrixChart = ({ data, color }) => {
             });
             
         } else {
-            console.log("Canvas context is not available");
+            
         }
 
         return () => {

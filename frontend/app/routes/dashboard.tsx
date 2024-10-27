@@ -51,16 +51,65 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme }: GraphPopupProps) => {
   }, [isOpen]);
   if (!isOpen) return null;
 
+  let id = Number(graphData['id'])
+  const { id: _, ...dataWithoutId } = graphData;
+  console.log(dataWithoutId)
+
+  // Convert dataWithoutId to an array to easily slice it based on the current id
+  const dataEntries = Object.entries(dataWithoutId);
+  
+  // Slice the data based on the current id
+  const slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
+  
+
+  const nextData = () =>{
+    if(id + 1 >= Number(graphData['id'])){
+      id = Number(graphData['id'])
+    } else {
+      id += 1;
+    }
+    console.log(id);
+    console.log(slicedData)
+  } 
+  const prevData = () =>{
+    if(id - 1 <= 0){
+      id = 0
+    } else {
+      id -= 1;
+    }
+
+    console.log(id);
+    console.log(slicedData)
+  } 
+
   return (
-    <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
-      <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-8 rounded-lg shadow-lg w-full max-w-4xl`}>
-        <h2 className="text-2xl mb-4 ">Expanded Graph View</h2>
+    <div className={`w-full h-full fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
+      <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-8 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
+        <h2 className="text-2xl mb-4">Expanded Graph View</h2>
         {/* Render your graph here */}
-        <LineChart data={graphData} isExpanded={true} />
-        <button onClick={() => onClose()}
-          className={`mt-4 px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} ounded z-[1000]`}>
-          Close
-        </button>
+        <div className="flex-grow overflow-auto">
+          <LongitudeChart data={dataWithoutId} isExpanded={true} />
+        </div>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={prevData}
+            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+          >
+            Prev
+          </button>
+          <button
+            onClick={onClose}
+            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded`}
+          >
+            Close
+          </button>
+          <button
+            onClick={nextData}
+            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
