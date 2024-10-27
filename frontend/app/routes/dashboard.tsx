@@ -37,9 +37,13 @@ interface GraphPopupProps {
   onClose: () => void;
   graphData: any;
   theme: string | undefined;
+  id: any;
+  setId:any;
+  ogId: number;
 }
 
-const GraphPopup = ({ isOpen, onClose, graphData, theme }: GraphPopupProps) => {
+const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: GraphPopupProps) => {
+  console.log("hello", ogId);
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'; // Disable scrolling
@@ -54,34 +58,33 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme }: GraphPopupProps) => {
   }, [isOpen]);
   if (!isOpen) return null;
 
-  let id = Number(graphData['id'])
   const { id: _, ...dataWithoutId } = graphData;
   console.log(dataWithoutId)
 
   // Convert dataWithoutId to an array to easily slice it based on the current id
   const dataEntries = Object.entries(dataWithoutId);
+  const subtraction = ogId - id;
   
   // Slice the data based on the current id
-  const slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
+  let slicedData = Object.fromEntries(dataEntries.slice(0, dataEntries.length - subtraction));
   
 
   const nextData = () =>{
     if(id + 1 >= Number(graphData['id'])){
-      id = Number(graphData['id'])
+      setId(Number(graphData['id']))
     } else {
-      id += 1;
+      setId(id+=1)
     }
-    console.log(id);
+    slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
     console.log(slicedData)
   } 
   const prevData = () =>{
     if(id - 1 <= 0){
-      id = 0
+      setId(0)
     } else {
-      id -= 1;
+      setId(id -= 1);
     }
-
-    console.log(id);
+    slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
     console.log(slicedData)
   } 
 
@@ -91,7 +94,7 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme }: GraphPopupProps) => {
         <h2 className="text-2xl mb-4">Expanded Graph View</h2>
         {/* Render your graph here */}
         <div className="flex-grow overflow-auto">
-          <LongitudeChart data={dataWithoutId} isExpanded={true} />
+          <LongitudeChart data={slicedData} isExpanded={true} />
         </div>
         <div className="flex justify-between mt-4">
           <button
@@ -195,7 +198,8 @@ export default function Index() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [id, setId] = useState(Number(longitude['id']));
+  const ogId = Number(longitude['id'])
 
   const handleOpenPopup = () => {
     setIsPopupOpen(true);
@@ -338,6 +342,9 @@ export default function Index() {
                     onClose={handleClosePopup}
                     graphData={longitude}
                     theme={theme}
+                    id={id}
+                    setId={setId}
+                    ogId={ogId}
                   />
                 </div>
                 <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={(el => (refs.current[1] = el))}>
