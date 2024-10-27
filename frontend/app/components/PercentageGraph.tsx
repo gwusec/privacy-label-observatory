@@ -28,7 +28,6 @@ ChartJS.register(
 
 export default function PercentageGraph ({data}:{data:any}) {   
     const { theme } = useTheme();
-    console.log(data)
     const track = [data["duty_free_no_app"], data["duty_free_in_app"], data["duty_paid_no_app"], data["duty_paid_in_app"]]
     const not_linked = [data["dnlty_free_no_app"], data["dnlty_free_in_app"], data["dnlty_paid_no_app"], data["dnlty_paid_in_app"]]
     const linked = [data["dlty_free_no_app"], data["dlty_free_in_app"], data["dlty_paid_no_app"], data["dlty_paid_in_app"]]

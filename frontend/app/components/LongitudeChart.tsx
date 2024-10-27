@@ -57,10 +57,8 @@ interface RunData {
 
 
 const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
-  console.log("Longitude Chart", data);
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
-
   useEffect(() => {
     return () => {
       if (chartRef.current) {
@@ -74,7 +72,6 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
 
   for (var key in data){
     if(key != "id"){
-        console.log(data[key]["date"])
         labels.push(data[key]["date"])
     }
   }
@@ -83,7 +80,6 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     let map:number[] = []
     for (var val in data){
         if(val != "id"){
-            console.log(data[val]["values"]["ALL_APPS"])
             map.push(data[val]["values"][key]);
         }
 
@@ -183,7 +179,7 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
                  
   return (
     <div className="w-full h-96 md:h-96">
-      <Line data={chartData} options={options} ref={chartRef} />
+        <Line data={chartData} options={options} ref={chartRef} />
     </div>
   );
 };
