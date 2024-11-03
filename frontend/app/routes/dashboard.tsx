@@ -19,6 +19,7 @@ import DataTypesChart from "~/components/DataTypesChart"
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import PercentageGraph from "~/components/PercentageGraph";
+import VersionUpdate from "~/components/VersionUpdate";
 
 import { MetaFunction } from "@remix-run/node";
 
@@ -97,7 +98,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const percentageData = await percentage.json()
   const dates = await fetch(process.env.BACKEND_API + "graph14")
   const dateJson = await dates.json()
-
+  
   const response = await fetch('http://localhost:8017/longitude');
   const longitude = await response.json();
   const response2 = await fetch('http://localhost:8017/ratios');
@@ -110,8 +111,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const dataTypes = await response5.json();
   const response6 = await fetch('http://localhost:8017/figure13');
   const appGenre = await response6.json();
-
-  return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre]
+  const version = await fetch(process.env.BACKEND_API + "graph11")
+  const versionData = await version.json()
+  
+  return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre, versionData];
 }
 
 export default function Index() {
@@ -129,6 +132,7 @@ export default function Index() {
   const privacyTypes = data[6];
   const dataTypes = data[7];
   const appGenre = data[8];
+  const versionData = data[9];
 
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -218,10 +222,7 @@ export default function Index() {
                 >
                   <h1 className="text-center font-bold">Annual Trends in App Privacy Compliance</h1>
 
-
-
                   <LineChart data={longitude} isExpanded={isPopupOpen} />
-
 
                   <h3 className={``}>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
                   <button
@@ -255,7 +256,7 @@ export default function Index() {
                   </div>
                   <h3>The ratios of the six Purposes for the Data Used to Track You, Data Linked to You and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.</h3>
                 </div>
-                <div ref={(el => (refs.current[2] = el))}>
+                <div className={`mb-20`} ref={(el => (refs.current[2] = el))}>
                   <h1 className="text-center font-bold">Data Category Ratios by Privacy Type</h1>
                   <div className="flex flex-row space-x-4">
                     <div className="flex flex-col items-center w-1/2">
@@ -283,6 +284,18 @@ export default function Index() {
                   <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
                     linked to users.</h3>
                 </div>
+
+
+
+                <div className={`mb-20 `} ref={(el => (refs.current[4] = el))}>
+                  <h1 className="text-center font-bold" >App Costs vs. Privacy Practices</h1>
+                  <VersionUpdate data={versionData} />
+                  <h3 className="mt-5 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
+                  designated content rating that have a privacy label.
+                </div>
+
+
+
 
                 <div className={`mb-20 `} ref={(el => (refs.current[5] = el))}>
                   <h1 className="text-center font-bold" >Yearly App Releases with Privacy Labels</h1>
@@ -355,6 +368,7 @@ export default function Index() {
                         with the designated app store genre that have a privacy label. This includes only apps placed in the top in genre categories.</h3>
                     </div>
                   </div>
+                </div>
                 </div>
             </div>
       )}

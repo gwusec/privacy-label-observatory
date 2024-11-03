@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import { animate } from 'framer-motion';
 import { useFetcher } from '@remix-run/react';
 import { json } from '@remix-run/node';
+import { FaTruckMonster } from 'react-icons/fa';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -149,7 +150,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
     },
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     scales: {
       x: {
         title: {
