@@ -26,16 +26,16 @@ ChartJS.register(
     ChartDataLabels
 );
 
-export default function PercentageGraph ({data}:{data:any}) {   
+export default function VersionUpdate ({data}:{data:any}) {   
     const { theme } = useTheme();
-    const track = [data["duty_free_no_app"], data["duty_free_in_app"], data["duty_paid_no_app"], data["duty_paid_in_app"]]
-    const not_linked = [data["dnlty_free_no_app"], data["dnlty_free_in_app"], data["dnlty_paid_no_app"], data["dnlty_paid_in_app"]]
-    const linked = [data["dlty_free_no_app"], data["dlty_free_in_app"], data["dlty_paid_no_app"], data["dlty_paid_in_app"]]
-    const collected = [data["dnc_free_no_app"], data["dnc_free_in_app"], data["dnc_paid_no_app"], data["dnc_paid_in_app"]]
+    const track = [data["duty_4"], data["duty_9"], data["duty_12"], data["duty_17"]]
+    const not_linked = [data["dnlty_4"], data["dnlty_9"], data["dnlty_12"], data["dnlty_17"]]
+    const linked = [data["dlty_4"], data["dlty_9"], data["dlty_12"], data["dlty_17"]]
+    const collected = [data["dnc_4"], data["dnc_9"], data["dnc_12"], data["dnc_17"]]
 
     const chartData = {
         labels: [
-            'Free', 'Free In-App', 'Paid', 'Paid In-App',
+            '4+', '9+', '12+', '17+',
           ],
         datasets: [
             {
@@ -50,7 +50,7 @@ export default function PercentageGraph ({data}:{data:any}) {
 
     const chartData2 = {
         labels: [
-            'Free', 'Free In-App', 'Paid', 'Paid In-App',
+            '4+', '9+', '12+', '17+',
           ],
         datasets: [
             {
@@ -65,7 +65,7 @@ export default function PercentageGraph ({data}:{data:any}) {
 
     const chartData3 = {
         labels: [
-            'Free', 'Free In-App', 'Paid', 'Paid In-App',
+            '4+', '9+', '12+', '17+',
           ],
         datasets: [
             {
@@ -80,7 +80,7 @@ export default function PercentageGraph ({data}:{data:any}) {
 
     const chartData4 = {
         labels: [
-            'Free', 'Free In-App', 'Paid', 'Paid In-App',
+            '4+', '9+', '12+', '17+',
           ],
         datasets: [
             {
