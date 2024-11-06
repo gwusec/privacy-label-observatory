@@ -284,18 +284,13 @@ export default function Index() {
                   <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
                     linked to users.</h3>
                 </div>
-
-
-
+                
                 <div className={`mb-20 `} ref={(el => (refs.current[4] = el))}>
-                  <h1 className="text-center font-bold" >App Costs vs. Privacy Practices</h1>
+                  <h1 className="text-center font-bold" > Content Ratings vs. Privacy Practices</h1>
                   <VersionUpdate data={versionData} />
                   <h3 className="mt-5 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
-                  designated content rating that have a privacy label.
+                  designated content rating that have a privacy label. </h3>
                 </div>
-
-
-
 
                 <div className={`mb-20 `} ref={(el => (refs.current[5] = el))}>
                   <h1 className="text-center font-bold" >Yearly App Releases with Privacy Labels</h1>
