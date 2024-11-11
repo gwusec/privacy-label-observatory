@@ -85,6 +85,9 @@ function YearGraph({data}:{data:any}){
         scales: {
             x: {
                 stacked: true,
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
                 grid: {
                     color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
                   },
@@ -92,6 +95,9 @@ function YearGraph({data}:{data:any}){
             y: {
                 stacked: false,
                 beginAtZero: true,
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
                 grid: {
                     color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
                   },
@@ -113,6 +119,9 @@ function YearGraph({data}:{data:any}){
         scales: {
             x: {
                 stacked: true,
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
                 grid: {
                     color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
                   },
@@ -121,7 +130,8 @@ function YearGraph({data}:{data:any}){
                 stacked: false,
                 beginAtZero: true,
                 ticks: {
-                    display: false
+                    display: false,
+                    color: theme === 'dark' ? 'white' : 'black',
                 },
                 grid: {
                     drawTicks: true,
