@@ -114,6 +114,11 @@ export default function PercentageGraph ({data}:{data:any}) {
             },
         },
         scales: {
+            x: {
+                ticks:{
+                    color: theme === 'dark' ? 'white' : 'black',
+                }
+            },
             y: {
                 display: true,
                 beginAtZero: true,
