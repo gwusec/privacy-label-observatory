@@ -337,15 +337,15 @@ export default function Index() {
 
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme}/>
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                      <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme}/>
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                      <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme}/>
                     </div>
                   </div>
                   <h3 className="text-sm md:text-base">The ratios of the 14 Data Categories for each of
@@ -357,15 +357,15 @@ export default function Index() {
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                      <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme}/>
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                      <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme}/>
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                      <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                     </div>
                   </div>
                   <h3 className="text-sm md:text-base">The ratios of the 32 Data Types for each of three
@@ -377,19 +377,19 @@ export default function Index() {
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-full md:w-1/4">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <DataTypesChart data={appGenre.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" />
+                      <DataTypesChart data={appGenre.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/4">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <DataTypesChart data={appGenre.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" />
+                      <DataTypesChart data={appGenre.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/4">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <DataTypesChart data={appGenre.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" />
+                      <DataTypesChart data={appGenre.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/4">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Collected</h1>
-                      <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" />
+                      <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" theme={theme} />
                     </div>
                   </div>
                   <h3 className="text-sm md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
