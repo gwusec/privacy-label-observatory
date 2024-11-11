@@ -53,6 +53,7 @@ const MatrixChart = ({ data, color, theme }) => {
                     type: 'category',
                     labels: dataCategories,
                     title: {
+                        color: theme === 'dark' ? 'white' : 'black',    
                         display: true,
                         text: 'Data Categories'
                     },
@@ -71,6 +72,7 @@ const MatrixChart = ({ data, color, theme }) => {
                     type: 'category',
                     labels: purposes,
                     title: {
+                        color: theme === 'dark' ? 'white' : 'black',
                         display: true,
                         text: 'Purposes'
                     },
