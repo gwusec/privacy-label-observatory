@@ -93,13 +93,15 @@ export default function PercentageGraph ({data}:{data:any}) {
         ],
     };
 
-    const options2 = {
+    const options = {
         responsive: true,
         plugins: {
-            
             legend: {
                 position: 'top' as const,
-            },
+                labels: {
+                  color: theme === 'dark' ? '#ffffff' : '#000000'
+                }
+              },
             datalabels: {
                 display: true,
                 align: 'end',
@@ -120,6 +122,8 @@ export default function PercentageGraph ({data}:{data:any}) {
                     display: false,
                     stepSize: 20, // Optional: Sets step size, depending on your data range
                     maxTicksLimit: 10, // Limit the number of tick marks
+                    color: theme === 'dark' ? 'white' : 'black',
+                    
                 },
                 grid: {
                     drawTicks: true, // Ensures tick marks are drawn
@@ -132,16 +136,16 @@ export default function PercentageGraph ({data}:{data:any}) {
     return (
         <div className="grid grid-cols-2 gap-10 px-10 pt-10">
             <div className="w-full">
-                <Bar data={chartData} options={options2} />
+                <Bar data={chartData} options={options} />
             </div>
             <div className="w-full">
-                <Bar data={chartData2} options={options2} />
+                <Bar data={chartData2} options={options} />
             </div>
             <div className="w-full">
-                <Bar data={chartData3} options={options2} />
+                <Bar data={chartData3} options={options} />
             </div>
             <div className="w-full">
-                <Bar data={chartData4} options={options2} />
+                <Bar data={chartData4} options={options} />
             </div>
         </div>
     );
