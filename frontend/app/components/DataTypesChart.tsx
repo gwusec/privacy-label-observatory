@@ -70,7 +70,9 @@ const DataTypesChart: React.FC<DataTypesProps> = ({ data, color, theme }) => {
               ticks: {
                 minRotation: 0, // Ensure labels are horizontal
                 maxRotation: 0, // Ensure labels are horizontal
-                padding: 5 // Increase padding between labels and chart
+                padding: 5, // Increase padding between labels and chart
+                color: theme === 'dark' ? 'white' : 'black',
+
               }
             }
           },

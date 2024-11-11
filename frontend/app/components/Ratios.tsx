@@ -69,7 +69,12 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
               grid: {
                 display: false // Remove grid lines
               },
-
+              ticks: {
+                color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
+                font: {
+                  size: 14, // Optional: Adjust the font size for better visibility
+                },
+              },
             }
           },
           plugins: {

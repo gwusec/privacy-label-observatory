@@ -4,13 +4,15 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import { color } from 'chart.js/helpers';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'tailwindcss/tailwind.css'; // Assuming you're using Tailwind for responsiveness
+import { useTheme } from 'next-themes';
 
 
 Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabels);
 
-const MatrixChart = ({ data, color }) => {
+const MatrixChart = ({ data, color, theme }) => {
     const chartRef = useRef(null);
     const canvasRef = useRef(null);
+    
     
     useEffect(() => {
         if (!data) return;
@@ -46,14 +48,6 @@ const MatrixChart = ({ data, color }) => {
         const options = {
             responsive: true,
             maintainAspectRatio: false, // Important for flexible height
-            animation: {
-                onComplete: function () {
-                  if(chartRef.current){
-                    
-                  }
-          
-                },
-              },
             scales: {
                 x: {
                     type: 'category',
@@ -65,8 +59,13 @@ const MatrixChart = ({ data, color }) => {
                     ticks: {
                         autoSkip: false,
                         maxRotation: 45,
-                        minRotation: 45
+                        minRotation: 45, 
+                        color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
+                        font: {
+                          size: 14, // Optional: Adjust the font size for better visibility
+                        },
                     }
+                    
                 },
                 y: {
                     type: 'category',
@@ -78,8 +77,12 @@ const MatrixChart = ({ data, color }) => {
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0,
-                        minRotation: 0
-                    },
+                        minRotation: 0, 
+                        color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
+                        font: {
+                          size: 14, // Optional: Adjust the font size for better visibility
+                        },
+                      },
                 }
             },
             plugins: {
@@ -125,7 +128,7 @@ const MatrixChart = ({ data, color }) => {
                 chartRef.current = null;
             }
         };
-    }, [data]);
+    }, [data, theme]);
 
     if (!data) {
         return <div>No data available</div>;
