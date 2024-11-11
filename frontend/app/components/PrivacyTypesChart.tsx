@@ -56,7 +56,8 @@ const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data, color, theme }) 
             x: {
               beginAtZero: true,
               grid: {
-                display: false // Remove grid lines
+                display: false, // Remove grid lines
+                color: theme === 'dark' ? 'white' : 'black',
               },
               ticks: {
                 display: false // Hide x-axis labels
@@ -65,12 +66,15 @@ const PrivacyTypesChart: React.FC<PrivacyTypesProps> = ({ data, color, theme }) 
             },
             y: {
               grid: {
-                display: false // Remove grid lines
+                display: false, // Remove grid lines
+                color: theme === 'dark' ? 'white' : 'black',
               },
               ticks: {
                 minRotation: 0, // Ensure labels are horizontal
                 maxRotation: 0, // Ensure labels are horizontal
-                padding: 5 // Increase padding between labels and chart
+                padding: 5, // Increase padding between labels and chart
+                color: theme === 'dark' ? 'white' : 'black',
+
               }
             }
           },

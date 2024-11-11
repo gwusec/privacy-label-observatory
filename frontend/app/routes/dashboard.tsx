@@ -301,11 +301,11 @@ export default function Index() {
                   <div className="flex flex-row space-x-4">
                     <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Not Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," />
+                      <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," />
+                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme}/>
                     </div>
                   </div>
                   <h4>The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
@@ -372,7 +372,7 @@ export default function Index() {
                     Privacy Types. The denominator is the number of apps in the
                     specific Privacy Type.</h3>
                 </div>
-                <div className="mb-20" ref={(el => (refs.current[8] = el))}>
+                <div ref={(el => (refs.current[8] = el))}>
                   <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-full md:w-1/4">

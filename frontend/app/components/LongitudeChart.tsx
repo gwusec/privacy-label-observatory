@@ -155,7 +155,11 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       x: {
         title: {
           display: true,
+          color: theme === 'dark' ? '#f1f1f1' : '#1e1e1e',
           text: 'Run Date',
+        },
+        ticks: {
+          color: theme === 'dark' ? '#f1f1f1' : '#1e1e1e', // X-axis ticks color
         },
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
@@ -163,8 +167,12 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
       y: {
         title: {
+          color: theme === 'dark' ? '#f1f1f1' : '#1e1e1e',
           display: true,
           text: 'Number of Apps',
+        },
+        ticks: {
+          color: theme === 'dark' ? '#f1f1f1' : '#1e1e1e', // X-axis ticks color
         },
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
@@ -172,7 +180,13 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       },
     },
     plugins: {
+      legend: {
+        labels: {
+          color: theme === 'dark' ? '#ffffff' : '#000000'
+        }
+      },
       datalabels: {
+        color: theme === 'dark' ? '#ffffff' : '#000000',
         display: false,
       },
     },
