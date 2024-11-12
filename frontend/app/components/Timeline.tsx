@@ -176,8 +176,6 @@ export default function Timeline({ data }: { data: any }) {
             {privDetails.length > 0 ?
                 <div className="flex">
                     <div className='p-2 flex w-full'>
-
-                        {/* Need to come back to this since currently it's wrong */}
                         <div
                             className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
                 ${theme === 'dark' && expandedColumn != 'column1' ?
@@ -218,55 +216,38 @@ export default function Timeline({ data }: { data: any }) {
                                                 <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
 
                                                     {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                                        <div className={`flex flex-wrap justify-center ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'} `}>
-                                                            <div key={dataCategoryIndex}>
-                                                                <li className="text-lg font-semibold flex items-center justify-center text-center space-x-2">
-                                                                    {expandedColumn === null && allColumns === false &&
-                                                                        <img
-                                                                            src={getIconPath(dataCategory.dataCategory)}
-                                                                            className='w-6 h-6'
-                                                                        />
-                                                                    }
-
-                                                                    {dataCategory.dataCategory}
-                                                                </li>
-                                                                <div className='flex flex-wrap justify-start gap-1'>
-                                                                    {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                        <div key={dataCategoryIndex} className="p-2">
-                                                                            <li className="text-base rounded-md p-2 flex flex-col">
-                                                                                <span
-                                                                                    key={dataTypeIndex}
-                                                                                    className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'
-                                                                                >
-                                                                                    {dataType.data_type}
-                                                                                </span>
-                                                                            </li>
-
+                                                        <div key={dataCategoryIndex} className={`flex flex-wrap ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'}`}>
+                                                            <div className="w-full">
+                                                                <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                    {expandedColumn === null && allColumns === false ? (
+                                                                        <div className="flex items-center space-x-2">
+                                                                            <img src={getIconPath(dataCategory.dataCategory)} className="w-6 h-6" />
+                                                                            <div className='pl-6'>{dataCategory.dataCategory}</div>
                                                                         </div>
-                                                                        /*
-                                                                        <div key={dataCategoryIndex} className="p-2">
-        <li className="text-base rounded-md p-2 flex flex-col">
-            {dataCategory.dataCategory}:
-    
-            <div className="flex flex-wrap justify-start gap-1">
-                {dataCategory.dataTypes &&
-                    dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                        <span
-                            key={dataTypeIndex}
-                            className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
-                        >
-                            {dataType.data_type}
-                        </span>
-                    ))}
-            </div>
-        </li>
-    </div>
-                                                                         */
-                                                                    ))}
-                                                                </div>
+                                                                    ) : (
+                                                                        <div className='text-center'>
+                                                                            {dataCategory.dataCategory}
+                                                                        </div>
+                                                                    )}
+                                                                </li>
+
+                                                                {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                    <div key={dataCategoryIndex} className="p-2 w-fit">
+                                                                        <li className="text-base rounded-md p-2 flex flex-col">
+                                                                            <span
+                                                                                key={dataTypeIndex}
+                                                                                className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'
+                                                                            >
+                                                                                {dataType.data_type}
+                                                                            </span>
+                                                                        </li>
+
+                                                                    </div>
+                                                                ))}
                                                             </div>
                                                         </div>
                                                     ))}
+
                                                 </ul>
                                             </div>
                                             :
@@ -345,7 +326,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                     {Array.from(allUniqueCategories).map((dataCategory, index) => (
                                                                         <li className="text-lg font-semibold flex items-center space-x-2">
                                                                             <img src={getIconPath(dataCategory)} className="w-6 h-6" />
-                                                                            {dataCategory}
+                                                                            <div className='pl-6'>{dataCategory}</div>
                                                                         </li>
                                                                     ))}
                                                                 </ul>
@@ -458,7 +439,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                     {Array.from(allUniqueCategories).map((dataCategory, index) => (
                                                                         <li className="text-lg font-semibold flex items-center space-x-2">
                                                                             <img src={getIconPath(dataCategory)} className="w-6 h-6" />
-                                                                            {dataCategory}
+                                                                            <div className='pl-6'>{dataCategory}</div>
                                                                         </li>
                                                                     ))}
                                                                 </ul>
@@ -496,8 +477,6 @@ export default function Timeline({ data }: { data: any }) {
                                             <div></div>
                                         )
                                     )}
-
-
                                 </div>
                                 :
                                 <div >
