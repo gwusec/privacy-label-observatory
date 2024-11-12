@@ -168,336 +168,519 @@ export default function Timeline({ data }: { data: any }) {
             <div className='flex flex-row justify-between items-end mr-4'>
                 <Button className='ml-6' onClick={handleButton}>Return to Search</Button>
                 {privDetails.length > 0 ?
-                    <Button onClick={() => expandAll()} className={`text-cyan-500  ${theme === 'dark' ? 'bg-black' : 'bg-white'} font-medium`}>View {allColumns ? 'Less' : 'More'}</Button>
+                    <Button onClick={() => expandAll()} className={`hidden text-cyan-500 lg:block ${theme === 'dark' ? 'bg-black' : 'bg-white'} font-medium`}>View {allColumns ? 'Less' : 'More'}</Button>
                     :
                     <></>
                 }
             </div>
             {privDetails.length > 0 ?
-                <div className="flex">
-                    <div className='p-2 flex w-full'>
-                        <div
-                            className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
+                <>
+                    <div className="flex hidden lg:block">
+                        <div className='p-2 flex w-full'>
+                            <div
+                                className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
                 ${theme === 'dark' && expandedColumn != 'column1' ?
-                                    'text-white bg-neutral-800' :
-                                    'text-red bg-neutral-300'} 
+                                        'text-white bg-neutral-800' :
+                                        'text-red bg-neutral-300'} 
                 ${expandedColumn !== 'column1' ?
-                                    (theme === 'dark' ?
-                                        'hover:text-red hover:bg-neutral-200' :
-                                        'hover:text-white hover:bg-neutral-700') :
-                                    ''} 
+                                        (theme === 'dark' ?
+                                            'hover:text-red hover:bg-neutral-200' :
+                                            'hover:text-white hover:bg-neutral-700') :
+                                        ''} 
                 ${expandedColumn === 'column1' ?
-                                    (theme === 'dark' ?
-                                        'text-red bg-neutral-200' :
-                                        'text-white bg-neutral-700') :
-                                    ''} 
+                                        (theme === 'dark' ?
+                                            'text-red bg-neutral-200' :
+                                            'text-white bg-neutral-700') :
+                                        ''} 
                 transform transition duration-200 
                 ${expandedColumn !== 'column1' ? 'hover:scale-105' : ''} 
                 ${expandedColumn === 'column1' || expandedColumn === null ? 'block' : 'hidden'}`}
-                            id='duty'
-                        >
-                            <div className='flex justify-end'>
-                                {expandedColumn === 'column1' ? <MdFullscreenExit onClick={() => handleExpand('column1')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column1')} size={28} />}
-                            </div>
-                            {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ?
-                                <div>
-                                    <div className='flex justify-center space-x-4'>
-                                        <img src={track} alt="" className="w-8 h-8" />
-                                        <h3 className="text-lg">Data Used to Track You</h3>
-                                    </div>
-                                    {privDetails.map(priv =>
-                                        priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
-                                            <div>
-                                                {expandedColumn === null && allColumns === false &&
-                                                    <div>
-                                                        The following data may be collected and linked to your identity:
-                                                    </div>
-                                                }
-                                                <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
-
-                                                    {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                                        <div key={dataCategoryIndex} className={`flex flex-wrap ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'}`}>
-                                                            <div className="w-full">
-                                                                <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                    {expandedColumn === null && allColumns === false ? (
-                                                                        <div className="flex items-center space-x-2">
-                                                                            <img src={getIconPath(dataCategory.dataCategory)} className="w-6 h-6" />
-                                                                            <div className='pl-6'>{dataCategory.dataCategory}</div>
-                                                                        </div>
-                                                                    ) : (
-                                                                        <div className='text-center'>
-                                                                            {dataCategory.dataCategory}
-                                                                        </div>
-                                                                    )}
-                                                                </li>
-
-                                                                {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                    <div key={dataCategoryIndex} className="p-2 w-fit">
-                                                                        <li className="text-base rounded-md p-2 flex flex-col">
-                                                                            <span
-                                                                                key={dataTypeIndex}
-                                                                                className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'
-                                                                            >
-                                                                                {dataType.data_type}
-                                                                            </span>
-                                                                        </li>
-
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    ))}
-
-                                                </ul>
-                                            </div>
-                                            :
-                                            <div></div>
-                                    )}
+                                id='duty'
+                            >
+                                <div className='flex justify-end'>
+                                    {expandedColumn === 'column1' ? <MdFullscreenExit onClick={() => handleExpand('column1')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column1')} size={28} />}
                                 </div>
-                                :
-                                <div className=''>
+                                {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ?
+                                    <div>
+                                        <div className='flex justify-center space-x-4'>
+                                            <img src={track} alt="" className="w-8 h-8" />
+                                            <h3 className="text-lg">Data Used to Track You</h3>
+                                        </div>
+                                        {privDetails.map(priv =>
+                                            priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
+                                                <div>
+                                                    {expandedColumn === null && allColumns === false &&
+                                                        <div>
+                                                            The following data may be collected and linked to your identity:
+                                                        </div>
+                                                    }
+                                                    <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
 
-                                    <div className='flex justify-center space-x-4'>
-                                        <img src={track} alt="" className="w-8 h-8" />
-                                        <h3 className="text-lg">Data Used to Track You</h3>
+                                                        {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                                            <div key={dataCategoryIndex} className={`flex flex-wrap ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'}`}>
+                                                                <div className="w-full">
+                                                                    <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                        {expandedColumn === null && allColumns === false ? (
+                                                                            <div className="flex items-center space-x-2">
+                                                                                <img src={getIconPath(dataCategory.dataCategory)} className="w-6 h-6" />
+                                                                                <div className='pl-6'>{dataCategory.dataCategory}</div>
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div className='text-center'>
+                                                                                {dataCategory.dataCategory}
+                                                                            </div>
+                                                                        )}
+                                                                    </li>
+
+                                                                    {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                        <div key={dataCategoryIndex} className="p-2 w-fit">
+                                                                            <li className="text-base rounded-md p-2 flex flex-col">
+                                                                                <span
+                                                                                    key={dataTypeIndex}
+                                                                                    className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'
+                                                                                >
+                                                                                    {dataType.data_type}
+                                                                                </span>
+                                                                            </li>
+
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        ))}
+
+                                                    </ul>
+                                                </div>
+                                                :
+                                                <div></div>
+                                        )}
                                     </div>
-                                    <p>No Data Collected</p>
-                                </div>}
-                        </div>
+                                    :
+                                    <div className=''>
 
-                        <div
-                            className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
+                                        <div className='flex justify-center space-x-4'>
+                                            <img src={track} alt="" className="w-8 h-8" />
+                                            <h3 className="text-lg">Data Used to Track You</h3>
+                                        </div>
+                                        <p>No Data Collected</p>
+                                    </div>}
+                            </div>
+
+                            <div
+                                className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
                 ${theme === 'dark' && expandedColumn != 'column2' ?
-                                    'text-white bg-neutral-800' :
-                                    'text-red bg-neutral-300'} 
+                                        'text-white bg-neutral-800' :
+                                        'text-red bg-neutral-300'} 
                 ${expandedColumn !== 'column2' ?
-                                    (theme === 'dark' ?
-                                        'hover:text-red hover:bg-neutral-200' :
-                                        'hover:text-white hover:bg-neutral-700') :
-                                    ''} 
+                                        (theme === 'dark' ?
+                                            'hover:text-red hover:bg-neutral-200' :
+                                            'hover:text-white hover:bg-neutral-700') :
+                                        ''} 
                 ${expandedColumn === 'column2' ?
-                                    (theme === 'dark' ?
-                                        'text-black bg-neutral-200' :
-                                        'text-white bg-neutral-700') :
-                                    ''} 
+                                        (theme === 'dark' ?
+                                            'text-black bg-neutral-200' :
+                                            'text-white bg-neutral-700') :
+                                        ''} 
                 transform transition duration-200 
                 ${expandedColumn !== 'column2' ? 'hover:scale-105' : ''} 
                 ${expandedColumn === 'column2' || expandedColumn === null ? 'block' : 'hidden'}`}
-                            id='dly'
-                        >
-                            <div className='flex justify-end'>
-                                {expandedColumn === 'column2' ? <MdFullscreenExit onClick={() => handleExpand('column2')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column2')} size={28} />}
-                            </div>
-                            {checkValueInDetails('DATA_LINKED_TO_YOU') ?
-                                <div>
-                                    <div className='flex justify-center space-x-4'>
-                                        <img src={linked} alt="" className="w-8 h-8" />
-                                        <h3 className="text-lg">Data Linked to You</h3>
-                                    </div>
-                                    {privDetails.map((priv) =>
-                                        priv.identifier === "DATA_LINKED_TO_YOU" ? (
-                                            <div>
-                                                {expandedColumn === null && allColumns === false && (
-                                                    <div>
-                                                        The following data may be collected but it is not linked to your
-                                                        identity:
-                                                    </div>
-                                                )}
-                                                <ul
-                                                    className={`mt-4 pl-6 list-none ${allColumns === false ? "" : "grid grid-cols-2"} ${expandedColumn === null ? "" : "grid grid-cols-4"} `}
-                                                >
-
-                                                    {(() => {
-                                                        // Create a Set to hold all unique data categories across all purposes
-                                                        const allUniqueCategories = new Set();
-
-                                                        // Collect all unique data categories when not expanded
-                                                        priv.purposes!.forEach((purpose) => {
-                                                            purpose.dataCategories!.forEach((category) =>
-                                                                allUniqueCategories.add(category.dataCategory)
-                                                            );
-                                                        });
-
-                                                        console.log("allUniqueCategories", allUniqueCategories);
-
-                                                        if (expandedColumn === null && allColumns === false) {
-                                                            return (
-                                                                <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
-                                                                    {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                        <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                            <img src={getIconPath(dataCategory)} className="w-6 h-6" />
-                                                                            <div className='pl-6'>{dataCategory}</div>
-                                                                        </li>
-                                                                    ))}
-                                                                </ul>
-                                                            );
-                                                        }
-
-                                                        // Render purposes, data categories, and data types when expanded
-                                                        return priv.purposes!.map((purpose, purposeIndex) => (
-                                                            <div key={purposeIndex}>
-                                                                <li className="text-lg font-semibold">{purpose.purpose}</li>
-                                                                {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
-                                                                    <div key={dataCategoryIndex} className="p-2">
-                                                                        <li className="text-base rounded-md p-2 flex flex-col">
-                                                                            {dataCategory.dataCategory}:
-                                                                            <div className="flex flex-wrap justify-center">
-                                                                                {dataCategory.dataTypes &&
-                                                                                    dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                                        <span
-                                                                                            key={dataTypeIndex}
-                                                                                            className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
-                                                                                        >
-                                                                                            {dataType.data_type}
-                                                                                        </span>
-                                                                                    ))}
-                                                                            </div>
-                                                                        </li>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        ));
-                                                    })()}
-                                                </ul>
-                                            </div>
-                                        ) : (
-                                            <div></div>
-                                        )
-                                    )}
+                                id='dly'
+                            >
+                                <div className='flex justify-end'>
+                                    {expandedColumn === 'column2' ? <MdFullscreenExit onClick={() => handleExpand('column2')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column2')} size={28} />}
                                 </div>
-                                :
-                                <div className="">
+                                {checkValueInDetails('DATA_LINKED_TO_YOU') ?
+                                    <div>
+                                        <div className='flex justify-center space-x-4'>
+                                            <img src={linked} alt="" className="w-8 h-8" />
+                                            <h3 className="text-lg">Data Linked to You</h3>
+                                        </div>
+                                        {privDetails.map((priv) =>
+                                            priv.identifier === "DATA_LINKED_TO_YOU" ? (
+                                                <div>
+                                                    {expandedColumn === null && allColumns === false && (
+                                                        <div>
+                                                            The following data may be collected but it is not linked to your
+                                                            identity:
+                                                        </div>
+                                                    )}
+                                                    <ul
+                                                        className={`mt-4 pl-6 list-none ${allColumns === false ? "" : "grid grid-cols-2"} ${expandedColumn === null ? "" : "grid grid-cols-4"} `}
+                                                    >
 
-                                    <div className='flex justify-center space-x-4'>
-                                        <img src={linked} alt="" className="w-8 h-8" />
-                                        <h3 className="text-lg">Data Linked to You</h3>
+                                                        {(() => {
+                                                            // Create a Set to hold all unique data categories across all purposes
+                                                            const allUniqueCategories = new Set();
+
+                                                            // Collect all unique data categories when not expanded
+                                                            priv.purposes!.forEach((purpose) => {
+                                                                purpose.dataCategories!.forEach((category) =>
+                                                                    allUniqueCategories.add(category.dataCategory)
+                                                                );
+                                                            });
+
+                                                            console.log("allUniqueCategories", allUniqueCategories);
+
+                                                            if (expandedColumn === null && allColumns === false) {
+                                                                return (
+                                                                    <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
+                                                                        {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                            <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                                <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                                <div className='pl-6'>{dataCategory}</div>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                );
+                                                            }
+                                                            return priv.purposes!.map((purpose, purposeIndex) => (
+                                                                <div key={purposeIndex}>
+                                                                    <li className="text-lg font-semibold">{purpose.purpose}</li>
+                                                                    {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
+                                                                        <div key={dataCategoryIndex} className="p-2">
+                                                                            <li className="text-base rounded-md p-2 flex flex-col">
+                                                                                {dataCategory.dataCategory}:
+                                                                                <div className="flex flex-wrap justify-center">
+                                                                                    {dataCategory.dataTypes &&
+                                                                                        dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                                            <span
+                                                                                                key={dataTypeIndex}
+                                                                                                className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
+                                                                                            >
+                                                                                                {dataType.data_type}
+                                                                                            </span>
+                                                                                        ))}
+                                                                                </div>
+                                                                            </li>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            ));
+                                                        })()}
+                                                    </ul>
+                                                </div>
+                                            ) : (
+                                                <div></div>
+                                            )
+                                        )}
                                     </div>
-                                    <p>No Data Collected</p>
-                                </div>}
-                        </div>
+                                    :
+                                    <div className="">
 
-                        <div
-                            className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
+                                        <div className='flex justify-center space-x-4'>
+                                            <img src={linked} alt="" className="w-8 h-8" />
+                                            <h3 className="text-lg">Data Linked to You</h3>
+                                        </div>
+                                        <p>No Data Collected</p>
+                                    </div>}
+                            </div>
+
+                            <div
+                                className={`m-4 rounded-lg w-full h-fit text-center p-4 shadow-md 
                 ${theme === 'dark' && expandedColumn != 'column3' ?
-                                    'text-white bg-neutral-800' :
-                                    'text-red bg-neutral-300'} 
+                                        'text-white bg-neutral-800' :
+                                        'text-red bg-neutral-300'} 
                 ${expandedColumn !== 'column3' ?
-                                    (theme === 'dark' ?
-                                        'hover:text-red hover:bg-neutral-200' :
-                                        'hover:text-white hover:bg-neutral-700') :
-                                    ''} 
+                                        (theme === 'dark' ?
+                                            'hover:text-red hover:bg-neutral-200' :
+                                            'hover:text-white hover:bg-neutral-700') :
+                                        ''} 
                 ${expandedColumn === 'column3' ?
-                                    (theme === 'dark' ?
-                                        'text-black bg-neutral-200' :
-                                        'text-white bg-neutral-700') :
-                                    ''} 
+                                        (theme === 'dark' ?
+                                            'text-black bg-neutral-200' :
+                                            'text-white bg-neutral-700') :
+                                        ''} 
                 transform transition duration-200 
                 ${expandedColumn !== 'column3' ? 'hover:scale-105' : ''} 
                 ${expandedColumn === 'column3' || expandedColumn === null ? 'block' : 'hidden'}`}
-                            id='dnly'
-                        >
-                            {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ?
-                                <div>
-                                    <div className='flex justify-end'>
-                                        {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
-                                    </div>
-                                    <div className='flex justify-center space-x-4'>
-                                        <img src={not_linked} alt="" className="w-8 h-8" />
-                                        <h3 className="text-lg">Data Not Linked to You</h3>
-                                    </div>
-                                    {privDetails.map((priv) =>
-                                        priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? (
-                                            <div>
-                                                {expandedColumn === null && allColumns === false && (
-                                                    <div>
-                                                        The following data may be collected but it is not linked to your
-                                                        identity:
-                                                    </div>
-                                                )}
-                                                <ul
-                                                    className={`mt-4 pl-6 list-none ${expandedColumn === null ? "" : "grid grid-cols-4"} 
+                                id='dnly'
+                            >
+                                {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ?
+                                    <div>
+                                        <div className='flex justify-end'>
+                                            {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
+                                        </div>
+                                        <div className='flex justify-center space-x-4'>
+                                            <img src={not_linked} alt="" className="w-8 h-8" />
+                                            <h3 className="text-lg">Data Not Linked to You</h3>
+                                        </div>
+                                        {privDetails.map((priv) =>
+                                            priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? (
+                                                <div>
+                                                    {expandedColumn === null && allColumns === false && (
+                                                        <div>
+                                                            The following data may be collected but it is not linked to your
+                                                            identity:
+                                                        </div>
+                                                    )}
+                                                    <ul
+                                                        className={`mt-4 pl-6 list-none ${expandedColumn === null ? "" : "grid grid-cols-4"} 
                                                 ${allColumns === false ? "" : "grid grid-cols-2"
-                                                        }`}
-                                                >
+                                                            }`}
+                                                    >
 
-                                                    {(() => {
-                                                        // Create a Set to hold all unique data categories across all purposes
-                                                        const allUniqueCategories = new Set();
+                                                        {(() => {
+                                                            // Create a Set to hold all unique data categories across all purposes
+                                                            const allUniqueCategories = new Set();
 
-                                                        // Collect all unique data categories when not expanded
-                                                        priv.purposes!.forEach((purpose) => {
-                                                            purpose.dataCategories!.forEach((category) =>
-                                                                allUniqueCategories.add(category.dataCategory)
-                                                            );
-                                                        });
+                                                            // Collect all unique data categories when not expanded
+                                                            priv.purposes!.forEach((purpose) => {
+                                                                purpose.dataCategories!.forEach((category) =>
+                                                                    allUniqueCategories.add(category.dataCategory)
+                                                                );
+                                                            });
 
-                                                        console.log("allUniqueCategories", allUniqueCategories);
+                                                            console.log("allUniqueCategories", allUniqueCategories);
 
-                                                        if (expandedColumn === null && allColumns === false) {
-                                                            return (
-                                                                <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
-                                                                    {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                        <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                            <img src={getIconPath(dataCategory)} className="w-6 h-6" />
-                                                                            <div className='pl-6'>{dataCategory}</div>
-                                                                        </li>
+                                                            if (expandedColumn === null && allColumns === false) {
+                                                                return (
+                                                                    <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
+                                                                        {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                            <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                                <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                                <div className='pl-6'>{dataCategory}</div>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                );
+                                                            }
+
+                                                            // Render purposes, data categories, and data types when expanded
+                                                            return priv.purposes!.map((purpose, purposeIndex) => (
+                                                                <div key={purposeIndex}>
+                                                                    <li className="text-lg font-semibold">{purpose.purpose}</li>
+                                                                    {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
+                                                                        <div key={dataCategoryIndex} className="p-2">
+                                                                            <li className="text-base rounded-md p-2 flex flex-col">
+                                                                                {dataCategory.dataCategory}:
+                                                                                <div className="flex flex-wrap justify-center">
+                                                                                    {dataCategory.dataTypes &&
+                                                                                        dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                                            <span
+                                                                                                key={dataTypeIndex}
+                                                                                                className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
+                                                                                            >
+                                                                                                {dataType.data_type}
+                                                                                            </span>
+                                                                                        ))}
+                                                                                </div>
+                                                                            </li>
+                                                                        </div>
                                                                     ))}
-                                                                </ul>
-                                                            );
-                                                        }
-
-                                                        // Render purposes, data categories, and data types when expanded
-                                                        return priv.purposes!.map((purpose, purposeIndex) => (
-                                                            <div key={purposeIndex}>
-                                                                <li className="text-lg font-semibold">{purpose.purpose}</li>
-                                                                {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
-                                                                    <div key={dataCategoryIndex} className="p-2">
-                                                                        <li className="text-base rounded-md p-2 flex flex-col">
-                                                                            {dataCategory.dataCategory}:
-                                                                            <div className="flex flex-wrap justify-center">
-                                                                                {dataCategory.dataTypes &&
-                                                                                    dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                                        <span
-                                                                                            key={dataTypeIndex}
-                                                                                            className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
-                                                                                        >
-                                                                                            {dataType.data_type}
-                                                                                        </span>
-                                                                                    ))}
-                                                                            </div>
-                                                                        </li>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        ));
-                                                    })()}
-                                                </ul>
-                                            </div>
-                                        ) : (
-                                            <div></div>
-                                        )
-                                    )}
-                                </div>
-                                :
-                                <div >
-                                    <div className='flex justify-end'>
-                                        {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
+                                                                </div>
+                                                            ));
+                                                        })()}
+                                                    </ul>
+                                                </div>
+                                            ) : (
+                                                <div></div>
+                                            )
+                                        )}
                                     </div>
-                                    <div className='flex justify-center space-x-4'>
-                                        <img src={not_linked} alt="" className="w-8 h-8" />
-                                        <h3 className="text-lg">Data Not Linked to You</h3>
-                                    </div>
-                                    <p>No Data Collected</p>
-                                </div>}
+                                    :
+                                    <div >
+                                        <div className='flex justify-end'>
+                                            {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
+                                        </div>
+                                        <div className='flex justify-center space-x-4'>
+                                            <img src={not_linked} alt="" className="w-8 h-8" />
+                                            <h3 className="text-lg">Data Not Linked to You</h3>
+                                        </div>
+                                        <p>No Data Collected</p>
+                                    </div>}
+                            </div>
                         </div>
+
                     </div>
 
-                </div>
+                    <div className='lg:hidden'>
+                        {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ?
+                            <div className={`m-4 rounded-lg w-fit h-fit text-center p-4 shadow-md 
+                                    ${theme === 'dark' ?
+                                    'text-white bg-neutral-800' :
+                                    'text-black bg-neutral-300'} 
+                                    `}
+                                id='duty'>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={track} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Used to Track You</h3>
+                                </div>
+                                {privDetails.map(priv =>
+                                    priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
+                                        <div>
+                                            <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
+
+                                                {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                                    <div key={dataCategoryIndex} className={`flex flex-wrap ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'}`}>
+                                                        <div className="w-full">
+                                                            <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                {expandedColumn === null && allColumns === false ? (
+                                                                    <div className="flex items-center space-x-2">
+                                                                        <img src={getIconPath(dataCategory.dataCategory)} className="w-6 h-6" />
+                                                                        <div className='pl-6'>{dataCategory.dataCategory}</div>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className='text-center'>
+                                                                        {dataCategory.dataCategory}
+                                                                    </div>
+                                                                )}
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                ))}
+
+                                            </ul>
+                                        </div>
+                                        :
+                                        <div></div>
+                                )}
+                            </div>
+                            :
+                            <div className={`m-4 rounded-lg ${theme === 'dark' ?
+                                'text-white bg-neutral-800' :
+                                'text-black bg-neutral-300'} 
+                            `} id='dlty'>
+                                <div className='flex justify-center items-center space-x-4'>
+                                    <img src={linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Used to Track You</h3>
+                                </div>
+                                <p className='text-center mt-4'>No Data Collected</p>
+                            </div>
+                            }
+                        {checkValueInDetails('DATA_LINKED_TO_YOU') ?
+                            <div className={`m-4 rounded-lg w-fit h-fit text-center p-4 shadow-md 
+                                ${theme === 'dark' ?
+                                    'text-white bg-neutral-800' :
+                                    'text-black bg-neutral-300'} 
+                                `}
+                                id='dlty'>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Linked to You</h3>
+                                </div>
+                                {privDetails.map((priv) =>
+                                    priv.identifier === "DATA_LINKED_TO_YOU" ? (
+                                        <div>
+                                            <ul
+                                                className={`mt-4 pl-6 list-none ${allColumns === false ? "" : "grid grid-cols-2"} ${expandedColumn === null ? "" : "grid grid-cols-4"} `}
+                                            >
+
+                                                {(() => {
+                                                    // Create a Set to hold all unique data categories across all purposes
+                                                    const allUniqueCategories = new Set();
+
+                                                    // Collect all unique data categories when not expanded
+                                                    priv.purposes!.forEach((purpose) => {
+                                                        purpose.dataCategories!.forEach((category) =>
+                                                            allUniqueCategories.add(category.dataCategory)
+                                                        );
+                                                    });
+
+                                                    console.log("allUniqueCategories", allUniqueCategories);
+
+                                                    return (
+                                                        <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
+                                                            {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                    <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                    <div className='pl-6'>{dataCategory}</div>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    );
+
+                                                })()}
+                                            </ul>
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )
+                                )}
+                            </div>
+                            :
+                            <div className={`m-4 rounded-lg ${theme === 'dark' ?
+                                'text-white bg-neutral-800' :
+                                'text-black bg-neutral-300'} 
+                            `} id='dlty'>
+                                <div className='flex justify-center items-center space-x-4'>
+                                    <img src={linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Linked to You</h3>
+                                </div>
+                                <p className='text-center mt-4'>No Data Collected</p>
+                            </div>}
+                        {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ?
+                            <div className={`m-4 rounded-lg w-fit h-fit text-center p-4 shadow-md 
+                                ${theme === 'dark' ?
+                                    'text-white bg-neutral-800' :
+                                    'text-black bg-neutral-300'} 
+                                `}
+                                id='dnlty'>
+                                <div className='flex justify-center space-x-4'>
+                                    <img src={not_linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg">Data Not Linked to You</h3>
+                                </div>
+                                {privDetails.map((priv) =>
+                                    priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? (
+                                        <div>
+                                            <ul
+                                                className={`mt-4 pl-6 list-none ${expandedColumn === null ? "" : "grid grid-cols-4"} 
+                                                ${allColumns === false ? "" : "grid grid-cols-2"
+                                                    }`}
+                                            >
+
+                                                {(() => {
+                                                    // Create a Set to hold all unique data categories across all purposes
+                                                    const allUniqueCategories = new Set();
+
+                                                    // Collect all unique data categories when not expanded
+                                                    priv.purposes!.forEach((purpose) => {
+                                                        purpose.dataCategories!.forEach((category) =>
+                                                            allUniqueCategories.add(category.dataCategory)
+                                                        );
+                                                    });
+
+                                                    console.log("allUniqueCategories", allUniqueCategories);
+
+                                                    return (
+                                                        <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
+                                                            {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                    <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                    <div className='pl-6'>{dataCategory}</div>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    );
+
+                                                })()}
+                                            </ul>
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )
+                                )}
+                            </div>
+                            :
+                            <div className={`m-4 rounded-lg ${theme === 'dark' ?
+                                'text-white bg-neutral-800' :
+                                'text-black bg-neutral-300'} 
+                            `} id='dlty'>
+                                <div className='flex justify-center items-center space-x-4'>
+                                    <img src={not_linked} alt="" className="w-8 h-8" />
+                                    <h3 className="text-lg text-center">Data Not Linked to You</h3>
+                                </div>
+                                <p className='text-center mt-4'>No Data Collected</p>
+                            </div>}
+                    </div>
+
+                </>
                 :
                 <div className='flex max-w-96  h-20 mx-auto text-center border-2 border-black rounded-3xl bg-neutral-300'>
                     <p className='m-auto'>Data Not Collected</p>
                 </div>
+
             }
         </div>
+
     )
 }
