@@ -18,6 +18,10 @@ import linked from "../resources/linked.svg"
 import not_linked from "../resources/not_linked.svg"
 import track from "../resources/track.svg"
 
+import linked_dark from "../resources/linked_dark.svg"
+import not_linked_dark from "../resources/not_linked_dark.svg"
+import track_dark from "../resources/track_dark.svg"
+
 
 interface dataType {
     data_category: Number,
@@ -44,26 +48,75 @@ interface privLabel {
 
 //Function that given a data type or a purpose (depending on privacy type)
 //Returns the dynamic svg to be loaded
-const getIconPath = (category: String) => {
+const getIconPath = (category: String, theme: String | undefined) => {
+    
     const iconMapping = {
-        "Browsing History": "/apple_icons/browsing_history.svg",
-        "Contact Info": "/apple_icons/contact_info.svg",
-        "Contacts": "/apple_icons/contacts.svg",
-        "Diagnostics": "/apple_icons/diagnostics.svg",
-        "Financial Info": "/apple_icons/financial_info.svg",
-        "Health and Fitness": "/apple_icons/health_and_fitness.svg",
-        "Identifiers": "/apple_icons/identifiers.svg",
-        "Location": "/apple_icons/location.svg",
-        "Other Data": "/apple_icons/other_data.svg",
-        "Purchases": "/apple_icons/purchases.svg",
-        "Search History": "/apple_icons/search_history.svg",
-        "Sensitive Info": "/apple_icons/sensitive_info.svg",
-        "Usage Data": "/apple_icons/usage_data.svg",
-        "User Content": "/apple_icons/user_content.svg",
+        "Browsing History": {
+            light: "/apple_icons/browsing_history.svg",
+            dark: "/apple_icons/browsing_history_dark.svg"
+        },
+        "Contact Info": {
+            light: "/apple_icons/contact_info.svg",
+            dark: "/apple_icons/contact_info_dark.svg"
+        },
+        "Contacts": {
+            light: "/apple_icons/contacts.svg",
+            dark: "/apple_icons/contacts_dark.svg"
+        },
+        "Diagnostics": {
+            light: "/apple_icons/diagnostics.svg",
+            dark: "/apple_icons/diagnostics_dark.svg"
+        },
+        "Financial Info": {
+            light: "/apple_icons/financial_info.svg",
+            dark: "/apple_icons/financial_info_dark.svg"
+        },
+        "Health and Fitness": {
+            light: "/apple_icons/health_and_fitness.svg",
+            dark: "/apple_icons/health_and_fitness_dark.svg"
+        },
+        "Identifiers": {
+            light: "/apple_icons/identifiers.svg",
+            dark: "/apple_icons/identifiers_dark.svg"
+        },
+        "Location": {
+            light: "/apple_icons/location.svg",
+            dark: "/apple_icons/location_dark.svg"
+        },
+        "Other Data": {
+            light: "/apple_icons/other_data.svg",
+            dark: "/apple_icons/other_data_dark.svg"
+        },
+        "Purchases": {
+            light: "/apple_icons/purchases.svg", 
+            dark: "/apple_icons/purchases_dark.svg"
+        },
+        "Search History": {
+            light: "/apple_icons/search_history.svg",
+            dark: "/apple_icons/search_history_dark.svg"
+        },
+        "Sensitive Info": {
+            light: "/apple_icons/sensitive_info.svg",
+            dark: "/apple_icons/sensitive_info_dark.svg"
+        },
+        "Usage Data": {
+            light: "/apple_icons/usage_data.svg",
+            dark: "/apple_icons/usage_data_dark.svg"
+        },
+        "User Content": {
+            light: "/apple_icons/user_content.svg",
+            dark: "/apple_icons/user_content_dark.svg"
+        }
     };
+    
 
     // Return the corresponding icon or a default icon if the category is not found
-    return iconMapping[category] || "/apple_icons/other_data.svg";
+    const icons = iconMapping[category];
+    if (icons) {
+        return theme === 'dark' ? icons.dark : icons.light;
+    } else {
+        return theme === 'dark' ? "/apple_icons/other_data_dark.svg" : "/apple_icons/other_data.svg";
+    }
 };
 
 export default function Timeline({ data }: { data: any }) {
@@ -193,7 +246,6 @@ export default function Timeline({ data }: { data: any }) {
                                             'text-white bg-neutral-700') :
                                         ''} 
                 transform transition duration-200 
-                ${expandedColumn !== 'column1' ? 'hover:scale-105' : ''} 
                 ${expandedColumn === 'column1' || expandedColumn === null ? 'block' : 'hidden'}`}
                                 id='duty'
                             >
@@ -203,7 +255,8 @@ export default function Timeline({ data }: { data: any }) {
                                 {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ?
                                     <div>
                                         <div className='flex justify-center space-x-4'>
-                                            <img src={track} alt="" className="w-8 h-8" />
+                                        {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
+
                                             <h3 className="text-lg">Data Used to Track You</h3>
                                         </div>
                                         {privDetails.map(priv =>
@@ -217,37 +270,43 @@ export default function Timeline({ data }: { data: any }) {
                                                     <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
 
                                                         {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                                            <div key={dataCategoryIndex} className={`flex flex-wrap ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'}`}>
-                                                                <div className="w-full">
-                                                                    <li className="text-lg font-semibold flex items-center space-x-2">
+                                                            <div
+                                                                key={dataCategoryIndex}
+                                                                className={`flex flex-col ${expandedColumn === null && allColumns === false ? 'items-start' : 'items-center mb-6'} `}
+                                                            >
+                                                                {/* Data Category Header */}
+                                                                <div className={`w-full ${expandedColumn === null && allColumns === false ? 'pl-6' : 'text-center mb-4'}`}>
+                                                                    <li className={`text-lg font-semibold flex ${expandedColumn === null && allColumns === false ? '' : 'justify-center'} items-center space-x-2`}>
                                                                         {expandedColumn === null && allColumns === false ? (
                                                                             <div className="flex items-center space-x-2">
-                                                                                <img src={getIconPath(dataCategory.dataCategory)} className="w-6 h-6" />
-                                                                                <div className='pl-6'>{dataCategory.dataCategory}</div>
+                                                                                <img src={getIconPath(dataCategory.dataCategory, theme)} className="w-6 h-6" />
+                                                                                <div className='pl-4'>{dataCategory.dataCategory}</div>
                                                                             </div>
                                                                         ) : (
-                                                                            <div className='text-center'>
-                                                                                {dataCategory.dataCategory}
-                                                                            </div>
+                                                                            <div>{dataCategory.dataCategory}</div>
                                                                         )}
                                                                     </li>
-
-                                                                    {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
-                                                                        <div key={dataCategoryIndex} className="p-2 w-fit">
-                                                                            <li className="text-base rounded-md p-2 flex flex-col">
-                                                                                <span
-                                                                                    key={dataTypeIndex}
-                                                                                    className='inline-block text-sm px-2 m-1 rounded-full border border-orange-400'
-                                                                                >
-                                                                                    {dataType.data_type}
-                                                                                </span>
-                                                                            </li>
-
-                                                                        </div>
-                                                                    ))}
                                                                 </div>
+
+                                                                {/* Data Types */}
+                                                                {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && (
+                                                                    <div className="flex flex-wrap justify-center gap-2">
+                                                                        {dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                            <span
+                                                                                key={dataTypeIndex}
+                                                                                className="inline-block text-sm px-3 py-1 m-1 rounded-full border border-orange-400"
+                                                                            >
+                                                                                {dataType.data_type}
+                                                                            </span>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+
+                                                                
                                                             </div>
                                                         ))}
+
+
 
                                                     </ul>
                                                 </div>
@@ -259,7 +318,8 @@ export default function Timeline({ data }: { data: any }) {
                                     <div className=''>
 
                                         <div className='flex justify-center space-x-4'>
-                                            <img src={track} alt="" className="w-8 h-8" />
+                                        {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
+
                                             <h3 className="text-lg">Data Used to Track You</h3>
                                         </div>
                                         <p>No Data Collected</p>
@@ -282,7 +342,6 @@ export default function Timeline({ data }: { data: any }) {
                                             'text-white bg-neutral-700') :
                                         ''} 
                 transform transition duration-200 
-                ${expandedColumn !== 'column2' ? 'hover:scale-105' : ''} 
                 ${expandedColumn === 'column2' || expandedColumn === null ? 'block' : 'hidden'}`}
                                 id='dly'
                             >
@@ -292,7 +351,7 @@ export default function Timeline({ data }: { data: any }) {
                                 {checkValueInDetails('DATA_LINKED_TO_YOU') ?
                                     <div>
                                         <div className='flex justify-center space-x-4'>
-                                            <img src={linked} alt="" className="w-8 h-8" />
+                                            {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
                                             <h3 className="text-lg">Data Linked to You</h3>
                                         </div>
                                         {privDetails.map((priv) =>
@@ -326,7 +385,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                     <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                                         {Array.from(allUniqueCategories).map((dataCategory, index) => (
                                                                             <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                                <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                                <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                                 <div className='pl-6'>{dataCategory}</div>
                                                                             </li>
                                                                         ))}
@@ -368,7 +427,8 @@ export default function Timeline({ data }: { data: any }) {
                                     <div className="">
 
                                         <div className='flex justify-center space-x-4'>
-                                            <img src={linked} alt="" className="w-8 h-8" />
+                                        {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
+
                                             <h3 className="text-lg">Data Linked to You</h3>
                                         </div>
                                         <p>No Data Collected</p>
@@ -391,7 +451,6 @@ export default function Timeline({ data }: { data: any }) {
                                             'text-white bg-neutral-700') :
                                         ''} 
                 transform transition duration-200 
-                ${expandedColumn !== 'column3' ? 'hover:scale-105' : ''} 
                 ${expandedColumn === 'column3' || expandedColumn === null ? 'block' : 'hidden'}`}
                                 id='dnly'
                             >
@@ -401,7 +460,8 @@ export default function Timeline({ data }: { data: any }) {
                                             {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
                                         </div>
                                         <div className='flex justify-center space-x-4'>
-                                            <img src={not_linked} alt="" className="w-8 h-8" />
+                                        {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
+
                                             <h3 className="text-lg">Data Not Linked to You</h3>
                                         </div>
                                         {privDetails.map((priv) =>
@@ -437,7 +497,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                     <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                                         {Array.from(allUniqueCategories).map((dataCategory, index) => (
                                                                             <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                                <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                                <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                                 <div className='pl-6'>{dataCategory}</div>
                                                                             </li>
                                                                         ))}
@@ -483,7 +543,8 @@ export default function Timeline({ data }: { data: any }) {
                                             {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
                                         </div>
                                         <div className='flex justify-center space-x-4'>
-                                            <img src={not_linked} alt="" className="w-8 h-8" />
+                                        {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
+
                                             <h3 className="text-lg">Data Not Linked to You</h3>
                                         </div>
                                         <p>No Data Collected</p>
@@ -502,7 +563,7 @@ export default function Timeline({ data }: { data: any }) {
                                     `}
                                 id='duty'>
                                 <div className='flex justify-center space-x-4'>
-                                    <img src={track} alt="" className="w-8 h-8" />
+                                {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
                                     <h3 className="text-lg">Data Used to Track You</h3>
                                 </div>
                                 {privDetails.map(priv =>
@@ -516,7 +577,7 @@ export default function Timeline({ data }: { data: any }) {
                                                             <li className="text-lg font-semibold flex items-center space-x-2">
                                                                 {expandedColumn === null && allColumns === false ? (
                                                                     <div className="flex items-center space-x-2">
-                                                                        <img src={getIconPath(dataCategory.dataCategory)} className="w-6 h-6" />
+                                                                        <img src={getIconPath(dataCategory.dataCategory, theme)} className="w-6 h-6" />
                                                                         <div className='pl-6'>{dataCategory.dataCategory}</div>
                                                                     </div>
                                                                 ) : (
@@ -541,12 +602,13 @@ export default function Timeline({ data }: { data: any }) {
                                 'text-black bg-neutral-300'} 
                             `} id='dlty'>
                                 <div className='flex justify-center items-center space-x-4'>
-                                    <img src={linked} alt="" className="w-8 h-8" />
+                                {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
+
                                     <h3 className="text-lg">Data Used to Track You</h3>
                                 </div>
                                 <p className='text-center mt-4'>No Data Collected</p>
                             </div>
-                            }
+                        }
                         {checkValueInDetails('DATA_LINKED_TO_YOU') ?
                             <div className={`m-4 rounded-lg w-fit h-fit text-center p-4 shadow-md 
                                 ${theme === 'dark' ?
@@ -555,7 +617,8 @@ export default function Timeline({ data }: { data: any }) {
                                 `}
                                 id='dlty'>
                                 <div className='flex justify-center space-x-4'>
-                                    <img src={linked} alt="" className="w-8 h-8" />
+                                {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
+
                                     <h3 className="text-lg">Data Linked to You</h3>
                                 </div>
                                 {privDetails.map((priv) =>
@@ -582,7 +645,7 @@ export default function Timeline({ data }: { data: any }) {
                                                         <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                             {Array.from(allUniqueCategories).map((dataCategory, index) => (
                                                                 <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                    <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                    <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                     <div className='pl-6'>{dataCategory}</div>
                                                                 </li>
                                                             ))}
@@ -616,7 +679,7 @@ export default function Timeline({ data }: { data: any }) {
                                 `}
                                 id='dnlty'>
                                 <div className='flex justify-center space-x-4'>
-                                    <img src={not_linked} alt="" className="w-8 h-8" />
+                                {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
                                     <h3 className="text-lg">Data Not Linked to You</h3>
                                 </div>
                                 {privDetails.map((priv) =>
@@ -645,7 +708,7 @@ export default function Timeline({ data }: { data: any }) {
                                                         <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                             {Array.from(allUniqueCategories).map((dataCategory, index) => (
                                                                 <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                    <img src={getIconPath(dataCategory)} className="w-6 h-6" />
+                                                                    <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                     <div className='pl-6'>{dataCategory}</div>
                                                                 </li>
                                                             ))}
@@ -666,7 +729,8 @@ export default function Timeline({ data }: { data: any }) {
                                 'text-black bg-neutral-300'} 
                             `} id='dlty'>
                                 <div className='flex justify-center items-center space-x-4'>
-                                    <img src={not_linked} alt="" className="w-8 h-8" />
+                                {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
+
                                     <h3 className="text-lg text-center">Data Not Linked to You</h3>
                                 </div>
                                 <p className='text-center mt-4'>No Data Collected</p>
