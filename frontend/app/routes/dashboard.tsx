@@ -489,7 +489,7 @@ export default function Index() {
             </div>
 
             {/* Privacy Types Charts */}
-            <div className="mb-20" ref={(el => (refs.current[6] = el))}>
+            <div className="mb-20">
               <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
 
@@ -533,7 +533,7 @@ export default function Index() {
                 specific Privacy Type.</h3>
             </div>
 
-            <div ref={(el => (refs.current[8] = el))}>
+            <div>
               <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                 <div className="flex flex-col items-center w-full md:w-1/4">
