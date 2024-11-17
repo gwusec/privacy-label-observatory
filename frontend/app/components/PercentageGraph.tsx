@@ -130,13 +130,20 @@ export default function PercentageGraph ({data}:{data:any}) {
 
 
     return (
-        <div className="w-2/6 items-start pr-20 pt-10">
-        <div className='flex flex-row gap-1'>
-                {chartData && <Bar data={chartData} options={options2} />}
-                {chartData2 && <Bar data={chartData2} options={options2} />}
-                {chartData3 && <Bar data={chartData3} options={options2} />}
-                {chartData4 && <Bar data={chartData4} options={options2} />}
+        <div className="grid grid-cols-2 gap-10 px-10 pt-10">
+            <div className="w-full">
+                <Bar data={chartData} options={options2} />
+            </div>
+            <div className="w-full">
+                <Bar data={chartData2} options={options2} />
+            </div>
+            <div className="w-full">
+                <Bar data={chartData3} options={options2} />
+            </div>
+            <div className="w-full">
+                <Bar data={chartData4} options={options2} />
+            </div>
         </div>
-    </div>
     );
+    
 }

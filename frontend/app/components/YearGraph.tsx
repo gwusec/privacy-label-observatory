@@ -121,19 +121,19 @@ function YearGraph({data}:{data:any}){
     
 
     return(
-        <div className="w-full p-4">
-        <div className="flex flex-row gap-4 w-full">
-            {sampleDatasets.map((sampleData, index) => (
-                <div key={index} className="w-full h-[300px]"> {/* Adjust width and height as needed */}
-                    {index === 0 ? (
-                        <Bar data={sampleData} options={options} />
-                    ) : (
-                        <Bar data={sampleData} options={options2} />
-                    )}
-                </div>
-            ))}
-        </div>
-    </div>
+<div className="grid grid-cols-2 px-10 pt-10">
+
+        {sampleDatasets.map((sampleData, index) => (
+            <div
+                key={index}
+                className="min-w-[300px] max-w-[400px] h-[300px] flex-shrink-0"
+            >
+                <Bar data={sampleData} options={index === 0 ? options : options2} />
+            </div>
+        ))}
+
+</div>
+
     
     )
 }
