@@ -9,7 +9,6 @@ import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import noPhoto from "../resources/no_available_photo.jpg"
 
 //CSS and Component for the timeline
-import VerticalTimeline from "~/components/VerticalTimeline";
 import HorizontalTimeline from '~/components/HorizontalTimeline';
 import { Button } from '@nextui-org/react';
 

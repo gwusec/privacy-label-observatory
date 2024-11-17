@@ -22,20 +22,20 @@ ChartJS.register(
 
 const startingYear = 22
 
-const generateLabels = (length:number) => {
+const generateLabels = (length: number) => {
     const labels = []
-    for(let i=0; i<length; i++){
-        if(startingYear-i < 10){
-            labels.push(`200${startingYear-i}`)
+    for (let i = 0; i < length; i++) {
+        if (startingYear - i < 10) {
+            labels.push(`200${startingYear - i}`)
         }
-        else{
-            labels.push(`20${startingYear-i}`)
+        else {
+            labels.push(`20${startingYear - i}`)
         }
     }
     return labels.reverse()
 }
 
-const createSampleData = (years:any, dataset:any, total:any, label:any, backgroundColor:any, theme:any) => ({
+const createSampleData = (years: any, dataset: any, total: any, label: any, backgroundColor: any, theme: any) => ({
     labels: years,
     datasets: [
         {
@@ -55,8 +55,8 @@ const createSampleData = (years:any, dataset:any, total:any, label:any, backgrou
     ],
 });
 
-function YearGraph({data}:{data:any}){
-    const {theme} = useTheme();
+function YearGraph({ data }: { data: any }) {
+    const { theme } = useTheme();
     const years = generateLabels(Object.keys(data["totals"]).length)
     const total = data["totals"]
     const linked = data["dlty"]
@@ -66,7 +66,7 @@ function YearGraph({data}:{data:any}){
     const collected = data["dnc"]
 
     const sampleDatasets = [
-        createSampleData(years, data["dnc"], total, 'Data Not Collected', 'rgba(255, 206, 86, 1)',  theme),
+        createSampleData(years, data["dnc"], total, 'Data Not Collected', 'rgba(255, 206, 86, 1)', theme),
         createSampleData(years, data["dnlty"], total, 'Data Not Linked', 'rgba(54, 162, 235, 1)', theme),
         createSampleData(years, data["dlty"], total, 'Data Linked', 'rgba(153, 102, 255, 1)', theme),
         createSampleData(years, data["duty"], total, 'Data Used to Track', 'rgba(75, 192, 192, 1)', theme),
@@ -78,9 +78,9 @@ function YearGraph({data}:{data:any}){
             legend: {
                 position: 'top' as const,
                 labels: {
-                  color: theme === 'dark' ? '#ffffff' : '#000000'
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
                 }
-              },
+            },
         },
         scales: {
             x: {
@@ -90,7 +90,7 @@ function YearGraph({data}:{data:any}){
                 },
                 grid: {
                     color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
-                  },
+                },
             },
             y: {
                 stacked: false,
@@ -100,7 +100,7 @@ function YearGraph({data}:{data:any}){
                 },
                 grid: {
                     color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
-                  },
+                },
             },
         }
     }
@@ -111,9 +111,9 @@ function YearGraph({data}:{data:any}){
             legend: {
                 position: 'top' as const,
                 labels: {
-                  color: theme === 'dark' ? '#ffffff' : '#000000'
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
                 }
-              },
+            },
 
         },
         scales: {
@@ -124,7 +124,7 @@ function YearGraph({data}:{data:any}){
                 },
                 grid: {
                     color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
-                  },
+                },
             },
             y: {
                 stacked: false,
@@ -136,29 +136,30 @@ function YearGraph({data}:{data:any}){
                 grid: {
                     drawTicks: true,
                     color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
-                  },
+                },
             },
         }
     }
 
-    
 
-    return(
+
+    return (
         <div className="w-full p-4">
-        <div className="flex flex-row gap-4 w-full">
-            {sampleDatasets.map((sampleData, index) => (
-                <div key={index} className="w-full h-[300px]"> {/* Adjust width and height as needed */}
-                    {index === 0 ? (
-                        <Bar data={sampleData} options={options} />
-                    ) : (
-                        <Bar data={sampleData} options={options2} />
-                    )}
-                </div>
-            ))}
+            {/* Flex container to handle layout changes based on screen size */}
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
+                {sampleDatasets.map((sampleData, index) => (
+                    <div key={index} className="w-full sm:w-1/2 md:w-1/4 h-[300px]"> {/* Adjust width and height as needed */}
+                        {index === 0 ? (
+                            <Bar data={sampleData} options={options} />
+                        ) : (
+                            <Bar data={sampleData} options={options2} />
+                        )}
+                    </div>
+                ))}
+            </div>
         </div>
-    </div>
-    
-    )
+    );
+
 }
 
 export default YearGraph
