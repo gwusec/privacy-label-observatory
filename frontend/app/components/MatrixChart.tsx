@@ -4,17 +4,19 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import { color } from 'chart.js/helpers';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'tailwindcss/tailwind.css'; // Assuming you're using Tailwind for responsiveness
+import { useTheme } from 'next-themes';
 
 
 Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabels);
 
-const MatrixChart = ({ data, color }) => {
+const MatrixChart = ({ data, color, theme }) => {
     const chartRef = useRef(null);
     const canvasRef = useRef(null);
-    
+
+
     useEffect(() => {
         if (!data) return;
-    
+
         if (chartRef.current) {
             chartRef.current.destroy();
         }
@@ -33,52 +35,57 @@ const MatrixChart = ({ data, color }) => {
             datasets: [{
                 label: 'Heat Map',
                 data: matrixData,
-                backgroundColor: (ctx:any) => {
+                backgroundColor: (ctx: any) => {
                     const value = ctx.dataset.data[ctx.dataIndex].v;
                     const alpha = (value / 100).toFixed(2);
                     return `${color} ${alpha})`;
                 },
-                width: (ctx:any) => ctx.chart.chartArea.width / dataCategories.length,
-                height: (ctx:any) => ctx.chart.chartArea.height / purposes.length,
+                width: (ctx: any) => ctx.chart.chartArea.width / dataCategories.length,
+                height: (ctx: any) => ctx.chart.chartArea.height / purposes.length,
             }]
         };
+
+        const isMobile = window.innerWidth < 768;
 
         const options = {
             responsive: true,
             maintainAspectRatio: false, // Important for flexible height
-            animation: {
-                onComplete: function () {
-                  if(chartRef.current){
-                    console.log("Base64ImageMatrix", chartRef.current.toBase64Image());
-                  }
-          
-                },
-              },
             scales: {
                 x: {
                     type: 'category',
                     labels: dataCategories,
                     title: {
+                        color: theme === 'dark' ? 'white' : 'black',
                         display: true,
                         text: 'Data Categories'
                     },
                     ticks: {
-                        autoSkip: false,
-                        maxRotation: 45,
-                        minRotation: 45
+                        autoSkip: isMobile,
+                        maxRotation: isMobile ? 30 : 45, // Reduce rotation on mobile
+                        minRotation: isMobile ? 0 : 45,
+                        color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
+                        font: {
+                            size: isMobile ? 10 : 14, // Optional: Adjust the font size for better visibility
+                        },
                     }
+
                 },
                 y: {
                     type: 'category',
                     labels: purposes,
                     title: {
+                        color: theme === 'dark' ? 'white' : 'black',
                         display: true,
                         text: 'Purposes'
                     },
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0,
-                        minRotation: 0
+                        minRotation: 0,
+                        color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
+                        font: {
+                            size: isMobile ? 10 : 14,
+                        },
                     },
                 }
             },
@@ -90,7 +97,7 @@ const MatrixChart = ({ data, color }) => {
                 tooltip: {
                     displayColors: false,
                     callbacks: {
-                        label: (context:any) => {
+                        label: (context: any) => {
                             const { x, y, raw } = context;
                             return `${raw.v.toFixed(2)}%`;
                         }
@@ -114,9 +121,9 @@ const MatrixChart = ({ data, color }) => {
                 data: chartData,
                 options: options
             });
-            
+
         } else {
-            console.log("Canvas context is not available");
+
         }
 
         return () => {
@@ -125,14 +132,14 @@ const MatrixChart = ({ data, color }) => {
                 chartRef.current = null;
             }
         };
-    }, [data]);
+    }, [data, theme]);
 
     if (!data) {
         return <div>No data available</div>;
     }
 
     return (
-        <div className="w-full h-64 md:h-96"> {/* Tailwind for responsive layout */}
+        <div className="flex justify-center items-center w-full h-72 md:h-96">
             <canvas ref={canvasRef} />
         </div>
     );
