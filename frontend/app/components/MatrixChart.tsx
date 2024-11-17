@@ -12,11 +12,11 @@ Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabel
 const MatrixChart = ({ data, color, theme }) => {
     const chartRef = useRef(null);
     const canvasRef = useRef(null);
-    
-    
+
+
     useEffect(() => {
         if (!data) return;
-    
+
         if (chartRef.current) {
             chartRef.current.destroy();
         }
@@ -35,15 +35,17 @@ const MatrixChart = ({ data, color, theme }) => {
             datasets: [{
                 label: 'Heat Map',
                 data: matrixData,
-                backgroundColor: (ctx:any) => {
+                backgroundColor: (ctx: any) => {
                     const value = ctx.dataset.data[ctx.dataIndex].v;
                     const alpha = (value / 100).toFixed(2);
                     return `${color} ${alpha})`;
                 },
-                width: (ctx:any) => ctx.chart.chartArea.width / dataCategories.length,
-                height: (ctx:any) => ctx.chart.chartArea.height / purposes.length,
+                width: (ctx: any) => ctx.chart.chartArea.width / dataCategories.length,
+                height: (ctx: any) => ctx.chart.chartArea.height / purposes.length,
             }]
         };
+
+        const isMobile = window.innerWidth < 768;
 
         const options = {
             responsive: true,
@@ -53,20 +55,20 @@ const MatrixChart = ({ data, color, theme }) => {
                     type: 'category',
                     labels: dataCategories,
                     title: {
-                        color: theme === 'dark' ? 'white' : 'black',    
+                        color: theme === 'dark' ? 'white' : 'black',
                         display: true,
                         text: 'Data Categories'
                     },
                     ticks: {
-                        autoSkip: false,
-                        maxRotation: 45,
-                        minRotation: 45, 
+                        autoSkip: isMobile,
+                        maxRotation: isMobile ? 30 : 45, // Reduce rotation on mobile
+                        minRotation: isMobile ? 0 : 45,
                         color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
                         font: {
-                          size: 14, // Optional: Adjust the font size for better visibility
+                            size: isMobile ? 10 : 14, // Optional: Adjust the font size for better visibility
                         },
                     }
-                    
+
                 },
                 y: {
                     type: 'category',
@@ -79,12 +81,12 @@ const MatrixChart = ({ data, color, theme }) => {
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0,
-                        minRotation: 0, 
+                        minRotation: 0,
                         color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
                         font: {
-                          size: 14, // Optional: Adjust the font size for better visibility
+                            size: isMobile ? 10 : 14,
                         },
-                      },
+                    },
                 }
             },
             plugins: {
@@ -95,7 +97,7 @@ const MatrixChart = ({ data, color, theme }) => {
                 tooltip: {
                     displayColors: false,
                     callbacks: {
-                        label: (context:any) => {
+                        label: (context: any) => {
                             const { x, y, raw } = context;
                             return `${raw.v.toFixed(2)}%`;
                         }
@@ -119,9 +121,9 @@ const MatrixChart = ({ data, color, theme }) => {
                 data: chartData,
                 options: options
             });
-            
+
         } else {
-            
+
         }
 
         return () => {
@@ -137,7 +139,7 @@ const MatrixChart = ({ data, color, theme }) => {
     }
 
     return (
-        <div className="w-full h-64 md:h-96"> {/* Tailwind for responsive layout */}
+        <div className="flex justify-center items-center w-full h-72 md:h-96">
             <canvas ref={canvasRef} />
         </div>
     );
