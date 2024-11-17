@@ -24,6 +24,13 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
     const labels = data.map(item => item.purpose);
     const percentages = data.map(item => parseFloat(item.percentage));
 
+    const getResponsiveFontSize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 480) return 10; // Small font for mobile
+      if (screenWidth < 768) return 12; // Medium font for tablets
+      return 14; // Default font size for desktops
+    };
+
     if (chartRef.current) {
       // Destroy previous chart instance if it exists
       if (chartInstanceRef.current) {
@@ -72,7 +79,7 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
               ticks: {
                 color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
                 font: {
-                  size: 14, // Optional: Adjust the font size for better visibility
+                  size: getResponsiveFontSize(), 
                 },
               },
             }
@@ -86,6 +93,9 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
                 label: function(context) {
                   return context.raw + '%'; // Append '%' to tooltip labels
                 }
+              }, 
+              bodyFont: {
+                size: getResponsiveFontSize()
               }
             },
             datalabels: {
@@ -93,9 +103,12 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
               anchor: 'end',
               align: 'end',
               formatter: (value) => `${value}%`, // Append '%' to data labels
-              offset: 5 // Offset data labels from the end of the bars
+              offset: 5, // Offset data labels from the end of the bars
+              font: {
+                size: getResponsiveFontSize(),
+              }
             }
-          }
+          }, 
         }
       });
     }
