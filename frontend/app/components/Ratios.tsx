@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from "next-themes";
 import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import the plugin
 
@@ -12,15 +13,23 @@ interface RatioData {
 interface RatiosProps {
   data: RatioData[];
   color: string;
+  theme: string | undefined;
 }
 
-const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
+const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstanceRef = useRef<Chart | null>(null); // Ref to store the chart instance
 
   useEffect(() => {
     const labels = data.map(item => item.purpose);
     const percentages = data.map(item => parseFloat(item.percentage));
+
+    const getResponsiveFontSize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 480) return 10; // Small font for mobile
+      if (screenWidth < 768) return 12; // Medium font for tablets
+      return 14; // Default font size for desktops
+    };
 
     if (chartRef.current) {
       // Destroy previous chart instance if it exists
@@ -67,7 +76,12 @@ const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
               grid: {
                 display: false // Remove grid lines
               },
-
+              ticks: {
+                color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
+                font: {
+                  size: getResponsiveFontSize(), 
+                },
+              },
             }
           },
           plugins: {
@@ -79,16 +93,22 @@ const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
                 label: function(context) {
                   return context.raw + '%'; // Append '%' to tooltip labels
                 }
+              }, 
+              bodyFont: {
+                size: getResponsiveFontSize()
               }
             },
             datalabels: {
-              color: 'black',
+              color: theme === 'dark' ? 'white' : 'black',
               anchor: 'end',
               align: 'end',
               formatter: (value) => `${value}%`, // Append '%' to data labels
-              offset: 5 // Offset data labels from the end of the bars
+              offset: 5, // Offset data labels from the end of the bars
+              font: {
+                size: getResponsiveFontSize(),
+              }
             }
-          }
+          }, 
         }
       });
     }
@@ -100,7 +120,7 @@ const Ratios: React.FC<RatiosProps> = ({ data, color }) => {
         chartInstanceRef.current = null;
       }
     };
-  }, [data]);
+  }, [data, theme]);
 
   return <canvas ref={chartRef} />;
 };

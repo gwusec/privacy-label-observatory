@@ -55,9 +55,9 @@ export default function App() {
             <div id="main-body" className="bg-gradient-to-b dark:from-black  dark:to-gray-900 from-white to-gray-100">
             <Outlet />
             </div>
-            <div className="block lg:hidden fixed bottom-0 w-full">
+            {/* <div className="block lg:hidden fixed bottom-0 w-full z-50">
               <Footer />
-            </div>
+            </div> */}
             <ScrollRestoration />
             <Scripts />
             <LiveReload />

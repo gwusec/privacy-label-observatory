@@ -6,7 +6,7 @@ import RichIcon from "../resources/shield_ur.svg"
 
 export default function Footer(){
     return(
-        <div className="border-2 shadow-xl">
+        <div className="shadow-md shadow-gray-500 dark:shadow-slate-400 mt-5">
             <div className="flex flex-row justify-evenly py-2">
                 <div className="mr-2">
                     <GWIcon></GWIcon>

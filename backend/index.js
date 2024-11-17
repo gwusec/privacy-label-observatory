@@ -16,11 +16,13 @@ var ratiosRouter = require("./routes/figure5")
 var figure7Router = require("./routes/figure7")
 var figure8Router = require("./routes/figure8")
 var matrixRouter = require("./routes/figure6")
+var figure13 = require("./routes/figure13")
 var totalRouter = require("./routes/totals")
 var graph16Router = require("./routes/graph_16")
 var helperRouter = require("./routes/graph_16_helper")
 var graph14Router = require("./routes/graph_14")
 var graph14Helper = require("./routes/graph_14_helper")
+var longUpdated = require("./routes/getLongitudeUpdated")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -54,7 +56,9 @@ app.use("/helper", helperRouter)
 app.use("/graph14", graph14Router)
 app.use("/figure7", figure7Router)
 app.use("/figure8", figure8Router)
+app.use("/figure13", figure13)
 app.use("/graph14helper", graph14Helper)
+app.use("/longUpdated", longUpdated)
 
 
 //helloworld GET
@@ -87,6 +91,13 @@ app.get("/api/runs", function (req, res) {
         res.json(t);
     })
 });
+
+app.post('/api/some-endpoint', (req, res) => {
+    const data = req.body;
+    console.log("received");
+    // Perform some action with the data
+    res.json({ message: 'Data received successfully', receivedData: data });
+  });
 
 app.post("/api/body/test", function (req, res) {
     res.json(req.body);

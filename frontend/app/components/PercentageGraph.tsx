@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Bar} from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import axios from 'axios';
 import {
     Chart as ChartJS,
@@ -26,9 +26,8 @@ ChartJS.register(
     ChartDataLabels
 );
 
-export default function PercentageGraph ({data}:{data:any}) {   
+export default function PercentageGraph({ data }: { data: any }) {
     const { theme } = useTheme();
-    console.log(data)
     const track = [data["duty_free_no_app"], data["duty_free_in_app"], data["duty_paid_no_app"], data["duty_paid_in_app"]]
     const not_linked = [data["dnlty_free_no_app"], data["dnlty_free_in_app"], data["dnlty_paid_no_app"], data["dnlty_paid_in_app"]]
     const linked = [data["dlty_free_no_app"], data["dlty_free_in_app"], data["dlty_paid_no_app"], data["dlty_paid_in_app"]]
@@ -37,7 +36,7 @@ export default function PercentageGraph ({data}:{data:any}) {
     const chartData = {
         labels: [
             'Free', 'Free In-App', 'Paid', 'Paid In-App',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Not Collected',
@@ -52,7 +51,7 @@ export default function PercentageGraph ({data}:{data:any}) {
     const chartData2 = {
         labels: [
             'Free', 'Free In-App', 'Paid', 'Paid In-App',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Not Linked to You',
@@ -67,7 +66,7 @@ export default function PercentageGraph ({data}:{data:any}) {
     const chartData3 = {
         labels: [
             'Free', 'Free In-App', 'Paid', 'Paid In-App',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Linked to You',
@@ -82,7 +81,7 @@ export default function PercentageGraph ({data}:{data:any}) {
     const chartData4 = {
         labels: [
             'Free', 'Free In-App', 'Paid', 'Paid In-App',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Used to Track You',
@@ -94,12 +93,14 @@ export default function PercentageGraph ({data}:{data:any}) {
         ],
     };
 
-    const options2 = {
+    const options = {
         responsive: true,
         plugins: {
-            
             legend: {
                 position: 'top' as const,
+                labels: {
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
+                }
             },
             datalabels: {
                 display: true,
@@ -113,6 +114,11 @@ export default function PercentageGraph ({data}:{data:any}) {
             },
         },
         scales: {
+            x: {
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                }
+            },
             y: {
                 display: true,
                 beginAtZero: true,
@@ -121,6 +127,8 @@ export default function PercentageGraph ({data}:{data:any}) {
                     display: false,
                     stepSize: 20, // Optional: Sets step size, depending on your data range
                     maxTicksLimit: 10, // Limit the number of tick marks
+                    color: theme === 'dark' ? 'white' : 'black',
+
                 },
                 grid: {
                     drawTicks: true, // Ensures tick marks are drawn
@@ -131,13 +139,22 @@ export default function PercentageGraph ({data}:{data:any}) {
 
 
     return (
-        <div className="w-2/6 items-start pr-20 pt-10">
-        <div className='flex flex-row gap-1'>
-                {chartData && <Bar data={chartData} options={options2} />}
-                {chartData2 && <Bar data={chartData2} options={options2} />}
-                {chartData3 && <Bar data={chartData3} options={options2} />}
-                {chartData4 && <Bar data={chartData4} options={options2} />}
+        <div className={`mb-20`}>
+            {/* Adjust the flexbox layout based on screen size */}
+            <div className="flex flex-wrap justify-center gap-5">
+                <div className="w-full sm:w-2/6 items-start pr-20 pt-10">
+                    {chartData && <Bar data={chartData} options={options} />}
+                </div>
+                <div className="w-full sm:w-2/6 items-start pr-20 pt-10">
+                    {chartData2 && <Bar data={chartData2} options={options} />}
+                </div>
+                <div className="w-full sm:w-2/6 items-start pr-20 pt-10">
+                    {chartData3 && <Bar data={chartData3} options={options} />}
+                </div>
+                <div className="w-full sm:w-2/6 items-start pr-20 pt-10">
+                    {chartData4 && <Bar data={chartData4} options={options} />}
+                </div>
+            </div>
         </div>
-    </div>
     );
 }
