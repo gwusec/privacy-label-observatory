@@ -74,7 +74,7 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
 
   for (var key in data){
     if(key != "id"){
-        labels.push(data[key]["index"])
+        labels.push(data[key]["date"])
     }
   }
 

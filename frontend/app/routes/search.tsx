@@ -33,7 +33,6 @@ export default function Search() {
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const submit = useSubmit();
-    const fetcher = useFetcher();
 
     // Close the dropdown when clicking outside
     useEffect(() => {
