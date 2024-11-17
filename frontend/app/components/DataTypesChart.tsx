@@ -12,10 +12,10 @@ interface DataTypesData {
 interface DataTypesProps {
   data: DataTypesData[];
   color: string;
+  theme: string | undefined;
 }
 
-const DataTypesChart: React.FC<DataTypesProps> = ({ data, color }) => {
-    console.log(data);
+const DataTypesChart: React.FC<DataTypesProps> = ({ data, color, theme }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstanceRef = useRef<Chart | null>(null);
 
@@ -70,7 +70,9 @@ const DataTypesChart: React.FC<DataTypesProps> = ({ data, color }) => {
               ticks: {
                 minRotation: 0, // Ensure labels are horizontal
                 maxRotation: 0, // Ensure labels are horizontal
-                padding: 5 // Increase padding between labels and chart
+                padding: 5, // Increase padding between labels and chart
+                color: theme === 'dark' ? 'white' : 'black',
+
               }
             }
           },
@@ -86,7 +88,7 @@ const DataTypesChart: React.FC<DataTypesProps> = ({ data, color }) => {
               }
             },
             datalabels: {
-              color: 'black',
+              color: theme === 'dark' ? 'white' : 'black',
               anchor: 'end',
               align: 'end',
               formatter: (value) => `${value}%`, // Append '%' to data labels
@@ -104,9 +106,9 @@ const DataTypesChart: React.FC<DataTypesProps> = ({ data, color }) => {
         chartInstanceRef.current = null;
       }
     };
-  }, [data]);
+  }, [data, theme]);
 
-  return <canvas ref={chartRef} style={{ width: '600px', height: '500px' }} />;
+  return <canvas ref={chartRef} style={{ width: '600px', height: '400px' }} />;
 };
 
 export default DataTypesChart;

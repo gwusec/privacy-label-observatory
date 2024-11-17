@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1080" height="1080" viewBox="0 0 1080 1080" xml:space="preserve">
+<desc>Created with Fabric.js 5.2.4</desc>
+<defs>
+</defs>
+<rect x="0" y="0" width="100%" height="100%" fill="transparent"></rect>
+<g transform="matrix(1 0 0 1 540 540)" id="db5b3e94-2809-44dc-8d57-f5810647d2e4"  >
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke"  x="-540" y="-540" rx="0" ry="0" width="1080" height="1080" />
+</g>
+<g transform="matrix(1 0 0 1 540 540)" id="e096dab1-ea06-419b-bcfa-c07844678204"  >
+</g>
+<g transform="matrix(NaN NaN NaN NaN 0 0)"  >
+<g style=""   >
+</g>
+</g>
+<g transform="matrix(NaN NaN NaN NaN 0 0)"  >
+<g style=""   >
+</g>
+</g>
+<g transform="matrix(NaN NaN NaN NaN 0 0)"  >
+<g style=""   >
+</g>
+</g>
+<g transform="matrix(16.88 0 0 16.88 540 540)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"  transform=" translate(-32.09, -31.98)" d="M 32.09 61.568 C 48.275000000000006 61.568 61.676 48.138 61.676 31.980999999999998 C 61.676 15.794999999999998 48.246 2.3939999999999984 32.06 2.3939999999999984 C 15.903000000000002 2.3939999999999984 2.5020000000000024 15.793999999999999 2.5020000000000024 31.980999999999998 C 2.5020000000000024 48.137 15.932000000000002 61.568 32.089 61.568 z M 32.09 41.872 C 23.387000000000004 41.872 16.658 44.976 13.728000000000005 48.457 C 9.812000000000005 44.105000000000004 7.462000000000005 38.333 7.462000000000005 31.981 C 7.462000000000005 18.289 18.369000000000007 7.325000000000003 32.06 7.325000000000003 C 45.751000000000005 7.325000000000003 56.716 18.289 56.746 31.981 C 56.774 38.333 54.396 44.105000000000004 50.480000000000004 48.486000000000004 C 47.550000000000004 45.005 40.82000000000001 41.87200000000001 32.09 41.87200000000001 z M 32.09 36.941 C 37.658 36.999 42.039 32.241 42.039 26.005000000000003 C 42.039 20.145000000000003 37.659 15.273000000000003 32.089 15.273000000000003 C 26.519 15.273000000000003 22.110999999999997 20.146000000000004 22.139 26.005000000000003 C 22.169 32.242000000000004 26.519 36.883 32.089 36.941 z" stroke-linecap="round" />
+</g>
+</svg>

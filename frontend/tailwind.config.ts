@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 const { nextui } = require('@nextui-org/react');
 
+const colors = require('tailwindcss/colors')
 
 
 export default {
@@ -16,6 +17,7 @@ export default {
         'dark-gradient': 'linear-gradient(to bottom, #000000 50%, #5A5A5A) ',
       },
       colors: {
+        ...colors,
         red: '#000000',
         grey: '#5A5A5A',
         dred: '#ffffff',
