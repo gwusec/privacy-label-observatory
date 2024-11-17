@@ -38,7 +38,7 @@ interface GraphPopupProps {
   graphData: any;
   theme: string | undefined;
   id: any;
-  setId:any;
+  setId: any;
   ogId: number;
 }
 
@@ -64,39 +64,41 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
   // Convert dataWithoutId to an array to easily slice it based on the current id
   const dataEntries = Object.entries(dataWithoutId);
   const subtraction = ogId - id;
-  
+
   // Slice the data based on the current id
   let slicedData = Object.fromEntries(dataEntries.slice(0, dataEntries.length - subtraction));
-  
 
-  const nextData = () =>{
-    if(id + 1 >= Number(graphData['id'])){
+
+  const nextData = () => {
+    if (id + 1 >= Number(graphData['id'])) {
       setId(Number(graphData['id']))
     } else {
-      setId(id+=1)
+      setId(id += 1)
     }
     slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
     console.log(slicedData)
-  } 
-  const prevData = () =>{
-    if(id - 1 <= 0){
+  }
+  const prevData = () => {
+    if (id - 1 <= 0) {
       setId(0)
     } else {
       setId(id -= 1);
     }
     slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
     console.log(slicedData)
-  } 
+  }
 
   return (
-    <div className={`w-full h-full fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
-      <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-8 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
-        <h2 className="text-2xl mb-4">Expanded Graph View</h2>
-        {/* Render your graph here */}
-        <div className="flex-grow overflow-auto">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
+      <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-6 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
+
+        {/* Graph Section */}
+        <div className="flex-grow pt-40 overflow-auto">
           <LongitudeChart data={slicedData} isExpanded={true} />
         </div>
-        <div className="flex justify-between mt-4">
+
+        {/* Buttons Section */}
+        <div className="flex justify-between items-center mt-4">
           <button
             onClick={prevData}
             className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
@@ -118,6 +120,7 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
         </div>
       </div>
     </div>
+
   );
 };
 
@@ -330,13 +333,14 @@ export default function Index() {
                 >
                   <h1 className="text-center font-bold">Annual Trends in App Privacy Compliance</h1>
                   <LongitudeChart data={longitude} isExpanded={isPopupOpen} />
-                  <h3 className={``}>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
                   <button
                     onClick={handleOpenPopup}
-                    className="px-4 py-2 z-50 bg-slate-400 rounded"
+                    className={`px-4 py-2 z-50 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-200'} rounded`}
                   >
-                    Open in Fullscreen
+                    Expand
                   </button>
+                  <h3 className={``}>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
+
                   <GraphPopup
                     isOpen={isPopupOpen}
                     onClose={handleClosePopup}
@@ -374,7 +378,7 @@ export default function Index() {
                     </div>
                     <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme}/>
+                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme} />
                     </div>
                   </div>
                   <h4>The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
@@ -430,15 +434,15 @@ export default function Index() {
 
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme}/>
+                      <PrivacyTypesChart data={privacyTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme}/>
+                      <PrivacyTypesChart data={privacyTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme}/>
+                      <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                     </div>
                   </div>
                   <h3 className="text-sm md:text-base">The ratios of the 14 Data Categories for each of
@@ -450,11 +454,11 @@ export default function Index() {
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme}/>
+                      <DataTypesChart data={dataTypes.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme}/>
+                      <DataTypesChart data={dataTypes.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-full md:w-1/3">
                       <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
