@@ -157,4 +157,5 @@ export default function PercentageGraph({ data }: { data: any }) {
             </div>
         </div>
     );
+    
 }
