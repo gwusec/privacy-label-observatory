@@ -567,6 +567,33 @@ export default function Index() {
                 linked to users.</h3>
             </div>
 
+            {/* Content Graph */}
+            <div className={`mb-20 h-full`}>
+              <h1 className="text-center font-bold" > Content Ratings vs. Privacy Practices</h1>
+              <ContentRatings data={contentData} />
+              <h3 className="mt-5 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
+                designated content rating that have a privacy label. </h3>
+            </div>
+
+            {/* Rating Graph */}
+            <div className={`mb-20 h-full`}>
+              <h1 className="text-center font-bold" > Rating Counts vs. Privacy Practices</h1>
+              <RatingCounts data={ratingData} />
+              <h3 className="mt-5 text-wrap"> The ratios of the rating counts for each of the four Privacy Types. The denominator is the number of apps with the
+                designated rating counts that have a privacy label. Apps with a larger number of user ratings are more likely to collect data,
+                including data used to track users. Ratings counts are not localized metadata and apps with low ratings counts in the US region
+                may have higher counts elsewhere. </h3>
+            </div>
+
+            {/* Size Graph */}
+            <div className={`mb-20 h-full`}>
+              <h1 className="text-center font-bold" > App Sizes vs. Privacy Practices</h1>
+              <SizeGraph data={sizeData} />
+              <h3 className="mt-5 text-wrap"> The ratios of app sizes for each of the four Privacy Types. The denominator is the number of apps with the designated
+                app size that have a privacy label. Apps that are larger in size are more likely to collect data, including data used to track and
+                linked to users.</h3>
+            </div>
+
             {/* Year Graph */}
             <div className={`mb-20 `}>
               <h1 className="text-center font-bold" >Yearly App Releases with Privacy Labels</h1>
