@@ -35,9 +35,13 @@ export default function RatingCounts ({data}:{data:any}) {
     
     const options2 = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'top' as const,
+                labels: {
+                    padding: 10
+                }, 
             },
             datalabels: {
                 display: true,
@@ -50,6 +54,14 @@ export default function RatingCounts ({data}:{data:any}) {
                     weight: 'bold'
                 },
                 rotation: -45, // Rotate labels to reduce overlap
+            },
+        },
+        layout: {
+            padding: {
+                top: 20, // Adds padding between the legend and the graph
+                right: 0,
+                bottom: 0,
+                left: 0,
             },
         },
         scales: {
@@ -110,8 +122,11 @@ export default function RatingCounts ({data}:{data:any}) {
     };
     
     return (
-        <div className="w-full items-start px-10 pt-10">
-            <Bar data={mergedChartData} options={options2} />
+        <div className="w-full items-start px-4 py-4">
+            {/* Chart container with dynamic height */}
+            <div className="relative" style={{ height: '40vh' }}> {/* Adjust height as needed */}
+                <Bar data={mergedChartData} options={options2} />
+            </div>
         </div>
     );
     

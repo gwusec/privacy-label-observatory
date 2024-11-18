@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Bar} from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import axios from 'axios';
 import {
     Chart as ChartJS,
@@ -26,7 +26,7 @@ ChartJS.register(
     ChartDataLabels
 );
 
-export default function ContentRatings ({data}:{data:any}) {   
+export default function ContentRatings({ data }: { data: any }) {
     const { theme } = useTheme();
     const track = [data["duty_4"], data["duty_9"], data["duty_12"], data["duty_17"]]
     const not_linked = [data["dnlty_4"], data["dnlty_9"], data["dnlty_12"], data["dnlty_17"]]
@@ -36,7 +36,7 @@ export default function ContentRatings ({data}:{data:any}) {
     const chartData = {
         labels: [
             '4+', '9+', '12+', '17+',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Not Collected',
@@ -51,7 +51,7 @@ export default function ContentRatings ({data}:{data:any}) {
     const chartData2 = {
         labels: [
             '4+', '9+', '12+', '17+',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Not Linked to You',
@@ -66,7 +66,7 @@ export default function ContentRatings ({data}:{data:any}) {
     const chartData3 = {
         labels: [
             '4+', '9+', '12+', '17+',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Linked to You',
@@ -81,7 +81,7 @@ export default function ContentRatings ({data}:{data:any}) {
     const chartData4 = {
         labels: [
             '4+', '9+', '12+', '17+',
-          ],
+        ],
         datasets: [
             {
                 label: 'Data Used to Track You',
@@ -95,8 +95,12 @@ export default function ContentRatings ({data}:{data:any}) {
 
     const options2 = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
+                labels: {
+                    padding: 10
+                }, 
                 position: 'top' as const,
             },
             datalabels: {
@@ -110,6 +114,14 @@ export default function ContentRatings ({data}:{data:any}) {
                     weight: 'bold'
                 },
                 rotation: -45, // Rotate labels to reduce overlap
+            },
+        },
+        layout: {
+            padding: {
+                top: 20, // Adds padding between the legend and the graph
+                right: 0,
+                bottom: 0,
+                left: 0,
             },
         },
         scales: {
@@ -133,9 +145,9 @@ export default function ContentRatings ({data}:{data:any}) {
             },
         },
     };
-    
 
-    
+
+
     const mergedChartData = {
         labels: ['4+', '9+', '12+', '17+'],
         datasets: [
@@ -169,12 +181,15 @@ export default function ContentRatings ({data}:{data:any}) {
             },
         ],
     };
-    
+
     return (
-        <div className="w-full items-start px-10 pt-10">
-            <Bar data={mergedChartData} options={options2} />
+        <div className="w-full items-start px-4 py-4">
+            {/* Chart container with dynamic height */}
+            <div className="relative" style={{ height: '40vh' }}> {/* Adjust height as needed */}
+                <Bar data={mergedChartData} options={options2} />
+            </div>
         </div>
     );
-    
-    
+
+
 }

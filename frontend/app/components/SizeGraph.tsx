@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Bar} from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import axios from 'axios';
 import {
     Chart as ChartJS,
@@ -26,18 +26,22 @@ ChartJS.register(
     ChartDataLabels
 );
 
-export default function RatingCounts ({data}:{data:any}) {   
+export default function RatingCounts({ data }: { data: any }) {
     const { theme } = useTheme();
     const track = [data["duty_1"], data["duty_10"], data["duty_100"], data["duty_1000"], data["duty_10000"], data["duty_100000"]]
     const not_linked = [data["dnlty_1"], data["dnlty_10"], data["dnlty_100"], data["dnlty_1000"], data["dnlty_10000"], data["dnlty_100000"]]
     const linked = [data["dlty_1"], data["dlty_10"], data["dlty_100"], data["dlty_1000"], data["dlty_10000"], data["dlty_100000"]]
     const collected = [data["dnc_1"], data["dnc_10"], data["dnc_100"], data["dnc_1000"], data["dnc_10000"], data["dnc_100000"]]
-    
+
     const options2 = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'top' as const,
+                labels: {
+                    padding: 10
+                }, 
             },
             datalabels: {
                 display: true,
@@ -50,6 +54,14 @@ export default function RatingCounts ({data}:{data:any}) {
                     weight: 'bold'
                 },
                 rotation: -45, // Rotate labels to reduce overlap
+            },
+        },
+        layout: {
+            padding: {
+                top: 40, // Adds padding between the legend and the graph
+                right: 0,
+                bottom: 0,
+                left: 0,
             },
         },
         scales: {
@@ -73,7 +85,7 @@ export default function RatingCounts ({data}:{data:any}) {
             },
         },
     };
-    
+
 
     const mergedChartData = {
         labels: ['100kB', '1MB', '10MB', '100MB', '1GB', '1GB+'],
@@ -108,11 +120,14 @@ export default function RatingCounts ({data}:{data:any}) {
             },
         ],
     };
-    
+
     return (
-        <div className="w-full items-start px-10 pt-10">
-            <Bar data={mergedChartData} options={options2} />
+        <div className="w-full items-start px-4 py-4">
+            {/* Chart container with dynamic height */}
+            <div className="relative" style={{ height: '40vh' }}> {/* Adjust height as needed */}
+                <Bar data={mergedChartData} options={options2} />
+            </div>
         </div>
     );
-    
+
 }
