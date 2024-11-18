@@ -4,7 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
-  console.log(value);
+  // console.log(value);
 
   if (value == "dnc") {
     value = "Data Not Collected";
@@ -19,7 +19,7 @@ router.get('/', async function(req, res) {
     throw new Error("Not a valid value, try again!")
   }
 
-  console.log(value);
+  // console.log(value);
 
   const dnc = {};
 
