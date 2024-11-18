@@ -274,7 +274,7 @@ export default function Index() {
         </div>
       ) : (
         <div className={`min-h-screen overflow-visible ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
-          <div className="fixed left-0 top-14 p-4">
+          <div className="fixed left-0 top-14 p-4 hidden md:block">
             <button
               onClick={toggleMenu}
               className={`px-4 py-2 text-lg font-bold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black text-white border border-slate-800' : 'bg-white text-black border-black'
