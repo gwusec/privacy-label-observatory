@@ -99,7 +99,8 @@ export default function ContentRatings({ data }: { data: any }) {
         plugins: {
             legend: {
                 labels: {
-                    padding: 10
+                    padding: 10,
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
                 }, 
                 position: 'top' as const,
             },
@@ -128,7 +129,8 @@ export default function ContentRatings({ data }: { data: any }) {
             x: {
                 ticks: {
                     maxRotation: 45, // Rotate x-axis labels
-                    minRotation: 45
+                    minRotation: 45,
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
                 }
             },
             y: {
@@ -138,6 +140,7 @@ export default function ContentRatings({ data }: { data: any }) {
                     display: false,
                     stepSize: 20,
                     maxTicksLimit: 10,
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
                 },
                 grid: {
                     drawTicks: true,
