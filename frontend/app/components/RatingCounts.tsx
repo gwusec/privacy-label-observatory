@@ -40,7 +40,8 @@ export default function RatingCounts ({data}:{data:any}) {
             legend: {
                 position: 'top' as const,
                 labels: {
-                    padding: 10
+                    padding: 10,
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
                 }, 
             },
             datalabels: {
@@ -68,7 +69,8 @@ export default function RatingCounts ({data}:{data:any}) {
             x: {
                 ticks: {
                     maxRotation: 45, // Rotate x-axis labels
-                    minRotation: 45
+                    minRotation: 45,
+                    color: theme === 'dark' ? '#ffffff' : '#000000'
                 }
             },
             y: {
@@ -78,6 +80,7 @@ export default function RatingCounts ({data}:{data:any}) {
                     display: false,
                     stepSize: 20,
                     maxTicksLimit: 10,
+                    color: theme === 'dark' ? '#ffffff' : '#000000',
                 },
                 grid: {
                     drawTicks: true,
