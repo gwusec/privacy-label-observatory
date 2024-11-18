@@ -4,7 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.index;
-  console.log(value);
+  // console.log(value);
 
   if (value == "dnc") {
     value = "Data Not Collected";
