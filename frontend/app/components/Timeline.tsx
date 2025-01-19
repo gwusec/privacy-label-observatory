@@ -118,12 +118,12 @@ const getIconPath = (category: String, theme: String | undefined) => {
     }
 };
 
-export default function Timeline({ data }: { data: any }) {
+export default function     Timeline({ data }: { data: any }) {
     const navigate = useNavigate()
     const [activeIndex, setActiveIndex] = useState(0);
     const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
     const [expandedColumn, setExpandedColumn] = useState(null);
-    const [allColumns, expandAllColumns] = useState(false);
+    const [allColumns, expandAllColumns] = useState(true);
 
     const handleClick = (event: any, index: number) => {
         console.log("called", index)
