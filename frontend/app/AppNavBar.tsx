@@ -55,18 +55,18 @@ export default function AppNavBar() {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent >
         <NavbarItem>
           <ThemeSwitcher />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
+        {/* <NavbarItem className="hidden lg:flex">
           <Link color="foreground" href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
           <Button as={Link} color="default" href="#" variant="flat">
             Sign Up
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
     </Navbar>
     </div>
