@@ -60,7 +60,7 @@ export default function App() {
             </div> */}
             <ScrollRestoration />
             <Scripts />
-            <LiveReload />
+
           </NextThemesProvider>
         </NextUIProvider>
       </body>
