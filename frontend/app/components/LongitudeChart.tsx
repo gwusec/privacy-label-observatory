@@ -177,6 +177,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
         },
+        suggestedMax: 600000,
+        max: undefined,
       },
     },
     plugins: {
