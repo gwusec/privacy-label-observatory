@@ -59,7 +59,7 @@ export default function RatingCounts({ data }: { data: any }) {
         },
         layout: {
             padding: {
-                top: 40, // Adds padding between the legend and the graph
+                top: 0, // Adds padding between the legend and the graph
                 right: 0,
                 bottom: 0,
                 left: 0,
