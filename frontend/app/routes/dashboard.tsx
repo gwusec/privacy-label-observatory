@@ -273,7 +273,7 @@ export default function Index() {
           <FaSpinner className="animate-spin" size={72} />
         </div>
       ) : (
-        <div className={`min-h-screen overflow-visible ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
+        <div className={`min-h-screen bg-cover overflow-visible ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
           <div className="fixed left-0 top-14 p-4 hidden md:block">
             <button
               onClick={toggleMenu}
@@ -468,7 +468,7 @@ export default function Index() {
                     Privacy Types. The denominator is the number of apps in the
                     specific Privacy Type.</h3>
                 </div>
-                <div className="mb-20" ref={(el => (refs.current[11] = el))}>
+                <div className="pb-20" ref={(el => (refs.current[11] = el))}>
                   <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-full md:w-1/4">
