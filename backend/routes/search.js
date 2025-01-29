@@ -7,24 +7,40 @@ router.get("/", function (req, res) {
     q = req.query.q;
     run = req.query.run;
     if (q == undefined) {
-        res.json({ "Error": "Missing parameters" })
+        res.json({ "Error": "Missing parameters" });
         return;
     }
     if (run == undefined) {
-        run = "run_000*"
+        run = "run_000*";
     }
-
 
     client.search({
         "index": run,
         "query": {
-            "match_phrase_prefix": {
-                "app_name": q
+            "bool": {
+                "should": [
+                    {
+                        "match_phrase": { // Exact match
+                            "app_name": {
+                                "query": q,
+                                "boost": 2 // Higher boost for exact matches
+                            }
+                        }
+                    },
+                    {
+                        "match_phrase_prefix": { // Prefix match
+                            "app_name": {
+                                "query": q,
+                                "boost": 1 // Lower boost for prefix matches
+                            }
+                        }
+                    }
+                ]
             }
         },
         "size": 20,
-        collapse: {
-            field: "app_id.keyword" // Use the keyword subfield for collapsing
+        "collapse": {
+            "field": "app_id.keyword" // Use the keyword subfield for collapsing
         }
     }).then((r) => {
         const hits = r.hits.hits.map(hit => ({
@@ -39,6 +55,6 @@ router.get("/", function (req, res) {
     });
 
     return;
-})
+});
 
 module.exports = router;
