@@ -238,27 +238,27 @@ const Index: React.FC = () => {
                 </ul>
               </details>
             </div>
-            </div>
-            <button
-              className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
-              style={{ fontSize: '1.5rem', padding: '1.5rem' }}
-              onClick={() => scrollTo('prev')}
-            >
-              &lt;
-            </button>
-            <button
-              className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
-              style={{ fontSize: '1.5rem', padding: '1.5rem' }}
-              onClick={() => scrollTo('next')}
-            >
-              &gt;
-            </button>
           </div>
+          <button
+            className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
+            style={{ fontSize: '1.5rem', padding: '1.5rem' }}
+            onClick={() => scrollTo('prev')}
+          >
+            &lt;
+          </button>
+          <button
+            className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
+            style={{ fontSize: '1.5rem', padding: '1.5rem' }}
+            onClick={() => scrollTo('next')}
+          >
+            &gt;
+          </button>
+        </div>
       }
-        </>
+    </>
   );
 };
 
 
-      export default Index;
+export default Index;
 
