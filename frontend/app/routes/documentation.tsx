@@ -169,28 +169,96 @@ const Index: React.FC = () => {
                 opacity: 1;
               }
             `}</style>
+            <div>
+              <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+                Apple's Data Categories
+              </h1>
 
+              {/* Contact Info */}
+              <details className="border rounded-lg p-4 mb-4">
+                <summary className="font-semibold cursor-pointer text-lg">Contact Info</summary>
+                <ul className="mt-2 space-y-2">
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Name:</strong> Such as first or last name
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Email Address:</strong> Including but not limited to a hashed email address
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Phone Number:</strong> Including but not limited to a hashed phone number
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Physical Address:</strong> Such as home address, physical address, or mailing address
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Other User Contact Info:</strong> Any other information that can be used to contact the user outside the app
+                  </li>
+                </ul>
+              </details>
+
+              {/* Health & Fitness */}
+              <details className="border rounded-lg p-4 mb-4">
+                <summary className="font-semibold cursor-pointer text-lg">Health & Fitness</summary>
+                <ul className="mt-2 space-y-2">
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Health:</strong> Health and medical data, including but not limited to data from the Clinical Health Records API, HealthKit API, Movement Disorder API, or health-related human subject research or any other user-provided health or medical data
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Fitness:</strong> Fitness and exercise data, including but not limited to the Motion and Fitness API
+                  </li>
+                </ul>
+              </details>
+
+              {/* Financial Info */}
+              <details className="border rounded-lg p-4 mb-4">
+                <summary className="font-semibold cursor-pointer text-lg">Financial Info</summary>
+                <ul className="mt-2 space-y-2">
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Payment Info:</strong> Such as form of payment, payment card number, or bank account number. If your app uses a payment service, the payment information is entered outside your app, and you as the developer never have access to the payment information, it is not collected and does not need to be disclosed.
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Credit Info:</strong> Such as credit score
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Other Financial Info:</strong> Such as salary, income, assets, debts, or any other financial information
+                  </li>
+                </ul>
+              </details>
+
+              {/* Location */}
+              <details className="border rounded-lg p-4 mb-4">
+                <summary className="font-semibold cursor-pointer text-lg">Location</summary>
+                <ul className="mt-2 space-y-2">
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Precise Location:</strong> Information that describes the location of a user or device with the same or greater resolution as a latitude and longitude with three or more decimal places
+                  </li>
+                  <li className="border-b border-gray-200 py-2">
+                    <strong>Coarse Location:</strong> Information that describes the location of a user or device with lower resolution than a latitude and longitude with three or more decimal places, such as Approximate Location Services
+                  </li>
+                </ul>
+              </details>
+            </div>
+            </div>
+            <button
+              className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
+              style={{ fontSize: '1.5rem', padding: '1.5rem' }}
+              onClick={() => scrollTo('prev')}
+            >
+              &lt;
+            </button>
+            <button
+              className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
+              style={{ fontSize: '1.5rem', padding: '1.5rem' }}
+              onClick={() => scrollTo('next')}
+            >
+              &gt;
+            </button>
           </div>
-          <button
-            className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
-            style={{ fontSize: '1.5rem', padding: '1.5rem' }}
-            onClick={() => scrollTo('prev')}
-          >
-            &lt;
-          </button>
-          <button
-            className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
-            style={{ fontSize: '1.5rem', padding: '1.5rem' }}
-            onClick={() => scrollTo('next')}
-          >
-            &gt;
-          </button>
-        </div>
       }
-    </>
+        </>
   );
 };
 
 
-export default Index;
+      export default Index;
 
