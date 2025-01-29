@@ -51,9 +51,9 @@ const Index: React.FC = () => {
                 Here is what we found:
               </h1>
             </div>
-            <div ref={scrollContainerRef} className="w-full snap-x snap-mandatory flex overflow-x-auto space-x-16 overflow-hidden mb-16">
+            <div ref={scrollContainerRef} className="w-full snap-x snap-mandatory flex overflow-x-hidden space-x-16 overflow-hidden mb-16">
               {/* Card 1 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10 bg-gray-${theme === 'dark' ? '800' : '200'}`}>
+              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10`}>
                 <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
                   Voluntary Update vs. Means to an End:
                 </h2>
@@ -74,7 +74,7 @@ const Index: React.FC = () => {
               </div>
 
               {/* Card 2 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10 bg-gray-${theme === 'dark' ? '800' : '200'}`}>
+              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10`}>
                 <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
                   You get what you do (or don't) pay for:
                 </h2>
@@ -90,7 +90,7 @@ const Index: React.FC = () => {
               </div>
 
               {/* Card 3 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10 bg-gray-${theme === 'dark' ? '800' : '200'}`}>
+              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col bg-gray-items-start justify-center p-10`}>
                 <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
                   Data collection may have no boundaries:
                 </h2>
@@ -100,7 +100,7 @@ const Index: React.FC = () => {
               </div>
 
               {/* Card 4 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10 bg-gray-${theme === 'dark' ? '800' : '200'}`}>
+              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10`}>
                 <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
                   Larger sized apps:
                 </h2>
