@@ -48,7 +48,7 @@ interface privLabel {
 //Function that given a data type or a purpose (depending on privacy type)
 //Returns the dynamic svg to be loaded
 const getIconPath = (category: String, theme: String | undefined) => {
-    
+
     const iconMapping = {
         "Browsing History": {
             light: "/apple_icons/browsing_history.svg",
@@ -87,7 +87,7 @@ const getIconPath = (category: String, theme: String | undefined) => {
             dark: "/apple_icons/other_data_dark.svg"
         },
         "Purchases": {
-            light: "/apple_icons/purchases.svg", 
+            light: "/apple_icons/purchases.svg",
             dark: "/apple_icons/purchases_dark.svg"
         },
         "Search History": {
@@ -107,7 +107,7 @@ const getIconPath = (category: String, theme: String | undefined) => {
             dark: "/apple_icons/user_content_dark.svg"
         }
     };
-    
+
 
     // Return the corresponding icon or a default icon if the category is not found
     const icons = iconMapping[category];
@@ -118,7 +118,7 @@ const getIconPath = (category: String, theme: String | undefined) => {
     }
 };
 
-export default function     Timeline({ data }: { data: any }) {
+export default function Timeline({ data }: { data: any }) {
     const navigate = useNavigate()
     const [activeIndex, setActiveIndex] = useState(0);
     const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
@@ -220,7 +220,7 @@ export default function     Timeline({ data }: { data: any }) {
             <div className='flex flex-row justify-between items-end mr-4'>
                 <Button className='ml-6' onClick={handleButton}>Return to Search</Button>
                 {privDetails.length > 0 ?
-                    <Button onClick={() => expandAll()} className={`hidden text-cyan-500 lg:block ${theme === 'dark' ? 'bg-black' : 'bg-white'} font-medium`}>View {allColumns ? 'Less' : 'More'}</Button>
+                    <Button onClick={() => expandAll()} className={`hidden text-cyan-500 lg:block hover:bg-cyan-300 ${theme === 'dark' ? 'bg-black' : 'bg-white'} font-medium`}>{allColumns ? 'Condense' : 'Expand'}</Button>
                     :
                     <></>
                 }
@@ -254,7 +254,7 @@ export default function     Timeline({ data }: { data: any }) {
                                 {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ?
                                     <div>
                                         <div className='flex justify-center space-x-4'>
-                                        {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
+                                            {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
 
                                             <h3 className="text-lg">Data Used to Track You</h3>
                                         </div>
@@ -301,7 +301,7 @@ export default function     Timeline({ data }: { data: any }) {
                                                                     </div>
                                                                 )}
 
-                                                                
+
                                                             </div>
                                                         ))}
 
@@ -317,7 +317,7 @@ export default function     Timeline({ data }: { data: any }) {
                                     <div className=''>
 
                                         <div className='flex justify-center space-x-4'>
-                                        {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
+                                            {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
 
                                             <h3 className="text-lg">Data Used to Track You</h3>
                                         </div>
@@ -426,7 +426,7 @@ export default function     Timeline({ data }: { data: any }) {
                                     <div className="">
 
                                         <div className='flex justify-center space-x-4'>
-                                        {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
+                                            {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
 
                                             <h3 className="text-lg">Data Linked to You</h3>
                                         </div>
@@ -459,7 +459,7 @@ export default function     Timeline({ data }: { data: any }) {
                                             {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
                                         </div>
                                         <div className='flex justify-center space-x-4'>
-                                        {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
+                                            {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
 
                                             <h3 className="text-lg">Data Not Linked to You</h3>
                                         </div>
@@ -542,7 +542,7 @@ export default function     Timeline({ data }: { data: any }) {
                                             {expandedColumn === 'column3' ? <MdFullscreenExit onClick={() => handleExpand('column3')} size={28} /> : <MdFullscreen onClick={() => handleExpand('column3')} size={28} />}
                                         </div>
                                         <div className='flex justify-center space-x-4'>
-                                        {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
+                                            {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
 
                                             <h3 className="text-lg">Data Not Linked to You</h3>
                                         </div>
@@ -562,7 +562,7 @@ export default function     Timeline({ data }: { data: any }) {
                                     `}
                                 id='duty'>
                                 <div className='flex justify-center space-x-4'>
-                                {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
+                                    {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
                                     <h3 className="text-lg">Data Used to Track You</h3>
                                 </div>
                                 {privDetails.map(priv =>
@@ -601,7 +601,7 @@ export default function     Timeline({ data }: { data: any }) {
                                 'text-black bg-neutral-300'} 
                             `} id='dlty'>
                                 <div className='flex justify-center items-center space-x-4'>
-                                {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
+                                    {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
 
                                     <h3 className="text-lg">Data Used to Track You</h3>
                                 </div>
@@ -616,7 +616,7 @@ export default function     Timeline({ data }: { data: any }) {
                                 `}
                                 id='dlty'>
                                 <div className='flex justify-center space-x-4'>
-                                {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
+                                    {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
 
                                     <h3 className="text-lg">Data Linked to You</h3>
                                 </div>
@@ -678,7 +678,7 @@ export default function     Timeline({ data }: { data: any }) {
                                 `}
                                 id='dnlty'>
                                 <div className='flex justify-center space-x-4'>
-                                {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
+                                    {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
                                     <h3 className="text-lg">Data Not Linked to You</h3>
                                 </div>
                                 {privDetails.map((priv) =>
@@ -728,7 +728,7 @@ export default function     Timeline({ data }: { data: any }) {
                                 'text-black bg-neutral-300'} 
                             `} id='dlty'>
                                 <div className='flex justify-center items-center space-x-4'>
-                                {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
+                                    {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
 
                                     <h3 className="text-lg text-center">Data Not Linked to You</h3>
                                 </div>
