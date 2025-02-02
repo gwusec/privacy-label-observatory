@@ -123,31 +123,6 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
   );
 };
 
-
-
-export async function action({ request }: any) {
-  const formData = await request.formData();
-  const dataToSend = Object.fromEntries(formData);
-
-  const response = await fetch('http://localhost:8017/api/some-endpoint', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(dataToSend), // Ensure you're sending JSON
-  });
-
-  if (!response.ok) {
-    // Log an error message if the response is not OK
-    console.error('Failed to send request:', response.statusText);
-    throw new Error('Failed to send request to Express');
-  }
-
-  const data = await response.json();
-  console.log(json(data));
-  return json(data);
-}
-
 export async function loader({ params }: LoaderFunctionArgs) {
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
