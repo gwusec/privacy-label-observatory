@@ -1,10 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from 'react';
-// import 'shepherd.js/dist/css/shepherd.css';
 import { useTheme } from "next-themes";
-import Shepherd from 'shepherd.js';
-
-
 import { FaSpinner } from "react-icons/fa";
 import { useNavigation } from "@remix-run/react";
 import Ratios from '~/components/Ratios';
@@ -14,14 +10,11 @@ import YearGraph from "~/components/YearGraph"
 import PrivacyTypesChart from "~/components/PrivacyTypesChart"
 import DataTypesChart from "~/components/DataTypesChart"
 import LongitudeChart from "~/components/LongitudeChart";
-
-
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import PercentageGraph from "~/components/PercentageGraph";
 import ContentRatings from "~/components/ContentRatings";
 import SizeGraph from "~/components/SizeGraph";
-
 import { MetaFunction } from "@remix-run/node";
 import RatingCounts from "~/components/RatingCounts";
 
@@ -87,6 +80,10 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
     console.log(slicedData)
   }
 
+  // Next and Prev Buttons Disabled?
+  const isPrevDisabled = id <= 0;
+  const isNextDisabled = id >= Number(graphData['id']);
+
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
       <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-6 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
@@ -100,9 +97,10 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
         <div className="flex justify-between items-center mt-4">
           <button
             onClick={prevData}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+            disabled={isPrevDisabled}
+            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isPrevDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            Prev
+            Remove a Run
           </button>
           <button
             onClick={onClose}
@@ -112,9 +110,10 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
           </button>
           <button
             onClick={nextData}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+            disabled={isNextDisabled}
+            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            Next
+            Add a Run
           </button>
         </div>
       </div>
