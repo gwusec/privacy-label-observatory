@@ -1,25 +1,12 @@
 import { useNavigate } from "react-router-dom";
-// import 'shepherd.js/dist/css/shepherd.css';
 import { useTheme } from "next-themes";
-import Shepherd from 'shepherd.js';
-
 import { FaSpinner } from "react-icons/fa";
 import { useNavigation } from "@remix-run/react";
-import LineChart from '~/components/LineChart';
-import Ratios from '~/components/Ratios';
-import MatrixChart from '~/components/MatrixChart';
-import VennDiagram from "~/components/VennDiagram";
-import YearGraph from "~/components/YearGraph"
-
-import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import PercentageGraph from "~/components/PercentageGraph";
-
 import { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [{
-    title: "Dashboard",
+    title: "Observatory",
   }];
 };
 
