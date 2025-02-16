@@ -4,6 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
+  var latestRun = req.query.latestRun;
   // console.log(value);
 
   if (value == "dnc") {
@@ -25,7 +26,7 @@ router.get('/', async function(req, res) {
 
   try {
     const response1 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {
@@ -59,7 +60,7 @@ router.get('/', async function(req, res) {
     dnc["free_no_app"] = response1.count;
 
     const response2 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {
@@ -93,7 +94,7 @@ router.get('/', async function(req, res) {
     dnc["free_in_app"] = response2.count;
 
     const response3 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {
@@ -127,7 +128,7 @@ router.get('/', async function(req, res) {
     dnc["paid_no_app"] = response3.count;
 
     const response4 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {

@@ -11,15 +11,17 @@ var roundUpto = function(number, upto){
 
 router.get('/', async function(req, res){
 
+    const latestRun = (await axios.get('http://localhost:8017/latestIndex')).data.latestRun;
+
     var dnc = {}
-    const totalRequest = await axios.get('http://localhost:8017/total?run=run_00069')
+    const totalRequest = await axios.get(`http://localhost:8017/total?run=${latestRun}`)
     totals = totalRequest.data
 
     percentages = {}
     console.log(totals)
 
     //This is for all percentages of data not collected
-    var request = await axios.get('http://localhost:8017/helper15?name=dnc')
+    var request = await axios.get(`http://localhost:8017/helper15?name=dnc&latestRun=${latestRun}`)
     dnc_totals = request.data
 
     for(const [key, value] of Object.entries(dnc_totals)){
@@ -29,7 +31,7 @@ router.get('/', async function(req, res){
     }
 
     //This is for all percentages of data not linked to you
-    var request = await axios.get('http://localhost:8017/helper15?name=dnlty')
+    var request = await axios.get(`http://localhost:8017/helper15?name=dnlty&latestRun=${latestRun}`)
     dnlty_totals = request.data
 
     for(const [key, value] of Object.entries(dnlty_totals)){
@@ -39,7 +41,7 @@ router.get('/', async function(req, res){
     }
 
     //This is for all percentages of data linked to you
-    var request = await axios.get('http://localhost:8017/helper15?name=dlty')
+    var request = await axios.get(`http://localhost:8017/helper15?name=dlty&latestRun=${latestRun}`)
     dlty_totals = request.data
 
     for(const [key, value] of Object.entries(dlty_totals)){
@@ -49,7 +51,7 @@ router.get('/', async function(req, res){
     }
 
     //This is for all percentages of data used to track you
-    var request = await axios.get('http://localhost:8017/helper15?name=duty')
+    var request = await axios.get(`http://localhost:8017/helper15?name=duty&latestRun=${latestRun}`)
     duty_totals = request.data
 
     for(const [key, value] of Object.entries(duty_totals)){

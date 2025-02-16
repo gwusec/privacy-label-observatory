@@ -29,6 +29,7 @@ var graph14Helper = require("./routes/graph_14_helper")
 var graph15Router = require("./routes/graph_15")
 var graph15Helper = require("./routes/graph_15_helper")
 var longUpdated = require("./routes/getLongitudeUpdated")
+var latestIndex = require("./routes/latestIndex")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -55,7 +56,7 @@ app.use("/venn", vennRouter)
 app.use("/longitude", longitudeRouter)
 app.use("/ratios", ratiosRouter)
 app.use("/matrix", matrixRouter)
-
+app.use("/latestIndex", latestIndex)
 app.use("/total", totalRouter)
 app.use("/graph16", graph16Router)
 app.use("/helper", helperRouter)

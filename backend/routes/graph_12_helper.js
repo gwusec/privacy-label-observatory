@@ -4,6 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
+  var run = req.query.run;
 
   if (value == "dnc") {
     value = "Data Not Collected";
@@ -22,7 +23,7 @@ const result = {};
 
 try {
     const responseDNC = await client.search({
-        index: "run_00069",
+        index: run,
         body: {
             query: {
                 bool: {
