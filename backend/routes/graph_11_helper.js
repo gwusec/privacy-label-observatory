@@ -4,6 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
+  var run = req.query.run;
 
   if (value == "dnc") {
     value = "Data Not Collected";
@@ -23,7 +24,7 @@ const result = {};
 
 try {
     const responseDNC = await client.search({
-        index: "run_00069",
+        index: run,
         body: {
             "query": {
                 "bool": {
@@ -50,7 +51,7 @@ try {
 // try {
     // Aggregation for 'Data Linked to You'
     const responseDLTY = await client.search({
-      index: "run_00069",
+      index: run,
       body: {
         "query": {
           "bool": {
@@ -76,7 +77,7 @@ try {
 
     // Aggregation for 'Data Not Linked to You'
     const responseDNLTY = await client.search({
-      index: "run_00069",
+      index: run,
       body: {
         "query": {
           "bool": {
@@ -102,7 +103,7 @@ try {
 
     // Aggregation for 'Data Used to Track You'
     const responseDUTY = await client.search({
-      index: "run_00069",
+      index: run,
       body: {
         "query": {
           "bool": {

@@ -4,6 +4,7 @@ var router = express.Router()
 const client = require("./../client")
 
 router.get("/", function (req, res) {
+    console.log("In search")
     q = req.query.q;
     run = req.query.run;
     if (q == undefined) {

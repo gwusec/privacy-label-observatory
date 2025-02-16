@@ -7,7 +7,6 @@ const client = require("./../client")
 router.get('/', async function(req, res){
 
     var run = req.query.run
-    console.log(run)
     var dnc = {}
 
     

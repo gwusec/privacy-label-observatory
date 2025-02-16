@@ -4,7 +4,8 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
-
+  var latestRun = req.query.latestRun;
+  console.log(latestRun)
   if (value == "dnc") {
     value = "Data Not Collected";
 } else if (value == "dlty") {
@@ -22,7 +23,7 @@ const result = {};
 
 try {
   const responseDNC = await client.search({
-    index: "run_00069",
+    index: latestRun,
     body: {
       query: {
         bool: {
