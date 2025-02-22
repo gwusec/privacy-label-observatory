@@ -5,28 +5,22 @@ const axios = require('axios');
 const client = require("./../client")
 
 //helper11 function that rounds to two decimal places
-var roundUpto = function(number, upto){
+var roundUpto = function (number, upto) {
     return Number(number.toFixed(upto));
 }
 
-router.get('/', async function(req, res){
-
-    const latestRun = (await axios.get('http://localhost:8017/latestIndex')).data.latestRun;
-
-    var dnc = {}
+router.get('/', async function (req, res) {
+    const latestRun = req.query.run;
     const totalRequest = await axios.get(`http://localhost:8017/total?run=${latestRun}`)
     totals = totalRequest.data
-
     percentages = {}
-    console.log(totals)
 
     //This is for all percentages of data not collected
     var request = await axios.get(`http://localhost:8017/helper15?name=dnc&latestRun=${latestRun}`)
     dnc_totals = request.data
 
-    for(const [key, value] of Object.entries(dnc_totals)){
-        console.log(key, value)
-        var total = roundUpto(((value/totals["Data Not Collected"]) * 100), 2)
+    for (const [key, value] of Object.entries(dnc_totals)) {
+        var total = roundUpto(((value / totals["Data Not Collected"]) * 100), 2)
         percentages["dnc_" + key] = total
     }
 
@@ -34,9 +28,8 @@ router.get('/', async function(req, res){
     var request = await axios.get(`http://localhost:8017/helper15?name=dnlty&latestRun=${latestRun}`)
     dnlty_totals = request.data
 
-    for(const [key, value] of Object.entries(dnlty_totals)){
-        console.log(key, value)
-        var total = roundUpto(((value/totals["Data Not Linked to You"]) * 100), 2)
+    for (const [key, value] of Object.entries(dnlty_totals)) {
+        var total = roundUpto(((value / totals["Data Not Linked to You"]) * 100), 2)
         percentages["dnlty_" + key] = total
     }
 
@@ -44,9 +37,8 @@ router.get('/', async function(req, res){
     var request = await axios.get(`http://localhost:8017/helper15?name=dlty&latestRun=${latestRun}`)
     dlty_totals = request.data
 
-    for(const [key, value] of Object.entries(dlty_totals)){
-        console.log(key, value)
-        var total = roundUpto(((value/totals["Data Linked to You"]) * 100), 2)
+    for (const [key, value] of Object.entries(dlty_totals)) {
+        var total = roundUpto(((value / totals["Data Linked to You"]) * 100), 2)
         percentages["dlty_" + key] = total
     }
 
@@ -54,17 +46,10 @@ router.get('/', async function(req, res){
     var request = await axios.get(`http://localhost:8017/helper15?name=duty&latestRun=${latestRun}`)
     duty_totals = request.data
 
-    for(const [key, value] of Object.entries(duty_totals)){
-        console.log(key, value)
-        var total = roundUpto(((value/totals["Data Used to Track You"]) * 100), 2)
+    for (const [key, value] of Object.entries(duty_totals)) {
+        var total = roundUpto(((value / totals["Data Used to Track You"]) * 100), 2)
         percentages["duty_" + key] = total
     }
-
-
-
-    
-
-   console.log(percentages)
 
     res.json(percentages)
 })

@@ -61,13 +61,11 @@ router.get("/", async function(req, res){
         }
         var hits = []
         for(i in r.hits.hits){
-            console.log(r.hits.hits[i])
             hits.push({
                 "index": r.hits.hits[i]._index,
                 "privacy_types": r.hits.hits[i]._source.privacylabels
             })
         }
-        console.log(hits)
         info.push({
             "privacy": hits
         })

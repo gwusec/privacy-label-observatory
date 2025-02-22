@@ -60,12 +60,10 @@ try {
     result_num = 1;
     buckets.forEach(bucket => {
         result[`${result_num}`]= bucket.doc_count;
-        console.log(`Range: ${bucket.from || 0} - ${bucket.to || '100000+'}, Count: ${bucket.doc_count}, result number = ${result_num}`);
         result_num = result_num * 10;
     });
 
     // Return the final result with all aggregations
-    // console.log(totalCount);
     res.json(result);
   
 

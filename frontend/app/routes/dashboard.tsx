@@ -123,31 +123,44 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
 };
 
 export async function loader({ params }: LoaderFunctionArgs) {
+  const latestRun = await fetch(process.env.BACKEND_API + "latestIndex"); 
+  const runData: string = (await latestRun.json()).latestRun;
+
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
-  const percentage = await fetch(process.env.BACKEND_API + "graph16")
-  const percentageData = await percentage.json()
-  const dates = await fetch(process.env.BACKEND_API + "graph14")
-  const dateJson = await dates.json()
 
-  const response = await fetch('http://localhost:8017/longUpdated');
+  const percentage = await fetch(process.env.BACKEND_API + "graph16?run=" + runData);
+  const percentageData = await percentage.json();
+
+  const dates = await fetch(process.env.BACKEND_API + "graph14");
+  const dateJson = await dates.json();
+
+  const response = await fetch(process.env.BACKEND_API + "longUpdated");
   const longitude = await response.json();
-  const response2 = await fetch('http://localhost:8017/ratios');
+
+  const response2 = await fetch(process.env.BACKEND_API + "ratios");
   const ratios = await response2.json();
-  const response3 = await fetch('http://localhost:8017/matrix');
+
+  const response3 = await fetch(process.env.BACKEND_API + "matrix");
   const matrix = await response3.json();
-  const response4 = await fetch('http://localhost:8017/figure7');
+
+  const response4 = await fetch(process.env.BACKEND_API + "figure7");
   const privacyTypes = await response4.json();
-  const response5 = await fetch('http://localhost:8017/figure8');
+
+  const response5 = await fetch(process.env.BACKEND_API + "figure8");
   const dataTypes = await response5.json();
-  const response6 = await fetch('http://localhost:8017/figure13');
+
+  const response6 = await fetch(process.env.BACKEND_API + "figure13");
   const appGenre = await response6.json();
-  const version = await fetch(process.env.BACKEND_API + "graph11")
-  const versionData = await version.json()
-  const rating = await fetch(process.env.BACKEND_API + "graph12")
-  const ratingData = await rating.json()
-  const size = await fetch(process.env.BACKEND_API + "graph15")
-  const sizeData = await size.json()
+
+  const version = await fetch(process.env.BACKEND_API + "graph11?run=" + runData);
+  const versionData = await version.json();
+
+  const rating = await fetch(process.env.BACKEND_API + "graph12?run=" + runData);
+  const ratingData = await rating.json();
+
+  const size = await fetch(process.env.BACKEND_API + "graph15?run=" + runData);
+  const sizeData = await size.json();
 
   return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre, versionData, ratingData, sizeData];
 }

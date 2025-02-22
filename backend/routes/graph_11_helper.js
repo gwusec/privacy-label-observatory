@@ -18,8 +18,6 @@ router.get('/', async function(req, res) {
     throw new Error("Not a valid value, try again!");
 }
 
-console.log("Final value for query:", value); // Log the final value
-
 const result = {};
 
 try {
@@ -44,7 +42,6 @@ try {
             }
         }
       });
-      console.log("Total hits:", responseDNC.hits.total.value);
       result["4"] = responseDNC.hits.total.value;
 
 
@@ -129,7 +126,6 @@ try {
 
     // Return the final result with all aggregations
     const totalCount = result["4"] + result["9"] + result["12"] + result["17"];
-    console.log(totalCount);
     res.json(result);
   
 

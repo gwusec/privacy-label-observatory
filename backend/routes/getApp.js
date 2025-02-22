@@ -9,12 +9,8 @@ const htmlRequest = imageModule.htmlRequest
 const decode = imageModule.decoder
 
 router.get("/", async function(req, res){
-    console.log("called")
     var app_id = req.query.id;
     var run = req.query.run;
-
-
-    console.log("does it make the call? app id: " + app_id)
 
     client.search({
         "index": run,
@@ -29,17 +25,10 @@ router.get("/", async function(req, res){
         for(i in r.hits.hits){
             privacyTypes = []
             for(j in r.hits.hits[i]._source.privacylabels.privacyDetails){
-                console.log(r.hits.hits[i]._source.privacylabels.privacyDetails[j].dataCategories)
                 privacyTypes.push(r.hits.hits[i]._source.privacylabels.privacyDetails[j])
-                //dataCategories = []
-                // for(k in r.hits.hits[i]._source.privacylabels.privacyDetails[j].dataCategories){
-                //     console.log(r.hits.hits[i]._source.privacylabels.privacyDetails[j].dataCategories[k])
-                //     dataCategories.push(r.hits.hits[i]._source.privacylabels.privacyDetails[j].dataCategories[k])
-                // }
             }
             app_name = r.hits.hits[i]._source.app_name
             app_id = r.hits.hits[i]._source.app_id
-            console.log(app_name)
             app_url = encodeUrl(r.hits.hits[i]._source.href)
             json_info = r.hits.hits[i]._source
             image_url = await htmlRequest(decode(app_url))
