@@ -108,9 +108,6 @@ router.get('/', async function(req, res) {
 
         const queryResults = await Promise.all(promises);
         queryResults.forEach(result => Object.assign(results, result));
-
-        // console.log(JSON.stringify(results, null, 2)); // Pretty print the results
-
         res.json(results);
     } catch (error) {
         console.error("Error executing query:", error);

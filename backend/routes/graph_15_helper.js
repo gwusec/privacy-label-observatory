@@ -5,7 +5,6 @@ const client = require("./../client");
 router.get('/', async function(req, res) {
   var value = req.query.name;
   var latestRun = req.query.latestRun;
-  console.log(latestRun)
   if (value == "dnc") {
     value = "Data Not Collected";
 } else if (value == "dlty") {
@@ -61,7 +60,6 @@ let result_num = 1;
 
   buckets.forEach((bucket) => {
     result[`${result_num}`] = bucket.doc_count || 0; // Store the count for each range
-    console.log(`Range: ${bucket.key}, Count: ${bucket.doc_count}`);
     result_num *= 10; // Increment result index
   });
 

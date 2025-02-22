@@ -105,13 +105,6 @@ app.get("/api/runs", function (req, res) {
     })
 });
 
-app.post('/api/some-endpoint', (req, res) => {
-    const data = req.body;
-    console.log("received");
-    // Perform some action with the data
-    res.json({ message: 'Data received successfully', receivedData: data });
-  });
-
 app.post("/api/body/test", function (req, res) {
     res.json(req.body);
 });
@@ -186,7 +179,6 @@ app.post("/api/get", function (req, res) {
         "index":run_id,
         "_source":true
     }).then((r) => {
-        console.log(r);
         res.json(r._source);
     });
 
@@ -202,7 +194,6 @@ app.post("/api/get", function (req, res) {
 //
 app.post("/api/search/app_name", function (req, res){
     var app_name = req.body.app_name
-    console.log("here")
 
     if (app_name == undefined){
         res.json({ "Error": "app_id required" })
@@ -220,7 +211,6 @@ app.post("/api/search/app_name", function (req, res){
             }
         }
     }).then((r) =>{
-        console.log(r.hits.hits)
         var hits = []
         for (i in r.hits.hits){
             app_id = r.hits.hits[i]._source.app_id;
