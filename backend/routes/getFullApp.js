@@ -42,8 +42,7 @@ router.get("/", async function(req, res){
                 "order": "asc"
               }
             }
-          ],
-          "size": 100
+          ]
     }).then(async (r) => {
         var info = []
         if(r.hits.hits.length > 0){

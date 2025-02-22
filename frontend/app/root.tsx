@@ -37,9 +37,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function App() {
-
   const navigate = useNavigate();
-
   return (
     <html lang="en">
       <head>
