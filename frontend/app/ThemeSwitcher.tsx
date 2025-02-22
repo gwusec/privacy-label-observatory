@@ -20,11 +20,11 @@ export function ThemeSwitcher() {
   return (
     <div>
      { theme === "dark" ?
-      <button isIconOnly  aria-label="Light Mode" onClick={() => setTheme('light')}>
+      <button aria-label="Light Mode" onClick={() => setTheme('light')}>
         <MdDarkMode></MdDarkMode>
       </button>
       :
-      <button isIconOnly  aria-label="Dark Mode" onClick={() => setTheme('dark')}>
+      <button aria-label="Dark Mode" onClick={() => setTheme('dark')}>
         <MdOutlineDarkMode></MdOutlineDarkMode>
       </button>
       

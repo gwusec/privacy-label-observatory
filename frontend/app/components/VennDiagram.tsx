@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { LoaderFunction } from "@remix-run/node";
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useState, useEffect } from "react";
 import { useMemo } from "react";
 import { useTheme } from "next-themes";
-
 import { extractSets, generateCombinations, VennDiagram } from '@upsetjs/react';
 import { VennDiagramFontSizes } from "@upsetjs/react";
 
@@ -50,13 +45,6 @@ function VennDiagrams({ data }: { data: any }) {
     };
 
     const mapping = isMobile ? abbreviatedMapping : fullMapping;
-
-    const colors = {
-        'Data Not Collected': 'gray',
-        'Data Not Linked to You': 'red',
-        'Data Linked to You': 'blue',
-        'Data Used to Track You': 'green',
-    };
 
     const elems = useMemo(
         () => {

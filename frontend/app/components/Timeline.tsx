@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from "next-themes";
-
-
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, useNavigate } from "@remix-run/react";
-import { json } from "@remix-run/node";
+import { useNavigate } from "@remix-run/react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import noPhoto from "../resources/no_available_photo.jpg"
 
@@ -23,31 +19,31 @@ import track_dark from "../resources/track_dark.svg"
 
 
 interface dataType {
-    data_category: Number,
-    data_type: String
+    data_category: number,
+    data_type: string
 }
 
 interface dataCat {
-    dataCategory: String,
+    dataCategory: string,
     dataTypes: dataType[];
 }
 
 interface purpose {
-    purpose: String,
-    identifier: String,
+    purpose: string,
+    identifier: string,
     dataCategories: dataCat[] | null;
 }
 
 interface privLabel {
-    privacyTypes: String,
-    identifier: String,
+    privacyTypes: string,
+    identifier: string,
     dataCategories: dataCat[] | null,
     purposes: purpose[] | null;
 }
 
 //Function that given a data type or a purpose (depending on privacy type)
 //Returns the dynamic svg to be loaded
-const getIconPath = (category: String, theme: String | undefined) => {
+const getIconPath = (category: string, theme: string | undefined) => {
 
     const iconMapping = {
         "Browsing History": {
