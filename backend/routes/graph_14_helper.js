@@ -4,7 +4,6 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.index;
-  // console.log(value);
 
   if (value == "dnc") {
     value = "Data Not Collected";
@@ -34,8 +33,6 @@ router.get('/', async function(req, res) {
   for(let i=0; i < mustQueries.length; i++){
     try {
         if(value != "Total"){
-
-
             const response = await client.count({
             body: {
                 query: {

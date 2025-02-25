@@ -42,8 +42,7 @@ router.get("/", async function(req, res){
                 "order": "asc"
               }
             }
-          ],
-          "size": 100
+          ]
     }).then(async (r) => {
         var info = []
         if(r.hits.hits.length > 0){
@@ -61,13 +60,11 @@ router.get("/", async function(req, res){
         }
         var hits = []
         for(i in r.hits.hits){
-            console.log(r.hits.hits[i])
             hits.push({
                 "index": r.hits.hits[i]._index,
                 "privacy_types": r.hits.hits[i]._source.privacylabels
             })
         }
-        console.log(hits)
         info.push({
             "privacy": hits
         })

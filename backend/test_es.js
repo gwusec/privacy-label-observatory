@@ -2,9 +2,6 @@ require('dotenv').config();
 const { Client } = require('@elastic/elasticsearch')
 const fs = require('node:fs');
 
-console.log(process.env.ELASTIC_USERNAME)
-console.log(process.env.ELASTIC_PASSWORD)
-
 const client = new Client({
     node: 'https://localhost:9200', // Elasticsearch endpoint
     auth: {
@@ -26,7 +23,4 @@ client.cat.indices({
             console.log(r[i]["index"])
         }
     }
-    
-    
-    
 })

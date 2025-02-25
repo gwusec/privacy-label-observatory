@@ -10,14 +10,8 @@ const decode = imageModule.decoder
 router.get("/", function(req, res){
     start = req.query.start
     start *= 20
-
     index = req.query.run
-    console.log(index)
-
-
-
     search = req.query.q 
-    console.log(search)
 
     if(search == null){
         client.search({
@@ -26,10 +20,8 @@ router.get("/", function(req, res){
             "size": 20,
         }).then(async (r) => {
             var hits = []
-            console.log(r.hits.hits)
             for(i in r.hits.hits){
                 app_name = r.hits.hits[i]._source.app_name
-                console.log(app_name)
                 app_index = r.hits.hits[i]._index
                 app_url = r.hits.hits[i].app_url
                 app_url = encodeUrl(r.hits.hits[i]._source.href)
@@ -72,13 +64,7 @@ router.get("/", function(req, res){
             res.json(hits)
         })
     }
-
-
-
     return
-
- 
-
 })
 
 module.exports = router;

@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
-import { color } from 'chart.js/helpers';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'tailwindcss/tailwind.css'; // Assuming you're using Tailwind for responsiveness
-import { useTheme } from 'next-themes';
 
 
 Chart.register(...registerables, MatrixController, MatrixElement, ChartDataLabels);
@@ -67,6 +65,12 @@ const MatrixChart = ({ data, color, theme }) => {
                         font: {
                             size: isMobile ? 10 : 14, // Optional: Adjust the font size for better visibility
                         },
+                    }, 
+                    grid: {
+                        display: false
+                    }, 
+                    border: {
+                        display: false
                     }
 
                 },
@@ -87,6 +91,12 @@ const MatrixChart = ({ data, color, theme }) => {
                             size: isMobile ? 10 : 14,
                         },
                     },
+                    grid: {
+                        display: false
+                    }, 
+                    border: {
+                        display: false
+                    }
                 }
             },
             plugins: {

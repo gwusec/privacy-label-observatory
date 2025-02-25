@@ -161,7 +161,6 @@ async function uploadData(indexName, document) {
         index: indexName,
         body: document
       });
-      console.log('Data uploaded:', response);
     } catch (error) {
       console.error('Error uploading data:', error);
     }

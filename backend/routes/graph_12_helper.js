@@ -4,6 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
+  var run = req.query.run;
 
   if (value == "dnc") {
     value = "Data Not Collected";
@@ -22,7 +23,7 @@ const result = {};
 
 try {
     const responseDNC = await client.search({
-        index: "run_00069",
+        index: run,
         body: {
             query: {
                 bool: {
@@ -59,12 +60,10 @@ try {
     result_num = 1;
     buckets.forEach(bucket => {
         result[`${result_num}`]= bucket.doc_count;
-        console.log(`Range: ${bucket.from || 0} - ${bucket.to || '100000+'}, Count: ${bucket.doc_count}, result number = ${result_num}`);
         result_num = result_num * 10;
     });
 
     // Return the final result with all aggregations
-    // console.log(totalCount);
     res.json(result);
   
 
