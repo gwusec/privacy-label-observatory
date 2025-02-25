@@ -4,6 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
+  var run = req.query.run;
 
   if (value == "dnc") {
     value = "Data Not Collected";
@@ -17,13 +18,11 @@ router.get('/', async function(req, res) {
     throw new Error("Not a valid value, try again!");
 }
 
-console.log("Final value for query:", value); // Log the final value
-
 const result = {};
 
 try {
     const responseDNC = await client.search({
-        index: "run_00069",
+        index: run,
         body: {
             "query": {
                 "bool": {
@@ -43,14 +42,13 @@ try {
             }
         }
       });
-      console.log("Total hits:", responseDNC.hits.total.value);
       result["4"] = responseDNC.hits.total.value;
 
 
 // try {
     // Aggregation for 'Data Linked to You'
     const responseDLTY = await client.search({
-      index: "run_00069",
+      index: run,
       body: {
         "query": {
           "bool": {
@@ -76,7 +74,7 @@ try {
 
     // Aggregation for 'Data Not Linked to You'
     const responseDNLTY = await client.search({
-      index: "run_00069",
+      index: run,
       body: {
         "query": {
           "bool": {
@@ -102,7 +100,7 @@ try {
 
     // Aggregation for 'Data Used to Track You'
     const responseDUTY = await client.search({
-      index: "run_00069",
+      index: run,
       body: {
         "query": {
           "bool": {
@@ -128,7 +126,6 @@ try {
 
     // Return the final result with all aggregations
     const totalCount = result["4"] + result["9"] + result["12"] + result["17"];
-    console.log(totalCount);
     res.json(result);
   
 

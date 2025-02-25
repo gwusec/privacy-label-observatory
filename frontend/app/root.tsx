@@ -37,9 +37,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function App() {
-
   const navigate = useNavigate();
-
   return (
     <html lang="en">
       <head>
@@ -60,7 +58,7 @@ export default function App() {
             </div> */}
             <ScrollRestoration />
             <Scripts />
-            <LiveReload />
+
           </NextThemesProvider>
         </NextUIProvider>
       </body>

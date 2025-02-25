@@ -4,7 +4,7 @@ const client = require("./../client");
 
 router.get('/', async function(req, res) {
   var value = req.query.name;
-  // console.log(value);
+  var latestRun = req.query.latestRun;
 
   if (value == "dnc") {
     value = "Data Not Collected";
@@ -19,13 +19,12 @@ router.get('/', async function(req, res) {
     throw new Error("Not a valid value, try again!")
   }
 
-  // console.log(value);
 
   const dnc = {};
 
   try {
     const response1 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {
@@ -59,7 +58,7 @@ router.get('/', async function(req, res) {
     dnc["free_no_app"] = response1.count;
 
     const response2 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {
@@ -93,7 +92,7 @@ router.get('/', async function(req, res) {
     dnc["free_in_app"] = response2.count;
 
     const response3 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {
@@ -127,7 +126,7 @@ router.get('/', async function(req, res) {
     dnc["paid_no_app"] = response3.count;
 
     const response4 = await client.count({
-      index: "run_00069",
+      index: latestRun,
       body: {
         query: {
           bool: {

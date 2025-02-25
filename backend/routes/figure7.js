@@ -90,26 +90,5 @@ router.get('/', async function (req, res) {
     res.json(percentages);
 });
     
-//     const promises = queries.map(async (q) => {
-//         const response = await client.search({
-//             // index: 'privacy_types_chart', // replace with your actual index name
-//             body: {
-//                 size: 0,
-//                 query: q.query,
-//                 aggs: q.aggs
-//             }
-//         });
-
-//         results[q.label] = response.aggregations.dataCategories.buckets.map(bucket => ({
-//             category: bucket.key,
-//             amount: bucket.doc_count // calculate percentage based on your data
-//         }));
-//     });
-
-//     await Promise.all(promises);
-//     console.log(results)
-
-//     res.json(results);
-// });
 
 module.exports = router;

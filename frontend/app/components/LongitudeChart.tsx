@@ -9,34 +9,6 @@ import { json } from '@remix-run/node';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
-  });
-
-  useEffect(() => {
-    // Function to update window size
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    // Add event listener on mount
-    window.addEventListener('resize', handleResize);
-
-    // Call handleResize initially to set the initial window size
-    handleResize();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize);
-  }, []); 
-
-  return windowSize;
-}
-
 interface RunData {
     index: string;
     date: string;
@@ -58,9 +30,9 @@ interface RunData {
 
 
 const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
-  console.log("updated");
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
+
   useEffect(() => {
     return () => {
       if (chartRef.current) {
@@ -148,6 +120,7 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     ].filter(dataset => dataset.data.length > 0),
   };
 
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -177,6 +150,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         grid: {
           color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
         },
+        suggestedMax: 600000,
+        max: undefined,
       },
     },
     plugins: {
@@ -188,6 +163,18 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       datalabels: {
         color: theme === 'dark' ? '#ffffff' : '#000000',
         display: false,
+      },
+      onHover: (event:any, legendItem:any, legend:any) => {
+        const label = legendItem.text;
+        setVisibleDatasets((prev) => {
+          const newSet = new Set(prev);
+          if (newSet.has(label)) {
+            newSet.delete(label);
+          } else {
+            newSet.add(label);
+          }
+          return newSet;
+        });
       },
     },
   };

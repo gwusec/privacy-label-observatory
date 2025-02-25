@@ -1,10 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from 'react';
-// import 'shepherd.js/dist/css/shepherd.css';
 import { useTheme } from "next-themes";
-import Shepherd from 'shepherd.js';
-
-
 import { FaSpinner } from "react-icons/fa";
 import { useNavigation } from "@remix-run/react";
 import Ratios from '~/components/Ratios';
@@ -14,14 +10,11 @@ import YearGraph from "~/components/YearGraph"
 import PrivacyTypesChart from "~/components/PrivacyTypesChart"
 import DataTypesChart from "~/components/DataTypesChart"
 import LongitudeChart from "~/components/LongitudeChart";
-
-
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import PercentageGraph from "~/components/PercentageGraph";
 import ContentRatings from "~/components/ContentRatings";
 import SizeGraph from "~/components/SizeGraph";
-
 import { MetaFunction } from "@remix-run/node";
 import RatingCounts from "~/components/RatingCounts";
 
@@ -42,7 +35,6 @@ interface GraphPopupProps {
 }
 
 const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: GraphPopupProps) => {
-  console.log("hello", ogId);
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'; // Disable scrolling
@@ -87,6 +79,10 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
     console.log(slicedData)
   }
 
+  // Next and Prev Buttons Disabled?
+  const isPrevDisabled = id <= 0;
+  const isNextDisabled = id >= Number(graphData['id']);
+
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
       <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-6 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
@@ -100,9 +96,10 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
         <div className="flex justify-between items-center mt-4">
           <button
             onClick={prevData}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+            disabled={isPrevDisabled}
+            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isPrevDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            Prev
+            Remove a Run
           </button>
           <button
             onClick={onClose}
@@ -112,9 +109,10 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
           </button>
           <button
             onClick={nextData}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+            disabled={isNextDisabled}
+            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            Next
+            Add a Run
           </button>
         </div>
       </div>
@@ -123,63 +121,51 @@ const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: Grap
   );
 };
 
-
-
-export async function action({ request }: any) {
-  const formData = await request.formData();
-  const dataToSend = Object.fromEntries(formData);
-
-  const response = await fetch('http://localhost:8017/api/some-endpoint', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(dataToSend), // Ensure you're sending JSON
-  });
-
-  if (!response.ok) {
-    // Log an error message if the response is not OK
-    console.error('Failed to send request:', response.statusText);
-    throw new Error('Failed to send request to Express');
-  }
-
-  const data = await response.json();
-  console.log(json(data));
-  return json(data);
-}
-
 export async function loader({ params }: LoaderFunctionArgs) {
+  const latestRun = await fetch(process.env.BACKEND_API + "latestIndex"); 
+  const runData: string = (await latestRun.json()).latestRun;
+
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
-  const percentage = await fetch(process.env.BACKEND_API + "graph16")
-  const percentageData = await percentage.json()
-  const dates = await fetch(process.env.BACKEND_API + "graph14")
-  const dateJson = await dates.json()
 
-  const response = await fetch('http://localhost:8017/longUpdated');
+  const percentage = await fetch(process.env.BACKEND_API + "graph16?run=" + runData);
+  const percentageData = await percentage.json();
+
+  const dates = await fetch(process.env.BACKEND_API + "graph14");
+  const dateJson = await dates.json();
+
+  const response = await fetch(process.env.BACKEND_API + "longUpdated");
   const longitude = await response.json();
-  const response2 = await fetch('http://localhost:8017/ratios');
+
+  const response2 = await fetch(process.env.BACKEND_API + "ratios");
   const ratios = await response2.json();
-  const response3 = await fetch('http://localhost:8017/matrix');
+
+  const response3 = await fetch(process.env.BACKEND_API + "matrix");
   const matrix = await response3.json();
-  const response4 = await fetch('http://localhost:8017/figure7');
+
+  const response4 = await fetch(process.env.BACKEND_API + "figure7");
   const privacyTypes = await response4.json();
-  const response5 = await fetch('http://localhost:8017/figure8');
+
+  const response5 = await fetch(process.env.BACKEND_API + "figure8");
   const dataTypes = await response5.json();
-  const response6 = await fetch('http://localhost:8017/figure13');
+
+  const response6 = await fetch(process.env.BACKEND_API + "figure13");
   const appGenre = await response6.json();
-  const version = await fetch(process.env.BACKEND_API + "graph11")
-  const versionData = await version.json()
-  const rating = await fetch(process.env.BACKEND_API + "graph12")
-  const ratingData = await rating.json()
-  const size = await fetch(process.env.BACKEND_API + "graph15")
-  const sizeData = await size.json()
+
+  const version = await fetch(process.env.BACKEND_API + "graph11?run=" + runData);
+  const versionData = await version.json();
+
+  const rating = await fetch(process.env.BACKEND_API + "graph12?run=" + runData);
+  const ratingData = await rating.json();
+
+  const size = await fetch(process.env.BACKEND_API + "graph15?run=" + runData);
+  const sizeData = await size.json();
 
   return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre, versionData, ratingData, sizeData];
 }
 
 export default function Index() {
-  const refs = useRef([]);
+  const refs = useRef<Array<HTMLDivElement>>([]);
   const navigate = useNavigate();
   const { state } = useNavigation();
   const data = useLoaderData<typeof loader>();
@@ -254,7 +240,7 @@ export default function Index() {
     });
   };
 
-  const getButtonStyles = (index) => {
+  const getButtonStyles = (index:number) => {
     const baseStyles = `px-4 py-1 text-md font-semibold shadow-xl rounded-full transition-all duration-200`;
     const activeStyles = `scale-110 ${theme === 'dark' ?
       'bg-slate-700 border-2 border-slate-500 text-white' :
@@ -273,7 +259,7 @@ export default function Index() {
           <FaSpinner className="animate-spin" size={72} />
         </div>
       ) : (
-        <div className={`min-h-screen overflow-visible ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
+        <div className={`min-h-screen bg-cover overflow-visible ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
           <div className="fixed left-0 top-14 p-4 hidden md:block">
             <button
               onClick={toggleMenu}
@@ -328,7 +314,7 @@ export default function Index() {
               <div style={{ width: '80%', margin: '0 auto' }}>
                 <div
                   className={`mb-20`}
-                  ref={(el) => (refs.current[0] = el)}
+                  ref={(el:HTMLDivElement) => (refs.current[0] = el)}
                 >
                   <h1 className="text-center font-bold">Annual Trends in App Privacy Compliance</h1>
                   <LongitudeChart data={longitude} isExpanded={isPopupOpen} />
@@ -350,7 +336,7 @@ export default function Index() {
                     ogId={ogId}
                   />
                 </div>
-                <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={(el => (refs.current[1] = el))}>
+                <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={((el:HTMLDivElement) => (refs.current[1] = el))}>
                   <h1 className="text-center font-bold">Purpose Distribution Across Privacy Types</h1>
                   <div className="flex flex-row space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-1/3">
@@ -368,7 +354,7 @@ export default function Index() {
                   </div>
                   <h3>The ratios of the six Purposes for the Data Used to Track You, Data Linked to You and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.</h3>
                 </div>
-                <div className={`mb-20`} ref={(el => (refs.current[2] = el))}>
+                <div className={`mb-20`} ref={((el:HTMLDivElement) => (refs.current[2] = el))}>
                   <h1 className="text-center font-bold">Data Category Ratios by Privacy Type</h1>
                   <div className="flex flex-row space-x-4">
                     <div className="flex flex-col items-center w-1/2">
@@ -383,28 +369,28 @@ export default function Index() {
                   <h4>The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked
                     to You (right) Privacy Types.</h4>
                 </div>
-                <div className={`mb-20`} ref={(el => (refs.current[3] = el))}>
+                <div className={`mb-20`} ref={((el:HTMLDivElement) => (refs.current[3] = el))}>
                   <h1 className="text-center  font-bold" >Overlap of Apps by Privacy Type</h1>
                   <VennDiagram data={vennDiagram} />
                   <h3 className="mt-5">A Venn diagram of the number of apps in each
                     of the four Privacy Types. Data Not Collected is mutually
                     exclusive to the other three Privacy Types</h3>
                 </div>
-                <div className={`mb-20 `} ref={(el => (refs.current[4] = el))}>
+                <div className={`mb-20 `} ref={((el:HTMLDivElement) => (refs.current[4] = el))}>
                   <h1 className="text-center font-bold" >App Costs vs. Privacy Practices</h1>
                   <PercentageGraph data={percentage} />
                   <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
                     linked to users.</h3>
                 </div>
 
-                <div className={`mb-20 `} ref={(el => (refs.current[5] = el))}>
+                <div className={`mb-20 `} ref={((el:HTMLDivElement) => (refs.current[5] = el))}>
                   <h1 className="text-center font-bold" > Content Ratings vs. Privacy Practices</h1>
                   <ContentRatings data={contentData} />
                   <h3 className="mt-5 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
                     designated content rating that have a privacy label. </h3>
                 </div>
 
-                <div className={`mb-20 `} ref={(el => (refs.current[6] = el))}>
+                <div className={`mb-20 `} ref={((el:HTMLDivElement) => (refs.current[6] = el))}>
                   <h1 className="text-center font-bold" > Rating Counts vs. Privacy Practices</h1>
                   <RatingCounts data={ratingData} />
                   <h3 className="mt-5 text-wrap"> The ratios of the rating counts for each of the four Privacy Types. The denominator is the number of apps with the
@@ -413,7 +399,7 @@ export default function Index() {
                     may have higher counts elsewhere. </h3>
                 </div>
 
-                <div className={`mb-20 `} ref={(el => (refs.current[7] = el))}>
+                <div className={`mb-20 `} ref={((el:HTMLDivElement) => (refs.current[7] = el))}>
                   <h1 className="text-center font-bold" > App Sizes vs. Privacy Practices</h1>
                   <SizeGraph data={sizeData} />
                   <h3 className="mt-5 text-wrap"> The ratios of app sizes for each of the four Privacy Types. The denominator is the number of apps with the designated
@@ -421,13 +407,13 @@ export default function Index() {
                     linked to users.</h3>
                 </div>
 
-                <div className={`mb-20 `} ref={(el => (refs.current[8] = el))}>
+                <div className={`mb-20 `} ref={((el:HTMLDivElement) => (refs.current[8] = el))}>
                   <h1 className="text-center font-bold" >Yearly App Releases with Privacy Labels</h1>
                   <YearGraph data={dates} />
                   <h3 className="">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
                     number of apps with privacy labels released in that year. </h3>
                 </div>
-                <div className="mb-20" ref={(el => (refs.current[9] = el))}>
+                <div className="mb-20" ref={((el:HTMLDivElement) => (refs.current[9] = el))}>
                   <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
 
@@ -448,7 +434,7 @@ export default function Index() {
                     three Privacy Types. The denominator is the number of apps
                     in the specific Privacy Type.</h3>
                 </div>
-                <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={(el => (refs.current[10] = el))}>
+                <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={((el:HTMLDivElement) => (refs.current[10] = el))}>
                   <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Types for Each Privacy Type</h1>
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-full md:w-1/3">
@@ -468,7 +454,7 @@ export default function Index() {
                     Privacy Types. The denominator is the number of apps in the
                     specific Privacy Type.</h3>
                 </div>
-                <div className="mb-20" ref={(el => (refs.current[11] = el))}>
+                <div className="pb-20" ref={((el:HTMLDivElement) => (refs.current[11] = el))}>
                   <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
                   <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                     <div className="flex flex-col items-center w-full md:w-1/4">

@@ -120,3 +120,24 @@ content-length: 318
 etag: W/"13e-IPHbXfDdnij1GWBk2SZ+TAIxfrg"
 date: Sun, 17 Nov 2024 16:55:50 GMT
 connection: close
+###
+GET http://localhost:8017/latestIndex
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+access-control-allow-origin: *
+content-type: application/json; charset=utf-8
+content-length: 25
+etag: W/"19-gRFCG/Ti8BZeGQII7NddccyXV60"
+date: Wed, 12 Feb 2025 17:21:02 GMT
+connection: close
+###
+GET http://localhost:4000/elastic-data
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 58
+etag: W/"3a-EHCPK+s+DqrXTEDIPpmPMZugFeo"
+date: Sun, 16 Feb 2025 21:26:37 GMT
+connection: close
