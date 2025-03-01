@@ -25,7 +25,7 @@ router.get("/", async function(req, res){
         for(i in r.hits.hits){
             privacyTypes = []
             for(j in r.hits.hits[i]._source.privacylabels.privacyDetails){
-                privacyTypes.push(r.hits.hits[i]._source.privacylabels.privacyDetails[j])
+                privacyTypes.push(r.hits.hits[i]._source.privacylabels.privacyDetails.privacyTypes[j])
             }
             app_name = r.hits.hits[i]._source.app_name
             app_id = r.hits.hits[i]._source.app_id

@@ -17,9 +17,8 @@ function equal(obj1: any, obj2: any){
     if(obj1.privacyDetails.length == 0){
         return obj2.privacyDetails.length == 0;
     }
-    
-    let obj1Fields = obj1.privacyDetails[0]
-    let obj2Fields = obj2.privacyDetails[0]
+    let obj1Fields = obj1.privacyDetails.privacyTypes
+    let obj2Fields = obj2.privacyDetails.privacyTypes
 
 
 
@@ -37,11 +36,11 @@ function equal(obj1: any, obj2: any){
     }
 
     //Checks purposes and data categories to see if there's more that were added
-    if(obj1Fields.dataCategories.length != obj2Fields.dataCategories.length){
+    if(obj1Fields.dataCategories && obj2Fields.dataCategories && obj1Fields.dataCategories.length != obj2Fields.dataCategories.length){
         return false;
     }
 
-    if(obj1Fields.purposes.length != obj2Fields.purposes.length){
+    if(obj1Fields.purposes && obj2Fields.purposes && obj1Fields.purposes.length != obj2Fields.purposes.length){
         return false;
     }
 
@@ -54,6 +53,8 @@ function findChanges(runs: any){
     for(let i=0; i<runs.length-1; i++){
         const currentRun = runs[i];
         const nextRun = runs[i + 1];
+        //console.log("Current Run: ", currentRun.privacy_types);
+        //console.log("Next Run: ", nextRun.privacy_types);
         if (!equal(currentRun.privacy_types, nextRun.privacy_types)) {
             // You can log the differences or handle them as needed
             arr.push(nextRun)

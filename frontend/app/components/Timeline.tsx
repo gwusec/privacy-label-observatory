@@ -35,7 +35,6 @@ interface purpose {
 }
 
 interface privLabel {
-    privacyTypes: string,
     identifier: string,
     dataCategories: dataCat[] | null,
     purposes: purpose[] | null;
@@ -153,21 +152,22 @@ export default function Timeline({ data }: { data: any }) {
         setActiveIndex(index)
     }
     const { theme } = useTheme();
-
     var app_name = data[0]["app_name"]
     var app_id = data[0]["app_id"]
     var image_url = data[0]["image_url"]
     var privacy_types = data[1]["privacy"]
-
     useEffect(() => {
         setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"])
-        console.log("privDetails", privDetails)
         if (privDetails.length == 0) {
             console.log("No privacy details");
+        } else {
+            setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
         }
-    })
+    }, [privDetails])
+    
 
     const checkValueInDetails = (value: any) => {
+        console.log(privDetails)
         return privDetails.some(detail => detail.identifier === value);
     };
 

@@ -31,7 +31,7 @@ router.get('/', async function(req, res) {
             must: [
               {
                 term: {
-                  "privacylabels.privacyDetails.privacyTypes.keyword": {
+                  "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                     value: value
                   }
                 }
@@ -44,9 +44,9 @@ router.get('/', async function(req, res) {
                 }
               },
               {
-                range: {
+                term: {
                   "metadata.has_in_app_purchases": {
-                    lte: 0
+                    value: "false"
                   }
                 }
               }
@@ -65,7 +65,7 @@ router.get('/', async function(req, res) {
             must: [
               {
                 term: {
-                  "privacylabels.privacyDetails.privacyTypes.keyword": {
+                  "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                     value: value
                   }
                 }
@@ -78,9 +78,9 @@ router.get('/', async function(req, res) {
                 }
               },
               {
-                range: {
+                term: {
                   "metadata.has_in_app_purchases": {
-                    gt: 0
+                    value: "true"
                   }
                 }
               }
@@ -99,7 +99,7 @@ router.get('/', async function(req, res) {
             must: [
               {
                 term: {
-                  "privacylabels.privacyDetails.privacyTypes.keyword": {
+                  "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                     value: value
                   }
                 }
@@ -112,9 +112,9 @@ router.get('/', async function(req, res) {
                 }
               },
               {
-                range: {
+                term: {
                   "metadata.has_in_app_purchases": {
-                    lte: 0
+                    value: "false"
                   }
                 }
               }
@@ -133,7 +133,7 @@ router.get('/', async function(req, res) {
             must: [
               {
                 term: {
-                  "privacylabels.privacyDetails.privacyTypes.keyword": {
+                  "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                     value: value
                   }
                 }
@@ -146,9 +146,9 @@ router.get('/', async function(req, res) {
                 }
               },
               {
-                range: {
+                term: {
                   "metadata.has_in_app_purchases": {
-                    gt: 0
+                    value: "true"
                   }
                 }
               }

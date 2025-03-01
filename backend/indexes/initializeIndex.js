@@ -2,7 +2,7 @@ const { Client } = require('@elastic/elasticsearch');
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = 'elastic';
-const ELASTIC_PASSWORD = 'xrFdfjjb';
+const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
 const client = new Client({
     node: 'http://localhost:9200',
     auth: {

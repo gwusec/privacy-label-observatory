@@ -17,6 +17,7 @@ const MatrixChart = ({ data, color, theme }) => {
 
         if (chartRef.current) {
             chartRef.current.destroy();
+            chartRef.current = null;
         }
 
         const purposes = data.map(d => d.purpose);

@@ -51,7 +51,7 @@ router.get('/', async function(req, res){
         var total = roundUpto(((value/totals["Data Used to Track You"]) * 100), 2)
         percentages["duty_" + key] = total
     }
-    
+
     res.json(percentages)
 })
 

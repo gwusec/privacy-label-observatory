@@ -29,7 +29,7 @@ try {
                     "must": [
                         {
                             "term": {
-                                "privacylabels.privacyDetails.privacyTypes.keyword": value
+                                "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": value
                             }
                         },
                         {
@@ -55,7 +55,7 @@ try {
             "must": [
               {
                 "term": {
-                  "privacylabels.privacyDetails.privacyTypes.keyword": {
+                  "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                     value: value
                   }
                 }
@@ -81,7 +81,7 @@ try {
             "must": [
               {
                 "term": {
-                  "privacylabels.privacyDetails.privacyTypes.keyword": {
+                  "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                     value: value
                   }
                 }
@@ -107,7 +107,7 @@ try {
             "must": [
               {
                 "term": {
-                  "privacylabels.privacyDetails.privacyTypes.keyword": {
+                  "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                     value: value
                   }
                 }
@@ -125,7 +125,6 @@ try {
     result["17"] = responseDUTY.hits.total.value;
 
     // Return the final result with all aggregations
-    const totalCount = result["4"] + result["9"] + result["12"] + result["17"];
     res.json(result);
   
 

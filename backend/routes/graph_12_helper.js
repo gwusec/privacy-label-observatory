@@ -30,7 +30,7 @@ try {
                     must: [
                         {
                             term: {
-                                "privacylabels.privacyDetails.privacyTypes.keyword": value
+                                "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": value
                             }
                         }
                     ]
