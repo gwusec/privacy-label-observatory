@@ -7,7 +7,7 @@ const PORT = 4000;
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = 'elastic';
-const ELASTIC_PASSWORD = 'xrFdfjjb';
+const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
 const indexName = 'longitude_graph';
 
 const client = new Client({
@@ -19,29 +19,32 @@ const client = new Client({
 });
 
 // Load run data mappings
-const fs = require('fs');
-const runDataMap = JSON.parse(fs.readFileSync("dates_and_runs.json", "utf8"))
-    .reduce((acc, run) => {
-        acc[run.run_number] = run.date;
-        return acc;
-    }, {});
+function getRunDate(runNumber) {
+    const startDate = new Date("2021-07-23");
+    const runOffset = parseInt(runNumber.split("_")[1], 10) - 1;
+    const runDate = new Date(startDate);
+    runDate.setDate(runDate.getDate() + runOffset * 7);
+    return runDate.toISOString().split("T")[0]; // Return YYYY-MM-DD
+}
+
 
 function extractRunNumber(runString) {
     const match = runString.match(/(\d{3})$/); // Get last three digits
     if (!match) return null; // Handle invalid cases
 
     let num = parseInt(match[0], 10); // Convert to number
-    return num % 100 === 1 ? num : num % 100; // Use last two digits unless third digit is 1
+    console.log(num / 100)
+    return num / 100 > 1 ? num : num % 100; // Use last two digits unless third digit is 1
 }
 
 // Queries for Elasticsearch
 const queries = [
     { label: "ALL_APPS", query: { match_all: {} } },
-    { label: "EXISTS_PRIVACY_LABELS", query: { exists: { field: "privacylabels.privacyDetails.identifier.keyword" } } },
-    { label: "DATA_USED_TO_TRACK_YOU", query: { term: { "privacylabels.privacyDetails.identifier.keyword": "DATA_USED_TO_TRACK_YOU" } } },
-    { label: "DATA_LINKED_TO_YOU", query: { term: { "privacylabels.privacyDetails.identifier.keyword": "DATA_LINKED_TO_YOU" } } },
-    { label: "DATA_NOT_COLLECTED", query: { term: { "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_COLLECTED" } } },
-    { label: "DATA_NOT_LINKED_TO_YOU", query: { term: { "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_LINKED_TO_YOU" } } }
+    { label: "EXISTS_PRIVACY_LABELS", query: { exists: { field: "privacylabels.privacyDetails.privacyTypes.identifier.keyword" } } },
+    { label: "DATA_USED_TO_TRACK_YOU", query: { term: { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_USED_TO_TRACK_YOU" } } },
+    { label: "DATA_LINKED_TO_YOU", query: { term: { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_LINKED_TO_YOU" } } },
+    { label: "DATA_NOT_COLLECTED", query: { term: { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_COLLECTED" } } },
+    { label: "DATA_NOT_LINKED_TO_YOU", query: { term: { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_LINKED_TO_YOU" } } }
 ];
 
 // Function to format run number
@@ -85,6 +88,7 @@ app.get('/elastic-data', async (req, res) => {
         // Fetch latest run number
         const latestResponse = await axios.get('http://localhost:8017/latestIndex');
         const latestRun = extractRunNumber(latestResponse.data.latestRun);
+        console.log("latest run: ", latestRun)
 
         // Calculate dynamic range
         const halfRuns = Math.floor(latestRun / 2);
@@ -92,40 +96,46 @@ app.get('/elastic-data', async (req, res) => {
         // Process the data in two halves
         const runData = {};
         let idValue = 0;
-
         const processRuns = async (start, end) => {
-            console.log("hello")
-            console.log("start", start)
-            console.log("end", end)
+            console.log("Start: ", start);
+            console.log("End: ", end);
             for (let i = start; i < end; i++) {
-                const runIndex = getRunNumber(i);
-                console.log(runIndex)
-                runData[runIndex] = {
-                    index: runIndex,
-                    date: runDataMap[runIndex] || "No Date Found",
-                    values: {}
-                };
+                try {
+                    console.log(i);
+                    const runIndex = getRunNumber(i);
+                    console.log(runIndex);
+                    runData[runIndex] = {
+                        index: runIndex,
+                        date: getRunDate(runIndex) || "No Date Found",
+                        values: {}
+                    };
 
-                for (const q of queries) {
-                    runData[runIndex].values[q.label] = await countQuery(q.query, runIndex);
-                }
+                    for (const q of queries) {
+                        runData[runIndex].values[q.label] = await countQuery(q.query, runIndex);
+                    }
+                } catch { }
+
             }
         };
 
         // Process first half and second half
         await processRuns(1, halfRuns);
-        await processRuns(halfRuns, latestRun+1);
-
-        runData["id"] = idValue;
-        idValue;
+        await processRuns(halfRuns, latestRun + 1);
+        console.log(runData);
 
         // Additional Logic to Create the Index (and upload the data)
         await initializeIndex();
-        await client.index({
-            index: indexName,
-            id: idValue.toString(),
-            body: runData
-        });
+        for (const runIndex in runData) {
+            await client.index({
+                index: indexName,
+                body: {
+                    runIndex: runIndex,  // Store runIndex as a field, not a key
+                    date: runData[runIndex].date,
+                    values: runData[runIndex].values
+                }
+            });
+        }
+
 
         console.log("Run data indexed successfully.");
         res.status(200).json({ message: "Run data uploaded successfully", indexedId: idValue });

@@ -47,7 +47,7 @@ router.get("/", function (req, res) {
             app_name: hit._source.app_name,
             app_id: hit._source.app_id
         }));
-
+        console.log(hits)
         res.json(hits);
     }).catch((error) => {
         console.error("Error:", error);

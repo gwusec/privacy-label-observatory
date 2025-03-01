@@ -29,7 +29,7 @@ try {
           must: [
             {
               term: {
-                "privacylabels.privacyDetails.privacyTypes.keyword": value, // Filter by privacy type
+                "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": value, // Filter by privacy type
               },
             },
           ],

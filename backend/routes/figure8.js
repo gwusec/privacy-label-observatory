@@ -10,13 +10,13 @@ router.get('/', async function (req, res) {
             label: "DATA_NOT_LINKED_TO_YOU",
             query: {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataTypes.data_type.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes",
                         "size": 15
                     }
                 }
@@ -26,13 +26,13 @@ router.get('/', async function (req, res) {
             label: "DATA_LINKED_TO_YOU",
             "query": {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_LINKED_TO_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataTypes.data_type.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes",
                         "size": 15
                     }
                 }
@@ -42,13 +42,13 @@ router.get('/', async function (req, res) {
             label: "DATA_USED_TO_TRACK_YOU",
             "query": {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_USED_TO_TRACK_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_USED_TO_TRACK_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataTypes.data_type.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes",
                         "size": 15
                     }
                 }
@@ -86,6 +86,7 @@ router.get('/', async function (req, res) {
             percentage: ((bucket.doc_count / total) * 100).toFixed(2) + '%'
         }));
     });
+
     res.json(percentages);
 });
     
