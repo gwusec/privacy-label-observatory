@@ -12,51 +12,47 @@ const CustomStepLabel = styled(StepLabel)(({ active }) => ({
     },
 }));
 
-function equal(obj1: any, obj2: any){
-    
-    if(obj1.privacyDetails.length == 0){
-        return obj2.privacyDetails.length == 0;
+function deepEqual(obj1: any, obj2: any): boolean {
+    if (typeof obj1 !== "object" || typeof obj2 !== "object" || obj1 === null || obj2 === null) {
+        return obj1 === obj2;
     }
-    let obj1Fields = obj1.privacyDetails.privacyTypes
-    let obj2Fields = obj2.privacyDetails.privacyTypes
 
+    if (Array.isArray(obj1) && Array.isArray(obj2)) {
+        if (obj1.length !== obj2.length) {
+            return false;
+        }
 
+        const sorted1 = [...obj1].sort();
+        const sorted2 = [...obj2].sort();
 
-    if(obj1Fields.identifier != obj2Fields.identifier){
+        return sorted1.every((item, index) => deepEqual(item, sorted2[index]));
+    }
+
+    const keys1 = Object.keys(obj1).sort();
+    const keys2 = Object.keys(obj2).sort();
+
+    if (!deepEqual(keys1, keys2)) {
         return false;
     }
 
-    if(obj1Fields.privacyTypes != obj2Fields.privacyTypes){
-        return false;
-    }
+    return keys1.every((key) => deepEqual(obj1[key], obj2[key]));
+}
 
-    //Checks if there's more privacy data (data not linked, data linked, data used to track) than previous run
-    if(obj1Fields.length != obj2Fields.length){
-        return false;
-    }
-
-    //Checks purposes and data categories to see if there's more that were added
-    if(obj1Fields.dataCategories && obj2Fields.dataCategories && obj1Fields.dataCategories.length != obj2Fields.dataCategories.length){
-        return false;
-    }
-
-    if(obj1Fields.purposes && obj2Fields.purposes && obj1Fields.purposes.length != obj2Fields.purposes.length){
-        return false;
-    }
-
-    return true;
+function equal(obj1: any, obj2: any): boolean {
+    return deepEqual(obj1?.privacyDetails, obj2?.privacyDetails);
 }
 
 function findChanges(runs: any){
     let arr = []
     arr.push(runs[0])
+
     for(let i=0; i<runs.length-1; i++){
         const currentRun = runs[i];
         const nextRun = runs[i + 1];
-        //console.log("Current Run: ", currentRun.privacy_types);
-        //console.log("Next Run: ", nextRun.privacy_types);
         if (!equal(currentRun.privacy_types, nextRun.privacy_types)) {
             // You can log the differences or handle them as needed
+            console.log("Current Run: ", currentRun.privacy_types);
+            console.log("Next Run: ", nextRun.privacy_types);
             arr.push(nextRun)
         }
     }
