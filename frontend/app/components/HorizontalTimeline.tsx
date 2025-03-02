@@ -22,10 +22,15 @@ function deepEqual(obj1: any, obj2: any): boolean {
             return false;
         }
 
-        const sorted1 = [...obj1].sort();
-        const sorted2 = [...obj2].sort();
+        // Sort objects in arrays by a stable key (if available)
+        const sorted1 = obj1
+            .map((item) => JSON.stringify(item)) // Convert to string for comparison
+            .sort();
+        const sorted2 = obj2
+            .map((item) => JSON.stringify(item))
+            .sort();
 
-        return sorted1.every((item, index) => deepEqual(item, sorted2[index]));
+        return sorted1.every((item, index) => deepEqual(JSON.parse(item), JSON.parse(sorted2[index])));
     }
 
     const keys1 = Object.keys(obj1).sort();
@@ -42,6 +47,7 @@ function equal(obj1: any, obj2: any): boolean {
     return deepEqual(obj1?.privacyDetails, obj2?.privacyDetails);
 }
 
+
 function findChanges(runs: any){
     let arr = []
     arr.push(runs[0])
@@ -51,8 +57,7 @@ function findChanges(runs: any){
         const nextRun = runs[i + 1];
         if (!equal(currentRun.privacy_types, nextRun.privacy_types)) {
             // You can log the differences or handle them as needed
-            console.log("Current Run: ", currentRun.privacy_types);
-            console.log("Next Run: ", nextRun.privacy_types);
+            console.log("Not equal at index ", i);
             arr.push(nextRun)
         }
     }
