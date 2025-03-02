@@ -168,7 +168,7 @@ export default function Timeline({ data }: { data: any }) {
     
 
     const checkValueInDetails = (value: any) => {
-        console.log(privDetails)
+        //console.log(privDetails)
         return privDetails.some(detail => detail.identifier === value);
     };
 
