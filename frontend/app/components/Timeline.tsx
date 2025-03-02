@@ -24,7 +24,7 @@ interface dataType {
 }
 
 interface dataCat {
-    dataCategory: string,
+    identifier: string,
     dataTypes: dataType[];
 }
 
@@ -45,59 +45,59 @@ interface privLabel {
 const getIconPath = (category: string, theme: string | undefined) => {
 
     const iconMapping = {
-        "Browsing History": {
+        "BROWSING_HISTORY": {
             light: "/apple_icons/browsing_history.svg",
             dark: "/apple_icons/browsing_history_dark.svg"
         },
-        "Contact Info": {
+        "CONTACT_INFO": {
             light: "/apple_icons/contact_info.svg",
             dark: "/apple_icons/contact_info_dark.svg"
         },
-        "Contacts": {
+        "CONTACTS": {
             light: "/apple_icons/contacts.svg",
             dark: "/apple_icons/contacts_dark.svg"
         },
-        "Diagnostics": {
+        "DIAGNOSTICS": {
             light: "/apple_icons/diagnostics.svg",
             dark: "/apple_icons/diagnostics_dark.svg"
         },
-        "Financial Info": {
+        "FINANCIAL_INFO": {
             light: "/apple_icons/financial_info.svg",
             dark: "/apple_icons/financial_info_dark.svg"
         },
-        "Health and Fitness": {
+        "HEALTH_AND_FITNESS": {
             light: "/apple_icons/health_and_fitness.svg",
             dark: "/apple_icons/health_and_fitness_dark.svg"
         },
-        "Identifiers": {
+        "IDENTIFIERS": {
             light: "/apple_icons/identifiers.svg",
             dark: "/apple_icons/identifiers_dark.svg"
         },
-        "Location": {
+        "LOCATION": {
             light: "/apple_icons/location.svg",
             dark: "/apple_icons/location_dark.svg"
         },
-        "Other Data": {
+        "OTHER_DATA": {
             light: "/apple_icons/other_data.svg",
             dark: "/apple_icons/other_data_dark.svg"
         },
-        "Purchases": {
+        "PURCHASES": {
             light: "/apple_icons/purchases.svg",
             dark: "/apple_icons/purchases_dark.svg"
         },
-        "Search History": {
+        "SEARCH_HISTORY": {
             light: "/apple_icons/search_history.svg",
             dark: "/apple_icons/search_history_dark.svg"
         },
-        "Sensitive Info": {
+        "SENSITIVE_INFO": {
             light: "/apple_icons/sensitive_info.svg",
             dark: "/apple_icons/sensitive_info_dark.svg"
         },
-        "Usage Data": {
+        "USAGE_DATA": {
             light: "/apple_icons/usage_data.svg",
             dark: "/apple_icons/usage_data_dark.svg"
         },
-        "User Content": {
+        "USER_CONTENT": {
             light: "/apple_icons/user_content.svg",
             dark: "/apple_icons/user_content_dark.svg"
         }
@@ -121,7 +121,7 @@ export default function Timeline({ data }: { data: any }) {
     const [allColumns, expandAllColumns] = useState(true);
 
     const handleClick = (event: any, index: number) => {
-        console.log("called", index)
+        console.log("Active Index: ", index);
         setActiveIndex(index)
     };
 
@@ -156,6 +156,7 @@ export default function Timeline({ data }: { data: any }) {
     var app_id = data[0]["app_id"]
     var image_url = data[0]["image_url"]
     var privacy_types = data[1]["privacy"]
+
     useEffect(() => {
         setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"])
         if (privDetails.length == 0) {
@@ -163,7 +164,7 @@ export default function Timeline({ data }: { data: any }) {
         } else {
             setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
         }
-    }, [privDetails])
+    }, [privDetails, activeIndex])
     
 
     const checkValueInDetails = (value: any) => {
@@ -274,11 +275,11 @@ export default function Timeline({ data }: { data: any }) {
                                                                     <li className={`text-lg font-semibold flex ${expandedColumn === null && allColumns === false ? '' : 'justify-center'} items-center space-x-2`}>
                                                                         {expandedColumn === null && allColumns === false ? (
                                                                             <div className="flex items-center space-x-2">
-                                                                                <img src={getIconPath(dataCategory.dataCategory, theme)} className="w-6 h-6" />
-                                                                                <div className='pl-4'>{dataCategory.dataCategory}</div>
+                                                                                <img src={getIconPath(dataCategory.identifier, theme)} className="w-6 h-6" />
+                                                                                <div className='pl-4'>{dataCategory.identifier}</div>
                                                                             </div>
                                                                         ) : (
-                                                                            <div>{dataCategory.dataCategory}</div>
+                                                                            <div>{dataCategory.identifier}</div>
                                                                         )}
                                                                     </li>
                                                                 </div>
@@ -291,7 +292,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                                 key={dataTypeIndex}
                                                                                 className="inline-block text-sm px-3 py-1 m-1 rounded-full border border-orange-400"
                                                                             >
-                                                                                {dataType.data_type}
+                                                                                {dataType}
                                                                             </span>
                                                                         ))}
                                                                     </div>
@@ -369,7 +370,7 @@ export default function Timeline({ data }: { data: any }) {
                                                             // Collect all unique data categories when not expanded
                                                             priv.purposes!.forEach((purpose) => {
                                                                 purpose.dataCategories!.forEach((category) =>
-                                                                    allUniqueCategories.add(category.dataCategory)
+                                                                    allUniqueCategories.add(category.identifier)
                                                                 );
                                                             });
 
@@ -389,11 +390,11 @@ export default function Timeline({ data }: { data: any }) {
                                                             }
                                                             return priv.purposes!.map((purpose, purposeIndex) => (
                                                                 <div key={purposeIndex}>
-                                                                    <li className="text-lg font-semibold">{purpose.purpose}</li>
+                                                                    <li className="text-lg font-semibold">{purpose.identifier}</li>
                                                                     {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
                                                                         <div key={dataCategoryIndex} className="p-2">
                                                                             <li className="text-base rounded-md p-2 flex flex-col">
-                                                                                {dataCategory.dataCategory}:
+                                                                                {dataCategory.identifier}:
                                                                                 <div className="flex flex-wrap justify-center">
                                                                                     {dataCategory.dataTypes &&
                                                                                         dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
@@ -401,7 +402,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                                                 key={dataTypeIndex}
                                                                                                 className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
                                                                                             >
-                                                                                                {dataType.data_type}
+                                                                                                {dataType}
                                                                                             </span>
                                                                                         ))}
                                                                                 </div>
@@ -481,7 +482,7 @@ export default function Timeline({ data }: { data: any }) {
                                                             // Collect all unique data categories when not expanded
                                                             priv.purposes!.forEach((purpose) => {
                                                                 purpose.dataCategories!.forEach((category) =>
-                                                                    allUniqueCategories.add(category.dataCategory)
+                                                                    allUniqueCategories.add(category.identifier)
                                                                 );
                                                             });
 
@@ -503,11 +504,11 @@ export default function Timeline({ data }: { data: any }) {
                                                             // Render purposes, data categories, and data types when expanded
                                                             return priv.purposes!.map((purpose, purposeIndex) => (
                                                                 <div key={purposeIndex}>
-                                                                    <li className="text-lg font-semibold">{purpose.purpose}</li>
+                                                                    <li className="text-lg font-semibold">{purpose.identifier}</li>
                                                                     {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
                                                                         <div key={dataCategoryIndex} className="p-2">
                                                                             <li className="text-base rounded-md p-2 flex flex-col">
-                                                                                {dataCategory.dataCategory}:
+                                                                                {dataCategory.identifier}:
                                                                                 <div className="flex flex-wrap justify-center">
                                                                                     {dataCategory.dataTypes &&
                                                                                         dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
@@ -515,7 +516,7 @@ export default function Timeline({ data }: { data: any }) {
                                                                                                 key={dataTypeIndex}
                                                                                                 className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
                                                                                             >
-                                                                                                {dataType.data_type}
+                                                                                                {dataType}
                                                                                             </span>
                                                                                         ))}
                                                                                 </div>

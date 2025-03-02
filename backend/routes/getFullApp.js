@@ -31,6 +31,7 @@ router.get("/", async function(req, res){
     var app_id = req.query.id  
 
     client.search({
+        "size": 1000,
         "query":{
             "match":{
               "app_id": app_id
@@ -60,17 +61,14 @@ router.get("/", async function(req, res){
         }
         var hits = []
         for(i in r.hits.hits){
-          console.log("Privacy Labels: ", r.hits.hits[i]._source.privacylabels.privacyTypes)
             hits.push({
                 "index": r.hits.hits[i]._index,
                 "privacy_types": r.hits.hits[i]._source.privacylabels
             })
         }
-        console.log(hits);
         info.push({
             "privacy": hits
         })
-        console.log(info)
         res.json(info)
     })
     return
