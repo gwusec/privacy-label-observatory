@@ -105,54 +105,16 @@ function YearGraph({ data }: { data: any }) {
         }
     }
 
-    const options2 = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top' as const,
-                labels: {
-                    color: theme === 'dark' ? '#ffffff' : '#000000'
-                }
-            },
-
-        },
-        scales: {
-            x: {
-                stacked: true,
-                ticks: {
-                    color: theme === 'dark' ? 'white' : 'black',
-                },
-                grid: {
-                    color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
-                },
-            },
-            y: {
-                stacked: false,
-                beginAtZero: true,
-                ticks: {
-                    display: false,
-                    color: theme === 'dark' ? 'white' : 'black',
-                },
-                grid: {
-                    drawTicks: true,
-                    color: theme === 'dark' ? '#f1f1f1' : '#b9b9b9',
-                },
-            },
-        }
-    }
-
-
-
     return (
         <div className="w-full p-4">
             {/* Flex container to handle layout changes based on screen size */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                 {sampleDatasets.map((sampleData, index) => (
-                    <div key={index} className="w-full sm:w-1/2 md:w-1/4 h-[300px]"> {/* Adjust width and height as needed */}
+                    <div key={index} className="h-[300px]"> {/* Adjust width and height as needed */}
                         {index === 0 ? (
                             <Bar data={sampleData} options={options} />
                         ) : (
-                            <Bar data={sampleData} options={options2} />
+                            <Bar data={sampleData} options={options} />
                         )}
                     </div>
                 ))}

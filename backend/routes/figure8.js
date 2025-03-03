@@ -1,12 +1,16 @@
 var express = require("express");
 var router = express.Router();
 const client = require("../client");
+const axios = require('axios');
 
 router.get('/', async function (req, res) {
     const results = {};
+    const totalRequest = await axios.get(`http://localhost:8017/latestIndex`);
+    totals = totalRequest.data.latestRun;
 
     const queries = [
         {
+            index: totals,
             label: "DATA_NOT_LINKED_TO_YOU",
             query: {
                 "term": {
@@ -16,13 +20,14 @@ router.get('/', async function (req, res) {
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
             }
         },
         {
+            index: totals,
             label: "DATA_LINKED_TO_YOU",
             "query": {
                 "term": {
@@ -32,13 +37,14 @@ router.get('/', async function (req, res) {
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
             }
         },
         {
+            index: totals,
             label: "DATA_USED_TO_TRACK_YOU",
             "query": {
                 "term": {
@@ -48,7 +54,7 @@ router.get('/', async function (req, res) {
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }

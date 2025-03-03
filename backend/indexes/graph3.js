@@ -50,6 +50,16 @@ const queries = [
 // Function to format run number
 const getRunNumber = (i) => `run_${i.toString().padStart(5, '0')}`;
 
+// Check if index exists before querying
+const indexExists = async (index) => {
+    try {
+        return await client.indices.exists({ index });
+    } catch (error) {
+        console.error(`Error checking if index ${index} exists:`, error);
+        return false;
+    }
+};
+
 // Function to perform a count query in Elasticsearch
 const countQuery = async (query, index) => {
     try {
@@ -97,13 +107,19 @@ app.get('/elastic-data', async (req, res) => {
         const runData = {};
         let idValue = 0;
         const processRuns = async (start, end) => {
-            console.log("Start: ", start);
-            console.log("End: ", end);
+
             for (let i = start; i < end; i++) {
                 try {
-                    console.log(i);
                     const runIndex = getRunNumber(i);
-                    console.log(runIndex);
+
+                    // Check if the index exists before processing
+                    const exists = await indexExists(runIndex);
+
+                    if (!exists) {
+                        console.log(`Index ${runIndex} does not exist - skipping`);
+                        continue; // Skip this iteration and move to the next run
+                    }
+
                     runData[runIndex] = {
                         index: runIndex,
                         date: getRunDate(runIndex) || "No Date Found",
