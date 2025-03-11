@@ -486,7 +486,7 @@ export default function Index() {
             {/* Longitude Graph */}
             <div className="w-full max-w-3xl mx-auto px-4 md:px-8">
               <div className="mb-10 md:mb-20">
-                <h1 className="text-center text-lg md:text-2xl font-bold">Annual Trends in App Privacy Compliance</h1>
+                <h1 className="text-center px-2 text-lg md:text-2xl font-bold">Annual Trends in App Privacy Compliance</h1>
                 <div className="w-full h-[300px] sm:h-[400px] md:h-[500px]">
                   <LongitudeChart data={longitude} isExpanded={isPopupOpen} />
                 </div>
@@ -495,7 +495,7 @@ export default function Index() {
 
             {/* Ratio Graphs */}
             <div className={`mb-10 mt-20 md:mb-20`} >
-              <h1 className="text-center font-bold text-lg md:text-2xl">Purpose Distribution Across Privacy Types</h1>
+              <h1 className="text-center px-2 font-bold text-lg md:text-2xl">Purpose Distribution Across Privacy Types</h1>
               <div className="flex flex-col md:flex-row md:space-x-4 mt-6 md:mt-10 mb-8 md:mb-20 space-y-8 md:space-y-0">
                 <div className="flex flex-col items-center w-full md:w-1/3">
                   <h2 className="text-center text-base md:text-lg">Data Not Linked to You</h2>
@@ -511,61 +511,61 @@ export default function Index() {
                 </div>
               </div>
 
-              <h3 className="text-sm md:text-base">
+              <h3 className="text-sm px-2 md:text-base">
                 The ratios of the six Purposes for the Data Used to Track You, Data Linked to You, and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.
               </h3>
             </div>
 
             <div >
-              <h1 className="text-center font-bold">Data Category Ratios by Privacy Type</h1>
+              <h1 className="text-center px-2 font-bold">Data Category Ratios by Privacy Type</h1>
               <div
                 className={`flex flex-col md:flex-row md:space-x-4 space-y-10 md:space-y-0`}
               >
                 <div className="flex flex-col items-center w-full md:w-1/2">
                   <h1 className="text-center text-lg md:text-xl">Data Not Linked to You</h1>
-                  {/*<MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," theme={theme} />*/}
+                  <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," theme={theme} />
                 </div>
                 <div className="flex flex-col items-center w-full md:w-1/2">
                   <h1 className="text-center text-lg md:text-xl">Data Linked to You</h1>
-                  {/*<MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme} />*/}
+                  <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme} />
                 </div>
               </div>
 
-              <h4 className="text-center mt-6 text-sm md:text-base">
+              <h4 className="text-center mt-6 px-2 text-sm md:text-base">
                 The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked to You (right) Privacy Types.
               </h4>
             </div>
 
             {/* Venn Diagram Chart */}
             <div className={`mb-20`}>
-              <h1 className="text-center  font-bold" >Overlap of Apps by Privacy Type</h1>
+              <h1 className="text-center px-2 font-bold" >Overlap of Apps by Privacy Type</h1>
               <VennDiagram data={vennDiagram} />
-              <h3 className="mt-5">A Venn diagram of the number of apps in each
+              <h3 className="mt-5 px-2">A Venn diagram of the number of apps in each
                 of the four Privacy Types. Data Not Collected is mutually
                 exclusive to the other three Privacy Types</h3>
             </div>
 
             {/* Percentage Graph */}
             <div className={`mb-20 `}>
-              <h1 className="text-center font-bold" >App Costs vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" >App Costs vs. Privacy Practices</h1>
               <PercentageGraph data={percentage} />
-              <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
+              <h3 className="mt-5 px-2 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
                 linked to users.</h3>
             </div>
 
             {/* Content Graph */}
             <div className={`mb-20 h-full`}>
-              <h1 className="text-center font-bold" > Content Ratings vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" > Content Ratings vs. Privacy Practices</h1>
               <ContentRatings data={contentData} />
-              <h3 className="mt-5 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
+              <h3 className="mt-5 px-2 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
                 designated content rating that have a privacy label. </h3>
             </div>
 
             {/* Rating Graph */}
             <div className={`mb-20 h-full`}>
-              <h1 className="text-center font-bold" > Rating Counts vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" > Rating Counts vs. Privacy Practices</h1>
               <RatingCounts data={ratingData} />
-              <h3 className="mt-5 text-wrap"> The ratios of the rating counts for each of the four Privacy Types. The denominator is the number of apps with the
+              <h3 className="mt-5 px-2 text-wrap"> The ratios of the rating counts for each of the four Privacy Types. The denominator is the number of apps with the
                 designated rating counts that have a privacy label. Apps with a larger number of user ratings are more likely to collect data,
                 including data used to track users. Ratings counts are not localized metadata and apps with low ratings counts in the US region
                 may have higher counts elsewhere. </h3>
@@ -573,24 +573,24 @@ export default function Index() {
 
             {/* Size Graph */}
             <div className={`mb-20 h-full`}>
-              <h1 className="text-center font-bold" > App Sizes vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" > App Sizes vs. Privacy Practices</h1>
               <SizeGraph data={sizeData} />
-              <h3 className="mt-5 text-wrap"> The ratios of app sizes for each of the four Privacy Types. The denominator is the number of apps with the designated
+              <h3 className="mt-5 px-2 text-wrap"> The ratios of app sizes for each of the four Privacy Types. The denominator is the number of apps with the designated
                 app size that have a privacy label. Apps that are larger in size are more likely to collect data, including data used to track and
                 linked to users.</h3>
             </div>
 
             {/* Year Graph */}
             <div className={`mb-20 `}>
-              <h1 className="text-center font-bold" >Yearly App Releases with Privacy Labels</h1>
+              <h1 className="text-center px-2 font-bold" >Yearly App Releases with Privacy Labels</h1>
               <YearGraph data={dates} />
-              <h3 className="">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
+              <h3 className="px-2 md:text-base">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
                 number of apps with privacy labels released in that year. </h3>
             </div>
 
             {/* Privacy Types Charts */}
             <div className="mb-20">
-              <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
+              <h1 className="text-center px-2 font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
 
                 <div className="flex flex-col items-center w-full md:w-1/3">
@@ -606,14 +606,14 @@ export default function Index() {
                   <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                 </div>
               </div>
-              <h3 className="text-sm md:text-base">The ratios of the 14 Data Categories for each of
+              <h3 className="px-2 md:text-base">The ratios of the 14 Data Categories for each of
                 three Privacy Types. The denominator is the number of apps
                 in the specific Privacy Type.</h3>
             </div>
 
             {/* Data Types Chart */}
             <div className={`mb-20`} >
-              <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Types for Each Privacy Type</h1>
+              <h1 className="text-center font-bold text-xl px-2 md:text-2xl" >Ratio of Data Types for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                 <div className="flex flex-col items-center w-full md:w-1/3">
                   <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
@@ -628,13 +628,13 @@ export default function Index() {
                   <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                 </div>
               </div>
-              <h3 className="text-sm md:text-base">The ratios of the 32 Data Types for each of three
+              <h3 className="px-2 md:text-base">The ratios of the 32 Data Types for each of three
                 Privacy Types. The denominator is the number of apps in the
                 specific Privacy Type.</h3>
             </div>
 
             <div>
-              <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
+              <h1 className="text-center font-bold text-xl px-2 md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                 <div className="flex flex-col items-center w-full md:w-1/4">
                   <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
@@ -653,7 +653,7 @@ export default function Index() {
                   <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" theme={theme} />
                 </div>
               </div>
-              <h3 className="text-sm md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
+              <h3 className="pb-10 px-2 md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
                 with the designated app store genre that have a privacy label. This includes only apps placed in the top in genre categories.</h3>
             </div>
           </div>
