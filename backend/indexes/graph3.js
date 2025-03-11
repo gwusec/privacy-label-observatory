@@ -33,7 +33,6 @@ function extractRunNumber(runString) {
     if (!match) return null; // Handle invalid cases
 
     let num = parseInt(match[0], 10); // Convert to number
-    console.log(num / 100)
     return num / 100 > 1 ? num : num % 100; // Use last two digits unless third digit is 1
 }
 
@@ -98,7 +97,6 @@ app.get('/elastic-data', async (req, res) => {
         // Fetch latest run number
         const latestResponse = await axios.get('http://localhost:8017/latestIndex');
         const latestRun = extractRunNumber(latestResponse.data.latestRun);
-        console.log("latest run: ", latestRun)
 
         // Calculate dynamic range
         const halfRuns = Math.floor(latestRun / 2);
@@ -116,8 +114,16 @@ app.get('/elastic-data', async (req, res) => {
                     const exists = await indexExists(runIndex);
 
                     if (!exists) {
-                        console.log(`Index ${runIndex} does not exist - skipping`);
                         continue; // Skip this iteration and move to the next run
+                    }
+
+                    if (true){
+                        let total = await countQuery(queries[0].query, runIndex);
+                        
+                        // If there are less than 700K apps in a run total, skip this run
+                        if (total < 700000){
+                            continue;
+                        }
                     }
 
                     runData[runIndex] = {
@@ -137,7 +143,6 @@ app.get('/elastic-data', async (req, res) => {
         // Process first half and second half
         await processRuns(1, halfRuns);
         await processRuns(halfRuns, latestRun + 1);
-        console.log(runData);
 
         // Additional Logic to Create the Index (and upload the data)
         await initializeIndex();
