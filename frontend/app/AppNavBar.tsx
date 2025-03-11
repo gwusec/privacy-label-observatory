@@ -16,9 +16,6 @@ import RichIcon from "./resources/shield_ur.svg"
 
 
 export default function AppNavBar() {
-  
-
-
 
   return (
     <div className="sticky top-0 z-50 shadow-md shadow-gray-500 dark:shadow-slate-400 mb-5">
@@ -52,6 +49,11 @@ export default function AppNavBar() {
         <NavbarItem>
           <Link color="foreground" underline="hover" href="/documentation">
             Documentation
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" underline="hover" href="/api">
+            API
           </Link>
         </NavbarItem>
       </NavbarContent>

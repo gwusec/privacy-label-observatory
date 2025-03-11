@@ -30,6 +30,7 @@ var graph15Router = require("./routes/graph_15")
 var graph15Helper = require("./routes/graph_15_helper")
 var longUpdated = require("./routes/getLongitudeUpdated")
 var latestIndex = require("./routes/latestIndex")
+var downloadRouter = require("./routes/download")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -72,6 +73,7 @@ app.use("/graph14helper", graph14Helper)
 app.use("/graph15", graph15Router)
 app.use("/helper15", graph15Helper)
 app.use("/longUpdated", longUpdated)
+app.use("/download", downloadRouter)
 
 
 //helloworld GET
