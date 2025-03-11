@@ -338,16 +338,16 @@ export default function Index() {
                 </div>
                 <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={((el:HTMLDivElement) => (refs.current[1] = el))}>
                   <h1 className="text-center font-bold">Purpose Distribution Across Privacy Types</h1>
-                  <div className="flex flex-row space-x-4 mt-10 mb-20">
-                    <div className="flex flex-col items-center w-1/3">
+                  <div className="flex flex-row justify-between space-x-8 mt-10 mb-20">
+                    <div className="flex flex-col items-center w-full">
                       <h1 className="text-center">Data Not Linked to You</h1>
                       <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
                     </div>
-                    <div className="flex flex-col items-center w-1/3">
+                    <div className="flex flex-col items-center w-full">
                       <h1 className="text-center">Data Linked to You</h1>
                       <Ratios data={ratios.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
                     </div>
-                    <div className="flex flex-col items-center w-1/3">
+                    <div className="flex flex-col items-center w-full">
                       <h1 className="text-center">Data Used to Track You</h1>
                       <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                     </div>

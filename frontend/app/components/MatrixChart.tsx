@@ -34,11 +34,11 @@ const MatrixChart = ({ data, color, theme }) => {
             datasets: [{
                 label: 'Heat Map',
                 data: matrixData,
-                backgroundColor: (ctx: any) => {
+                backgroundColor: (ctx:any) => {
                     const value = ctx.dataset.data[ctx.dataIndex].v;
                     const alpha = (value / 100).toFixed(2);
-                    return `${color} ${alpha})`;
-                },
+                    return `${color.replace(',', ', ')}${alpha})`; // Fix incorrect `color` string formatting
+                },                  
                 width: (ctx: any) => ctx.chart.chartArea.width / dataCategories.length,
                 height: (ctx: any) => ctx.chart.chartArea.height / purposes.length,
             }]
@@ -55,7 +55,7 @@ const MatrixChart = ({ data, color, theme }) => {
                     labels: dataCategories,
                     title: {
                         color: theme === 'dark' ? 'white' : 'black',
-                        display: true,
+                        display: false,
                         text: 'Data Categories'
                     },
                     ticks: {
@@ -80,7 +80,7 @@ const MatrixChart = ({ data, color, theme }) => {
                     labels: purposes,
                     title: {
                         color: theme === 'dark' ? 'white' : 'black',
-                        display: true,
+                        display: false,
                         text: 'Purposes'
                     },
                     ticks: {
@@ -117,8 +117,8 @@ const MatrixChart = ({ data, color, theme }) => {
             },
             layout: {
                 padding: {
-                    left: 50,
-                    right: 50,
+                    left: 30,
+                    right: 30,
                     top: 50,
                     bottom: 50
                 }
