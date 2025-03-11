@@ -188,7 +188,7 @@ export default function ContentRatings({ data }: { data: any }) {
     return (
         <div className="w-full items-start px-4 py-4">
             {/* Chart container with dynamic height */}
-            <div className="relative" style={{ height: '40vh' }}> {/* Adjust height as needed */}
+            <div className="relative h-60"> {/* Adjust height as needed */}
                 <Bar data={mergedChartData} options={options2} />
             </div>
         </div>
