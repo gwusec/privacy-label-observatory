@@ -34,92 +34,92 @@ interface GraphPopupProps {
   ogId: number;
 }
 
-const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: GraphPopupProps) => {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'; // Disable scrolling
-    } else {
-      document.body.style.overflow = ''; // Reset to default when closed
-    }
+// const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: GraphPopupProps) => {
+//   useEffect(() => {
+//     if (isOpen) {
+//       document.body.style.overflow = 'hidden'; // Disable scrolling
+//     } else {
+//       document.body.style.overflow = ''; // Reset to default when closed
+//     }
 
-    // Cleanup when component unmounts or isOpen changes
-    return () => {
-      document.body.style.overflow = ''; // Ensure scroll is reset on unmount
-    };
-  }, [isOpen]);
-  if (!isOpen) return null;
+//     // Cleanup when component unmounts or isOpen changes
+//     return () => {
+//       document.body.style.overflow = ''; // Ensure scroll is reset on unmount
+//     };
+//   }, [isOpen]);
+//   if (!isOpen) return null;
 
-  const { id: _, ...dataWithoutId } = graphData;
-  console.log(dataWithoutId)
+//   const { id: _, ...dataWithoutId } = graphData;
+//   console.log(dataWithoutId)
 
-  // Convert dataWithoutId to an array to easily slice it based on the current id
-  const dataEntries = Object.entries(dataWithoutId);
-  const subtraction = ogId - id;
+//   // Convert dataWithoutId to an array to easily slice it based on the current id
+//   const dataEntries = Object.entries(dataWithoutId);
+//   const subtraction = ogId - id;
 
-  // Slice the data based on the current id
-  let slicedData = Object.fromEntries(dataEntries.slice(0, dataEntries.length - subtraction));
+//   // Slice the data based on the current id
+//   let slicedData = Object.fromEntries(dataEntries.slice(0, dataEntries.length - subtraction));
 
 
-  const nextData = () => {
-    if (id + 1 >= Number(graphData['id'])) {
-      setId(Number(graphData['id']))
-    } else {
-      setId(id += 1)
-    }
-    slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
-    console.log(slicedData)
-  }
-  const prevData = () => {
-    if (id - 1 <= 0) {
-      setId(0)
-    } else {
-      setId(id -= 1);
-    }
-    slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
-    console.log(slicedData)
-  }
+//   const nextData = () => {
+//     if (id + 1 >= Number(graphData['id'])) {
+//       setId(Number(graphData['id']))
+//     } else {
+//       setId(id += 1)
+//     }
+//     slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
+//     console.log(slicedData)
+//   }
+//   const prevData = () => {
+//     if (id - 1 <= 0) {
+//       setId(0)
+//     } else {
+//       setId(id -= 1);
+//     }
+//     slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
+//     console.log(slicedData)
+//   }
 
-  // Next and Prev Buttons Disabled?
-  const isPrevDisabled = id <= 0;
-  const isNextDisabled = id >= Number(graphData['id']);
+//   // Next and Prev Buttons Disabled?
+//   const isPrevDisabled = id <= 0;
+//   const isNextDisabled = id >= Number(graphData['id']);
 
-  return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
-      <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-6 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
+//   return (
+//     <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
+//       <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-6 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
 
-        {/* Graph Section */}
-        <div className="flex-grow pt-40 overflow-auto">
-          <LongitudeChart data={slicedData} isExpanded={true} />
-        </div>
+//         {/* Graph Section */}
+//         <div className="flex-grow pt-40 overflow-auto">
+//           <LongitudeChart data={slicedData} isExpanded={true} />
+//         </div>
 
-        {/* Buttons Section */}
-        <div className="flex justify-between items-center mt-4">
-          <button
-            onClick={prevData}
-            disabled={isPrevDisabled}
-            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isPrevDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            Remove a Run
-          </button>
-          <button
-            onClick={onClose}
-            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded`}
-          >
-            Close
-          </button>
-          <button
-            onClick={nextData}
-            disabled={isNextDisabled}
-            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            Add a Run
-          </button>
-        </div>
-      </div>
-    </div>
+//         {/* Buttons Section */}
+//         <div className="flex justify-between items-center mt-4">
+//           <button
+//             onClick={prevData}
+//             disabled={isPrevDisabled}
+//             className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isPrevDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+//           >
+//             Remove a Run
+//           </button>
+//           <button
+//             onClick={onClose}
+//             className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded`}
+//           >
+//             Close
+//           </button>
+//           <button
+//             onClick={nextData}
+//             disabled={isNextDisabled}
+//             className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+//           >
+//             Add a Run
+//           </button>
+//         </div>
+//       </div>
+//     </div>
 
-  );
-};
+//   );
+// };
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const latestRun = await fetch(process.env.BACKEND_API + "latestIndex"); 
@@ -232,7 +232,7 @@ export default function Index() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleScroll = (index) => {
+  const handleScroll = (index:number) => {
     setActiveButton(index);
     refs.current[index]?.scrollIntoView({
       behavior: 'smooth',
@@ -318,15 +318,15 @@ export default function Index() {
                 >
                   <h1 className="text-center font-bold">Annual Trends in App Privacy Compliance</h1>
                   <LongitudeChart data={longitude} isExpanded={isPopupOpen} />
-                  <button
+                  {/* <button
                     onClick={handleOpenPopup}
                     className={`px-4 py-2 z-50 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-200'} rounded`}
                   >
                     Expand
-                  </button>
+                  </button> */}
                   <h3 className={``}>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
 
-                  <GraphPopup
+                  {/* <GraphPopup
                     isOpen={isPopupOpen}
                     onClose={handleClosePopup}
                     graphData={longitude}
@@ -334,7 +334,7 @@ export default function Index() {
                     id={id}
                     setId={setId}
                     ogId={ogId}
-                  />
+                  /> */}
                 </div>
                 <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={((el:HTMLDivElement) => (refs.current[1] = el))}>
                   <h1 className="text-center font-bold">Purpose Distribution Across Privacy Types</h1>
