@@ -34,6 +34,14 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
   const chartRef = useRef<ChartJS | null>(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      import("chartjs-plugin-zoom").then((zoomPlugin) => {
+        ChartJS.register(zoomPlugin.default);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (chartRef.current) {
         chartRef.current.destroy();
@@ -164,27 +172,33 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         color: theme === 'dark' ? '#ffffff' : '#000000',
         display: false,
       },
-      onHover: (event:any, legendItem:any, legend:any) => {
-        const label = legendItem.text;
-        setVisibleDatasets((prev) => {
-          const newSet = new Set(prev);
-          if (newSet.has(label)) {
-            newSet.delete(label);
-          } else {
-            newSet.add(label);
-          }
-          return newSet;
-        });
-      },
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: 'x',
+          modifierKey: 'ctrl',
+        },
+        zoom: {
+          drag: {
+            enabled: true
+          },
+          mode: 'x',
+        },
+      }
     },
   };
 
                  
   return (
-    <div className="w-full h-96 md:h-96">
-        <Line data={chartData} options={options} ref={chartRef} />
+    <div className="w-full h-96 md:h-96 pb-10">
+      <Line data={chartData} options={options} ref={chartRef} />
+      <button className={`p-2 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-black'} rounded`} onClick={() => chartRef.current?.resetZoom()}>
+        Reset Zoom
+      </button>
     </div>
   );
+  
+  
 };
 
 export default LongitudeChart;
