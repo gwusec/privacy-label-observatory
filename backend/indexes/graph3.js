@@ -1,5 +1,7 @@
 const express = require('express');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 const { Client } = require('@elastic/elasticsearch');
 
 const app = express();
@@ -18,13 +20,20 @@ const client = new Client({
     }
 });
 
-// Load run data mappings
+// Load dates and runs from JSON file
+let runsDateMapping = {};
+try {
+    const datesAndRunsPath = path.join(__dirname, '../dates_and_runs.json');
+    runsDateMapping = JSON.parse(fs.readFileSync(datesAndRunsPath, 'utf8'));
+    console.log('Successfully loaded dates_and_runs.json');
+} catch (error) {
+    console.error('Error loading dates_and_runs.json:', error);
+    process.exit(1);
+}
+
+// Get date for a given run using the mapping
 function getRunDate(runNumber) {
-    const startDate = new Date("2021-07-23");
-    const runOffset = parseInt(runNumber.split("_")[1], 10) - 1;
-    const runDate = new Date(startDate);
-    runDate.setDate(runDate.getDate() + runOffset * 7);
-    return runDate.toISOString().split("T")[0]; // Return YYYY-MM-DD
+    return runsDateMapping[runNumber]['date'] || "No Date Found";
 }
 
 
@@ -109,7 +118,6 @@ app.get('/elastic-data', async (req, res) => {
             for (let i = start; i < end; i++) {
                 try {
                     const runIndex = getRunNumber(i);
-
                     // Check if the index exists before processing
                     const exists = await indexExists(runIndex);
 
@@ -126,9 +134,11 @@ app.get('/elastic-data', async (req, res) => {
                         }
                     }
 
+                    console.log(getRunDate(i));
+
                     runData[runIndex] = {
                         index: runIndex,
-                        date: getRunDate(runIndex) || "No Date Found",
+                        date: getRunDate(i) || "No Date Found",
                         values: {}
                     };
 
