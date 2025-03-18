@@ -25,7 +25,7 @@ interface dataType {
 
 interface dataCat {
     identifier: string,
-    dataTypes: dataType[];
+    dataTypes: string[];
 }
 
 interface purpose {
@@ -368,7 +368,7 @@ export default function Timeline({ data }: { data: any }) {
 
                                                         {(() => {
                                                             // Create a Set to hold all unique data categories across all purposes
-                                                            const allUniqueCategories = new Set();
+                                                            const allUniqueCategories = new Set<string>();
 
                                                             // Collect all unique data categories when not expanded
                                                             priv.purposes!.forEach((purpose) => {
@@ -479,7 +479,7 @@ export default function Timeline({ data }: { data: any }) {
 
                                                         {(() => {
                                                             // Create a Set to hold all unique data categories across all purposes
-                                                            const allUniqueCategories = new Set();
+                                                            const allUniqueCategories = new Set<string>();
 
                                                             // Collect all unique data categories when not expanded
                                                             priv.purposes!.forEach((purpose) => {
@@ -553,7 +553,7 @@ export default function Timeline({ data }: { data: any }) {
 
                     <div className='lg:hidden'>
                         {checkValueInDetails('DATA_USED_TO_TRACK_YOU') ?
-                            <div className={`m-4 rounded-lg w-fit h-fit text-center p-4 shadow-md 
+                            <div className={`m-4 rounded-lg h-fit text-center p-4 shadow-md 
                                     ${theme === 'dark' ?
                                     'text-white bg-neutral-800' :
                                     'text-black bg-neutral-300'} 
@@ -566,24 +566,15 @@ export default function Timeline({ data }: { data: any }) {
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
                                         <div>
-                                            <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
-
+                                            <ul className={`mt-2 ml-6 pt-2 flex flex-col items-start w-full gap-4 `}>
                                                 {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
-                                                    <div key={dataCategoryIndex} className={`flex flex-wrap ${expandedColumn === null && allColumns === false ? 'justify-start' : 'justify-center'}`}>
-                                                        <div className="w-full">
-                                                            <li className="text-lg font-semibold flex items-center space-x-2">
-                                                                {expandedColumn === null && allColumns === false ? (
-                                                                    <div className="flex items-center space-x-2">
-                                                                        <img src={getIconPath(dataCategory.dataCategory, theme)} className="w-6 h-6" />
-                                                                        <div className='pl-6'>{dataCategory.dataCategory}</div>
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className='text-center'>
-                                                                        {dataCategory.dataCategory}
-                                                                    </div>
-                                                                )}
-                                                            </li>
-                                                        </div>
+                                                    <div key={dataCategoryIndex} className={`flex flex-wrap justify-center`}>
+                                                        <li className="text-lg font-semibold flex items-center space-x-2">
+                                                            <div className="flex items-center space-x-2">
+                                                                <img src={getIconPath(dataCategory.identifier, theme)} className="w-6 h-6" />
+                                                                <div className='pl-6'>{dataCategory.identifier}</div>
+                                                            </div>
+                                                        </li>
                                                     </div>
                                                 ))}
 
@@ -607,7 +598,7 @@ export default function Timeline({ data }: { data: any }) {
                             </div>
                         }
                         {checkValueInDetails('DATA_LINKED_TO_YOU') ?
-                            <div className={`m-4 rounded-lg w-fit h-fit text-center p-4 shadow-md 
+                            <div className={`m-4 rounded-lg h-fit text-center p-4 shadow-md 
                                 ${theme === 'dark' ?
                                     'text-white bg-neutral-800' :
                                     'text-black bg-neutral-300'} 
@@ -622,23 +613,23 @@ export default function Timeline({ data }: { data: any }) {
                                     priv.identifier === "DATA_LINKED_TO_YOU" ? (
                                         <div>
                                             <ul
-                                                className={`mt-4 pl-6 list-none ${allColumns === false ? "" : "grid grid-cols-2"} ${expandedColumn === null ? "" : "grid grid-cols-4"} `}
+                                                className={`mt-4 pl-6 list-none w-full`}
                                             >
 
                                                 {(() => {
                                                     // Create a Set to hold all unique data categories across all purposes
-                                                    const allUniqueCategories = new Set();
+                                                    const allUniqueCategories = new Set<string>();
 
                                                     // Collect all unique data categories when not expanded
                                                     priv.purposes!.forEach((purpose) => {
                                                         purpose.dataCategories!.forEach((category) =>
-                                                            allUniqueCategories.add(category.dataCategory)
+                                                            allUniqueCategories.add(category.identifier)
                                                         );
                                                     });
 
 
                                                     return (
-                                                        <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
+                                                        <ul className="mt-2 ml-6 pt-2 flex flex-col items-start w-full gap-4">
                                                             {Array.from(allUniqueCategories).map((dataCategory, index) => (
                                                                 <li className="text-lg font-semibold flex items-center space-x-2">
                                                                     <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
@@ -668,7 +659,7 @@ export default function Timeline({ data }: { data: any }) {
                                 <p className='text-center mt-4'>No Data Collected</p>
                             </div>}
                         {checkValueInDetails('DATA_NOT_LINKED_TO_YOU') ?
-                            <div className={`m-4 rounded-lg w-fit h-fit text-center p-4 shadow-md 
+                            <div className={`m-4 rounded-lg h-fit text-center p-4 shadow-md 
                                 ${theme === 'dark' ?
                                     'text-white bg-neutral-800' :
                                     'text-black bg-neutral-300'} 
@@ -682,19 +673,17 @@ export default function Timeline({ data }: { data: any }) {
                                     priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? (
                                         <div>
                                             <ul
-                                                className={`mt-4 pl-6 list-none ${expandedColumn === null ? "" : "grid grid-cols-4"} 
-                                                ${allColumns === false ? "" : "grid grid-cols-2"
-                                                    }`}
+                                                className={`mt-4 pl-6 list-none `}
                                             >
 
                                                 {(() => {
                                                     // Create a Set to hold all unique data categories across all purposes
-                                                    const allUniqueCategories = new Set();
+                                                    const allUniqueCategories = new Set<string>();
 
                                                     // Collect all unique data categories when not expanded
                                                     priv.purposes!.forEach((purpose) => {
                                                         purpose.dataCategories!.forEach((category) =>
-                                                            allUniqueCategories.add(category.dataCategory)
+                                                            allUniqueCategories.add(category.identifier)
                                                         );
                                                     });
 

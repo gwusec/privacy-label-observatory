@@ -192,7 +192,7 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
   return (
     <div className="w-full h-96 md:h-96 pb-10">
       <Line data={chartData} options={options} ref={chartRef} />
-      <button className={`p-2 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-black'} rounded`} onClick={() => chartRef.current?.resetZoom()}>
+      <button className={`p-2 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-black'} hidden md:block rounded`} onClick={() => chartRef.current?.resetZoom()}>
         Reset Zoom
       </button>
     </div>
