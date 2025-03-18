@@ -74,7 +74,6 @@ export default function Search() {
                                 role="search" className="w-full flex flex-col items-center">
                                 <div className='flex '>
                                     <input
-
                                         id="q"
                                         aria-label="Search apps"
                                         placeholder="Search apps"
@@ -82,7 +81,6 @@ export default function Search() {
                                         name="q"
                                         defaultValue={q || ""}
                                         className="px-4 py-2 border border-gray-300 rounded-md w-full min-w-40 text-black pr-10"
-                                    // onFocus={() => setIsFocused(true)}
                                     />
                                     <button
                                         type="submit"
@@ -98,7 +96,7 @@ export default function Search() {
                                     </button>
                                 </div>
                                 <div ref={inputRef}>
-                                    {/* isFocused && */ searchResults.length > 0 && (
+                                    {searchResults.length > 0 && (
                                         <ul className={`absolute top-full left-0 right-0 mt-2 border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto  ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'}`}>
                                             {searchResults.map((app: any, index: any) => (
                                                 <Link className='w-full' to={'/app/' + app.app_id}>
@@ -115,7 +113,7 @@ export default function Search() {
                         </div>
 
                     </div>
-                    <div className='pl-2 ml-2'>
+                    <div className='hidden md:block pl-2 ml-2'>
                         <AppSearch cacheList={cachedApps} />
                     </div>
                     <div className='pt-40 w-full'>

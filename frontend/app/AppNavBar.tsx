@@ -51,11 +51,11 @@ export default function AppNavBar() {
             Documentation
           </Link>
         </NavbarItem>
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" underline="hover" href="/api">
             API
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
       <NavbarContent >
         <NavbarItem>
