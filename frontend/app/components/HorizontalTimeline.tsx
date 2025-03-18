@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Stepper, Step, StepLabel, Button, styled } from '@mui/material';
+
 var data = require("../../../backend/Misc/dates_and_runs.json");
 
 
@@ -56,8 +57,6 @@ function findChanges(runs: any){
         const currentRun = runs[i];
         const nextRun = runs[i + 1];
         if (!equal(currentRun.privacy_types, nextRun.privacy_types)) {
-            // You can log the differences or handle them as needed
-            console.log("Not equal at index ", i);
             arr.push(nextRun)
         }
     }
