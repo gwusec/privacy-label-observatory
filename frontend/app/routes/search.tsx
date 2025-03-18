@@ -7,6 +7,7 @@ import { Link, Outlet } from '@remix-run/react';
 import { MetaFunction } from "@remix-run/node";
 import { FaSpinner } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
+import AppSearch from '~/components/AppSelector';
 
 export const meta: MetaFunction = () => {
     return [{
@@ -14,41 +15,38 @@ export const meta: MetaFunction = () => {
     }];
 };
 
-export async function loader({ request }: LoaderFunctionArgs) {
-    // Loads the list of apps first
-    const url = new URL(request.url);
-    // If there's a search query
-    const q = url.searchParams.get("q");
-    let data = [];
 
+export async function loader({ request }: LoaderFunctionArgs) {
+    const url = new URL(request.url);
+    // Get search query
+    const q = url.searchParams.get("q") || "";
+
+    let cachedApps = [];
+    let searchResults = [];
+
+    // Fetch the list of cached apps regardless of search query
+    const cacheResponse = await fetch(process.env.BACKEND_API + "cache");
+    cachedApps = await cacheResponse.json();
+
+    // If there's a search query, fetch search results
     if (q) {
         const list = await fetch(process.env.BACKEND_API + "search?q=" + q);
-        data = await list.json();
+        searchResults = await list.json();
     }
 
-    return json({ data, q });
+    return json({
+        cachedApps,
+        searchResults,
+        q
+    });
 }
-
 export default function Search() {
     const { theme } = useTheme();
     const { state } = useNavigation()
-    const { data, q } = useLoaderData<typeof loader>();
+    const { cachedApps, searchResults, q } = useLoaderData<typeof loader>();
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const submit = useSubmit();
-
-    // Close the dropdown when clicking outside
-    // useEffect(() => {
-    //     const handleClickOutside = (event: MouseEvent) => {
-    //         if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
-    //             setIsFocused(false);
-    //         }
-    //     };
-    //     document.addEventListener('mousedown', handleClickOutside);
-    //     return () => {
-    //         document.removeEventListener('mousedown', handleClickOutside);
-    //     };
-    // }, []);
 
     useEffect(() => {
         const searchField = document.getElementById("q");
@@ -75,29 +73,34 @@ export default function Search() {
                             <Form id="search-form"
                                 role="search" className="w-full flex flex-col items-center">
                                 <div className='flex '>
-                                <input
+                                    <input
 
-                                    id="q"
-                                    aria-label="Search apps"
-                                    placeholder="Search apps"
-                                    type="search"
-                                    name="q"
-                                    defaultValue={q || ""}
-                                    className="px-4 py-2 border border-gray-300 rounded-md w-full min-w-40 text-black pr-10"
+                                        id="q"
+                                        aria-label="Search apps"
+                                        placeholder="Search apps"
+                                        type="search"
+                                        name="q"
+                                        defaultValue={q || ""}
+                                        className="px-4 py-2 border border-gray-300 rounded-md w-full min-w-40 text-black pr-10"
                                     // onFocus={() => setIsFocused(true)}
-                                />
-                                <button
-                                    type="submit"
-                                    aria-label="Search"
-                                    className="px-4 py-2 text-black rounded-r-md"
-                                >
-                                    <FaSearch className="w-5 h-5" /> {/* Search icon */}
-                                </button>
+                                    />
+                                    <button
+                                        type="submit"
+                                        aria-label="Search"
+                                        className="px-4 py-2 text-black rounded-r-md"
+                                    >
+                                        {theme === 'dark' ?
+                                            <FaSearch color='white' className="w-5 h-5" />
+                                            :
+                                            <FaSearch color='black' className="w-5 h-5" />
+                                        }
+
+                                    </button>
                                 </div>
                                 <div ref={inputRef}>
-                                    {/* isFocused && */ data.length > 0 && (
+                                    {/* isFocused && */ searchResults.length > 0 && (
                                         <ul className={`absolute top-full left-0 right-0 mt-2 border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto  ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'}`}>
-                                            {data.map((app: any, index: any) => (
+                                            {searchResults.map((app: any, index: any) => (
                                                 <Link className='w-full' to={'/app/' + app.app_id}>
                                                     <li key={index} className={`px-4 py-2 cursor-pointer ${theme === 'dark' ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
                                                         {app.app_name}
@@ -112,12 +115,17 @@ export default function Search() {
                         </div>
 
                     </div>
+                    <div className='pl-2 ml-2'>
+                        <AppSearch cacheList={cachedApps} />
+                    </div>
                     <div className='pt-40 w-full'>
                         <Outlet />
                     </div>
+
                 </div >
 
             </div >
+
         </>
     );
 }
