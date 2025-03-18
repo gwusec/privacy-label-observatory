@@ -125,50 +125,34 @@ const Index: React.FC = () => {
               <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>But what are privacy labels?</h1>
               <p className="text-lg text-white-300 font-medium text-center mb-4">Privacy labels are basically nutrition labels, where the app must indicate what data is collected and used compactly.</p>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : 'hover:text-gray-500'}`}>
+              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Used to Track You
-                <span className="hover-text">Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.</span>
+                <strong className="block text-sm text-gray mt-1">
+                  Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.
+                </strong>
               </a>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : 'hover:text-gray-500'}`}>
+              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Linked to You
-                <span className="hover-text">Data is collected and is linked to the user’s identity.</span>
+                <strong className="block text-sm text-gray mt-1">
+                  Data is collected and is linked to the user’s identity.
+                </strong>
               </a>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : ' hover:text-gray-500'}`}>
+              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Not Linked to You
-                <span className="hover-text">Data is collected but is de-identified or anonymized and is therefore not linked to the user’s identity.</span>
+                <strong className="block text-sm text-gray mt-1">
+                  Data is collected but is de-identified or anonymized and is therefore not linked to the user’s identity.
+                </strong>
               </a>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-32 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : 'hover:text-gray-500'}`}>
+              <a className={`text-md cursor-pointer font-medium text-center mb-32 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Not Collected
-                <span className="hover-text">When an app has a label with the Data Not Collected Privacy Type, it implies that it does not collect any data from the user, and therefore does not include other Privacy Types.</span>
+                <strong className="block text-sm text-gray mt-1">
+                  When an app has a label with the Data Not Collected Privacy Type, it implies that it does not collect any data from the user, and therefore does not include other Privacy Types.
+                </strong>
               </a>
             </div>
-
-            <style jsx="true">{`
-              .hover-text {
-                visibility: hidden;
-                opacity: 0;
-                width: 300px;
-                background-color: #555;
-                color: #fff;
-                text-align: center;
-                border-radius: 6px;
-                padding: 15px 10px;
-                position: absolute;
-                z-index: 1;
-                bottom: 125%;
-                left: 50%;
-                margin-left: -150px;
-                transition: opacity 0.3s;
-              }
-
-              a:hover .hover-text {
-                visibility: visible;
-                opacity: 1;
-              }
-            `}</style>
             <div className='pb-20'>
               <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                 Apple's Data Categories
@@ -357,7 +341,7 @@ const Index: React.FC = () => {
                   </li>
                 </ul>
               </details>
-                
+
               {/* Surroundings */}
               <details className="border rounded-lg p-4 mb-4" open>
                 <summary className="font-semibold cursor-pointer text-lg">Surroundings</summary>
