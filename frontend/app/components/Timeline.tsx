@@ -121,7 +121,6 @@ export default function Timeline({ data }: { data: any }) {
     const [allColumns, expandAllColumns] = useState(true);
 
     const handleClick = (event: any, index: number) => {
-        console.log("Active Index: ", index);
         setActiveIndex(index)
     };
 
@@ -159,16 +158,20 @@ export default function Timeline({ data }: { data: any }) {
 
     useEffect(() => {
         setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"])
-        if (privDetails.length == 0) {
-            console.log("No privacy details");
-        } else {
+        if (privDetails.length == 0) { }
+        else {
             setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
         }
-    }, [privDetails, activeIndex])
-    
+    }, [privDetails])
+
+    useEffect(() => {
+        setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
+    }, [activeIndex])
+
+
+
 
     const checkValueInDetails = (value: any) => {
-        //console.log(privDetails)
         return privDetails.some(detail => detail.identifier === value);
     };
 
@@ -374,7 +377,6 @@ export default function Timeline({ data }: { data: any }) {
                                                                 );
                                                             });
 
-                                                            console.log("allUniqueCategories", allUniqueCategories);
 
                                                             if (expandedColumn === null && allColumns === false) {
                                                                 return (
@@ -486,7 +488,6 @@ export default function Timeline({ data }: { data: any }) {
                                                                 );
                                                             });
 
-                                                            console.log("allUniqueCategories", allUniqueCategories);
 
                                                             if (expandedColumn === null && allColumns === false) {
                                                                 return (
@@ -635,7 +636,6 @@ export default function Timeline({ data }: { data: any }) {
                                                         );
                                                     });
 
-                                                    console.log("allUniqueCategories", allUniqueCategories);
 
                                                     return (
                                                         <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
@@ -698,7 +698,6 @@ export default function Timeline({ data }: { data: any }) {
                                                         );
                                                     });
 
-                                                    console.log("allUniqueCategories", allUniqueCategories);
 
                                                     return (
                                                         <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
