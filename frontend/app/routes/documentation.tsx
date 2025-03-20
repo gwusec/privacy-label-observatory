@@ -14,34 +14,44 @@ const Index: React.FC = () => {
           <FaSpinner className="animate-spin" size={72} />
         </div>
         :
-        <div className={` min-h-screen flex`}>
+        <div className={`pl-4 md:pl-2 min-h-screen flex`}>
           <div id="main-text">
             <div className="">
-              <h1 className={`text-4xl font-bold mb-16 text-center ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+              <h1 className={`text-4xl text-center font-bold mb-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                 GWUSEC Privacy Label Observatory Wiki
               </h1>
-              <p className="text-xl text-white-700 mb-4 text-center">
+              <p className="text-xl text-white-700 mb-4">
                 After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels. The various choices made by developers of apps are reflected here, whether it be underreporting data or reporting well, and the reasons behind each.
               </p>
-              <h2 className="text-xl text-white-700 mb-4 text-center">
+              <h2 className="text-xl text-white-700 mb-4">
                 We collected snapshots of the privacy labels of 1.6+ million apps.
               </h2>
-              <h2 className="text-xl text-center">
+              <h2 className="text-xl">
                 Initially, these runs were collected once a week. However, once sufficient data had been collected, the data has been scraped at a monthly pace.
               </h2>
             </div>
 
+            <div id="papers" className=''>
+              <h1 className='text-3xl font-bold pb-4'>Additional Resources</h1>
+              <h2 className='text-xl'>For more information on Privacy Labels and the research behind the conception of the Observatory, peruse the following at your leisure:</h2>
+              <ul className={`pt-4 pl-8`}>
+                <li className='text-lg'>Florian Farke, David G. Balash, Maximilian Golla, Markus Dürmuth and Adam J. Aviv. <a className={`${theme === 'dark' ? 'text-sky-200' : 'text-sky-700'}`} href='https://www.usenix.org/conference/usenixsecurity21/presentation/farke' target='_blank'>Are Privacy Dashboards Good for End Users? Evaluating User Perceptions and Reactions to Google's My Activity.</a> 30th USENIX Security Symposium (USENIX Security 21) (Sec'21). August 2021. (<a className={`${theme === 'dark' ? 'text-sky-200' : 'text-sky-700'}`} href='https://arxiv.org/abs/2105.14066' target='_blank'>arxiv</a>)</li>
+                <li className='text-lg pt-2'>David G. Balash, Mir Masood Ali, Xiaoyuan Wu, Chris Kanich, Adam J. Aviv. <a href='https://arxiv.org/abs/2206.02658' target='_blank'>Longitudinal Analysis of Privacy Labels in the Apple App Store.</a> arXiv:2206.02658. June 2022. (<a href='https://arxiv.org/abs/2206.02658' target='_blank' className={`${theme === 'dark' ? 'text-sky-200' : 'text-sky-700'}`}>arxiv</a>) </li>
+                <li className='text-lg pt-2'>Mir Masood Ali, David G. Balash, Monica Kodwani, Chris Kanich and Adam J. Aviv. <a className={`${theme === 'dark' ? 'text-sky-200' : 'text-sky-700'}`} href='https://petsymposium.org/popets/2024/popets-2024-0111.php' target='_blank'>Honesty is the Best Policy: On the Accuracy of Apple Privacy Labels Compared to Apps' Privacy Policies.</a> Proceedings of Privacy Enhancing Technologies. Vol. 2024 (4). Pgs. 142-166. (PoPETS'24). July 2024. (<a className={`${theme === 'dark' ? 'text-sky-200' : 'text-sky-700'}`} href='https://arxiv.org/abs/2306.17063' target='_blank'>arxiv</a>) (<a className={`${theme === 'dark' ? 'text-sky-200' : 'text-sky-700'}`} href='https://doi.org/https://doi.org/10.56553/popets-2024-0111'>doi</a>)</li>
+              </ul>
+            </div>
+
             <div className='pt-10'>
-              <h1 className="text-3xl pb-4 font-bold text-center">
+              <h1 className="text-3xl pb-4 font-bold">
                 How to Use this Website
               </h1>
-              <h2 className='text-xl pb-2 text-center'>
+              <h2 className='text-xl pb-2'>
                 <strong>Dashboard</strong>: As the name states, it's a dashboard for all statistical data that has been done on the apps that have been collected from the Apple Store, from longitudinal data to more specific distinctions across categories.
               </h2>
-              <h2 className='text-xl pb-2 text-center'>
+              <h2 className='text-xl pb-2'>
                 <strong>Search</strong>: At your perusal, feel free to search our database of apps that we've collected. View the privacy data of your app in a new way, or select apps that other users are searching for.
               </h2>
-              <h2 className='text-xl pb-10 text-center'>
+              <h2 className='text-xl pb-10'>
                 <strong>App</strong>: Once you find the app that you would like to view, choose to either view a condensed view of data that your app has access to, or expand to view extensive details about what permissions your app has access to. Additionally, travel through the history of the app and view what permissions have changed over time.
               </h2>
             </div>
@@ -49,31 +59,31 @@ const Index: React.FC = () => {
 
 
             <div className="mb-16 relative">
-              <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>But what are privacy labels?</h1>
-              <p className="text-lg text-white-300 font-medium text-center mb-4">Privacy labels are basically nutrition labels, where the app must indicate what data is collected and used compactly.</p>
+              <h1 className={`text-3xl mb-8 text-white-700 font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>But what are privacy labels?</h1>
+              <p className="text-lg text-white-300 font-medium mb-4">Privacy labels are basically nutrition labels, where the app must indicate what data is collected and used compactly.</p>
 
-              <a className={`text-lg font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
+              <a className={`text-lg font-medium mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Used to Track You
                 <strong className="block text-md text-gray mt-1">
                   Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.
                 </strong>
               </a>
 
-              <a className={`text-lg font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
+              <a className={`text-lg font-medium mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Linked to You
                 <strong className="block text-md text-gray mt-1">
                   Data is collected and is linked to the user’s identity.
                 </strong>
               </a>
 
-              <a className={`text-lg font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
+              <a className={`text-lg font-medium mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Not Linked to You
                 <strong className="block text-md text-gray mt-1">
                   Data is collected but is de-identified or anonymized and is therefore not linked to the user’s identity.
                 </strong>
               </a>
 
-              <a className={`text-lg cursor-pointer font-medium text-center mb-32 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
+              <a className={`text-lg cursor-pointer font-medium mb-32 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Not Collected
                 <strong className="block text-md text-gray mt-1">
                   When an app has a label with the Data Not Collected Privacy Type, it implies that it does not collect any data from the user, and therefore does not include other Privacy Types.
@@ -81,7 +91,7 @@ const Index: React.FC = () => {
               </a>
             </div>
             <div className='pb-20'>
-              <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
+              <h1 className={`text-3xl mb-8 text-white-700 font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                 Apple's Data Categories
               </h1>
 
