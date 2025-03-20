@@ -1,54 +1,60 @@
 var express = require("express");
 var router = express.Router();
 const client = require("../client");
+const axios = require('axios');
 
 router.get('/', async function (req, res) {
     const results = {};
+    const totalRequest = await axios.get(`http://localhost:8017/latestIndex`);
+    totals = totalRequest.data.latestRun;
 
     const queries = [
         {
+            index: totals,
             label: "DATA_NOT_LINKED_TO_YOU",
             query: {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataTypes.data_type.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
             }
         },
         {
+            index: totals,
             label: "DATA_LINKED_TO_YOU",
             "query": {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_LINKED_TO_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataTypes.data_type.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
             }
         },
         {
+            index: totals,
             label: "DATA_USED_TO_TRACK_YOU",
             "query": {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_USED_TO_TRACK_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_USED_TO_TRACK_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataTypes.data_type.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
@@ -86,6 +92,7 @@ router.get('/', async function (req, res) {
             percentage: ((bucket.doc_count / total) * 100).toFixed(2) + '%'
         }));
     });
+
     res.json(percentages);
 });
     

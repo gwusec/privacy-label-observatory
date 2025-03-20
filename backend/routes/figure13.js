@@ -11,7 +11,7 @@ router.get('/', async function (req, res) {
             query: {
                 "bool": {
                     "must": [
-                        { "term": { "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_LINKED_TO_YOU" } }
+                        { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_LINKED_TO_YOU" } }
                     ],
                     "must_not": [
                         { "term": { "metadata.app_store_genre_name.keyword": "" } }
@@ -32,7 +32,7 @@ router.get('/', async function (req, res) {
             query: {
                 "bool": {
                     "must": [
-                        { "term": { "privacylabels.privacyDetails.identifier.keyword": "DATA_LINKED_TO_YOU" } }
+                        { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_LINKED_TO_YOU" } }
                     ],
                     "must_not": [
                         { "term": { "metadata.app_store_genre_name.keyword": "" } }
@@ -53,7 +53,7 @@ router.get('/', async function (req, res) {
             query: {
                 "bool": {
                     "must": [
-                        { "term": { "privacylabels.privacyDetails.identifier.keyword": "DATA_USED_TO_TRACK_YOU" } }
+                        { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_USED_TO_TRACK_YOU" } }
                     ],
                     "must_not": [
                         { "term": { "metadata.app_store_genre_name.keyword": "" } }
@@ -74,7 +74,7 @@ router.get('/', async function (req, res) {
             query: {
                 "bool": {
                     "must": [
-                        { "term": { "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_COLLECTED" } }
+                        { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_COLLECTED" } }
                     ],
                     "must_not": [
                         { "term": { "metadata.app_store_genre_name.keyword": "" } }

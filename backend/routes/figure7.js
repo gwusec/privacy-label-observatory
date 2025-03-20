@@ -10,13 +10,13 @@ router.get('/', async function (req, res) {
             label: "DATA_NOT_LINKED_TO_YOU",
             query: {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataCategory.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
                         "size": 15
                     }
                 }
@@ -26,13 +26,13 @@ router.get('/', async function (req, res) {
             label: "DATA_LINKED_TO_YOU",
             "query": {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_LINKED_TO_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataCategory.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
                         "size": 15
                     }
                 }
@@ -42,13 +42,13 @@ router.get('/', async function (req, res) {
             label: "DATA_USED_TO_TRACK_YOU",
             "query": {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_USED_TO_TRACK_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_USED_TO_TRACK_YOU"
                 }
             },
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.dataCategories.dataCategory.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
                         "size": 15
                     }
                 }

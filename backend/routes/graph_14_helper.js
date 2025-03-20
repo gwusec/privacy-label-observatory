@@ -40,7 +40,7 @@ router.get('/', async function(req, res) {
                     must: [
                     {
                         term: {
-                        "privacylabels.privacyDetails.privacyTypes.keyword": {
+                        "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                             value: value
                         }
                         }

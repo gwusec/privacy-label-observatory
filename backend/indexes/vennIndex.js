@@ -6,7 +6,7 @@ const { Client } = require('@elastic/elasticsearch');
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = 'elastic';
-const ELASTIC_PASSWORD = 'xrFdfjjb';
+const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
 const indexName = 'venn_graph';
 
 const client = new Client({

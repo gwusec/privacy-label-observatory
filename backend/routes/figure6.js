@@ -3,52 +3,32 @@
 var express = require("express");
 var router = express.Router();
 const client = require("../client");
+const axios = require('axios');
 
 router.get('/', async function(req, res) {
     var results = {};
+    const totalRequest = await axios.get(`http://localhost:8017/latestIndex`);
+    totals = totalRequest.data.latestRun;
 
     const queries = [
         {
-            label: "DATA_USED_TO_TRACK_YOU",
-            query: {
-                "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_USED_TO_TRACK_YOU"
-                }
-            },
-            aggs: {
-                "purposes": {
-                    "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.purpose.keyword",
-                        "size": 10
-                    },
-                    aggs: {
-                        "dataCategories": {
-                            "terms": {
-                                "field": "privacylabels.privacyDetails.purposes.dataCategories.dataCategory.keyword",
-                                "size": 15
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
+            index: totals,
             label: "DATA_LINKED_TO_YOU",
             query: {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_LINKED_TO_YOU"
                 }
             },
             aggs: {
                 "purposes": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.purpose.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.purpose.keyword",
                         "size": 10
                     },
                     aggs: {
                         "dataCategories": {
                             "terms": {
-                                "field": "privacylabels.privacyDetails.purposes.dataCategories.dataCategory.keyword",
+                                "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
                                 "size": 15
                             }
                         }
@@ -57,22 +37,23 @@ router.get('/', async function(req, res) {
             }
         },
         {
+            index: totals, 
             label: "DATA_NOT_LINKED_TO_YOU",
             query: {
                 "term": {
-                    "privacylabels.privacyDetails.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
+                    "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_LINKED_TO_YOU"
                 }
             },
             aggs: {
                 "purposes": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.purposes.purpose.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.purpose.keyword",
                         "size": 10
                     },
                     aggs: {
                         "dataCategories": {
                             "terms": {
-                                "field": "privacylabels.privacyDetails.purposes.dataCategories.dataCategory.keyword",
+                                "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
                                 "size": 15
                             }
                         }

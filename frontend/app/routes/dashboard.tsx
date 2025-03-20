@@ -34,92 +34,92 @@ interface GraphPopupProps {
   ogId: number;
 }
 
-const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: GraphPopupProps) => {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'; // Disable scrolling
-    } else {
-      document.body.style.overflow = ''; // Reset to default when closed
-    }
+// const GraphPopup = ({ isOpen, onClose, graphData, theme, id, setId, ogId }: GraphPopupProps) => {
+//   useEffect(() => {
+//     if (isOpen) {
+//       document.body.style.overflow = 'hidden'; // Disable scrolling
+//     } else {
+//       document.body.style.overflow = ''; // Reset to default when closed
+//     }
 
-    // Cleanup when component unmounts or isOpen changes
-    return () => {
-      document.body.style.overflow = ''; // Ensure scroll is reset on unmount
-    };
-  }, [isOpen]);
-  if (!isOpen) return null;
+//     // Cleanup when component unmounts or isOpen changes
+//     return () => {
+//       document.body.style.overflow = ''; // Ensure scroll is reset on unmount
+//     };
+//   }, [isOpen]);
+//   if (!isOpen) return null;
 
-  const { id: _, ...dataWithoutId } = graphData;
-  console.log(dataWithoutId)
+//   const { id: _, ...dataWithoutId } = graphData;
+//   console.log(dataWithoutId)
 
-  // Convert dataWithoutId to an array to easily slice it based on the current id
-  const dataEntries = Object.entries(dataWithoutId);
-  const subtraction = ogId - id;
+//   // Convert dataWithoutId to an array to easily slice it based on the current id
+//   const dataEntries = Object.entries(dataWithoutId);
+//   const subtraction = ogId - id;
 
-  // Slice the data based on the current id
-  let slicedData = Object.fromEntries(dataEntries.slice(0, dataEntries.length - subtraction));
+//   // Slice the data based on the current id
+//   let slicedData = Object.fromEntries(dataEntries.slice(0, dataEntries.length - subtraction));
 
 
-  const nextData = () => {
-    if (id + 1 >= Number(graphData['id'])) {
-      setId(Number(graphData['id']))
-    } else {
-      setId(id += 1)
-    }
-    slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
-    console.log(slicedData)
-  }
-  const prevData = () => {
-    if (id - 1 <= 0) {
-      setId(0)
-    } else {
-      setId(id -= 1);
-    }
-    slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
-    console.log(slicedData)
-  }
+//   const nextData = () => {
+//     if (id + 1 >= Number(graphData['id'])) {
+//       setId(Number(graphData['id']))
+//     } else {
+//       setId(id += 1)
+//     }
+//     slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
+//     console.log(slicedData)
+//   }
+//   const prevData = () => {
+//     if (id - 1 <= 0) {
+//       setId(0)
+//     } else {
+//       setId(id -= 1);
+//     }
+//     slicedData = Object.fromEntries(dataEntries.slice(0, id + 1));
+//     console.log(slicedData)
+//   }
 
-  // Next and Prev Buttons Disabled?
-  const isPrevDisabled = id <= 0;
-  const isNextDisabled = id >= Number(graphData['id']);
+//   // Next and Prev Buttons Disabled?
+//   const isPrevDisabled = id <= 0;
+//   const isNextDisabled = id >= Number(graphData['id']);
 
-  return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
-      <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-6 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
+//   return (
+//     <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'} bg-opacity-50`}>
+//       <div className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} p-6 rounded-lg shadow-lg w-full max-w-[95vw] h-[90vh] flex flex-col`}>
 
-        {/* Graph Section */}
-        <div className="flex-grow pt-40 overflow-auto">
-          <LongitudeChart data={slicedData} isExpanded={true} />
-        </div>
+//         {/* Graph Section */}
+//         <div className="flex-grow pt-40 overflow-auto">
+//           <LongitudeChart data={slicedData} isExpanded={true} />
+//         </div>
 
-        {/* Buttons Section */}
-        <div className="flex justify-between items-center mt-4">
-          <button
-            onClick={prevData}
-            disabled={isPrevDisabled}
-            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isPrevDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            Remove a Run
-          </button>
-          <button
-            onClick={onClose}
-            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded`}
-          >
-            Close
-          </button>
-          <button
-            onClick={nextData}
-            disabled={isNextDisabled}
-            className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            Add a Run
-          </button>
-        </div>
-      </div>
-    </div>
+//         {/* Buttons Section */}
+//         <div className="flex justify-between items-center mt-4">
+//           <button
+//             onClick={prevData}
+//             disabled={isPrevDisabled}
+//             className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isPrevDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+//           >
+//             Remove a Run
+//           </button>
+//           <button
+//             onClick={onClose}
+//             className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded`}
+//           >
+//             Close
+//           </button>
+//           <button
+//             onClick={nextData}
+//             disabled={isNextDisabled}
+//             className={`px-4 py-2 ${theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'} rounded ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+//           >
+//             Add a Run
+//           </button>
+//         </div>
+//       </div>
+//     </div>
 
-  );
-};
+//   );
+// };
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const latestRun = await fetch(process.env.BACKEND_API + "latestIndex"); 
@@ -232,7 +232,7 @@ export default function Index() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleScroll = (index) => {
+  const handleScroll = (index:number) => {
     setActiveButton(index);
     refs.current[index]?.scrollIntoView({
       behavior: 'smooth',
@@ -318,15 +318,15 @@ export default function Index() {
                 >
                   <h1 className="text-center font-bold">Annual Trends in App Privacy Compliance</h1>
                   <LongitudeChart data={longitude} isExpanded={isPopupOpen} />
-                  <button
+                  {/* <button
                     onClick={handleOpenPopup}
                     className={`px-4 py-2 z-50 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-200'} rounded`}
                   >
                     Expand
-                  </button>
+                  </button> */}
                   <h3 className={``}>A longitudinal view over the year-long collection period of the total number of apps and the total number of apps with privacy labels (compliant apps). For comparison, we also display the four Privacy Types over the same period. Each data point represents a snapshot of the Apple App Store on that date.</h3>
 
-                  <GraphPopup
+                  {/* <GraphPopup
                     isOpen={isPopupOpen}
                     onClose={handleClosePopup}
                     graphData={longitude}
@@ -334,20 +334,20 @@ export default function Index() {
                     id={id}
                     setId={setId}
                     ogId={ogId}
-                  />
+                  /> */}
                 </div>
                 <div className={`mb-20 ${isExpanded ? 'hidden' : ''}`} ref={((el:HTMLDivElement) => (refs.current[1] = el))}>
                   <h1 className="text-center font-bold">Purpose Distribution Across Privacy Types</h1>
-                  <div className="flex flex-row space-x-4 mt-10 mb-20">
-                    <div className="flex flex-col items-center w-1/3">
+                  <div className="flex flex-row justify-between space-x-8 mt-10 mb-20">
+                    <div className="flex flex-col items-center w-full">
                       <h1 className="text-center">Data Not Linked to You</h1>
                       <Ratios data={ratios.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
                     </div>
-                    <div className="flex flex-col items-center w-1/3">
+                    <div className="flex flex-col items-center w-full">
                       <h1 className="text-center">Data Linked to You</h1>
                       <Ratios data={ratios.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
                     </div>
-                    <div className="flex flex-col items-center w-1/3">
+                    <div className="flex flex-col items-center w-full">
                       <h1 className="text-center">Data Used to Track You</h1>
                       <Ratios data={ratios.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                     </div>
@@ -486,7 +486,7 @@ export default function Index() {
             {/* Longitude Graph */}
             <div className="w-full max-w-3xl mx-auto px-4 md:px-8">
               <div className="mb-10 md:mb-20">
-                <h1 className="text-center text-lg md:text-2xl font-bold">Annual Trends in App Privacy Compliance</h1>
+                <h1 className="text-center px-2 text-lg md:text-2xl font-bold">Annual Trends in App Privacy Compliance</h1>
                 <div className="w-full h-[300px] sm:h-[400px] md:h-[500px]">
                   <LongitudeChart data={longitude} isExpanded={isPopupOpen} />
                 </div>
@@ -495,7 +495,7 @@ export default function Index() {
 
             {/* Ratio Graphs */}
             <div className={`mb-10 mt-20 md:mb-20`} >
-              <h1 className="text-center font-bold text-lg md:text-2xl">Purpose Distribution Across Privacy Types</h1>
+              <h1 className="text-center px-2 font-bold text-lg md:text-2xl">Purpose Distribution Across Privacy Types</h1>
               <div className="flex flex-col md:flex-row md:space-x-4 mt-6 md:mt-10 mb-8 md:mb-20 space-y-8 md:space-y-0">
                 <div className="flex flex-col items-center w-full md:w-1/3">
                   <h2 className="text-center text-base md:text-lg">Data Not Linked to You</h2>
@@ -511,13 +511,13 @@ export default function Index() {
                 </div>
               </div>
 
-              <h3 className="text-sm md:text-base">
+              <h3 className="text-sm px-2 md:text-base">
                 The ratios of the six Purposes for the Data Used to Track You, Data Linked to You, and Data Not Linked to You Privacy Types. The denominator is the number of apps in the specific Privacy Type.
               </h3>
             </div>
 
             <div >
-              <h1 className="text-center font-bold">Data Category Ratios by Privacy Type</h1>
+              <h1 className="text-center px-2 font-bold">Data Category Ratios by Privacy Type</h1>
               <div
                 className={`flex flex-col md:flex-row md:space-x-4 space-y-10 md:space-y-0`}
               >
@@ -531,41 +531,41 @@ export default function Index() {
                 </div>
               </div>
 
-              <h4 className="text-center mt-6 text-sm md:text-base">
+              <h4 className="text-center mt-6 px-2 text-sm md:text-base">
                 The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked to You (right) Privacy Types.
               </h4>
             </div>
 
             {/* Venn Diagram Chart */}
             <div className={`mb-20`}>
-              <h1 className="text-center  font-bold" >Overlap of Apps by Privacy Type</h1>
+              <h1 className="text-center px-2 font-bold" >Overlap of Apps by Privacy Type</h1>
               <VennDiagram data={vennDiagram} />
-              <h3 className="mt-5">A Venn diagram of the number of apps in each
+              <h3 className="mt-5 px-2">A Venn diagram of the number of apps in each
                 of the four Privacy Types. Data Not Collected is mutually
                 exclusive to the other three Privacy Types</h3>
             </div>
 
             {/* Percentage Graph */}
             <div className={`mb-20 `}>
-              <h1 className="text-center font-bold" >App Costs vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" >App Costs vs. Privacy Practices</h1>
               <PercentageGraph data={percentage} />
-              <h3 className="mt-5 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
+              <h3 className="mt-5 px-2 text-wrap">The ratios of app costs for each of the four Privacy Types.  Free apps are more likely than paid apps to collect data, including data used to track and
                 linked to users.</h3>
             </div>
 
             {/* Content Graph */}
             <div className={`mb-20 h-full`}>
-              <h1 className="text-center font-bold" > Content Ratings vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" > Content Ratings vs. Privacy Practices</h1>
               <ContentRatings data={contentData} />
-              <h3 className="mt-5 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
+              <h3 className="mt-5 px-2 text-wrap"> The ratios of content ratings for each of the four Privacy Types. The denominator is the number of apps with the
                 designated content rating that have a privacy label. </h3>
             </div>
 
             {/* Rating Graph */}
             <div className={`mb-20 h-full`}>
-              <h1 className="text-center font-bold" > Rating Counts vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" > Rating Counts vs. Privacy Practices</h1>
               <RatingCounts data={ratingData} />
-              <h3 className="mt-5 text-wrap"> The ratios of the rating counts for each of the four Privacy Types. The denominator is the number of apps with the
+              <h3 className="mt-5 px-2 text-wrap"> The ratios of the rating counts for each of the four Privacy Types. The denominator is the number of apps with the
                 designated rating counts that have a privacy label. Apps with a larger number of user ratings are more likely to collect data,
                 including data used to track users. Ratings counts are not localized metadata and apps with low ratings counts in the US region
                 may have higher counts elsewhere. </h3>
@@ -573,24 +573,24 @@ export default function Index() {
 
             {/* Size Graph */}
             <div className={`mb-20 h-full`}>
-              <h1 className="text-center font-bold" > App Sizes vs. Privacy Practices</h1>
+              <h1 className="text-center px-2 font-bold" > App Sizes vs. Privacy Practices</h1>
               <SizeGraph data={sizeData} />
-              <h3 className="mt-5 text-wrap"> The ratios of app sizes for each of the four Privacy Types. The denominator is the number of apps with the designated
+              <h3 className="mt-5 px-2 text-wrap"> The ratios of app sizes for each of the four Privacy Types. The denominator is the number of apps with the designated
                 app size that have a privacy label. Apps that are larger in size are more likely to collect data, including data used to track and
                 linked to users.</h3>
             </div>
 
             {/* Year Graph */}
             <div className={`mb-20 `}>
-              <h1 className="text-center font-bold" >Yearly App Releases with Privacy Labels</h1>
+              <h1 className="text-center px-2 font-bold" >Yearly App Releases with Privacy Labels</h1>
               <YearGraph data={dates} />
-              <h3 className="">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
+              <h3 className="px-2 md:text-base">The number of apps released during a given year for each of the four Privacy Types. The pink bars show the total
                 number of apps with privacy labels released in that year. </h3>
             </div>
 
             {/* Privacy Types Charts */}
             <div className="mb-20">
-              <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
+              <h1 className="text-center px-2 font-bold text-xl md:text-2xl" >Ratio of Data Categories for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
 
                 <div className="flex flex-col items-center w-full md:w-1/3">
@@ -606,14 +606,14 @@ export default function Index() {
                   <PrivacyTypesChart data={privacyTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                 </div>
               </div>
-              <h3 className="text-sm md:text-base">The ratios of the 14 Data Categories for each of
+              <h3 className="px-2 md:text-base">The ratios of the 14 Data Categories for each of
                 three Privacy Types. The denominator is the number of apps
                 in the specific Privacy Type.</h3>
             </div>
 
             {/* Data Types Chart */}
             <div className={`mb-20`} >
-              <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of Data Types for Each Privacy Type</h1>
+              <h1 className="text-center font-bold text-xl px-2 md:text-2xl" >Ratio of Data Types for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                 <div className="flex flex-col items-center w-full md:w-1/3">
                   <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
@@ -628,13 +628,13 @@ export default function Index() {
                   <DataTypesChart data={dataTypes.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
                 </div>
               </div>
-              <h3 className="text-sm md:text-base">The ratios of the 32 Data Types for each of three
+              <h3 className="px-2 md:text-base">The ratios of the 32 Data Types for each of three
                 Privacy Types. The denominator is the number of apps in the
                 specific Privacy Type.</h3>
             </div>
 
             <div>
-              <h1 className="text-center font-bold text-xl md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
+              <h1 className="text-center font-bold text-xl px-2 md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
                 <div className="flex flex-col items-center w-full md:w-1/4">
                   <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
@@ -653,7 +653,7 @@ export default function Index() {
                   <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" theme={theme} />
                 </div>
               </div>
-              <h3 className="text-sm md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
+              <h3 className="pb-10 px-2 md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
                 with the designated app store genre that have a privacy label. This includes only apps placed in the top in genre categories.</h3>
             </div>
           </div>

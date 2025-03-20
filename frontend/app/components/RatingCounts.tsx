@@ -40,7 +40,7 @@ export default function RatingCounts ({data}:{data:any}) {
             legend: {
                 position: 'top' as const,
                 labels: {
-                    padding: 10,
+                    padding: 20,
                     color: theme === 'dark' ? '#ffffff' : '#000000'
                 }, 
             },
@@ -59,7 +59,7 @@ export default function RatingCounts ({data}:{data:any}) {
         },
         layout: {
             padding: {
-                top: 20, // Adds padding between the legend and the graph
+                top: 40, // Adds padding between the legend and the graph
                 right: 0,
                 bottom: 0,
                 left: 0,
@@ -127,7 +127,7 @@ export default function RatingCounts ({data}:{data:any}) {
     return (
         <div className="w-full items-start px-4 py-4">
             {/* Chart container with dynamic height */}
-            <div className="relative" style={{ height: '40vh' }}> {/* Adjust height as needed */}
+            <div className="relative h-96"> {/* Adjust height as needed */}
                 <Bar data={mergedChartData} options={options2} />
             </div>
         </div>
