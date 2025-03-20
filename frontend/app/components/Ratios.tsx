@@ -24,13 +24,6 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
     const labels = data.map(item => item.purpose);
     const percentages = data.map(item => parseFloat(item.percentage));
 
-    const getResponsiveFontSize = () => {
-      const screenWidth = window.innerWidth;
-      if (screenWidth < 480) return 10; // Small font for mobile
-      if (screenWidth < 768) return 12; // Medium font for tablets
-      return 14; // Default font size for desktops
-    };
-
     if (chartRef.current) {
       // Destroy previous chart instance if it exists
       if (chartInstanceRef.current) {
@@ -48,17 +41,17 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
             backgroundColor: color,
             borderColor: color,
             borderWidth: 1,
-            barThickness: 15
+            barThickness: 25
           }]
         },
         options: {
           indexAxis: 'y', // Horizontal bar chart
           layout: {
             padding: {
-              top: 10,
-              bottom: 10,
-              left: 30,
-              right: 30 // Adjust padding around the chart
+              top: 0,
+              bottom: 0,
+              left: 10,
+              right: 10 // Adjust padding around the chart
             }
           },
           scales: {
@@ -70,7 +63,6 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
               ticks: {
                 display: false // Hide x-axis labels
               },
-              maxTicksLimit: 5 // Limit the number of x-axis ticks
             },
             y: {
               grid: {
@@ -79,7 +71,7 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
               ticks: {
                 color: theme === 'dark' ? '#FFFFFF' : '#000000', // Dynamically set label color
                 font: {
-                  size: getResponsiveFontSize(), 
+                  size: 10, 
                 },
               },
             }
@@ -95,17 +87,16 @@ const Ratios: React.FC<RatiosProps> = ({ data, color, theme }) => {
                 }
               }, 
               bodyFont: {
-                size: getResponsiveFontSize()
+                size: 12
               }
             },
             datalabels: {
               color: theme === 'dark' ? 'white' : 'black',
-              anchor: 'end',
+              anchor: 'start',
               align: 'end',
               formatter: (value) => `${value}%`, // Append '%' to data labels
-              offset: 5, // Offset data labels from the end of the bars
               font: {
-                size: getResponsiveFontSize(),
+                size: 14,
               }
             }
           }, 

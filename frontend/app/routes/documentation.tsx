@@ -6,27 +6,6 @@ import { FaSpinner } from 'react-icons/fa';
 const Index: React.FC = () => {
   const { state } = useNavigation();
   const { theme } = useTheme();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 4; // Update this according to the actual number of pages
-
-  const scrollTo = (direction: 'prev' | 'next') => {
-    const container = scrollContainerRef.current;
-    if (!container) {
-      console.error('Scroll container not found');
-      return;
-    }
-
-    const scrollAmount = direction === 'prev' ? -container.offsetWidth : container.offsetWidth;
-    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-
-    if (direction === 'prev' && currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    } else if (direction === 'next' && currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
 
   return (
     <>
@@ -37,138 +16,70 @@ const Index: React.FC = () => {
         :
         <div className={` min-h-screen flex`}>
           <div id="main-text">
-            <div className="mb-14">
+            <div className="">
               <h1 className={`text-4xl font-bold mb-16 text-center ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                 GWUSEC Privacy Label Observatory Wiki
               </h1>
               <p className="text-xl text-white-700 mb-4 text-center">
-                After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels.
-              </p>
-              <h2 className="text-xl text-white-700 mb-20 text-center">
-                We collected nearly weekly snapshots of the privacy labels of 1.6+ million apps over the span of a year.
-              </h2>
-              <h1 className={`text-4xl text-white-700 text-center font-semibold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
-                Here is what we found:
-              </h1>
-            </div>
-            <div ref={scrollContainerRef} className="w-full snap-x snap-mandatory flex overflow-x-hidden space-x-16 overflow-hidden mb-16">
-              {/* Card 1 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10`}>
-                <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                  Voluntary Update vs. Means to an End:
-                </h2>
-                <div>
-                  <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} mb-4 text-justify`}>
-                    The increase from 2021 to 2022 is mainly in new apps which are being published, where the privacy label is just an obstacle to the goal of adding an app to the app store.
-                  </p>
-                  <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} mb-4 text-justify`}>
-                    Our research found that existing apps that voluntarily updated their privacy labels -- without a version update -- included more details about their data collection practices.
-                  </p>
-                  <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} mb-4 text-justify`}>
-                    50% of older apps that added a label with a version update simply stated they don’t collect any data.
-                  </p>
-                  <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} font-semibold text-justify`}>
-                    This implies more truthfulness in the apps which voluntarily updated their labels.
-                  </p>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10`}>
-                <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                  You get what you do (or don't) pay for:
-                </h2>
-                <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} text-justify max-w-lg`}>
-                  When comparing paid vs. free apps, more free apps report data collection and tracking than those you pay for, perhaps reflecting additional revenue streams from free apps in targeted advertising and/or selling user data.
-                </p>
-                <h3 className={`text-2xl font-bold mt-8 mb-4 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                  Data collection in popular free apps:
-                </h3>
-                <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} text-justify max-w-lg`}>
-                  The large audience increases the surveillance surplus, which may make it harder for app sellers to resist collecting a wider range of data to increase profits. Therefore, popular apps reflect more data collection compared to less popular apps.
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col bg-gray-items-start justify-center p-10`}>
-                <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                  Data collection may have no boundaries:
-                </h2>
-                <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} text-justify max-w-md`}>
-                  Many apps with a 4+ or 9+ content rating report tracking data and would be available to children under the content rating guidelines, implying that they are tracking the data of children.
-                </p>
-              </div>
-
-              {/* Card 4 */}
-              <div className={`snap-center flex-shrink-0 w-full rounded-3xl min-w-full h-[80vh] flex flex-col items-start justify-center p-10`}>
-                <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                  Larger sized apps:
-                </h2>
-                <p className={`text-lg text-gray-${theme === 'dark' ? '200' : '800'} text-justify max-w-md`}>
-                  According to the privacy labels, larger apps collect and track more user data. This may be due to the fact that apps with larger footprints contain additional software libraries for the purpose of collecting data.
-                </p>
-              </div>
-            </div>
-
-
-            <div className="flex justify-center items-center mb-8">
-              <span className={`text-xl ${theme === 'dark' ? 'text-white-700' : 'text-gray-700'}`}>
-                {currentPage}/{totalPages}
-              </span>
-            </div>
-            <div className="mt-40">
-              <p className="text-lg text-white-700 mb-16 mt-32 text-center">
                 After 2021, Apple Store required apps updating or being put on the app store for the first time to specify privacy labels. The various choices made by developers of apps are reflected here, whether it be underreporting data or reporting well, and the reasons behind each.
               </p>
+              <h2 className="text-xl text-white-700 mb-4 text-center">
+                We collected snapshots of the privacy labels of 1.6+ million apps.
+              </h2>
+              <h2 className="text-xl text-center">
+                Initially, these runs were collected once a week. However, once sufficient data had been collected, the data has been scraped at a monthly pace.
+              </h2>
             </div>
+
+            <div className='pt-10'>
+              <h1 className="text-3xl pb-4 font-bold text-center">
+                How to Use this Website
+              </h1>
+              <h2 className='text-xl pb-2 text-center'>
+                <strong>Dashboard</strong>: As the name states, it's a dashboard for all statistical data that has been done on the apps that have been collected from the Apple Store, from longitudinal data to more specific distinctions across categories.
+              </h2>
+              <h2 className='text-xl pb-2 text-center'>
+                <strong>Search</strong>: At your perusal, feel free to search our database of apps that we've collected. View the privacy data of your app in a new way, or select apps that other users are searching for.
+              </h2>
+              <h2 className='text-xl pb-10 text-center'>
+                <strong>App</strong>: Once you find the app that you would like to view, choose to either view a condensed view of data that your app has access to, or expand to view extensive details about what permissions your app has access to. Additionally, travel through the history of the app and view what permissions have changed over time.
+              </h2>
+            </div>
+
+
+
             <div className="mb-16 relative">
               <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>But what are privacy labels?</h1>
               <p className="text-lg text-white-300 font-medium text-center mb-4">Privacy labels are basically nutrition labels, where the app must indicate what data is collected and used compactly.</p>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : 'hover:text-gray-500'}`}>
+              <a className={`text-lg font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Used to Track You
-                <span className="hover-text">Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.</span>
+                <strong className="block text-md text-gray mt-1">
+                  Data collected may be used to track users across apps and websites owned by other companies, including sharing data with third-party advertising networks and data brokers.
+                </strong>
               </a>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : 'hover:text-gray-500'}`}>
+              <a className={`text-lg font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Linked to You
-                <span className="hover-text">Data is collected and is linked to the user’s identity.</span>
+                <strong className="block text-md text-gray mt-1">
+                  Data is collected and is linked to the user’s identity.
+                </strong>
               </a>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : ' hover:text-gray-500'}`}>
+              <a className={`text-lg font-medium text-center mb-4 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Not Linked to You
-                <span className="hover-text">Data is collected but is de-identified or anonymized and is therefore not linked to the user’s identity.</span>
+                <strong className="block text-md text-gray mt-1">
+                  Data is collected but is de-identified or anonymized and is therefore not linked to the user’s identity.
+                </strong>
               </a>
 
-              <a className={`text-md cursor-pointer font-medium text-center mb-32 block relative ${theme === 'dark' ? 'text-dred hover:text-grey' : 'hover:text-gray-500'}`}>
+              <a className={`text-lg cursor-pointer font-medium text-center mb-32 block relative ${theme === 'dark' ? 'text-dred' : 'text-black'}`}>
                 Data Not Collected
-                <span className="hover-text">When an app has a label with the Data Not Collected Privacy Type, it implies that it does not collect any data from the user, and therefore does not include other Privacy Types.</span>
+                <strong className="block text-md text-gray mt-1">
+                  When an app has a label with the Data Not Collected Privacy Type, it implies that it does not collect any data from the user, and therefore does not include other Privacy Types.
+                </strong>
               </a>
             </div>
-
-            <style jsx="true">{`
-              .hover-text {
-                visibility: hidden;
-                opacity: 0;
-                width: 300px;
-                background-color: #555;
-                color: #fff;
-                text-align: center;
-                border-radius: 6px;
-                padding: 15px 10px;
-                position: absolute;
-                z-index: 1;
-                bottom: 125%;
-                left: 50%;
-                margin-left: -150px;
-                transition: opacity 0.3s;
-              }
-
-              a:hover .hover-text {
-                visibility: visible;
-                opacity: 1;
-              }
-            `}</style>
             <div className='pb-20'>
               <h1 className={`text-3xl mb-8 text-white-700 text-center font-bold ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
                 Apple's Data Categories
@@ -357,7 +268,7 @@ const Index: React.FC = () => {
                   </li>
                 </ul>
               </details>
-                
+
               {/* Surroundings */}
               <details className="border rounded-lg p-4 mb-4" open>
                 <summary className="font-semibold cursor-pointer text-lg">Surroundings</summary>
@@ -393,20 +304,7 @@ const Index: React.FC = () => {
 
             </div>
           </div>
-          <button
-            className={`absolute left-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
-            style={{ fontSize: '1.5rem', padding: '1.5rem' }}
-            onClick={() => scrollTo('prev')}
-          >
-            &lt;
-          </button>
-          <button
-            className={`absolute right-0 top-3/4 transform -translate-y-1/2 text-gray-700 rounded-full p-4 shadow-md ${theme === 'dark' ? 'text-white bg-grey hover:text-red hover:bg-white' : 'text-red hover:text-white hover:bg-red'}`}
-            style={{ fontSize: '1.5rem', padding: '1.5rem' }}
-            onClick={() => scrollTo('next')}
-          >
-            &gt;
-          </button>
+
         </div>
       }
     </>

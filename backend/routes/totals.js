@@ -17,7 +17,7 @@ router.get('/', async function(req, res){
               "must": [
                 {
                     "term": {
-                    "privacylabels.privacyDetails.privacyTypes.keyword": {
+                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                       "value": "Data Not Collected"
                     }
                   }
@@ -36,7 +36,7 @@ router.get('/', async function(req, res){
               "must": [
                 {
                     "term": {
-                    "privacylabels.privacyDetails.privacyTypes.keyword": {
+                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                       "value": "Data Linked to You"
                     }
                   }
@@ -55,7 +55,7 @@ router.get('/', async function(req, res){
               "must": [
                 {
                     "term": {
-                    "privacylabels.privacyDetails.privacyTypes.keyword": {
+                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                       "value": "Data Not Linked to You"
                     }
                   }
@@ -74,7 +74,7 @@ router.get('/', async function(req, res){
               "must": [
                 {
                     "term": {
-                    "privacylabels.privacyDetails.privacyTypes.keyword": {
+                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
                       "value": "Data Used to Track You"
                     }
                   }
