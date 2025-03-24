@@ -7,6 +7,7 @@ const { Client } = require('@elastic/elasticsearch');
 const ELASTIC_USERNAME = 'elastic';
 const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
 const indexName = 'longitude_graph';
+const datesIndex = 'dates_runs_mapping'; // New index for dates and runs
 
 const client = new Client({
     node: 'http://localhost:9200',
@@ -16,22 +17,39 @@ const client = new Client({
     }
 });
 
-// Load dates and runs from JSON file
-let runsDateMapping = {};
-try {
-    const datesAndRunsPath = path.join(__dirname, '../dates_and_runs.json');
-    runsDateMapping = JSON.parse(fs.readFileSync(datesAndRunsPath, 'utf8'));
-    console.log('Successfully loaded dates_and_runs.json');
-} catch (error) {
-    console.error('Error loading dates_and_runs.json:', error);
-    process.exit(1);
-}
 
-// Get date for a given run using the mapping
-function getRunDate(runNumber) {
-    console.log(runNumber);
-    
-    return runsDateMapping[runNumber]?.['date'] || "No Date Found";
+async function getRunDate(runNumber) {
+    try {
+        console.log(`Searching for date with run number: ${runNumber}`);
+        
+        const response = await client.search({
+            index: datesIndex,
+            body: {
+                query: {
+                    term: {
+                        run_number: runNumber  // Verify this matches your index's field exactly
+                    }
+                },
+                size: 1
+            }
+        });
+
+        console.log('Search response:', JSON.stringify(response, null, 2));
+
+        // Check if any hits were found
+        if (response.hits.total.value > 0) {
+            const hit = response.hits.hits[0]._source;
+            console.log('Hit found:', hit);
+            return hit.date || "No Date Found";
+        }
+
+        console.log(`No date found for run number ${runNumber}`);
+        return "No Date Found";
+    } catch (error) {
+        console.error(`Detailed error retrieving date for run ${runNumber}:`, error);
+        console.error('Error details:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+        return "No Date Found";
+    }
 }
 
 function extractRunNumber(runString) {
@@ -142,7 +160,7 @@ async function processAndIndexData() {
                 runData[runIndex] = {
                     index: runIndex,
                     runNumber: i,
-                    date: getRunDate(count++),
+                    date: await getRunDate(runIndex),
                     values: {}
                 };
 
@@ -193,12 +211,8 @@ async function processAndIndexData() {
             }
         }
 
-        // Save skipped runs information to a file for reference
-        const skippedRunsPath = path.join(__dirname, 'skipped_runs.json');
-        fs.writeFileSync(skippedRunsPath, JSON.stringify(skippedRuns, null, 2));
 
         console.log(`\nIndexed ${successCount} runs successfully.`);
-        console.log(`Skipped runs information saved to ${skippedRunsPath}`);
         console.log("Processing complete!");
         
     } catch (error) {

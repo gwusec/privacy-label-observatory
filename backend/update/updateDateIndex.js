@@ -16,8 +16,6 @@ const client = new Client({
     }
 });
 
-// Path to JSON file
-const datesAndRunsPath = path.join(__dirname, '../dates_and_runs.json');
 
 // Function to format run number
 function getRunNumber(i) {
@@ -61,20 +59,6 @@ async function addNewRun() {
             }
         }
 
-        // If we still don't have a latest run number, check the JSON file
-        if (!latestRunNumber) {
-            console.log("Checking JSON file for latest run...");
-            const data = JSON.parse(fs.readFileSync(datesAndRunsPath, 'utf8'));
-            
-            // Find the highest run number in the file
-            if (data.length > 0) {
-                const runNumbers = data.map(entry => extractRunNumber(entry.run_number));
-                latestRunNumber = Math.max(...runNumbers.filter(num => num !== null));
-            } else {
-                // Default if all else fails
-                latestRunNumber = 1;
-            }
-        }
 
         // Calculate new run number
         const newRunNumber = latestRunNumber + 1;
@@ -91,21 +75,6 @@ async function addNewRun() {
                 date: currentDate
             }
         });
-
-        // Update the JSON file
-        try {
-            const data = JSON.parse(fs.readFileSync(datesAndRunsPath, 'utf8'));
-            data.push({
-                run_number: newRunString,
-                date: currentDate
-            });
-
-            // Write updated data back to file
-            fs.writeFileSync(datesAndRunsPath, JSON.stringify(data, null, 4), 'utf8');
-            console.log(`Updated ${datesAndRunsPath} with new entry`);
-        } catch (fileError) {
-            console.error("Error updating JSON file:", fileError);
-        }
 
         // Refresh the index
         await client.indices.refresh({ index: indexName });
