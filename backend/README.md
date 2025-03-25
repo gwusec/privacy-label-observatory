@@ -62,7 +62,7 @@ Past that into the connect command in js
 
 ```js
 const client = new Client({
-    node: 'https://localhost:9200', // Elasticsearch endpoint
+    node: 'http://localhost:9200', // Elasticsearch endpoint
     auth: {
         username: process.env.ELASTIC_USERNAME,
         password: process.env.ELASTIC_PASSWORD

@@ -2,15 +2,16 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const { Client } = require('@elastic/elasticsearch');
+require('dotenv').config({ path: '../.env' });
 
 // Elasticsearch credentials
-const ELASTIC_USERNAME = 'elastic';
-const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
+const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
+const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const indexName = 'longitude_graph';
 const datesIndex = 'dates_runs_mapping'; // New index for dates and runs
 
 const client = new Client({
-    node: 'http://localhost:9200',
+    node: process.env.ELASTIC_ENDPOINT,
     auth: {
         username: ELASTIC_USERNAME,
         password: ELASTIC_PASSWORD
@@ -114,7 +115,7 @@ async function initializeIndex() {
 async function processAndIndexData() {
     try {
         // Fetch latest run number
-        const latestResponse = await axios.get('http://localhost:8017/latestIndex');
+        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
         const latestRun = extractRunNumber(latestResponse.data.latestRun);
 
         // Process all runs sequentially

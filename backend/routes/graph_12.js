@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../.env' });
 var express = require("express")
 var router = express.Router()
 const axios = require('axios');
@@ -12,14 +13,14 @@ var roundUpto = function(number, upto){
 router.get('/', async function(req, res){
     const latestRun = req.query.run;
 
-    const totalRequest = await axios.get(`http://localhost:8017/total?run=${latestRun}`)
+    const totalRequest = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/total?run=${latestRun}`)
     totals = totalRequest.data
 
     percentages = {}
 
 
     //This is for all percentages of data not collected
-    var request = await axios.get(`http://localhost:8017/helper12?name=dnc&run=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/helper12?name=dnc&run=${latestRun}`)
     dnc_totals = request.data
 
     for(const [key, value] of Object.entries(dnc_totals)){
@@ -28,7 +29,7 @@ router.get('/', async function(req, res){
     }
 
     //This is for all percentages of data not linked to you
-    var request = await axios.get(`http://localhost:8017/helper12?name=dnlty&run=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/helper12?name=dnlty&run=${latestRun}`)
     dnlty_totals = request.data
 
     for(const [key, value] of Object.entries(dnlty_totals)){
@@ -37,7 +38,7 @@ router.get('/', async function(req, res){
     }
 
     //This is for all percentages of data linked to you
-    var request = await axios.get(`http://localhost:8017/helper12?name=dlty&run=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/helper12?name=dlty&run=${latestRun}`)
     dlty_totals = request.data
 
     for(const [key, value] of Object.entries(dlty_totals)){
@@ -46,7 +47,7 @@ router.get('/', async function(req, res){
     }
 
     //This is for all percentages of data used to track you
-    var request = await axios.get(`http://localhost:8017/helper12?name=duty&run=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/helper12?name=duty&run=${latestRun}`)
     duty_totals = request.data
 
     for(const [key, value] of Object.entries(duty_totals)){
