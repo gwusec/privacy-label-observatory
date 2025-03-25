@@ -115,7 +115,7 @@ async function initializeIndex() {
 async function processAndIndexData() {
     try {
         // Fetch latest run number
-        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
+        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
         const latestRun = extractRunNumber(latestResponse.data.latestRun);
 
         // Process all runs sequentially

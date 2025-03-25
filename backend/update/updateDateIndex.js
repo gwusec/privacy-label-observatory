@@ -40,7 +40,7 @@ function getCurrentDate() {
 async function addNewRun() {
     try {
         // Fetch latest run number from your API
-        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
+        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
         let latestRunNumber = extractRunNumber(latestResponse.data.latestRun);
 
         // If API call fails, try to get latest from Elasticsearch

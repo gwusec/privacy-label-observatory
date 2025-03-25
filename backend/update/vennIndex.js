@@ -65,7 +65,7 @@ const countQuery = async (query, index) => {
 async function processVennGraphData() {
     try {
         // Fetch latest run number
-        const latestRunResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
+        const latestRunResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
         const latestRun = latestRunResponse.data.latestRun;
 
         // Initialize the index

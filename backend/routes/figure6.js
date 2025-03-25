@@ -7,7 +7,7 @@ const axios = require('axios');
 
 router.get('/', async function(req, res) {
     var results = {};
-    const totalRequest = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
+    const totalRequest = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
     totals = totalRequest.data.latestRun;
 
     const queries = [

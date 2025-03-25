@@ -43,6 +43,7 @@ const DataTypesChart: React.FC<DataTypesProps> = ({ data, color, theme }) => {
           }]
         },
         options: {
+          maintainAspectRatio: true,
           indexAxis: 'y', // Horizontal bar chart
           layout: {
             padding: {
