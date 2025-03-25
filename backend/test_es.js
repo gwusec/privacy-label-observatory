@@ -20,7 +20,6 @@ client.cat.indices({
 }).then((r) => {
     for (i in r){
         if (r[i]["index"].includes("run")){
-            console.log(r[i]["index"])
         }
     }
 })

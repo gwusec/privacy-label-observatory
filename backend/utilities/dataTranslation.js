@@ -14,7 +14,6 @@ const readCSV = async (filePath) => {
       Papa.parse(csvData, {
         header: true,
         complete: results => {
-          console.log('Complete', results.data.length, 'records.'); 
           resolve(results.data);
         }
       });
@@ -28,15 +27,12 @@ router.get('/', async (req, res) => {
 
     let parsedData = await readCSV(csvFilePath); 
 
-    console.log(parsedData)
-
     for(let i = 0; i < privacy_data.length; i++) {
         const python = spawn('python3', ['alterCsv.py', privacy_data[i]]);
         
         // Promisify the 'on' method of the stream
         const stdoutPromise = new Promise(resolve => {
             python.stdout.on('data', data => {
-                console.log('Pipe data from python script ...');
                 const dataToSend = data.toString();
                 translation.push(dataToSend);
                 resolve(dataToSend); // Resolve the promise once data is received
@@ -45,12 +41,10 @@ router.get('/', async (req, res) => {
 
         const code = await new Promise(resolve => {
             python.on('close', code => {
-                console.log(`child process close all stdio with code ${code}`);
                 resolve(code); // Resolve the promise once the process is closed
             });
         });
 
-        console.log(`Process for ${privacy_data[i]} finished with code ${code}`);
     }
 
     // Send the combined translation after all processes have finished

@@ -32,7 +32,6 @@ interface RunData {
 const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
   const { theme } = useTheme();
   const chartRef = useRef<ChartJS | null>(null);
-  console.log("data", data);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

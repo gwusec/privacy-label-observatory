@@ -44,7 +44,6 @@ async function addNewRun() {
 
         // If API call fails, try to get latest from Elasticsearch
         if (!latestRunNumber) {
-            console.log("Couldn't get latest run from API, checking Elasticsearch...");
             const searchResponse = await client.search({
                 index: indexName,
                 body: {
@@ -65,7 +64,6 @@ async function addNewRun() {
         const newRunString = getRunNumber(newRunNumber);
         const currentDate = getCurrentDate();
 
-        console.log(`Creating new run: ${newRunString} with date: ${currentDate}`);
 
         // Index the new entry in Elasticsearch
         await client.index({
@@ -78,8 +76,6 @@ async function addNewRun() {
 
         // Refresh the index
         await client.indices.refresh({ index: indexName });
-        console.log(`Successfully added new run ${newRunString} to index ${indexName}`);
-
     } catch (error) {
         console.error("Error adding new run:", error);
     }
@@ -89,7 +85,6 @@ async function addNewRun() {
 async function main() {
     try {
         await addNewRun();
-        console.log("Update complete!");
     } catch (error) {
         console.error("Error in main process:", error);
     } finally {
