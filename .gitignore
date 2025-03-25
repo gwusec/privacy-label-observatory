@@ -5,3 +5,4 @@ date_run_mapping.json
 /final
 /.vscode
 /GraphUpload
+.env

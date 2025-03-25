@@ -1,5 +1,5 @@
 //express
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 const express = require("express");
 var cors = require('cors')
 const bodyParser = require("body-parser")
@@ -42,7 +42,6 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 const port =  process.env.BACKEND_PORT;
-
 
 
 //TestAPI - this could be used when writing some more of the functions

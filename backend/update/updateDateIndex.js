@@ -2,14 +2,15 @@ const fs = require('fs');
 const path = require('path');
 const { Client } = require('@elastic/elasticsearch');
 const axios = require('axios');
+require('dotenv').config({ path: '../.env' });
 
 // Elasticsearch credentials
-const ELASTIC_USERNAME = 'elastic';
-const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
+const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
+const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const indexName = 'dates_runs_mapping';
 
 const client = new Client({
-    node: 'http://localhost:9200',
+    node: process.env.ELASTIC_ENDPOINT,
     auth: {
         username: ELASTIC_USERNAME,
         password: ELASTIC_PASSWORD
@@ -39,7 +40,7 @@ function getCurrentDate() {
 async function addNewRun() {
     try {
         // Fetch latest run number from your API
-        const latestResponse = await axios.get('http://localhost:8017/latestIndex');
+        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
         let latestRunNumber = extractRunNumber(latestResponse.data.latestRun);
 
         // If API call fails, try to get latest from Elasticsearch

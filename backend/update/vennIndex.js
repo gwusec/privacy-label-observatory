@@ -1,14 +1,15 @@
 const axios = require('axios');
 const { Client } = require('@elastic/elasticsearch');
 const indexCreation = require('./initializeIndex');
+require('dotenv').config({ path: '../.env' });
 
 // Elasticsearch credentials
-const ELASTIC_USERNAME = 'elastic';
-const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
+const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
+const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const indexName = 'venn_graph';
 
 const client = new Client({
-    node: 'http://localhost:9200',
+    node: process.env.ELASTIC_ENDPOINT,
     auth: {
         username: ELASTIC_USERNAME,
         password: ELASTIC_PASSWORD
@@ -64,7 +65,7 @@ const countQuery = async (query, index) => {
 async function processVennGraphData() {
     try {
         // Fetch latest run number
-        const latestRunResponse = await axios.get('http://localhost:8017/latestIndex');
+        const latestRunResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
         const latestRun = latestRunResponse.data.latestRun;
 
         // Initialize the index

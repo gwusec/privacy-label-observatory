@@ -1,5 +1,5 @@
 // File path: /routes/index.js
-
+require('dotenv').config({ path: '../.env' });
 var express = require("express");
 var router = express.Router();
 const client = require("../client");
@@ -7,7 +7,7 @@ const axios = require('axios');
 
 router.get('/', async function(req, res) {
     var results = {};
-    const totalRequest = await axios.get(`http://localhost:8017/latestIndex`);
+    const totalRequest = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/latestIndex`);
     totals = totalRequest.data.latestRun;
 
     const queries = [
