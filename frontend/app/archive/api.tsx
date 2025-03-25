@@ -8,7 +8,7 @@ import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/dropdown";
 import { json } from "@remix-run/node";
-import DownloadButton from "~/components/DownloadButton";
+import DownloadButton from "~/archive/DownloadButton";
 
 export const meta: MetaFunction = () => {
     return [{
