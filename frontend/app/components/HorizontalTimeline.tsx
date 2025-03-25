@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Stepper, Step, StepLabel, Button, styled } from '@mui/material';
 
-var data = require("../../../backend/Misc/dates_and_runs.json");
-
 const CustomStepLabel = styled(StepLabel)(({ active }) => ({
     '& .MuiStepLabel-label': {
         color: active ? 'blue' : 'grey', 
@@ -62,11 +60,10 @@ function findChanges(runs: any){
     return arr
 }
 
-function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick }: { privtypes: any, activeIndex: any, updateParent: any, handleClick: any }) {
+function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick, dates }: { privtypes: any, activeIndex: any, updateParent: any, handleClick: any, dates:any }) {
     const [activeStep, setActiveStep] = useState(0);
     const [mounted, setMounted] = useState(false);
     const runRefs = useRef<any[]>([]);
-    const [dateMapping, setDateMapping] = useState(JSON.parse(JSON.stringify(data)));
     const [isMobile, setIsMobile] = useState(false);
 
     // Check if mobile on mount
@@ -125,7 +122,7 @@ function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick 
     }
 
     // Get current date for display
-    const currentDate = dateMapping.find((obj: any) => obj.run_number === arrRuns[activeStep]?.index)?.date || '';
+    const currentDate = dates.find((obj: any) => obj.run_number === arrRuns[activeStep]?.index)?.date || '';
     
     // Progress information for mobile view
     const progressText = `${activeStep + 1} of ${arrRuns.length}`;
@@ -220,7 +217,7 @@ function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick 
                                     </>
                                 )}
                                 <CustomStepLabel active={index === activeStep}>
-                                    {dateMapping.find((obj: any) => obj.run_number === data.index)?.date}
+                                    {dates.find((obj: any) => obj.run_number === data.index)?.date}
                                 </CustomStepLabel>
                             </Step>
                         ))}

@@ -18,6 +18,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export async function loader({ params }: LoaderFunctionArgs) {
+
+    // First, get dates
+    const dates = await fetch(process.env.BACKEND_API + "dates");
+    const datesJson = await dates.json();
+
+    // Then, get app
     const q = params.app_id
     if (q == undefined) {
         return
@@ -25,15 +31,17 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
     const app = await fetch(process.env.BACKEND_API + "fullApp?id=" + q)
     const data = await app.json()
-    return (json(data));
+    return [datesJson, data];
 };
 
 export default function searchApp() {
 
     const data = useLoaderData<typeof loader>();
+    const app = data[1];
+    const dates = data[0]
     return (
         <div className={`items-start min-h-screen h-full`}>
-            <Timeline data={data} />
+            <Timeline data={app} dates={dates}/>
         </div>
     )
 }

@@ -31,6 +31,7 @@ var longUpdated = require("./routes/getLongitudeUpdated")
 var latestIndex = require("./routes/latestIndex")
 var downloadRouter = require("./routes/download")
 var cacheRouter = require("./routes/cacheList")
+var datesRouter = require("./routes/dates")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -74,6 +75,7 @@ app.use("/helper15", graph15Helper)
 app.use("/longUpdated", longUpdated)
 app.use("/download", downloadRouter)
 app.use("/cache", cacheRouter)
+app.use("/dates", datesRouter)
 
 //helloworld GET
 app.get('/', function (req, res) {
