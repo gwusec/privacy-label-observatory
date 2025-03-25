@@ -18,11 +18,9 @@ async function initializeIndex(indexName) {
         const exists = await client.indices.exists({ index: indexName });
 
         if (exists) {
-            console.log(`Index exists: ${indexName}`);
             return; 
         }
 
-        console.log(`Creating new index: ${indexName}`);
         await client.indices.create({ index: indexName });
     } catch (error) {
         console.error("Error initializing index:", error);

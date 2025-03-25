@@ -34,7 +34,6 @@ router.get("/", async function (req, res) {
                     };
                 })
             );
-            console.log("Got cache list", hits);
             res.json(hits)
             return;
         }

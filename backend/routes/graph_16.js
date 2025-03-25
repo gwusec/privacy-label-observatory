@@ -23,7 +23,6 @@ router.get('/', async function(req, res){
     for(const [key, value] of Object.entries(dnc_totals)){
         const totalSum = Object.values(dnc_totals).reduce((sum, num) => sum + num, 0)
         var total = roundUpto(((value/totalSum) * 100), 2)
-        console.log("dnc", total);
         percentages["dnc_" + key] = total
     }
 

@@ -64,13 +64,10 @@ const countQuery = async (query, index) => {
 async function processVennGraphData() {
     try {
         // Fetch latest run number
-        console.log("Fetching latest run number...");
         const latestRunResponse = await axios.get('http://localhost:8017/latestIndex');
         const latestRun = latestRunResponse.data.latestRun;
-        console.log(`Latest run: ${latestRun}`);
 
         // Initialize the index
-        console.log(`Initializing index: ${indexName}`);
         await indexCreation.initializeIndex(indexName);
 
         // Process queries and collect data
@@ -81,19 +78,15 @@ async function processVennGraphData() {
 
         // Execute each query and collect counts
         for (const query of queries) {
-            console.log(`Processing query: ${query.label}`);
             vennData[query.label] = await countQuery(query.query, latestRun);
         }
 
         // Index the data
-        console.log("Indexing Venn graph data...");
         const indexResponse = await client.index({
             index: indexName, 
             body: vennData
         });
 
-        console.log("Data successfully indexed!");
-        console.log("Venn Graph Data:", vennData);
 
         return vennData;
     } catch (error) {

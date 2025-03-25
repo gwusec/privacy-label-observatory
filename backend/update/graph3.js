@@ -20,7 +20,6 @@ const client = new Client({
 
 async function getRunDate(runNumber) {
     try {
-        console.log(`Searching for date with run number: ${runNumber}`);
         
         const response = await client.search({
             index: datesIndex,
@@ -34,16 +33,13 @@ async function getRunDate(runNumber) {
             }
         });
 
-        console.log('Search response:', JSON.stringify(response, null, 2));
 
         // Check if any hits were found
         if (response.hits.total.value > 0) {
             const hit = response.hits.hits[0]._source;
-            console.log('Hit found:', hit);
             return hit.date || "No Date Found";
         }
 
-        console.log(`No date found for run number ${runNumber}`);
         return "No Date Found";
     } catch (error) {
         console.error(`Detailed error retrieving date for run ${runNumber}:`, error);
@@ -103,11 +99,9 @@ async function initializeIndex() {
         const exists = await client.indices.exists({ index: indexName });
 
         if (exists) {
-            console.log(`Deleting existing index: ${indexName}`);
             await client.indices.delete({ index: indexName });
         }
 
-        console.log(`Creating new index: ${indexName}`);
         await client.indices.create({ index: indexName });
         return true;
     } catch (error) {
@@ -120,10 +114,8 @@ async function initializeIndex() {
 async function processAndIndexData() {
     try {
         // Fetch latest run number
-        console.log("Fetching latest run number...");
         const latestResponse = await axios.get('http://localhost:8017/latestIndex');
         const latestRun = extractRunNumber(latestResponse.data.latestRun);
-        console.log(`Latest run number: ${latestRun}`);
 
         // Process all runs sequentially
         const runData = {};
@@ -134,13 +126,11 @@ async function processAndIndexData() {
         for (let i = 1; i <= latestRun; i++) {
             try {
                 const runIndex = getRunNumber(i);
-                console.log(`Processing ${runIndex} (${i}/${latestRun})...`);
                 
                 // Check if the index exists before processing
                 const exists = await indexExists(runIndex);
 
                 if (!exists) {
-                    console.log(`Run ${runIndex} doesn't exist - skipping`);
                     skippedRuns[runIndex] = { reason: "Index does not exist" };
                     continue; // Skip this iteration and move to the next run
                 }
@@ -150,12 +140,10 @@ async function processAndIndexData() {
                 
                 // If there are less than 700K apps in a run total, skip this run but log it
                 if (total < 700000) {
-                    console.log(`Run ${runIndex} has only ${total} apps - skipping`);
                     skippedRuns[runIndex] = { reason: "Less than 700K apps", count: total };
                     continue;
                 }
 
-                console.log(`Processing data for ${runIndex} with ${total} apps`);
                 // Store the run data
                 runData[runIndex] = {
                     index: runIndex,
@@ -168,7 +156,6 @@ async function processAndIndexData() {
                 for (const q of queries) {
                     const count = await countQuery(q.query, runIndex);
                     runData[runIndex].values[q.label] = count;
-                    console.log(`  ${q.label}: ${count}`);
                 }
                 
             } catch (error) {
@@ -177,12 +164,8 @@ async function processAndIndexData() {
             }
         }
 
-        // Log summary of processing
-        console.log(`\nProcessed ${Object.keys(runData).length} runs successfully.`);
-        console.log(`Skipped ${Object.keys(skippedRuns).length} runs.`);
         
         // Initialize the index for storing the processed data
-        console.log("\nInitializing index for storing the processed data...");
         const indexInitialized = await initializeIndex();
         
         if (!indexInitialized) {
@@ -192,7 +175,6 @@ async function processAndIndexData() {
         
         // Index the data
         let successCount = 0;
-        console.log("Indexing processed data...");
         for (const runIndex in runData) {
             try {
                 await client.index({
@@ -205,16 +187,13 @@ async function processAndIndexData() {
                     }
                 });
                 successCount++;
-                console.log(`Indexed data for ${runIndex}`);
             } catch (error) {
                 console.error(`Failed to index data for ${runIndex}:`, error.message);
             }
         }
 
 
-        console.log(`\nIndexed ${successCount} runs successfully.`);
-        console.log("Processing complete!");
-        
+
     } catch (error) {
         console.error("Error in main process:", error);
     }

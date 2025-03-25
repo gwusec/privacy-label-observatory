@@ -6,7 +6,6 @@ async function createIndex(indexName) {
       const { body: exists } = await client.indices.exists({ index: indexName });
       
       if (exists) {
-        console.log(`Index "${indexName}" already exists.`);
         return;
       }
   
@@ -14,8 +13,7 @@ async function createIndex(indexName) {
       const { body: response } = await client.indices.create({
         index: indexName
       });
-  
-      console.log(`Index "${indexName}" created successfully.`);
+ 
     } catch (error) {
       console.error(`Error creating index "${indexName}":`, error);
     }

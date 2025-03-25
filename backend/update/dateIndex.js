@@ -24,12 +24,10 @@ async function initializeIndex() {
         const exists = await client.indices.exists({ index: indexName });
 
         if (exists) {
-            console.log(`Index ${indexName} already exists.`);
             await client.indices.delete({
                 index: indexName
             })
         } else {
-            console.log(`Creating new index: ${indexName}`);
             await client.indices.create({ 
                 index: indexName,
                 body: {
@@ -41,7 +39,6 @@ async function initializeIndex() {
                     }
                 }
             });
-            console.log(`Index ${indexName} created successfully.`);
         }
     } catch (error) {
         console.error("Error initializing index:", error);
@@ -54,7 +51,6 @@ async function indexData() {
     try {
         // Read and parse the JSON file
         const data = JSON.parse(fs.readFileSync(datesAndRunsPath, 'utf8'));
-        console.log(`Loaded ${data.length} entries from ${datesAndRunsPath}`);
 
         // Index each entry
         let successful = 0;
@@ -73,7 +69,6 @@ async function indexData() {
             }
         }
 
-        console.log(`Successfully indexed ${successful} out of ${data.length} entries.`);
         
         // Refresh the index to make the data available for search
         await client.indices.refresh({ index: indexName });
@@ -89,7 +84,6 @@ async function main() {
     try {
         await initializeIndex();
         await indexData();
-        console.log("Indexing complete!");
     } catch (error) {
         console.error("Error in main process:", error);
     } finally {

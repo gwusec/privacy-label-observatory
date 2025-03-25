@@ -77,10 +77,6 @@ app.use("/download", downloadRouter)
 app.use("/cache", cacheRouter)
 app.use("/dates", datesRouter)
 
-//helloworld GET
-app.get('/', function (req, res) {
-    res.send('Hello World');
-});
 
 var server = app.listen(port, () => {
     var host = server.address().address;

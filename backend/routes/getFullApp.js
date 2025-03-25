@@ -95,7 +95,6 @@ async function addToCache(app_id, data) {
       refresh: true  // Make sure the document is immediately searchable
     });
     
-    console.log(`Added app ${app_id} to cache index`);
   } catch (error) {
     console.error("Error adding to cache:", error);
   }
@@ -108,7 +107,6 @@ router.get("/", async function (req, res) {
     // Check if the app is in the cache
     const cachedResult = await checkAppCache(app_id);
     if (cachedResult) {
-      console.log(`Serving app ${app_id} from cache index`);
       
       // Update the cached_at timestamp
       await updateCacheTimestamp(cachedResult.id);
