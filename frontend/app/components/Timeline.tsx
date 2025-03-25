@@ -113,7 +113,7 @@ const getIconPath = (category: string, theme: string | undefined) => {
     }
 };
 
-export default function Timeline({ data }: { data: any }) {
+export default function Timeline({ data, dates }: { data: any, dates:any }) {
     const navigate = useNavigate()
     const [activeIndex, setActiveIndex] = useState(0);
     const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
@@ -208,6 +208,7 @@ export default function Timeline({ data }: { data: any }) {
                         }`}>
                         <HorizontalTimeline
                             privtypes={privacy_types}
+                            dates={dates}
                             activeIndex={activeIndex}
                             updateParent={updateParent}
                             handleClick={handleClick}
