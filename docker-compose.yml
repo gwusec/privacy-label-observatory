@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend  # Path to your React Remix app
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"  # Use environment variable for port
+    env_file:
+      - .env  # Include the .env file to load environment variables
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend  # Path to your Express app
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"  # Use environment variable for port
+    env_file:
+      - .env  # Include the .env file to load environment variables
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
