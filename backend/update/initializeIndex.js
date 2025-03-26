@@ -1,10 +1,11 @@
 const { Client } = require('@elastic/elasticsearch');
+require('dotenv').config({ path: '../.env' });
 
 // Elasticsearch credentials
-const ELASTIC_USERNAME = 'elastic';
-const ELASTIC_PASSWORD = 'uIihE15cqeQIvaz';
+const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
+const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const client = new Client({
-    node: 'http://localhost:9200',
+    node: process.env.ELASTIC_ENDPOINT,
     auth: {
         username: ELASTIC_USERNAME,
         password: ELASTIC_PASSWORD
