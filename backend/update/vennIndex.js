@@ -1,12 +1,13 @@
 const axios = require('axios');
 const { Client } = require('@elastic/elasticsearch');
 const indexCreation = require('./initializeIndex');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '../../.env' });
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
 const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const indexName = 'venn_graph';
+const datesIndex = 'dates_runs_mapping'
 
 const client = new Client({
     node: process.env.ELASTIC_ENDPOINT,
@@ -65,8 +66,20 @@ const countQuery = async (query, index) => {
 async function processVennGraphData() {
     try {
         // Fetch latest run number
-        const latestRunResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
-        const latestRun = latestRunResponse.data.latestRun;
+        const latestRunResponse = await client.search({
+            index: datesIndex,
+            size: 1,
+            sort: [{ "run_number.keyword": "desc" }],
+            _source: ["run_number"]
+        });
+        
+        if (latestRunResponse.hits.total.value === 0) {
+            throw new Error("No runs found in the dates_runs_mapping index.");
+        }
+        
+        const latestRunStr = latestRunResponse.hits.hits[0]._source.run_number;
+        let latestRunNumber = parseInt(latestRunStr.match(/(\d{5})$/)[1], 10);
+        const latestRun = 'run_00' + latestRunNumber;
 
         // Initialize the index
         await indexCreation.initializeIndex(indexName);
