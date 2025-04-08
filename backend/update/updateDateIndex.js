@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { Client } = require('@elastic/elasticsearch');
 const axios = require('axios');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '../../.env' });
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
@@ -40,24 +40,19 @@ function getCurrentDate() {
 async function addNewRun() {
     try {
         // Fetch latest run number from your API
-        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
-        let latestRunNumber = extractRunNumber(latestResponse.data.latestRun);
-
-        // If API call fails, try to get latest from Elasticsearch
-        if (!latestRunNumber) {
-            const searchResponse = await client.search({
-                index: indexName,
-                body: {
-                    size: 1,
-                    sort: [{ "run_number": "desc" }],
-                    _source: ["run_number"]
-                }
-            });
-
-            if (searchResponse.hits.total.value > 0) {
-                latestRunNumber = extractRunNumber(searchResponse.hits.hits[0]._source.run_number);
+        const searchResponse = await client.search({
+            index: indexName,
+            body: {
+                size: 1,
+                sort: [{ "run_number.keyword": "desc" }],
+                _source: ["run_number"]
             }
+        });
+
+        if (searchResponse.hits.total.value > 0) {
+            latestRunNumber = extractRunNumber(searchResponse.hits.hits[0]._source.run_number);
         }
+
 
 
         // Calculate new run number
