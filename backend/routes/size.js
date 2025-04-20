@@ -17,7 +17,7 @@ router.get('/', async function (req, res) {
     percentages = {}
 
     //This is for all percentages of data not collected
-    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/helper15?name=dnc&latestRun=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/sizeHelper?name=dnc&latestRun=${latestRun}`)
     dnc_totals = request.data
 
     for (const [key, value] of Object.entries(dnc_totals)) {
@@ -26,7 +26,7 @@ router.get('/', async function (req, res) {
     }
 
     //This is for all percentages of data not linked to you
-    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/helper15?name=dnlty&latestRun=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/sizeHelper?name=dnlty&latestRun=${latestRun}`)
     dnlty_totals = request.data
 
     for (const [key, value] of Object.entries(dnlty_totals)) {
@@ -35,7 +35,7 @@ router.get('/', async function (req, res) {
     }
 
     //This is for all percentages of data linked to you
-    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/helper15?name=dlty&latestRun=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/sizeHelper?name=dlty&latestRun=${latestRun}`)
     dlty_totals = request.data
 
     for (const [key, value] of Object.entries(dlty_totals)) {
@@ -44,7 +44,7 @@ router.get('/', async function (req, res) {
     }
 
     //This is for all percentages of data used to track you
-    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/helper15?name=duty&latestRun=${latestRun}`)
+    var request = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/sizeHelper?name=duty&latestRun=${latestRun}`)
     duty_totals = request.data
 
     for (const [key, value] of Object.entries(duty_totals)) {
