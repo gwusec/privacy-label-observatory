@@ -257,7 +257,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                         <div className='flex justify-center space-x-4'>
                                             {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
 
-                                            <h3 className="text-lg">Data Used to Track You</h3>
+                                            <h3 className="text-md">Data Used to Track You</h3>
                                         </div>
                                         {privDetails.map(priv =>
                                             priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
@@ -276,7 +276,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                             >
                                                                 {/* Data Category Header */}
                                                                 <div className={`w-full ${expandedColumn === null && allColumns === false ? 'pl-6' : 'text-center mb-4'}`}>
-                                                                    <li className={`text-lg font-semibold flex ${expandedColumn === null && allColumns === false ? '' : 'justify-center'} items-center space-x-2`}>
+                                                                    <li className={`text-md font-semibold flex ${expandedColumn === null && allColumns === false ? '' : 'justify-center'} items-center space-x-2`}>
                                                                         {expandedColumn === null && allColumns === false ? (
                                                                             <div className="flex items-center space-x-2">
                                                                                 <img src={getIconPath(dataCategory.identifier, theme)} className="w-6 h-6" />
@@ -320,7 +320,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                         <div className='flex justify-center space-x-4'>
                                             {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
 
-                                            <h3 className="text-lg">Data Used to Track You</h3>
+                                            <h3 className="text-md">Data Used to Track You</h3>
                                         </div>
                                         <p>No Data Collected</p>
                                     </div>}
@@ -352,7 +352,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                     <div>
                                         <div className='flex justify-center space-x-4'>
                                             {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
-                                            <h3 className="text-lg">Data Linked to You</h3>
+                                            <h3 className="text-md">Data Linked to You</h3>
                                         </div>
                                         {privDetails.map((priv) =>
                                             priv.identifier === "DATA_LINKED_TO_YOU" ? (
@@ -383,7 +383,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                 return (
                                                                     <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                                         {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                            <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                            <li className="text-md font-semibold flex items-center space-x-2">
                                                                                 <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                                 <div className='pl-6'>{dataCategory}</div>
                                                                             </li>
@@ -393,7 +393,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                             }
                                                             return priv.purposes!.map((purpose, purposeIndex) => (
                                                                 <div key={purposeIndex}>
-                                                                    <li className="text-lg font-semibold">{purpose.identifier}</li>
+                                                                    <li className="text-md font-semibold">{purpose.identifier}</li>
                                                                     {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
                                                                         <div key={dataCategoryIndex} className="p-2">
                                                                             <li className="text-base rounded-md p-2 flex flex-col">
@@ -428,7 +428,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                         <div className='flex justify-center space-x-4'>
                                             {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
 
-                                            <h3 className="text-lg">Data Linked to You</h3>
+                                            <h3 className="text-md">Data Linked to You</h3>
                                         </div>
                                         <p>No Data Collected</p>
                                     </div>}
@@ -461,7 +461,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                         <div className='flex justify-center space-x-4'>
                                             {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
 
-                                            <h3 className="text-lg">Data Not Linked to You</h3>
+                                            <h3 className="text-md">Data Not Linked to You</h3>
                                         </div>
                                         {privDetails.map((priv) =>
                                             priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? (
@@ -494,7 +494,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                 return (
                                                                     <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                                         {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                            <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                            <li className="text-md font-semibold flex items-center space-x-2">
                                                                                 <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                                 <div className='pl-6'>{dataCategory}</div>
                                                                             </li>
@@ -506,7 +506,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                             // Render purposes, data categories, and data types when expanded
                                                             return priv.purposes!.map((purpose, purposeIndex) => (
                                                                 <div key={purposeIndex}>
-                                                                    <li className="text-lg font-semibold">{purpose.identifier}</li>
+                                                                    <li className="text-md font-semibold">{purpose.identifier}</li>
                                                                     {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
                                                                         <div key={dataCategoryIndex} className="p-2">
                                                                             <li className="text-base rounded-md p-2 flex flex-col">
@@ -543,7 +543,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                         <div className='flex justify-center space-x-4'>
                                             {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
 
-                                            <h3 className="text-lg">Data Not Linked to You</h3>
+                                            <h3 className="text-md">Data Not Linked to You</h3>
                                         </div>
                                         <p>No Data Collected</p>
                                     </div>}
@@ -562,7 +562,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                 id='duty'>
                                 <div className='flex justify-center space-x-4'>
                                     {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
-                                    <h3 className="text-lg">Data Used to Track You</h3>
+                                    <h3 className="text-md">Data Used to Track You</h3>
                                 </div>
                                 {privDetails.map(priv =>
                                     priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
@@ -570,7 +570,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                             <ul className={`mt-2 ml-6 pt-2 flex flex-col items-start w-full gap-4 `}>
                                                 {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
                                                     <div key={dataCategoryIndex} className={`flex flex-wrap justify-center`}>
-                                                        <li className="text-lg font-semibold flex items-center space-x-2">
+                                                        <li className="text-md font-semibold flex items-center space-x-2">
                                                             <div className="flex items-center space-x-2">
                                                                 <img src={getIconPath(dataCategory.identifier, theme)} className="w-6 h-6" />
                                                                 <div className='pl-6'>{dataCategory.identifier}</div>
@@ -593,7 +593,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                 <div className='flex justify-center items-center space-x-4'>
                                     {theme === 'dark' ? <img src={track_dark} alt="" className="w-8 h-8" /> : <img src={track} alt="" className="w-8 h-8" />}
 
-                                    <h3 className="text-lg">Data Used to Track You</h3>
+                                    <h3 className="text-md">Data Used to Track You</h3>
                                 </div>
                                 <p className='text-center mt-4'>No Data Collected</p>
                             </div>
@@ -608,7 +608,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                 <div className='flex justify-center space-x-4'>
                                     {theme === 'dark' ? <img src={linked_dark} alt="" className="w-8 h-8" /> : <img src={linked} alt="" className="w-8 h-8" />}
 
-                                    <h3 className="text-lg">Data Linked to You</h3>
+                                    <h3 className="text-md">Data Linked to You</h3>
                                 </div>
                                 {privDetails.map((priv) =>
                                     priv.identifier === "DATA_LINKED_TO_YOU" ? (
@@ -632,7 +632,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                     return (
                                                         <ul className="mt-2 ml-6 pt-2 flex flex-col items-start w-full gap-4">
                                                             {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                <li className="text-md font-semibold flex items-center space-x-2">
                                                                     <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                     <div className='pl-6'>{dataCategory}</div>
                                                                 </li>
@@ -655,7 +655,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                             `} id='dlty'>
                                 <div className='flex justify-center items-center space-x-4'>
                                     <img src={linked} alt="" className="w-8 h-8" />
-                                    <h3 className="text-lg">Data Linked to You</h3>
+                                    <h3 className="text-md">Data Linked to You</h3>
                                 </div>
                                 <p className='text-center mt-4'>No Data Collected</p>
                             </div>}
@@ -668,7 +668,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                 id='dnlty'>
                                 <div className='flex justify-center space-x-4'>
                                     {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
-                                    <h3 className="text-lg">Data Not Linked to You</h3>
+                                    <h3 className="text-md">Data Not Linked to You</h3>
                                 </div>
                                 {privDetails.map((priv) =>
                                     priv.identifier === "DATA_NOT_LINKED_TO_YOU" ? (
@@ -692,7 +692,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                     return (
                                                         <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                             {Array.from(allUniqueCategories).map((dataCategory, index) => (
-                                                                <li className="text-lg font-semibold flex items-center space-x-2">
+                                                                <li className="text-md font-semibold flex items-center space-x-2">
                                                                     <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                     <div className='pl-6'>{dataCategory}</div>
                                                                 </li>
@@ -716,7 +716,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                 <div className='flex justify-center items-center space-x-4'>
                                     {theme === 'dark' ? <img src={not_linked_dark} alt="" className="w-8 h-8" /> : <img src={not_linked} alt="" className="w-8 h-8" />}
 
-                                    <h3 className="text-lg text-center">Data Not Linked to You</h3>
+                                    <h3 className="text-md text-center">Data Not Linked to You</h3>
                                 </div>
                                 <p className='text-center mt-4'>No Data Collected</p>
                             </div>}
