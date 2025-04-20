@@ -3,9 +3,6 @@
 # Set the path to Node.js (adjust if needed)
 NODE_PATH=$(which node)
 
-# Log file for tracking updates
-LOG_FILE="database_update_$(date +"%Y%m%d_%H%M%S").log"
-
 # Optional date input
 DATE_ARG=""
 
@@ -25,24 +22,19 @@ done
 
 # Function to run update script and log output
 run_update_script() {
-    echo "Running $1 at $(date)" | tee -a "$LOG_FILE"
     if [ -n "$DATE_ARG" ]; then
-        "$NODE_PATH" "$1" "$DATE_ARG" 2>&1 | tee -a "$LOG_FILE"
+        "$NODE_PATH" "$1" "$DATE_ARG" 2>&1 
     else
-        "$NODE_PATH" "$1" 2>&1 | tee -a "$LOG_FILE"
+        "$NODE_PATH" "$1" 2>&1 
     fi
 
     if [ $? -eq 0 ]; then
-        echo "$1 completed successfully" | tee -a "$LOG_FILE"
+        echo "$1 completed successfully" 
     else
-        echo "ERROR: $1 failed" | tee -a "$LOG_FILE"
+        echo "ERROR: $1 failed" 
         exit 1
     fi
 }
 
 # Run update scripts
-run_update_script "updateDateIndex.js"
-run_update_script "graph3.js"
-run_update_script "vennIndex.js"
-
-echo "All database updates completed" | tee -a "$LOG_FILE"
+run_update_script "testDateArg.js"

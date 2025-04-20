@@ -31,10 +31,24 @@ function extractRunNumber(runString) {
 }
 
 // Function to get current date in YYYY-MM-DD format
+// Modify getCurrentDate to optionally take a date string
 function getCurrentDate() {
+    const argDate = process.argv[2];
+    if (argDate) {
+        // Validate format YYYY-MM-DD
+        const isValid = /^\d{4}-\d{2}-\d{2}$/.test(argDate);
+        if (!isValid) {
+            console.error("Invalid date format. Use YYYY-MM-DD.");
+            process.exit(1);
+        }
+        return argDate;
+    }
+
+    // Default to today's date
     const today = new Date();
     return today.toISOString().split('T')[0];
 }
+
 
 // Function to add a new run to the index and JSON file
 async function addNewRun() {
