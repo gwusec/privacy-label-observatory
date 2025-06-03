@@ -1,5 +1,5 @@
 const { Client } = require('@elastic/elasticsearch');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '../../.env' });
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;

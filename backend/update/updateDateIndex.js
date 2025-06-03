@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { Client } = require('@elastic/elasticsearch');
 const axios = require('axios');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '../../.env' });
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
@@ -31,33 +31,42 @@ function extractRunNumber(runString) {
 }
 
 // Function to get current date in YYYY-MM-DD format
+// Modify getCurrentDate to optionally take a date string
 function getCurrentDate() {
+    const argDate = process.argv[2];
+    if (argDate) {
+        // Validate format YYYY-MM-DD
+        const isValid = /^\d{4}-\d{2}-\d{2}$/.test(argDate);
+        if (!isValid) {
+            console.error("Invalid date format. Use YYYY-MM-DD.");
+            process.exit(1);
+        }
+        return argDate;
+    }
+
+    // Default to today's date
     const today = new Date();
     return today.toISOString().split('T')[0];
 }
+
 
 // Function to add a new run to the index and JSON file
 async function addNewRun() {
     try {
         // Fetch latest run number from your API
-        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
-        let latestRunNumber = extractRunNumber(latestResponse.data.latestRun);
-
-        // If API call fails, try to get latest from Elasticsearch
-        if (!latestRunNumber) {
-            const searchResponse = await client.search({
-                index: indexName,
-                body: {
-                    size: 1,
-                    sort: [{ "run_number": "desc" }],
-                    _source: ["run_number"]
-                }
-            });
-
-            if (searchResponse.hits.total.value > 0) {
-                latestRunNumber = extractRunNumber(searchResponse.hits.hits[0]._source.run_number);
+        const searchResponse = await client.search({
+            index: indexName,
+            body: {
+                size: 1,
+                sort: [{ "run_number.keyword": "desc" }],
+                _source: ["run_number"]
             }
+        });
+
+        if (searchResponse.hits.total.value > 0) {
+            latestRunNumber = extractRunNumber(searchResponse.hits.hits[0]._source.run_number);
         }
+
 
 
         // Calculate new run number
