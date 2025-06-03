@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const { Client } = require('@elastic/elasticsearch');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '../../.env' });
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
@@ -21,7 +21,7 @@ const client = new Client({
 
 async function getRunDate(runNumber) {
     try {
-        
+
         const response = await client.search({
             index: datesIndex,
             body: {
@@ -115,19 +115,31 @@ async function initializeIndex() {
 async function processAndIndexData() {
     try {
         // Fetch latest run number
-        const latestResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/api/latestIndex`);
-        const latestRun = extractRunNumber(latestResponse.data.latestRun);
+        const latestRunResponse = await client.search({
+            index: datesIndex,
+            size: 1,
+            sort: [{ "run_number.keyword": "desc" }],
+            _source: ["run_number"]
+        });
+
+        if (latestRunResponse.hits.total.value === 0) {
+            throw new Error("No runs found in the dates_runs_mapping index.");
+        }
+
+        const latestRunStr = latestRunResponse.hits.hits[0]._source.run_number;
+        const latestRun = parseInt(latestRunStr.match(/(\d{5})$/)[1], 10);
+
 
         // Process all runs sequentially
         const runData = {};
         const skippedRuns = {};
         count = 1;
-        
+
         // Process all runs from 1 to latestRun
         for (let i = 1; i <= latestRun; i++) {
             try {
                 const runIndex = getRunNumber(i);
-                
+
                 // Check if the index exists before processing
                 const exists = await indexExists(runIndex);
 
@@ -138,7 +150,7 @@ async function processAndIndexData() {
 
                 // Check total app count
                 let total = await countQuery(queries[0].query, runIndex);
-                
+
                 // If there are less than 700K apps in a run total, skip this run but log it
                 if (total < 700000) {
                     skippedRuns[runIndex] = { reason: "Less than 700K apps", count: total };
@@ -158,22 +170,22 @@ async function processAndIndexData() {
                     const count = await countQuery(q.query, runIndex);
                     runData[runIndex].values[q.label] = count;
                 }
-                
+
             } catch (error) {
                 console.error(`Error processing run ${i}:`, error.message);
                 skippedRuns[getRunNumber(i)] = { reason: "Error", message: error.message };
             }
         }
 
-        
+
         // Initialize the index for storing the processed data
         const indexInitialized = await initializeIndex();
-        
+
         if (!indexInitialized) {
             console.error("Failed to initialize index. Aborting.");
             return;
         }
-        
+
         // Index the data
         let successCount = 0;
         for (const runIndex in runData) {

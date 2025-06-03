@@ -128,10 +128,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
 
-  const percentage = await fetch(process.env.BACKEND_API + "graph16?run=" + runData);
+  const percentage = await fetch(process.env.BACKEND_API + "percentage?run=" + runData);
   const percentageData = await percentage.json();
 
-  const dates = await fetch(process.env.BACKEND_API + "graph14");
+  const dates = await fetch(process.env.BACKEND_API + "yearlyReleases");
   const dateJson = await dates.json();
 
   const response = await fetch(process.env.BACKEND_API + "longUpdated");
@@ -143,22 +143,22 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const response3 = await fetch(process.env.BACKEND_API + "matrix");
   const matrix = await response3.json();
 
-  const response4 = await fetch(process.env.BACKEND_API + "figure7");
+  const response4 = await fetch(process.env.BACKEND_API + "ratioDC");
   const privacyTypes = await response4.json();
 
-  const response5 = await fetch(process.env.BACKEND_API + "figure8");
+  const response5 = await fetch(process.env.BACKEND_API + "ratioDT");
   const dataTypes = await response5.json();
 
-  const response6 = await fetch(process.env.BACKEND_API + "figure13");
+  const response6 = await fetch(process.env.BACKEND_API + "appGenre");
   const appGenre = await response6.json();
 
-  const version = await fetch(process.env.BACKEND_API + "graph11?run=" + runData);
+  const version = await fetch(process.env.BACKEND_API + "version?run=" + runData);
   const versionData = await version.json();
 
-  const rating = await fetch(process.env.BACKEND_API + "graph12?run=" + runData);
+  const rating = await fetch(process.env.BACKEND_API + "rating?run=" + runData);
   const ratingData = await rating.json();
 
-  const size = await fetch(process.env.BACKEND_API + "graph15?run=" + runData);
+  const size = await fetch(process.env.BACKEND_API + "size?run=" + runData);
   const sizeData = await size.json();
 
   return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre, versionData, ratingData, sizeData];
