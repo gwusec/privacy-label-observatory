@@ -28,11 +28,8 @@ export async function loader({ params }: LoaderFunctionArgs) {
     // Then, get app
     const q = params.app_id
     if (!q || q == undefined || isNaN(Number(q))) {
-        console.log("is it getting here?");
         return redirect("/error")
     }
-
-    console.log("what about here?");
 
     const app = await fetch(process.env.BACKEND_API + "fullApp?id=" + q)
     const data = await app.json()
