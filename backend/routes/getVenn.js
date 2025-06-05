@@ -3,191 +3,23 @@ var router = express.Router()
 
 const client = require("./../client")
 
-router.get('/', async function(req, res){
-
-    var dnc = {}
-
-    
-    await client.count({ 
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Not Collected"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["not_collected"] = r["count"]
+router.get('/', async function (req, res) {
+  try {
+    const result = await client.search({
+      index: "venn_graph",
+      body:{
+        size: 1,
+        sort: [
+          { "timestamp": { "order": "desc" } } 
+        ]
+      }
     })
 
-    await client.count({
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Not Linked to You"
-                    }
-                  }
-                },
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Linked to You"
-                    }
-                  }
-                },
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Used to Track You"
-                    }
-                  }
-                },
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["all_three"] = r["count"]
-    })
+    res.json(result.hits.hits[0]._source)
+  } catch (error){
+    console.error("Error querying for venn diagram")
+  }
 
-    await client.count({
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Not Linked to You"
-                    }
-                  }
-                },
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Linked to You"
-                    }
-                  }
-                },
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["linked_not_linked"] = r["count"]
-    })
-
-    await client.count({
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Used to Track You"
-                    }
-                  }
-                },
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Linked to You"
-                    }
-                  }
-                },
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["track_linked"] = r["count"]
-    })
-
-    await client.count({
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Used to Track You"
-                    }
-                  }
-                },
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Not Linked to You"
-                    }
-                  }
-                },
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["track_not_linked"] = r["count"]
-    })
-
-    await client.count({
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Linked to You"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["linked"] = r["count"]
-    })
-
-    await client.count({
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Not Linked to You"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["not_linked"] = r["count"]
-    })
-
-    await client.count({
-        "query": {
-            "bool": {
-              "must": [
-                {
-                    "term": {
-                    "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": {
-                      "value": "Data Used to Track You"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-    }).then(async (r) => {
-        dnc["track"] = r["count"]
-    })
-
-    res.json(dnc)
 })
 
 module.exports = router;
