@@ -40,7 +40,7 @@ export default function searchApp() {
     const app = data[1];
     const dates = data[0]
     return (
-        <div className={`items-start min-h-screen h-full`}>
+        <div className={`items-start h-full`}>
             <Timeline data={app} dates={dates}/>
         </div>
     )

@@ -259,7 +259,7 @@ export default function Index() {
           <FaSpinner className="animate-spin" size={72} />
         </div>
       ) : (
-        <div className={`min-h-screen bg-cover overflow-visible ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
+        <div className={`bg-cover overflow-visible ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
           <div className="fixed left-0 top-14 p-4 hidden md:block">
             <button
               onClick={toggleMenu}
@@ -484,7 +484,7 @@ export default function Index() {
             </div>
           </div>
           {/* Used for Mobile View */}
-          <div className="block md:hidden min-h-screen h-fit">
+          <div className="block md:hidden h-fit">
 
             {/* Longitude Graph */}
             <div className="w-full max-w-3xl mx-auto px-4 md:px-8">
