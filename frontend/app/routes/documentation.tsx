@@ -14,7 +14,7 @@ const Index: React.FC = () => {
           <FaSpinner className="animate-spin" size={72} />
         </div>
         :
-        <div className={`pl-4 md:pl-2 min-h-screen flex`}>
+        <div className={`pl-4 md:pl-2 flex`}>
           <div id="main-text">
             <div className="">
               <h1 className={`text-4xl text-center font-bold mb-16 ${theme === 'dark' ? 'text-dred' : 'text-red'}`}>
