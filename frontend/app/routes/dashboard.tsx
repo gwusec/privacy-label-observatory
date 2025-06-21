@@ -124,42 +124,67 @@ interface GraphPopupProps {
 export async function loader({ params }: LoaderFunctionArgs) {
   const latestRun = await fetch(process.env.BACKEND_API + "latestIndex");
   const runData: string = (await latestRun.json()).latestRun;
+  console.log("Latest Run Done");
 
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
+  console.log("Graph 1 Done");
+
 
   const percentage = await fetch(process.env.BACKEND_API + "percentage?run=" + runData);
   const percentageData = await percentage.json();
+  console.log("Graph 2 Done");
+
 
   const dates = await fetch(process.env.BACKEND_API + "yearlyReleases");
   const dateJson = await dates.json();
+  console.log("Graph 3 Done");
+
 
   const response = await fetch(process.env.BACKEND_API + "longUpdated");
   const longitude = await response.json();
+  console.log("Graph 4 Done");
+
 
   const response2 = await fetch(process.env.BACKEND_API + "ratios");
   const ratios = await response2.json();
+  console.log("Graph 5 Done");
+
 
   const response3 = await fetch(process.env.BACKEND_API + "matrix");
   const matrix = await response3.json();
+  console.log("Graph 6 Done");
+
 
   const response4 = await fetch(process.env.BACKEND_API + "ratioDC");
   const privacyTypes = await response4.json();
+  console.log("Graph 7 Done");
+
 
   const response5 = await fetch(process.env.BACKEND_API + "ratioDT");
   const dataTypes = await response5.json();
+  console.log("Graph 8 Done");
+
 
   const response6 = await fetch(process.env.BACKEND_API + "appGenre");
   const appGenre = await response6.json();
+  console.log("Graph 9 Done");
+
 
   const version = await fetch(process.env.BACKEND_API + "version?run=" + runData);
   const versionData = await version.json();
+  console.log("Graph 10 Done");
+
 
   const rating = await fetch(process.env.BACKEND_API + "rating?run=" + runData);
   const ratingData = await rating.json();
+  console.log("Graph 11 Done");
+
 
   const size = await fetch(process.env.BACKEND_API + "size?run=" + runData);
   const sizeData = await size.json();
+  console.log("Graph 12 Done");
+
 
   return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre, versionData, ratingData, sizeData];
 }
