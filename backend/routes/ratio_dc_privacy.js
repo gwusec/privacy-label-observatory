@@ -9,6 +9,9 @@ router.get('/', async function (req, res) {
       index: "ratio_data_categories",
       body:{
         size: 1,
+        sort: [
+          { "timestamp": { "order": "desc" } } 
+        ]
       }
     })
     res.json(result.hits.hits[0]._source.ratios)
