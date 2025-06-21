@@ -47,5 +47,6 @@ run_update_script "vennIndex.js"
 run_update_script "initializePurpose.js"
 run_update_script "initializeMatrix.js"
 run_update_script "initializeRatioDC.js"
+run_update_script "initializeRatioDT.js"
 
 echo "All database updates completed" | tee -a "$LOG_FILE"

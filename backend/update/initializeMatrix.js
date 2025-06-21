@@ -122,7 +122,6 @@ async function getMatrix(totals) {
 
         const queryResults = await Promise.all(promises);
         queryResults.forEach(result => Object.assign(results, result));
-        console.log(queryResults);
         return queryResults;
     } catch (error) {
         console.error("Error executing query:", error);
@@ -141,7 +140,7 @@ async function uploadMatrix() {
         return;
     }
 
-    const ratios = await getMatrix(totals); // pass `totals` to your function
+    const ratios = await getMatrix(totals); 
     await client.index({
         index: indexName,
         document: {

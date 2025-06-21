@@ -15,7 +15,6 @@ router.get('/', async function (req, res) {
       }
     })
 
-    console.log(result.hits.hits[0]._source.ratios);
     res.json(result.hits.hits[0]._source.ratios)
   } catch (error){
     console.error("Error querying for venn diagram")

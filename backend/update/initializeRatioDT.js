@@ -5,7 +5,7 @@ require('dotenv').config({ path: '../../.env' });
 // Elasticsearch credentials
 const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
 const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
-const indexName = 'ratio_data_categories';
+const indexName = 'ratio_data_types';
 
 const client = new Client({
     node: process.env.ELASTIC_ENDPOINT,
@@ -15,11 +15,34 @@ const client = new Client({
     }
 });
 
-async function getRatio() {
+async function getLatestRunIndex() {
+    try {
+        const response = await client.search({
+            index: 'dates_runs_mapping',
+            size: 1,
+            sort: [{ "run_number.keyword": "desc" }],
+            _source: ["run_number"]
+        });
+
+        if (response.hits.total.value === 0) {
+            throw new Error("No runs found in dates_runs_mapping index.");
+        }
+
+        const latestRunStr = response.hits.hits[0]._source.run_number;
+        const latestRunNumber = parseInt(latestRunStr.match(/(\d{5})$/)[1], 10);
+        return 'run_00' + latestRunNumber;
+    } catch (error) {
+        console.error("Error fetching latest run index:", error);
+        throw error;
+    }
+}
+
+async function getRatio(totals) {
     const results = {};
 
     const queries = [
         {
+            index: totals,
             label: "DATA_NOT_LINKED_TO_YOU",
             query: {
                 "term": {
@@ -29,13 +52,14 @@ async function getRatio() {
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
             }
         },
         {
+            index: totals,
             label: "DATA_LINKED_TO_YOU",
             "query": {
                 "term": {
@@ -45,13 +69,14 @@ async function getRatio() {
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
             }
         },
         {
+            index: totals,
             label: "DATA_USED_TO_TRACK_YOU",
             "query": {
                 "term": {
@@ -61,7 +86,7 @@ async function getRatio() {
             "aggs": {
                 "dataCategories": {
                     "terms": {
-                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataCategory.keyword",
+                        "field": "privacylabels.privacyDetails.privacyTypes.purposes.dataCategories.dataTypes.keyword",
                         "size": 15
                     }
                 }
@@ -112,7 +137,15 @@ async function getRatio() {
 async function uploadRatio(){
     await initializeIndex(indexName);
 
-    const ratios = await getRatio(); // pass `totals` to your function
+    let totals;
+    try {
+        totals = await getLatestRunIndex();
+    } catch (err) {
+        console.error("Unable to determine latest index:", err);
+        return;
+    }
+
+    const ratios = await getRatio(totals);
     await client.index({
         index: indexName,
         document: {
@@ -125,7 +158,7 @@ async function uploadRatio(){
 
 uploadRatio()
     .then(() => {
-        console.log("Ratio DC Upload Successful");
+        console.log("Ratio DT Upload Successful");
     })
     .catch((err) => {
         console.error("Upload failed:", err);
