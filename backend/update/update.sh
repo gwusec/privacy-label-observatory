@@ -53,5 +53,6 @@ run_update_script "initializeYear.js"
 run_update_script "initializeVersion.js"
 run_update_script "initializeSize.js"
 run_update_script "initializeRating.js"
+run_update_script "initializePrice.js"
 
 echo "All database updates completed" | tee -a "$LOG_FILE"

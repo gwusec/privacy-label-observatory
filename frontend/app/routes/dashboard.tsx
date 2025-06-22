@@ -131,7 +131,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   console.log("Graph 1 Done");
 
 
-  const percentage = await fetch(process.env.BACKEND_API + "percentage?run=" + runData);
+  const percentage = await fetch(process.env.BACKEND_API + "price");
   const percentageData = await percentage.json();
   console.log("Graph 2 Done");
 
