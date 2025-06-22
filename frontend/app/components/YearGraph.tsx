@@ -57,13 +57,11 @@ const createSampleData = (years: any, dataset: any, total: any, label: any, back
 
 function YearGraph({ data }: { data: any }) {
     const { theme } = useTheme();
+    console.log("hello");
+    console.log(data);
     const years = generateLabels(Object.keys(data["totals"]).length)
     const total = data["totals"]
-    const linked = data["dlty"]
 
-    const not_linked = data["dnlty"]
-    const tracked = data["duty"]
-    const collected = data["dnc"]
 
     const sampleDatasets = [
         createSampleData(years, data["dnc"], total, 'Data Not Collected', 'rgba(255, 206, 86, 1)', theme),

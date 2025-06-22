@@ -49,5 +49,6 @@ run_update_script "initializeMatrix.js"
 run_update_script "initializeRatioDC.js"
 run_update_script "initializeRatioDT.js"
 run_update_script "initializeGenre.js"
+run_update_script "initializeYear.js"
 
 echo "All database updates completed" | tee -a "$LOG_FILE"
