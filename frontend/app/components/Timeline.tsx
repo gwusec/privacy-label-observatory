@@ -169,7 +169,6 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
     var app_id = data[0]["app_id"]
     var image_url = data[0]["image_url"]
     var privacy_types = data[1]["privacy"]
-    console.log(privacy_types);
 
     useEffect(() => {
         setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
