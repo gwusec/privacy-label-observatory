@@ -268,8 +268,11 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                         </div>
                                                     }
                                                     <ul className={`mt-2 ml-6 pt-2 ${expandedColumn === null ? 'grid grid-cols-2' : 'grid grid-cols-4'} gap-4 `}>
-
-                                                        {priv.dataCategories && priv.dataCategories.map((dataCategory, dataCategoryIndex) => (
+                                                        {priv.dataCategories &&
+                                                            // Sort dataCategories alphabetically by identifier
+                                                            [...priv.dataCategories]
+                                                                .sort((a, b) => a.identifier.localeCompare(b.identifier))
+                                                                .map((dataCategory, dataCategoryIndex) => (
                                                             <div
                                                                 key={dataCategoryIndex}
                                                                 className={`flex flex-col ${expandedColumn === null && allColumns === false ? 'items-start' : 'items-center mb-6'} `}
@@ -291,7 +294,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                 {/* Data Types */}
                                                                 {(expandedColumn === 'column1' || allColumns === true) && dataCategory.dataTypes && (
                                                                     <div className="flex flex-wrap justify-center gap-2">
-                                                                        {dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
+                                                                        {[...dataCategory.dataTypes].sort().map((dataType, dataTypeIndex) => (
                                                                             <span
                                                                                 key={dataTypeIndex}
                                                                                 className="inline-block text-sm px-3 py-1 m-1 rounded-full border border-orange-400"
@@ -378,11 +381,14 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                 );
                                                             });
 
+                                                            // Sort the categories alphabetically
+                                                            const sortedCategories = Array.from(allUniqueCategories).sort();
+
 
                                                             if (expandedColumn === null && allColumns === false) {
                                                                 return (
                                                                     <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
-                                                                        {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                        {Array.from(sortedCategories).map((dataCategory, index) => (
                                                                             <li className="text-md font-semibold flex items-center space-x-2">
                                                                                 <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                                 <div className='pl-6'>{dataCategory}</div>
@@ -391,6 +397,18 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                     </ul>
                                                                 );
                                                             }
+
+                                                            // Otherwise, sort the purposes and the data categories alphabetically
+                                                            priv.purposes!.sort((a, b) => a.identifier.localeCompare(b.identifier));
+                                                            priv.purposes!.forEach((purpose) => {
+                                                                purpose.dataCategories!.sort((a, b) => a.identifier.localeCompare(b.identifier));
+                                                                purpose.dataCategories!.forEach((category) => {
+                                                                    if (category.dataTypes) {
+                                                                        category.dataTypes.sort();
+                                                                    }
+                                                                });
+                                                            });
+
                                                             return priv.purposes!.map((purpose, purposeIndex) => (
                                                                 <div key={purposeIndex}>
                                                                     <li className="text-md font-semibold">{purpose.identifier}</li>
@@ -489,11 +507,13 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                 );
                                                             });
 
+                                                            // Sort the categories alphabetically
+                                                            const sortedCategories = Array.from(allUniqueCategories).sort();
 
                                                             if (expandedColumn === null && allColumns === false) {
                                                                 return (
                                                                     <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
-                                                                        {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                                        {Array.from(sortedCategories).map((dataCategory, index) => (
                                                                             <li className="text-md font-semibold flex items-center space-x-2">
                                                                                 <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                                 <div className='pl-6'>{dataCategory}</div>
@@ -502,6 +522,17 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                     </ul>
                                                                 );
                                                             }
+
+                                                            // Otherwise, sort the purposes and the data categories alphabetically
+                                                            priv.purposes!.sort((a, b) => a.identifier.localeCompare(b.identifier));
+                                                            priv.purposes!.forEach((purpose) => {
+                                                                purpose.dataCategories!.sort((a, b) => a.identifier.localeCompare(b.identifier));
+                                                                purpose.dataCategories!.forEach((category) => {
+                                                                    if (category.dataTypes) {
+                                                                        category.dataTypes.sort();
+                                                                    }
+                                                                });
+                                                            });
 
                                                             // Render purposes, data categories, and data types when expanded
                                                             return priv.purposes!.map((purpose, purposeIndex) => (
@@ -628,10 +659,12 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                         );
                                                     });
 
+                                                    // Sort the categories alphabetically
+                                                    const sortedCategories = Array.from(allUniqueCategories).sort();
 
                                                     return (
                                                         <ul className="mt-2 ml-6 pt-2 flex flex-col items-start w-full gap-4">
-                                                            {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                            {Array.from(sortedCategories).map((dataCategory, index) => (
                                                                 <li className="text-md font-semibold flex items-center space-x-2">
                                                                     <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                     <div className='pl-6'>{dataCategory}</div>
@@ -688,10 +721,12 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                         );
                                                     });
 
+                                                    // Sort the categories alphabetically
+                                                    const sortedCategories = Array.from(allUniqueCategories).sort();
 
                                                     return (
                                                         <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
-                                                            {Array.from(allUniqueCategories).map((dataCategory, index) => (
+                                                            {Array.from(sortedCategories).map((dataCategory, index) => (
                                                                 <li className="text-md font-semibold flex items-center space-x-2">
                                                                     <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
                                                                     <div className='pl-6'>{dataCategory}</div>
