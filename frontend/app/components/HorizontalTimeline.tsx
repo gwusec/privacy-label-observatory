@@ -2,6 +2,17 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Stepper, Step, StepLabel, Button, styled } from '@mui/material';
 import { ComparePrivacyLabels } from './Comparison';
 
+function formatDate(dateString: string) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'UTC',
+    }).format(date);
+}
+
 const CustomStepLabel = styled(StepLabel)(({ active }) => ({
     '& .MuiStepLabel-label': {
         color: active ? 'blue' : 'grey', 
@@ -74,7 +85,9 @@ function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick,
     }
 
     // Get current date for display
-    const currentDate = dates.find((obj: any) => obj.run_number === arrRuns[activeStep]?.index)?.date || '';
+    const currentDate = formatDate(
+        dates.find((obj: any) => obj.run_number === arrRuns[activeStep]?.index)?.date || ''
+    );
     
     // Progress information for mobile view
     const progressText = `${activeStep + 1} of ${arrRuns.length}`;
@@ -169,7 +182,7 @@ function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick,
                                     </>
                                 )}
                                 <CustomStepLabel active={index === activeStep}>
-                                    {dates.find((obj: any) => obj.run_number === data.index)?.date}
+                                    {formatDate(dates.find((obj: any) => obj.run_number === data.index)?.date) || ''}
                                 </CustomStepLabel>
                             </Step>
                         ))}
