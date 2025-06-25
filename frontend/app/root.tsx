@@ -49,13 +49,16 @@ export default function App() {
       <body className="flex flex-col">
         <NextUIProvider navigate={navigate}>
           <NextThemesProvider attribute="class" defaultTheme="dark">
-            <AppNavBar />
-            <div id="main-body" className="bg-gradient-to-b dark:from-black  dark:to-gray-900 from-white to-gray-100">
-            <Outlet />
+            <div className="flex flex-col min-h-screen">
+                <AppNavBar />
+                <div
+                  id="main-body"
+                  className="flex-1 bg-gradient-to-b dark:from-black dark:to-gray-900 from-white to-gray-100"
+                >
+                    <Outlet />
+                </div>
+                <Footer />
             </div>
-            {/* <div className="block lg:hidden fixed bottom-0 w-full z-50">
-              <Footer />
-            </div> */}
             <ScrollRestoration />
             <Scripts />
 

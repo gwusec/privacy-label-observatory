@@ -45,7 +45,7 @@ export default function API() {
       };
 
       return (
-        <div className="min-h-screen h-full flex flex-col items-center space-y-4">
+        <div className="h-full flex flex-col items-center space-y-4">
             <h1 className="text-xl font-bold">Download JSON Data</h1>
 
             {/* Dropdown for selecting a run */}
