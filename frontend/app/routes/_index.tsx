@@ -35,7 +35,7 @@ export default function Index() {
           <FaSpinner className="animate-spin" size={72} />
         </div>
         :
-        <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark' : 'bg-light'} overflow-hidden`}>
+        <div className={`${theme === 'dark' ? 'bg-dark' : 'bg-light'} overflow-hidden`}>
           <div id="main-text">
 
             <div className="mb-20">
