@@ -22,56 +22,6 @@ const CustomStepLabel = styled(StepLabel)(({ active }) => ({
     },
 }));
 
-function deepEqual(obj1: any, obj2: any): boolean {
-    if (typeof obj1 !== "object" || typeof obj2 !== "object" || obj1 === null || obj2 === null) {
-        return obj1 === obj2;
-    }
-
-    if (Array.isArray(obj1) && Array.isArray(obj2)) {
-        if (obj1.length !== obj2.length) {
-            return false;
-        }
-
-        // Sort objects in arrays by a stable key (if available)
-        const sorted1 = obj1
-            .map((item) => JSON.stringify(item)) // Convert to string for comparison
-            .sort();
-        const sorted2 = obj2
-            .map((item) => JSON.stringify(item))
-            .sort();
-
-        return sorted1.every((item, index) => deepEqual(JSON.parse(item), JSON.parse(sorted2[index])));
-    }
-
-    const keys1 = Object.keys(obj1).sort();
-    const keys2 = Object.keys(obj2).sort();
-
-    if (!deepEqual(keys1, keys2)) {
-        return false;
-    }
-
-    return keys1.every((key) => deepEqual(obj1[key], obj2[key]));
-}
-
-function equal(obj1: any, obj2: any): boolean {
-    return deepEqual(obj1?.privacyDetails, obj2?.privacyDetails);
-}
-
-function findChanges(runs: any){
-    let arr = []
-    arr.push(runs[0])
-
-    for(let i=0; i<runs.length-1; i++){
-        const currentRun = runs[i];
-        const nextRun = runs[i + 1];
-        if (!equal(currentRun.privacy_types, nextRun.privacy_types)) {
-            arr.push(nextRun)
-        }
-    }
-    arr.push(runs[runs.length-1])
-    return arr
-}
-
 function HorizontalTimeline({ privtypes, updateParent, dates }: { privtypes: any, updateParent: any,  dates:any }) {
     const [activeStep, setActiveStep] = useState(0);
     const [mounted, setMounted] = useState(false);
