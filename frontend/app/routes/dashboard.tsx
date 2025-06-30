@@ -128,38 +128,50 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
 
-  const percentage = await fetch(process.env.BACKEND_API + "percentage?run=" + runData);
+
+  const percentage = await fetch(process.env.BACKEND_API + "price");
   const percentageData = await percentage.json();
+
 
   const dates = await fetch(process.env.BACKEND_API + "yearlyReleases");
   const dateJson = await dates.json();
 
+
   const response = await fetch(process.env.BACKEND_API + "longUpdated");
   const longitude = await response.json();
+
 
   const response2 = await fetch(process.env.BACKEND_API + "ratios");
   const ratios = await response2.json();
 
+
   const response3 = await fetch(process.env.BACKEND_API + "matrix");
   const matrix = await response3.json();
+
 
   const response4 = await fetch(process.env.BACKEND_API + "ratioDC");
   const privacyTypes = await response4.json();
 
+
   const response5 = await fetch(process.env.BACKEND_API + "ratioDT");
   const dataTypes = await response5.json();
+
 
   const response6 = await fetch(process.env.BACKEND_API + "appGenre");
   const appGenre = await response6.json();
 
+
   const version = await fetch(process.env.BACKEND_API + "version?run=" + runData);
   const versionData = await version.json();
+
 
   const rating = await fetch(process.env.BACKEND_API + "rating?run=" + runData);
   const ratingData = await rating.json();
 
+
   const size = await fetch(process.env.BACKEND_API + "size?run=" + runData);
   const sizeData = await size.json();
+
 
   return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre, versionData, ratingData, sizeData];
 }
@@ -181,6 +193,8 @@ export default function Index() {
   const contentData = data[9];
   const ratingData = data[10];
   const sizeData = data[11];
+
+  console.log(matrix[0].DATA_LINKED_TO_YOU);
 
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -359,11 +373,11 @@ export default function Index() {
                   <div className="flex flex-row space-x-4">
                     <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Not Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," theme={theme} />
+                      <MatrixChart data={matrix[1].DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," theme={theme} />
                     </div>
                     <div className="flex flex-col items-center w-1/2">
                       <h1 className="text-center">Data Linked to You</h1>
-                      <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme} />
+                      <MatrixChart data={matrix[0].DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme} />
                     </div>
                   </div>
                   <h4>The ratios of Data Categories by the reported Purpose for the Data Linked to You (left) and Data Not Linked

@@ -92,7 +92,7 @@ async function addToCache(app_id, data) {
         data: data,
         cached_at: new Date()
       },
-      refresh: true  // Make sure the document is immediately searchable
+      refresh: true 
     });
     
   } catch (error) {
@@ -103,6 +103,10 @@ async function addToCache(app_id, data) {
 router.get("/", async function (req, res) {
   try {
     var app_id = req.query.id;
+
+    if (!app_id || isNaN(Number(app_id))) {
+      return res.status(400).json({ error: "Invalid app_id. Must be a number." });
+    }
 
     // Check if the app is in the cache
     const cachedResult = await checkAppCache(app_id);
