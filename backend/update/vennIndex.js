@@ -19,7 +19,7 @@ const client = new Client({
 
 // Queries for Elasticsearch
 const queries = [
-    { label: "not_collected", query: { bool: { must: [{ term: { "privacylabels.privacyDetails.privacyTypes.keyword": { "value": "Data Not Collected" } } }] } } },
+    { label: "not_collected", query: { bool: { must: [{ term: { "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": { "value": "Data Not Collected" } } }] } } },
     { label: "all_three", query: { bool: { must: [
         { term: { "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": { "value": "Data Linked to You" } } }, 
         { term: { "privacylabels.privacyDetails.privacyTypes.privacyType.keyword": { "value": "Data Not Linked to You" } } }, 

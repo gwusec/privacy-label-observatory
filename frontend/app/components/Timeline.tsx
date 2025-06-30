@@ -40,12 +40,24 @@ interface privLabel {
     purposes: purpose[] | null;
 }
 
-//Function that given a data type or a purpose (depending on privacy type)
-//Returns the dynamic svg to be loaded
-const getIconPath = (category: string, theme: string | undefined) => {
+// Additional type specification to ensure category is actually passed in
+type Category = "BROWSING_HISTORY"
+| "CONTACT_INFO"
+| "CONTACTS"
+| "DIAGNOSTICS"
+| "FINANCIAL_INFO"
+| "HEALTH_AND_FITNESS"
+| "IDENTIFIERS"
+| "LOCATION"
+| "OTHER_DATA"
+| "PURCHASES"
+| "SEARCH_HISTORY"
+| "SENSITIVE_INFO"
+| "USAGE_DATA"
+| "USER_CONTENT";
 
-    const iconMapping = {
-        "BROWSING_HISTORY": {
+const iconMapping: Record<Category, {light: string, dark: string}> = {
+    "BROWSING_HISTORY": {
             light: "/apple_icons/browsing_history.svg",
             dark: "/apple_icons/browsing_history_dark.svg"
         },
@@ -101,14 +113,16 @@ const getIconPath = (category: string, theme: string | undefined) => {
             light: "/apple_icons/user_content.svg",
             dark: "/apple_icons/user_content_dark.svg"
         }
-    };
+}
 
-
-    // Return the corresponding icon or a default icon if the category is not found
-    const icons = iconMapping[category];
-    if (icons) {
+//Function that given a data type or a purpose (depending on privacy type)
+//Returns the dynamic svg to be loaded
+const getIconPath = (category: string, theme: string | undefined) => {
+    if(category in iconMapping){
+        const icons = iconMapping[category as Category];
         return theme === 'dark' ? icons.dark : icons.light;
-    } else {
+    }
+    else {
         return theme === 'dark' ? "/apple_icons/other_data_dark.svg" : "/apple_icons/other_data.svg";
     }
 };
@@ -155,14 +169,6 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
     var app_id = data[0]["app_id"]
     var image_url = data[0]["image_url"]
     var privacy_types = data[1]["privacy"]
-
-    useEffect(() => {
-        setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"])
-        if (privDetails.length == 0) { }
-        else {
-            setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
-        }
-    }, [privDetails])
 
     useEffect(() => {
         setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
