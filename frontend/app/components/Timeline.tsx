@@ -130,13 +130,10 @@ const getIconPath = (category: string, theme: string | undefined) => {
 export default function Timeline({ data, dates }: { data: any, dates:any }) {
     const navigate = useNavigate()
     const [activeIndex, setActiveIndex] = useState(0);
+    const [prevActiveIndex, setPrevActiveIndex] = useState(0);
     const [privDetails, setPrivDetails] = useState<privLabel[]>([]);
     const [expandedColumn, setExpandedColumn] = useState(null);
     const [allColumns, expandAllColumns] = useState(true);
-
-    const handleClick = (event: any, index: number) => {
-        setActiveIndex(index)
-    };
 
     const handleButton = () => {
         navigate("/search")
@@ -162,7 +159,9 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
 
 
     const updateParent = (index: number) => {
-        setActiveIndex(index)
+        setPrevActiveIndex(activeIndex);
+        setActiveIndex(index);
+        setPrivDetails(privacy_types[index]["privacy_types"]["privacyDetails"]["privacyTypes"]);
     }
     const { theme } = useTheme();
     var app_name = data[0]["app_name"]
@@ -173,14 +172,57 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
     useEffect(() => {
         setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
     }, [activeIndex])
-
-
-
-
+ 
     const checkValueInDetails = (value: any) => {
         return privDetails.some(detail => detail.identifier === value);
     };
 
+    // This is a helper function to check if a dataType (when expanded) or dataCategory (when condensed) should be highlighted
+    const hasChanged = (identifier: string, purpose: string, category: string, type: string = "") => {
+        const prevPrivDetails: privLabel[] = privacy_types[prevActiveIndex]["privacy_types"]["privacyDetails"]["privacyTypes"];
+
+        if (prevPrivDetails.length === 0) return false; // No previous details to compare against
+        const prevDetail = prevPrivDetails.find(detail => detail.identifier === identifier);
+        if (!prevDetail) return true; // No previous detail found for this identifier
+
+        if (purpose === "") {
+            let toReturn = true;
+            // We need to just look at categories and check if category exists in *any* purpose
+            prevDetail.purposes?.forEach(p => {
+                const prevCategory = p.dataCategories?.find(c => c.identifier === category);
+                if (prevCategory) {
+                    toReturn = false; // If we find the category in any purpose, we return false
+                }
+            });
+
+            // If there are no purposes, we may just need to look directly at prevDetail.dataCategories
+            if (prevDetail.dataCategories) {
+                const prevCategory = prevDetail.dataCategories.find(c => c.identifier === category);
+                if (prevCategory) {
+                    toReturn = false; // If we find the category in any purpose, we return false
+                }
+            }
+
+            return toReturn; // If we found the category in any purpose, return false, otherwise true
+        }
+        else {
+            // We need to look at the specific purpose and look for changed types
+            // Try to find category in previous details
+            const prevPurpose = prevDetail.purposes?.find(p => p.identifier === purpose);
+            if (!prevPurpose) return true; // No previous purpose found
+    
+            // Try to find data category in previous purposes
+            const prevCategory = prevPurpose.dataCategories?.find(c => c.identifier === category);
+            if (!prevCategory) return true; // No previous category found
+    
+            // If type is provided, check if it exists in the previous category's dataTypes
+            if (type) {
+                return !prevCategory.dataTypes?.includes(type);
+            }
+            // If no type is provided, just check if the category exists
+            return !prevPurpose.dataCategories?.some(c => c.identifier === category);
+        }
+    }
 
     return (
         <div className=''>
@@ -215,9 +257,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                         <HorizontalTimeline
                             privtypes={privacy_types}
                             dates={dates}
-                            activeIndex={activeIndex}
                             updateParent={updateParent}
-                            handleClick={handleClick}
                         />
                     </div>
                 </div>
@@ -267,7 +307,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                         </div>
                                         {privDetails.map(priv =>
                                             priv.identifier === "DATA_USED_TO_TRACK_YOU" ?
-                                                <div>
+                                                <div key={priv.identifier}>
                                                     {expandedColumn === null && allColumns === false &&
                                                         <div>
                                                             The following data may be collected and linked to your identity:
@@ -289,7 +329,15 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                         {expandedColumn === null && allColumns === false ? (
                                                                             <div className="flex items-center space-x-2">
                                                                                 <img src={getIconPath(dataCategory.identifier, theme)} className="w-6 h-6" />
-                                                                                <div className='pl-4'>{dataCategory.identifier}</div>
+                                                                                <div className='pl-6 flex items-center'>
+                                                                                    {dataCategory.identifier}
+                                                                                    {hasChanged('DATA_USED_TO_TRACK_YOU', '', dataCategory.identifier) && (
+                                                                                        <span
+                                                                                            className="ml-2 inline-block w-3 h-3 rounded-full bg-yellow-400 border border-yellow-600"
+                                                                                            title="Changed"
+                                                                                        />
+                                                                                    )}
+                                                                                </div>
                                                                             </div>
                                                                         ) : (
                                                                             <div>{dataCategory.identifier}</div>
@@ -302,10 +350,10 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                     <div className="flex flex-wrap justify-center gap-2">
                                                                         {[...dataCategory.dataTypes].sort().map((dataType, dataTypeIndex) => (
                                                                             <span
-                                                                                key={dataTypeIndex}
-                                                                                className="inline-block text-sm px-3 py-1 m-1 rounded-full border border-orange-400"
-                                                                            >
-                                                                                {dataType}
+                                                                                key={dataCategory.identifier + dataTypeIndex}
+                                                                                className={`inline-block text-sm px-3 py-1 m-1 rounded-full border border-orange-400 ${hasChanged('DATA_USED_TO_TRACK_YOU', '', dataCategory.identifier, dataType) ? 'bg-yellow-200 border-yellow-600' : ''}`}
+                                                                                >
+                                                                                    {dataType}
                                                                             </span>
                                                                         ))}
                                                                     </div>
@@ -365,7 +413,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                         </div>
                                         {privDetails.map((priv) =>
                                             priv.identifier === "DATA_LINKED_TO_YOU" ? (
-                                                <div>
+                                                <div key={priv.identifier}>
                                                     {expandedColumn === null && allColumns === false && (
                                                         <div>
                                                             The following data may be collected but it is not linked to your
@@ -395,9 +443,20 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                 return (
                                                                     <ul className="mt-4 pl-6 grid grid-cols-2 gap-4">
                                                                         {Array.from(sortedCategories).map((dataCategory, index) => (
-                                                                            <li className="text-md font-semibold flex items-center space-x-2">
+                                                                            <li
+                                                                                className="text-md font-semibold flex items-center space-x-2"
+                                                                                key={priv.identifier + dataCategory}
+                                                                            >
                                                                                 <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
-                                                                                <div className='pl-6'>{dataCategory}</div>
+                                                                                <div className='pl-6 flex items-center'>
+                                                                                    {dataCategory}
+                                                                                    {hasChanged('DATA_LINKED_TO_YOU', '', dataCategory) && (
+                                                                                        <span
+                                                                                            className="ml-2 inline-block w-3 h-3 rounded-full bg-yellow-400 border border-yellow-600"
+                                                                                            title="Changed"
+                                                                                        />
+                                                                                    )}
+                                                                                </div>
                                                                             </li>
                                                                         ))}
                                                                     </ul>
@@ -416,7 +475,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                             });
 
                                                             return priv.purposes!.map((purpose, purposeIndex) => (
-                                                                <div key={purposeIndex}>
+                                                                <div key={priv.identifier + purposeIndex}>
                                                                     <li className="text-md font-semibold">{purpose.identifier}</li>
                                                                     {purpose.dataCategories!.map((dataCategory, dataCategoryIndex) => (
                                                                         <div key={dataCategoryIndex} className="p-2">
@@ -426,8 +485,12 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                                     {dataCategory.dataTypes &&
                                                                                         dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
                                                                                             <span
-                                                                                                key={dataTypeIndex}
-                                                                                                className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
+                                                                                                key={dataCategory.identifier + dataTypeIndex}
+                                                                                                className={`inline-block text-sm px-2 m-1 rounded-full border border-orange-400 ${
+                                                                                                    hasChanged('DATA_LINKED_TO_YOU', purpose.identifier, dataCategory.identifier, dataType)
+                                                                                                        ? 'bg-yellow-200 border-yellow-600'
+                                                                                                        : ''
+                                                                                                }`}
                                                                                             >
                                                                                                 {dataType}
                                                                                             </span>
@@ -522,7 +585,15 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                         {Array.from(sortedCategories).map((dataCategory, index) => (
                                                                             <li className="text-md font-semibold flex items-center space-x-2">
                                                                                 <img src={getIconPath(dataCategory, theme)} className="w-6 h-6" />
-                                                                                <div className='pl-6'>{dataCategory}</div>
+                                                                                <div className='pl-6 flex items-center'>
+                                                                                    {dataCategory}
+                                                                                    {hasChanged('DATA_NOT_LINKED_TO_YOU', '', dataCategory) && (
+                                                                                        <span
+                                                                                            className="ml-2 inline-block w-3 h-3 rounded-full bg-yellow-400 border border-yellow-600"
+                                                                                            title="Changed"
+                                                                                        />
+                                                                                    )}
+                                                                                </div>
                                                                             </li>
                                                                         ))}
                                                                     </ul>
@@ -552,8 +623,12 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                                     {dataCategory.dataTypes &&
                                                                                         dataCategory.dataTypes.map((dataType, dataTypeIndex) => (
                                                                                             <span
-                                                                                                key={dataTypeIndex}
-                                                                                                className="inline-block text-sm px-2 m-1 rounded-full border border-orange-400"
+                                                                                                key={dataCategory.identifier + dataTypeIndex}
+                                                                                                className={`inline-block text-sm px-2 m-1 rounded-full border border-orange-400 ${
+                                                                                                    hasChanged('DATA_NOT_LINKED_TO_YOU', purpose.identifier, dataCategory.identifier, dataType)
+                                                                                                        ? 'bg-yellow-200 border-yellow-600'
+                                                                                                        : ''
+                                                                                                }`}
                                                                                             >
                                                                                                 {dataType}
                                                                                             </span>
