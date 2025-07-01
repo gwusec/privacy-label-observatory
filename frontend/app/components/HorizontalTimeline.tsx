@@ -22,7 +22,7 @@ const CustomStepLabel = styled(StepLabel)(({ active }) => ({
     },
 }));
 
-function HorizontalTimeline({ privtypes, activeIndex, updateParent, handleClick, dates }: { privtypes: any, activeIndex: any, updateParent: any, handleClick: any, dates:any }) {
+function HorizontalTimeline({ privtypes, updateParent, dates }: { privtypes: any, updateParent: any,  dates:any }) {
     const [activeStep, setActiveStep] = useState(0);
     const [mounted, setMounted] = useState(false);
     const runRefs = useRef<any[]>([]);
