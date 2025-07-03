@@ -4,12 +4,35 @@ var router = express.Router()
 const client = require("./../client")
 const imageModule = require("./../utilities/imageLoader")
 const { json } = require("body-parser")
+const e = require("express")
 const encodeUrl = imageModule.encodeUrl
 const htmlRequest = imageModule.htmlRequest
 const decode = imageModule.decoder
 
 // Cache index name
 const CACHE_INDEX = "app_cache";
+
+async function getLatestRunIndex() {
+  try {
+    const response = await client.search({
+      index: 'dates_runs_mapping',
+      size: 1,
+      sort: [{ "run_number.keyword": "desc" }],
+      _source: ["run_number"]
+    });
+
+    if (response.hits.total.value === 0) {
+      throw new Error("No runs found in dates_runs_mapping index.");
+    }
+
+    const latestRunStr = response.hits.hits[0]._source.run_number;
+    const latestRunNumber = parseInt(latestRunStr.match(/(\d{5})$/)[1], 10);
+    return 'run_00' + latestRunNumber;
+  } catch (error) {
+    console.error("Error fetching latest run index:", error);
+    throw error;
+  }
+}
 
 async function updateCacheTimestamp(doc_id) {
   try {
@@ -58,7 +81,6 @@ async function checkAppCache(app_id) {
   }
 }
 
-
 // Function to add app data to the cache
 async function addToCache(app_id, data) {
   try {
@@ -82,7 +104,7 @@ async function addToCache(app_id, data) {
         throw error;
       }
     }
-    
+
     // Add or update the app in the cache
     await client.index({
       index: CACHE_INDEX,
@@ -92,9 +114,9 @@ async function addToCache(app_id, data) {
         data: data,
         cached_at: new Date()
       },
-      refresh: true 
+      refresh: true
     });
-    
+
   } catch (error) {
     console.error("Error adding to cache:", error);
   }
@@ -111,31 +133,26 @@ router.get("/", async function (req, res) {
     // Check if the app is in the cache
     const cachedResult = await checkAppCache(app_id);
     if (cachedResult) {
-      
       // Update the cached_at timestamp
-      await updateCacheTimestamp(cachedResult.id);
-      
+      updateCacheTimestamp(cachedResult.id);
       return res.json(cachedResult.data);
     }
 
+    let latestIndex = await getLatestRunIndex();
+    let size = latestIndex.substring(latestIndex.length - 3);
+
     // If not in cache, get from regular index
     const r = await client.search({
-      "size": 1000,
+      "index": "run*",
+      "size": size,
       "query": {
         "bool": {
           "must": [
-            { match: { app_id: app_id } },
+            { term: { app_id: app_id } },
             { match: { country_code: "us" } }
           ]
         }
       },
-      "sort": [
-        {
-          "_index": {
-            "order": "asc"
-          }
-        }
-      ]
     });
 
     var info = [];
@@ -152,19 +169,29 @@ router.get("/", async function (req, res) {
         "json": json_info,
       });
     }
-    var hits = [];
-    for (i in r.hits.hits) {
-      hits.push({
-        "index": r.hits.hits[i]._index,
-        "privacy_types": r.hits.hits[i]._source.privacylabels
-      });
+
+    // Bug found due to app 504847776 (also known as Al Jazeera English)
+    if (typeof json_info.metadata?.has_in_app_purchases === 'boolean') {
+      json_info.metadata.has_in_app_purchases = json_info.metadata.has_in_app_purchases ? 1 : 0;
     }
+
+    const hits = r.hits.hits
+      .map(hit => ({
+        index: hit._index,
+        privacy_types: hit._source.privacylabels
+      }))
+      .sort((a, b) => a.index.localeCompare(b.index));
+
     info.push({
       "privacy": hits
     });
 
+
+
     // Store the app data in cache index
-    await addToCache(app_id, info);
+    if (info.length > 1 && hits.length > 0) {
+      await addToCache(app_id, info);
+    }
 
     res.json(info);
   } catch (error) {
@@ -175,7 +202,7 @@ router.get("/", async function (req, res) {
 
 
 // Add a route to manually clear the cache
-router.post("/clearCache", async function(req, res) {
+router.post("/clearCache", async function (req, res) {
   try {
     const exists = await client.indices.exists({ index: CACHE_INDEX });
     if (exists) {
@@ -191,15 +218,15 @@ router.post("/clearCache", async function(req, res) {
 });
 
 // Add a route to get cache statistics
-router.get("/cacheStats", async function(req, res) {
+router.get("/cacheStats", async function (req, res) {
   try {
     const exists = await client.indices.exists({ index: CACHE_INDEX });
     if (!exists) {
       return res.json({ cacheSize: 0, cachedApps: [] });
     }
-    
+
     const stats = await client.count({ index: CACHE_INDEX });
-    
+
     const result = await client.search({
       index: CACHE_INDEX,
       body: {
@@ -208,12 +235,12 @@ router.get("/cacheStats", async function(req, res) {
         size: 1000
       }
     });
-    
+
     const cachedApps = result.hits.hits.map(hit => ({
       app_id: hit._source.app_id,
       cached_at: hit._source.cached_at
     }));
-    
+
     res.json({
       cacheSize: stats.count,
       cachedApps: cachedApps

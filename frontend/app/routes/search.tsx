@@ -96,18 +96,34 @@ export default function Search() {
                                     </button>
                                 </div>
                                 <div ref={inputRef}>
-                                    {searchResults.length > 0 && (
-                                        <ul className={`absolute top-full left-0 right-0 mt-2 border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto  ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'}`}>
+                                    {searchResults.length > 0 ? (
+                                        <ul
+                                            className={`absolute top-full left-0 right-0 mt-2 border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'
+                                                }`}
+                                        >
                                             {searchResults.map((app: any, index: any) => (
-                                                <Link className='w-full' to={'/app/' + app.app_id}>
-                                                    <li key={index} className={`px-4 py-2 cursor-pointer ${theme === 'dark' ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                                <Link key={app.app_id} className="w-full" to={'/app/' + app.app_id}>
+                                                    <li
+                                                        className={`px-4 py-2 cursor-pointer ${theme === 'dark' ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'
+                                                            }`}
+                                                    >
                                                         {app.app_name}
                                                     </li>
                                                 </Link>
                                             ))}
                                         </ul>
+                                    ) : (
+                                        q && (
+                                            <div
+                                                className={`absolute top-full left-0 right-0 mt-2 px-4 py-2 border border-gray-300 rounded-md shadow-lg z-10 ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'
+                                                    }`}
+                                            >
+                                                No results found.
+                                            </div>
+                                        )
                                     )}
                                 </div>
+
 
                             </Form>
                         </div>

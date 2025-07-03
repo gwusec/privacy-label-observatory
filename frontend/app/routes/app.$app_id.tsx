@@ -33,6 +33,14 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
     const app = await fetch(process.env.BACKEND_API + "fullApp?id=" + q)
     const data = await app.json()
+
+    // Redirect if it's an error or empty response 
+    const isEmptyPrivacyOnly = Array.isArray(data) && data.length === 1 && Array.isArray(data[0].privacy) && data[0].privacy.length === 0;
+
+    if (data?.error || isEmptyPrivacyOnly) {
+        return redirect("/error");
+    }
+
     return [datesJson, data];
 };
 
@@ -40,11 +48,11 @@ export default function searchApp() {
 
     const data = useLoaderData<typeof loader>();
     const app = data[1];
-    const dates = data[0]
-    
+    const dates = data[0];
+
     return (
         <div className={`items-start h-full`}>
-            <Timeline data={app} dates={dates}/>
+            <Timeline data={app} dates={dates} />
         </div>
     )
 }

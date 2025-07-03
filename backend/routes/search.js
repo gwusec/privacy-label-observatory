@@ -3,15 +3,39 @@ var router = express.Router()
 
 const client = require("./../client")
 
-router.get("/", function (req, res) {
+async function getLatestRunIndex() {
+    try {
+        const response = await client.search({
+            index: 'dates_runs_mapping',
+            size: 1,
+            sort: [{ "run_number.keyword": "desc" }],
+            _source: ["run_number"]
+        });
+
+        if (response.hits.total.value === 0) {
+            throw new Error("No runs found in dates_runs_mapping index.");
+        }
+
+        const latestRunStr = response.hits.hits[0]._source.run_number;
+        const latestRunNumber = parseInt(latestRunStr.match(/(\d{5})$/)[1], 10);
+        return 'run_00' + latestRunNumber;
+    } catch (error) {
+        console.error("Error fetching latest run index:", error);
+        throw error;
+    }
+}
+
+router.get("/", async function (req, res) {
     q = req.query.q;
     run = req.query.run;
+
     if (q == undefined) {
         res.json({ "Error": "Missing parameters" });
         return;
     }
     if (run == undefined) {
-        run = "run_000*";
+        let latestIndex = await getLatestRunIndex();
+        run = latestIndex;
     }
 
     client.search({
