@@ -4,7 +4,6 @@ var router = express.Router()
 const client = require("./../client")
 const imageModule = require("./../utilities/imageLoader")
 const { json } = require("body-parser")
-const e = require("express")
 const encodeUrl = imageModule.encodeUrl
 const htmlRequest = imageModule.htmlRequest
 const decode = imageModule.decoder
@@ -176,11 +175,46 @@ router.get("/", async function (req, res) {
     }
 
     const hits = r.hits.hits
-      .map(hit => ({
-        index: hit._index,
-        privacy_types: hit._source.privacylabels
-      }))
+      .map(hit => {
+        const raw = hit._source.privacylabels;
+        const details = raw?.privacyDetails || {};
+        const privacyTypes = details.privacyTypes || [];
+
+        const sortedPrivacyTypes = privacyTypes.map(pt => {
+          const sortedPurposes = (pt.purposes || [])
+            .map(purpose => {
+              const sortedDataCategories = (purpose.dataCategories || [])
+                .map(dc => ({
+                  ...dc,
+                  dataTypes: (dc.dataTypes || []).slice().sort((a, b) => a.localeCompare(b))
+                }))
+                .sort((a, b) => a.identifier.localeCompare(b.identifier));
+
+              return {
+                ...purpose,
+                dataCategories: sortedDataCategories
+              };
+            })
+            .sort((a, b) => a.identifier.localeCompare(b.identifier));
+
+          return {
+            ...pt,
+            purposes: sortedPurposes
+          };
+        }).sort((a, b) => a.identifier.localeCompare(b.identifier));
+
+        return {
+          index: hit._index,
+          privacy_types: {
+            privacyDetails: {
+              managePrivacyChoicesUrl: details.managePrivacyChoicesUrl || null,
+              privacyTypes: sortedPrivacyTypes
+            }
+          }
+        };
+      })
       .sort((a, b) => a.index.localeCompare(b.index));
+
 
     info.push({
       "privacy": hits

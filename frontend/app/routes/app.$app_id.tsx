@@ -49,6 +49,7 @@ export default function searchApp() {
     const data = useLoaderData<typeof loader>();
     const app = data[1];
     const dates = data[0];
+    console.log(app);
 
     return (
         <div className={`items-start h-full`}>
