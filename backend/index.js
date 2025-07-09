@@ -28,6 +28,7 @@ var latestIndex = require("./routes/latestIndex")
 var downloadRouter = require("./routes/download")
 var cacheRouter = require("./routes/cacheList")
 var datesRouter = require("./routes/dates")
+var summaryRouter = require("./routes/appSumarizer")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -35,6 +36,10 @@ const client = require("./client")
 
 const app = express()
 app.use(cors())
+
+// Necessary to receive the app object from the frontend
+app.use(express.json({limit: '50mb'}));
+
 app.use(bodyParser.json())
 const port =  process.env.BACKEND_PORT;
 
@@ -66,6 +71,7 @@ app.use("/api/longUpdated", longUpdated)
 app.use("/api/download", downloadRouter)
 app.use("/api/cache", cacheRouter)
 app.use("/api/dates", datesRouter)
+app.use("/api/summary", summaryRouter)
 
 
 var server = app.listen(port, () => {

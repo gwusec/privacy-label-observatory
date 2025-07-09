@@ -351,7 +351,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                         {[...dataCategory.dataTypes].sort().map((dataType, dataTypeIndex) => (
                                                                             <span
                                                                                 key={dataCategory.identifier + dataTypeIndex}
-                                                                                className={`inline-block text-sm px-3 py-1 m-1 rounded-full border border-orange-400 ${hasChanged('DATA_USED_TO_TRACK_YOU', '', dataCategory.identifier, dataType) ? 'bg-yellow-200 border-yellow-600' : ''}`}
+                                                                                className={`inline-block text-sm px-3 py-1 m-1 rounded-full border border-orange-400 ${hasChanged('DATA_USED_TO_TRACK_YOU', '', dataCategory.identifier, dataType) ? 'bg-yellow-200 border-yellow-600 text-black' : ''}`}
                                                                                 >
                                                                                     {dataType}
                                                                             </span>
@@ -488,7 +488,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                                                 key={dataCategory.identifier + dataTypeIndex}
                                                                                                 className={`inline-block text-sm px-2 m-1 rounded-full border border-orange-400 ${
                                                                                                     hasChanged('DATA_LINKED_TO_YOU', purpose.identifier, dataCategory.identifier, dataType)
-                                                                                                        ? 'bg-yellow-200 border-yellow-600'
+                                                                                                        ? 'bg-yellow-200 border-yellow-600 text-black'
                                                                                                         : ''
                                                                                                 }`}
                                                                                             >
@@ -626,7 +626,7 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
                                                                                                 key={dataCategory.identifier + dataTypeIndex}
                                                                                                 className={`inline-block text-sm px-2 m-1 rounded-full border border-orange-400 ${
                                                                                                     hasChanged('DATA_NOT_LINKED_TO_YOU', purpose.identifier, dataCategory.identifier, dataType)
-                                                                                                        ? 'bg-yellow-200 border-yellow-600'
+                                                                                                        ? 'bg-yellow-200 border-yellow-600 text-black'
                                                                                                         : ''
                                                                                                 }`}
                                                                                             >
@@ -840,8 +840,14 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
 
                 </>
                 :
-                <div className='flex max-w-96  h-20 mx-auto text-center border-2 border-black rounded-3xl bg-neutral-300'>
-                    <p className='m-auto'>Data Not Collected</p>
+                <div className='flex flex-col items-center max-w-96 h-24 mx-auto text-center border-2 border-black rounded-3xl bg-neutral-300'>
+                    <p className='m-auto'>
+                        Data Not Collected
+                        <br />
+                        <span className='text-xs text-gray-600 mt-1'>
+                            {privacy_types.length} {privacy_types.length === 1 ? 'measurement' : 'measurements'}
+                        </span>
+                    </p>
                 </div>
 
             }

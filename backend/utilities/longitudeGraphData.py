@@ -1,7 +1,12 @@
+import os
 from elasticsearch import Elasticsearch
+from dotenv import load_dotenv
 
-username = "elastic"
-password = "BGx=DB-POME9uzH*=8qY"
+# Load environment variables
+load_dotenv()
+
+username = os.getenv("ELASTIC_USERNAME")
+password = os.getenv("ELASTIC_PASSWORD")
 
 # Initialize the Elasticsearch client
 es = Elasticsearch("http://localhost:9200", http_auth=(username, password), verify_certs=False)
