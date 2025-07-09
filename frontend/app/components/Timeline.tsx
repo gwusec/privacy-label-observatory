@@ -240,10 +240,20 @@ export default function Timeline({ data, dates }: { data: any, dates:any }) {
 
                     />
                 }
-                <div className="ml-10 m-2 items-start mt-6">
+                <div className="ml-10 m-4 flex flex-col justify-center h-100 flex-grow">
                     <h1 className="text-2xl font-bold">{app_name}</h1>
                     <h2 className="text-sm text-gray-500">App ID: {app_id}</h2>
-
+                    <div>
+                        <a
+                            href={`https://apps.apple.com/app/id${app_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Button className="mt-2" color="primary" variant="flat">
+                                View on App Store
+                            </Button>
+                        </a>
+                    </div>
                 </div>
             </div>
             {privDetails.length > 0 ?
