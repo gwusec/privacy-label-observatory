@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, TimeScale } from 'chart.js';
 import { useTheme } from 'next-themes';
+import 'chartjs-adapter-date-fns';
 import html2canvas from 'html2canvas';
 import { animate } from 'framer-motion';
 import { useFetcher } from '@remix-run/react';
 import { json } from '@remix-run/node';
+import { display } from 'html2canvas/dist/types/css/property-descriptors/display';
 
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, TimeScale);
 
 interface RunData {
     index: string;
@@ -50,11 +52,11 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     };
   }, []);
 
-  let labels:String[] = []
+  let labels:Date[] = []
 
   for (var key in data){
     if(key != "id"){
-        labels.push(data[key]["date"])
+        labels.push(new Date(data[key]["date"]));
     }
   }
 
@@ -134,6 +136,13 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
     maintainAspectRatio: false,
     scales: {
       x: {
+        type: 'time',
+        time: {
+            unit: 'day',
+            displayFormats: {
+                day: 'MMM dd, yyyy',
+            },
+        },
         title: {
           display: true,
           color: theme === 'dark' ? '#f1f1f1' : '#1e1e1e',
@@ -171,19 +180,6 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       datalabels: {
         color: theme === 'dark' ? '#ffffff' : '#000000',
         display: false,
-      },
-      zoom: {
-        pan: {
-          enabled: true,
-          mode: 'x',
-          modifierKey: 'ctrl',
-        },
-        zoom: {
-          drag: {
-            enabled: true
-          },
-          mode: 'x',
-        },
       }
     },
   };
