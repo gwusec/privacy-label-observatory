@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <footer className="footer bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 py-8 border-t border-gray-300 dark:border-gray-700">
-      <div className="footer-content max-w-4xl mx-auto px-4 flex flex-col items-center space-y-4">
+    <footer className="footer bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 py-3 border-t border-gray-300 dark:border-gray-700 sticky bottom-0 left-0 right-0 text-xs mt-auto">
+      <div className="footer-content max-w-5xl mx-auto px-4 flex flex-col items-center space-y-4">
         <div className="text-center space-y-2">
           <p>
             This project is funded by the National Science Foundation (NSF) under awards{' '}
