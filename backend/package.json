@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "@elastic/elasticsearch": "^8.11.0",
-    "@google/genai": "^1.8.0",
     "@upsetjs/react": "^1.11.0",
     "axios": "^1.7.3",
     "body-parser": "^1.20.2",

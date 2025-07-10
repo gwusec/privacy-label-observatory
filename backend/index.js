@@ -28,7 +28,7 @@ var latestIndex = require("./routes/latestIndex")
 var downloadRouter = require("./routes/download")
 var cacheRouter = require("./routes/cacheList")
 var datesRouter = require("./routes/dates")
-var summaryRouter = require("./routes/appSumarizer")
+//var summaryRouter = require("./routes/appSumarizer")
 
 var translationRouter = require("./utilities/dataTranslation")
 
@@ -71,7 +71,7 @@ app.use("/api/longUpdated", longUpdated)
 app.use("/api/download", downloadRouter)
 app.use("/api/cache", cacheRouter)
 app.use("/api/dates", datesRouter)
-app.use("/api/summary", summaryRouter)
+//app.use("/api/summary", summaryRouter)
 
 
 var server = app.listen(port, () => {
