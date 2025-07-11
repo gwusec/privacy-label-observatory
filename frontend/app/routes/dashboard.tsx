@@ -194,7 +194,7 @@ export default function Index() {
   const ratingData = data[10];
   const sizeData = data[11];
 
-  console.log(matrix[0].DATA_LINKED_TO_YOU);
+  //console.log(matrix[0].DATA_LINKED_TO_YOU);
 
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
