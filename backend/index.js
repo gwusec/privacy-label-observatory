@@ -33,6 +33,20 @@ var datesRouter = require("./routes/dates")
 const client = require("./client")
 
 const app = express()
+
+// Simple logging for nginx logging
+app.use((req, res, next) => {
+  const start = process.hrtime();
+
+  res.on('finish', () => {
+    const diff = process.hrtime(start);
+    const time = (diff[0] * 1e3 + diff[1] / 1e6).toFixed(3); // ms
+    console.log(`${req.method} ${req.originalUrl} ${res.statusCode} - - ${time} ms`);
+  });
+
+  next();
+});
+
 app.use(cors())
 
 // Necessary to receive the app object from the frontend
