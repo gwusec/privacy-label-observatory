@@ -30,8 +30,6 @@ var cacheRouter = require("./routes/cacheList")
 var datesRouter = require("./routes/dates")
 //var summaryRouter = require("./routes/appSumarizer")
 
-var translationRouter = require("./utilities/dataTranslation")
-
 const client = require("./client")
 
 const app = express()
@@ -52,7 +50,6 @@ app.use("/api/appList", appListRouter)
 app.use("/api/search", searchRouter)
 app.use("/api/getApp", getAppRouter)
 app.use("/api/runs", runsRouter)
-app.use("/api/translateApp", translationRouter)
 app.use("/api/fullApp", fullAppRouter)
 app.use("/api/venn", vennRouter)
 app.use("/api/ratios", ratiosRouter)
