@@ -30,11 +30,43 @@ var cacheRouter = require("./routes/cacheList")
 var datesRouter = require("./routes/dates")
 //var summaryRouter = require("./routes/appSumarizer")
 
-var translationRouter = require("./utilities/dataTranslation")
-
 const client = require("./client")
 
 const app = express()
+
+// Simple logging for nginx logging
+app.use((req, res, next) => {
+  const start = process.hrtime();
+
+  res.on('finish', () => {
+    const diff = process.hrtime(start);
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '-';
+    const user = '-'; // Customize if you have auth
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[now.getMonth()];
+    const year = now.getFullYear();
+    const time = now.toTimeString().split(' ')[0]; // HH:MM:SS
+    const tz = "+0000"; // Fixed timezone; adjust if needed
+    const date = `${day}/${month}/${year}:${time} ${tz}`;
+    const method = req.method;
+    const url = req.originalUrl;
+    const protocol = `HTTP/${req.httpVersion}`;
+    const status = res.statusCode;
+    const length = res.get('Content-Length') || 0;
+    const referer = req.get('referer') || '-';
+    const userAgent = req.get('user-agent') || '-';
+
+    console.log(`${ip} - ${user} [${date}] "${method} ${url} ${protocol}" ${status} ${length} "${referer}" "${userAgent}"`);
+  });
+
+  next();
+});
+
+
+
+
 app.use(cors())
 
 // Necessary to receive the app object from the frontend
@@ -52,7 +84,6 @@ app.use("/api/appList", appListRouter)
 app.use("/api/search", searchRouter)
 app.use("/api/getApp", getAppRouter)
 app.use("/api/runs", runsRouter)
-app.use("/api/translateApp", translationRouter)
 app.use("/api/fullApp", fullAppRouter)
 app.use("/api/venn", vennRouter)
 app.use("/api/ratios", ratiosRouter)
