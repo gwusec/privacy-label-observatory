@@ -1,6 +1,9 @@
 import { Link } from '@remix-run/react';
+import { useTheme } from 'next-themes';
 
 export default function AppSearch({ cacheList }: { cacheList: Record<string, { app_id: string; app_name: string; image_url: string; }> }) {
+    const { theme } = useTheme();
+
     return (
         <div>
             <h1>Apps Users are Searching:</h1>
@@ -9,7 +12,7 @@ export default function AppSearch({ cacheList }: { cacheList: Record<string, { a
                     <li key={app.app_id} className="border-b">
                         <Link 
                             to={`/app/${app.app_id}`} 
-                            className="flex items-center gap-4 p-2 hover:bg-gray-100 rounded-md transition duration-200"
+                            className={`flex items-center gap-4 p-2 ${theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-md transition duration-200`}
                         >
                             <img 
                                 className="w-12 h-12 rounded-xl" 
