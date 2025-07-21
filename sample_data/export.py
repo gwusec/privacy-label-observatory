@@ -17,7 +17,7 @@ es = Elasticsearch([server_url], basic_auth=(username, password), verify_certs=F
 
 # Get all `run_*` indices
 selected_indices = random.sample(
-    sorted([index for index in es.indices.get_alias(index="run_*")])[:20], 10
+    sorted([index for index in es.indices.get_alias(index="run_*")])[-20:], 10
 )
 
 
