@@ -51,7 +51,18 @@ Clone this repo to the location you want to run Elasticsearch and Kibana
 6. Log into Kibana with username `elastic` and the password from step 2
 
 ## Loading sample data into Elasticsearch
-<!-- TODO: add instructions for loading our small set of sample data -->
+
+To load the sample data into Elasticsearch, run the following command from the `sample_data` directory:
+
+```console
+$ uv run import.py
+```
+
+_Note that you must have `uv` installed. (See [uv](https://docs.astral.sh/uv/getting-started/installation/).)_
+
+This will import the sample data into Elasticsearch, creating the necessary indices and documents. If errors occur during the import, they most likely can be ignored.
+
+For more details on the sample data, see the [sample_data README](../sample_data/README.md).
 
 # Running the backend
 
