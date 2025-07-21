@@ -14,7 +14,7 @@ Cone this repo to the location you want to run elastic search and kibana
    docker compose exec elasticsearch /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
    ```
 
-   Put this in the `.env` file so that you can use it later across different scripts
+   Put this in the [`.env`](../.env) file so that you can use it later across different scripts
 
 3. Generate a kibana access token 
 
