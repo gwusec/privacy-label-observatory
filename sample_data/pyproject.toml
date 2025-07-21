@@ -1,0 +1,10 @@
+[project]
+name = "sample-data"
+version = "0.1.0"
+description = "Exports data from the full Elasticsearch index to a smaller sample index that can be used for development and testing purposes."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "elasticsearch>=9.0.2",
+    "python-dotenv>=1.1.1",
+]
