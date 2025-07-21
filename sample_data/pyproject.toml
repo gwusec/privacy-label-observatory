@@ -5,7 +5,7 @@ description = "Exports data from the full Elasticsearch index to a smaller sampl
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "elasticsearch>=9.0.2",
+    "elasticsearch>=8.0.0,<9",
     "python-dotenv>=1.1.1",
 ]
 

@@ -13,7 +13,7 @@ server_url = os.getenv("ELASTIC_ENDPOINT", "http://localhost:9200")
 username = os.getenv("ELASTIC_USERNAME", "elastic")
 password = os.getenv("ELASTIC_PASSWORD", "")
 
-es = Elasticsearch([server_url], http_auth=(username, password), verify_certs=False)
+es = Elasticsearch([server_url], basic_auth=(username, password), verify_certs=False, ssl_show_warn=False)
 
 # Get all `run_*` indices
 selected_indices = random.sample(
@@ -34,7 +34,7 @@ def get_unique_app_ids(inde, limit=None):
             "app_ids": {
                 "composite": {
                     "size": 1000,
-                    "sources": [{"app_id": {"terms": {"field": "app_id"}}}],
+                    "sources": [{"app_id": {"terms": {"field": "app_id.keyword"}}}],
                 }
             }
         }
