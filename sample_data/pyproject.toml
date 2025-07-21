@@ -8,3 +8,17 @@ dependencies = [
     "elasticsearch>=9.0.2",
     "python-dotenv>=1.1.1",
 ]
+
+[tool.ruff]
+line-length = 100
+output-format = "grouped"
+show-fixes = true
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E203", "E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
