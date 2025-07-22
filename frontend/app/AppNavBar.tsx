@@ -52,9 +52,6 @@ export default function AppNavBar() {
             <div className="invisible sm:visible sm:mr-2">
               <UICIcon></UICIcon>
             </div>
-            <div className="invisible sm:visible sm:mr-2">
-              <img src={RichIcon} alt="" className="sm:w-12 sm:h-12 size-12"/>
-            </div>
             <SiteIcon></SiteIcon>
             <p className="font-bold text-inherit">Privacy Label Observatory</p>
           </Link>
