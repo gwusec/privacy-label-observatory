@@ -9,14 +9,25 @@ const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
 const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const indexName = 'dates_runs_mapping';
 
-const client = new Client({
+const args = process.argv.slice(2);
+const isInitializeMode = args.includes("--initialize") || args.includes("-i");
+
+const clientConfig = {
     node: process.env.ELASTIC_ENDPOINT,
     auth: {
         username: ELASTIC_USERNAME,
         password: ELASTIC_PASSWORD
     }
-});
+}
 
+if (isInitializeMode) {
+    clientConfig.caFingerprint = process.env.ELASTIC_FINGERPRINT,
+    clientConfig.tls = {
+        rejectUnauthorized: false,
+    }
+}
+
+const client = new Client(clientConfig);
 
 // Function to format run number
 function getRunNumber(i) {
@@ -33,7 +44,7 @@ function extractRunNumber(runString) {
 // Function to get current date in YYYY-MM-DD format
 // Modify getCurrentDate to optionally take a date string
 function getCurrentDate() {
-    const argDate = process.argv[2];
+    const argDate = isInitializeMode ? process.argv[3] : process.argv[2];
     if (argDate) {
         // Validate format YYYY-MM-DD
         const isValid = /^\d{4}-\d{2}-\d{2}$/.test(argDate);

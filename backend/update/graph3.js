@@ -10,13 +10,25 @@ const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const indexName = 'longitude_graph';
 const datesIndex = 'dates_runs_mapping'; // New index for dates and runs
 
-const client = new Client({
+const args = process.argv.slice(2);
+const isInitializeMode = args.includes("--initialize") || args.includes("-i");
+
+const clientConfig = {
     node: process.env.ELASTIC_ENDPOINT,
     auth: {
         username: ELASTIC_USERNAME,
         password: ELASTIC_PASSWORD
     }
-});
+}
+
+if (isInitializeMode) {
+    clientConfig.caFingerprint = process.env.ELASTIC_FINGERPRINT,
+    clientConfig.tls = {
+        rejectUnauthorized: false,
+    }
+}
+
+const client = new Client(clientConfig);
 
 
 async function getRunDate(runNumber) {
@@ -151,8 +163,8 @@ async function processAndIndexData() {
                 // Check total app count
                 let total = await countQuery(queries[0].query, runIndex);
 
-                // If there are less than 700K apps in a run total, skip this run but log it
-                if (total < 700000) {
+                // If we're not initializing (for local) and there are less than 700K apps in a run total, skip this run but log it
+                if (!isInitializeMode && total < 700000) {
                     skippedRuns[runIndex] = { reason: "Less than 700K apps", count: total };
                     continue;
                 }
