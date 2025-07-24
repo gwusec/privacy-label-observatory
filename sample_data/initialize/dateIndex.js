@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { Client } = require('@elastic/elasticsearch');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '../../.env' });
 
 // Elasticsearch credentials
 const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
@@ -20,8 +20,8 @@ const client = new Client({
     },
 });
 
-// Path to JSON file
-const datesAndRunsPath = path.join(__dirname, 'dates_and_runs.json');
+// Path to JSON file (backend/dates_and_runs.json)
+const datesAndRunsPath = path.join(__dirname, '../../backend/dates_and_runs.json');
 
 // Initialize Elasticsearch index
 async function initializeIndex() {
@@ -31,18 +31,6 @@ async function initializeIndex() {
         if (exists) {
             await client.indices.delete({
                 index: indexName,
-            });
-        } else {
-            await client.indices.create({
-                index: indexName,
-                body: {
-                    mappings: {
-                        properties: {
-                            run_number: { type: "keyword" },
-                            date: { type: "date", format: "yyyy-MM-dd" },
-                        },
-                    },
-                },
             });
         }
         

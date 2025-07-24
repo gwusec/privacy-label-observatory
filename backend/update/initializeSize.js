@@ -7,13 +7,25 @@ const ELASTIC_USERNAME = process.env.ELASTIC_USERNAME;
 const ELASTIC_PASSWORD = process.env.ELASTIC_PASSWORD;
 const indexName = 'size_release';
 
-const client = new Client({
+const args = process.argv.slice(2);
+const isInitializeMode = args.includes("--initialize") || args.includes("-i");
+
+const clientConfig = {
     node: process.env.ELASTIC_ENDPOINT,
     auth: {
         username: ELASTIC_USERNAME,
         password: ELASTIC_PASSWORD
     }
-});
+}
+
+if (isInitializeMode) {
+    clientConfig.caFingerprint = process.env.ELASTIC_FINGERPRINT,
+    clientConfig.tls = {
+        rejectUnauthorized: false,
+    }
+}
+
+const client = new Client(clientConfig);
 
 async function getLatestRunIndex() {
     try {

@@ -27,9 +27,9 @@ done
 run_update_script() {
     echo "Running $1 at $(date)" | tee -a "$LOG_FILE"
     if [ -n "$DATE_ARG" ]; then
-        "$NODE_PATH" "$1" "$DATE_ARG" 2>&1 | tee -a "$LOG_FILE"
+        "$NODE_PATH" "$1" "$DATE_ARG" -i 2>&1 | tee -a "$LOG_FILE"
     else
-        "$NODE_PATH" "$1" 2>&1 | tee -a "$LOG_FILE"
+        "$NODE_PATH" "$1" -i 2>&1 | tee -a "$LOG_FILE"
     fi
 
     if [ $? -eq 0 ]; then
@@ -42,18 +42,18 @@ run_update_script() {
 
 # Run update scripts
 run_update_script "dateIndex.js"
-run_update_script "updateDateIndex.js"
-run_update_script "graph3.js"
-run_update_script "vennIndex.js"
-run_update_script "initializePurpose.js"
-run_update_script "initializeMatrix.js"
-run_update_script "initializeRatioDC.js"
-run_update_script "initializeRatioDT.js"
-run_update_script "initializeGenre.js"
-run_update_script "initializeYear.js"
-run_update_script "initializeVersion.js"
-run_update_script "initializeSize.js"
-run_update_script "initializeRating.js"
-run_update_script "initializePrice.js"
+run_update_script "../../backend/update/updateDateIndex.js"
+run_update_script "../../backend/update/graph3.js"
+run_update_script "../../backend/update/vennIndex.js"
+run_update_script "../../backend/update/initializePurpose.js"
+run_update_script "../../backend/update/initializeMatrix.js"
+run_update_script "../../backend/update/initializeRatioDC.js"
+run_update_script "../../backend/update/initializeRatioDT.js"
+run_update_script "../../backend/update/initializeGenre.js"
+run_update_script "../../backend/update/initializeYear.js"
+run_update_script "../../backend/update/initializeVersion.js"
+run_update_script "../../backend/update/initializeSize.js"
+run_update_script "../../backend/update/initializeRating.js"
+run_update_script "../../backend/update/initializePrice.js"
 
 echo "All database updates completed" | tee -a "$LOG_FILE"
