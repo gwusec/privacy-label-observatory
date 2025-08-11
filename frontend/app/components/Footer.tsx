@@ -34,7 +34,7 @@ const Footer = () => {
             Found an issue or have feedback? Please{' '}
             {/* TODO: update with link to public repo/issue */}
             <a
-              href="https://github.com/gwusec/pl-obser-sample/issues/new"
+              href="https://github.com/gwusec/privacy-label-observatory/issues/new"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 dark:text-blue-400 underline hover:text-blue-500 dark:hover:text-blue-300 transition"

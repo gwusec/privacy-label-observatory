@@ -1,33 +1,39 @@
-# How to set up Observatory
-1. Make sure Elastic/Kibana is set up. Make note of the passwords for elastic and kibana
+# Privacy Label Observatory
 
-2. Using the upload script in final_copy directory, upload runs 1 through 69, ignoring any errors that occur. Ensure that data was uploaded via Kibana dashboard. 
+The Privacy Label Observatory is a web application for analyzing visualizing weekly snapshots of privacy labels from the App Store.
 
-3. cd to backend directory and run npm install to install all dependencies. 
+## Quick Start
 
-4. Run "npm run dev" in the backend directory to run it. If successful, it should run on port 8017. 
+### Prerequisites
+- Node.js and npm installed
+- Docker and Docker Compose for Elasticsearch/Kibana
 
-5. Using another terminal shell, cd to frontend and run "npm install" to install all dependencies as well. 
+### Setup Overview
 
-6. Run "npm run dev" in the frontend directory to run it. If successful, it should run on port 3000. 
+1. **Backend Setup**: Set up Elasticsearch/Kibana and the API server
+   - See [backend/README.md](backend/README.md) for detailed instructions
 
+2. **Frontend Setup**: Set up the React application
+   - See [frontend/README.md](frontend/README.md) for detailed instructions
 
+### Running the Application
 
-# Installation Changes
-.env file was created in the frontend, with one variable: 
-```sh
-BACKEND_API = "http://localhost:8080/"
-```
-or whatever port you're using. This is needed to simplify instead of writing the URL for everything
+1. Start backend (runs on port 8017):
+   ```sh
+   cd backend
+   npm install
+   npm run dev
+   ```
 
-Backend still has nodemon, running:
-```sh
-npm run dev
-```
-will solve that
+2. Start frontend (runs on port 3000):
+   ```sh
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-react-icons was installed to represent the arrows on the explore sidebar. 
-
-papaparse was installed for parsing CSV. 
-
-
+## Updating the Application (via Docker)
+1. sudo docker-compose down
+2. git pull (for any changes in main)
+3. sudo docker-compose build
+4. sudo docker-compose up
