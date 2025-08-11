@@ -31,3 +31,9 @@ The Privacy Label Observatory is a web application for analyzing visualizing wee
    npm install
    npm run dev
    ```
+
+## Updating the Application
+1. sudo docker-compose down
+2. git pull (for any changes in main)
+3. sudo docker-compose build
+4. sudo docker-compose up
