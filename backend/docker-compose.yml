@@ -8,6 +8,10 @@ services:
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
+      - path.repo=/usr/share/elasticsearch/snapshots
+    volumes:
+      - ./es_data:/usr/share/elasticsearch/data        # persistent data volume
+      - ./es_snapshots:/usr/share/elasticsearch/snapshots
     networks:
       - elastic
     ports:
@@ -24,3 +28,4 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    

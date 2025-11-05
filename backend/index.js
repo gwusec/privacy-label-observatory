@@ -4,7 +4,6 @@ const express = require("express");
 var cors = require('cors')
 const bodyParser = require("body-parser")
 
-
 var testAPIRouter = require("./routes/testAPI") //establish in file, acts as container for info, declaring
 var appListRouter = require("./routes/appList")
 var searchRouter = require("./routes/search")
@@ -28,6 +27,7 @@ var latestIndex = require("./routes/latestIndex")
 var downloadRouter = require("./routes/download")
 var cacheRouter = require("./routes/cacheList")
 var datesRouter = require("./routes/dates")
+var recentlyChangedRouter = require("./routes/recentlyChanged");
 //var summaryRouter = require("./routes/appSumarizer")
 
 const client = require("./client")
@@ -102,12 +102,12 @@ app.use("/api/longUpdated", longUpdated)
 app.use("/api/download", downloadRouter)
 app.use("/api/cache", cacheRouter)
 app.use("/api/dates", datesRouter)
+app.use("/api/recently-changed", recentlyChangedRouter);
 //app.use("/api/summary", summaryRouter)
 
 
-var server = app.listen(port, () => {
-    var host = server.address().address;
-    console.log("Example app listening at http://%s:%s", host, port);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Example app listening at http://localhost:${port}`);
 });
 
 //use json encoded bodies

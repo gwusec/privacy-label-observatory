@@ -3,3 +3,5 @@ py310/*
 node_modules/*
 .env
 Misc/
+es_data/
+es_snapshots/
