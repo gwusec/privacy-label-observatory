@@ -40,6 +40,10 @@ function getPreviousRun(latestRun) {
   return `run_${String(num - 1).padStart(5, "0")}`;
 }
 
+function isEnglish(str) {
+  return /^[a-zA-Z0-9 .,!?'"()\-|]+$/.test(str);
+}
+
 router.get("/", async (req, res) => {
   try {
     const changedApps = [];
@@ -48,7 +52,7 @@ router.get("/", async (req, res) => {
 
     console.log(`Comparing ${latestRun} vs ${previousRun}`);
 
-    // Scroll through all apps in the latest run
+    //scroll through all apps in the latest run
     let response = await client.search({
       index: latestRun,
       scroll: "5m",
@@ -64,6 +68,8 @@ router.get("/", async (req, res) => {
         const { app_id, app_name, href, privacylabels } = app._source;
         const currentData = extractPrivacyData(privacylabels);
 
+        if (!isEnglish(app_name)) continue; // don;t process non-English named apps
+
         // Fetch same app from previous run
         const prev = await client.search({
           index: previousRun,
@@ -73,9 +79,9 @@ router.get("/", async (req, res) => {
         });
 
         if (prev.hits.hits.length === 0) continue;
-
+        
         const previousData = extractPrivacyData(prev.hits.hits[0]._source.privacylabels);
-
+        
         // compare JSON as string for the current runs privacy data vs previous run
         if (JSON.stringify(currentData) !== JSON.stringify(previousData)) {
           try {
