@@ -8,6 +8,7 @@ import { MetaFunction } from "@remix-run/node";
 import { FaSpinner } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import AppSearch from '~/components/AppSelector';
+import RecentlyChanged from '~/components/RecentlyChanged';
 
 export const meta: MetaFunction = () => {
     return [{
@@ -23,10 +24,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
     let cachedApps = [];
     let searchResults = [];
+    let recentlyChanged = [];
 
     // Fetch the list of cached apps regardless of search query
     const cacheResponse = await fetch(process.env.BACKEND_API + "cache");
     cachedApps = await cacheResponse.json();
+
+    // Fetch recently changed apps
+    const recentlyChangedResponse = await fetch(process.env.BACKEND_API + "recently-changed");
+    recentlyChanged = await recentlyChangedResponse.json();
 
     // If there's a search query, fetch search results
     if (q) {
@@ -37,13 +43,14 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return json({
         cachedApps,
         searchResults,
+        recentlyChanged,
         q
     });
 }
 export default function Search() {
     const { theme } = useTheme();
     const { state } = useNavigation()
-    const { cachedApps, searchResults, q } = useLoaderData<typeof loader>();
+    const { cachedApps, searchResults, recentlyChanged, q } = useLoaderData<typeof loader>();
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const submit = useSubmit();
@@ -135,7 +142,9 @@ export default function Search() {
                     <div className='pt-40 w-full'>
                         <Outlet />
                     </div>
-
+                    <div className='hidden md:block pl-2 ml-2'>
+                        <RecentlyChanged cacheList={recentlyChanged} />
+                    </div>
                 </div >
 
             </div >
