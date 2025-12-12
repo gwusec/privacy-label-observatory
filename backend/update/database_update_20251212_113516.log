@@ -1,0 +1,357 @@
+Running updateDateIndex.js at Fri Dec 12 11:35:16 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/updateDateIndex.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/updateDateIndex.js:3:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/updateDateIndex.js'
+  ]
+}
+
+Node.js v22.13.0
+updateDateIndex.js completed successfully
+Running graph3.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module 'axios'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/graph3.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/graph3.js:1:15)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/graph3.js'
+  ]
+}
+
+Node.js v22.13.0
+graph3.js completed successfully
+Running vennIndex.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module 'axios'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/vennIndex.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/vennIndex.js:1:15)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/vennIndex.js'
+  ]
+}
+
+Node.js v22.13.0
+vennIndex.js completed successfully
+Running initializePurpose.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module 'axios'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializePurpose.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializePurpose.js:1:15)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializePurpose.js'
+  ]
+}
+
+Node.js v22.13.0
+initializePurpose.js completed successfully
+Running initializeMatrix.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeMatrix.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeMatrix.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeMatrix.js completed successfully
+Running initializeRatioDC.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeRatioDC.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeRatioDC.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeRatioDC.js completed successfully
+Running initializeRatioDT.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeRatioDT.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeRatioDT.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeRatioDT.js completed successfully
+Running initializeGenre.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeGenre.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeGenre.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeGenre.js completed successfully
+Running initializeYear.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeYear.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeYear.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeYear.js completed successfully
+Running initializeVersion.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeVersion.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeVersion.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeVersion.js completed successfully
+Running initializeSize.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeSize.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeSize.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeSize.js completed successfully
+Running initializeRating.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeRating.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeRating.js'
+  ]
+}
+
+Node.js v22.13.0
+initializeRating.js completed successfully
+Running initializePrice.js at Fri Dec 12 11:35:17 EST 2025
+node:internal/modules/cjs/loader:1247
+  throw err;
+  ^
+
+Error: Cannot find module '@elastic/elasticsearch'
+Require stack:
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js
+- /Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializePrice.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1244:15)
+    at Function._load (node:internal/modules/cjs/loader:1070:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+    at Module.require (node:internal/modules/cjs/loader:1335:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js:1:20)
+    at Module._compile (node:internal/modules/cjs/loader:1562:14)
+    at Object..js (node:internal/modules/cjs/loader:1699:10)
+    at Module.load (node:internal/modules/cjs/loader:1313:32) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializeIndex.js',
+    '/Users/arwaa/Documents/GitHub/privacy-label-observatory/backend/update/initializePrice.js'
+  ]
+}
+
+Node.js v22.13.0
+initializePrice.js completed successfully
+All database updates completed
