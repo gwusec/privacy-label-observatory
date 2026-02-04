@@ -34,6 +34,26 @@ async function getLatestRunIndex() {
   }
 }
 
+async function getLatestRunDate() {
+  try {
+    const response = await client.search({
+      index: 'dates_runs_mapping',
+      size: 1,
+      sort: [{ "run_number.keyword": "desc" }],
+      _source: ["run_number", "date"]
+    });
+
+    if (response.hits.total.value === 0) {
+      throw new Error("No runs found in dates_runs_mapping index.");
+    }
+    const latestRunDate = response.hits.hits[0]._source.date;
+    return latestRunDate;
+  } catch (error) {
+    console.error("Error fetching latest run date:", error);
+    throw error;
+  }
+}
+
 // get the previous run index (run_00115 if latest is run_00116)
 function getPreviousRun(latestRun) {
   const num = parseInt(latestRun.split("_")[1], 10);
@@ -44,12 +64,28 @@ function isEnglish(str) {
   return /^[a-zA-Z0-9 .,!?'"()\-|]+$/.test(str);
 }
 
+// TODO: Transfer logic to image loader, with logic to batch lookup multiple ids
+// to avoid api limit if too many calls in short time
+// also add logic to return a default image if nothing is found or api call is blocked
+async function getAppIconFromItunesById(appId) {
+  const url = `https://itunes.apple.com/lookup?id=${appId}`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data.results || data.results.length === 0) return null;
+
+  return (
+    data.results[0].artworkUrl100 ||
+    data.results[0].artworkUrl60
+  );
+}
+
 router.get("/", async (req, res) => {
   try {
     const changedApps = [];
     const latestRun = await getLatestRunIndex();
     const previousRun = getPreviousRun(latestRun);
-
+    const latestRunDate = await getLatestRunDate();
     console.log(`Comparing ${latestRun} vs ${previousRun}`);
 
     //scroll through all apps in the latest run
@@ -85,13 +121,13 @@ router.get("/", async (req, res) => {
         // compare JSON as string for the current runs privacy data vs previous run
         if (JSON.stringify(currentData) !== JSON.stringify(previousData)) {
           try {
-            const app_url = encodeUrl(href);
-            const image_url = await htmlRequest(decode(app_url));
+            const image_url = await getAppIconFromItunesById(app_id);
 
             changedApps.push({
               app_id,
               app_name,
               image_url,
+              latestRunDate
             });
 
             // Stop once we have 10 changed apps
