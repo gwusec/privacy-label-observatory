@@ -53,7 +53,7 @@ interface PrivacyDetail {
   purposes: Purpose[] | null;
 }
 
-export default function AppDetail({ data, dates, firstIndex }: { data: any, dates:any, firstIndex: number }) {
+export default function AppDetail({ data, dates, firstIndex, aiOverview}: { data: any, dates:any, firstIndex: number, aiOverview?: string }) {
   const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
   const [prevActiveIndex, setPrevActiveIndex] = useState(0);
@@ -154,6 +154,13 @@ export default function AppDetail({ data, dates, firstIndex }: { data: any, date
                   </div>
               </div>
           </div>
+          {/* --- AI Overview --- */}
+            {aiOverview && (
+                <div className="mx-4 mb-4 p-4 rounded-lg bg-gray-200 dark:bg-gray-800">
+                    <h3 className="font-bold mb-2">AI Overview</h3>
+                    <p className="whitespace-pre-line">{aiOverview}</p>
+                </div>
+            )}
 
           {/* Horizontal Timeline */}
           {firstIndex >= 0 ? (

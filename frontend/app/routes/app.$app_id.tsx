@@ -39,13 +39,30 @@ export async function loader({ params }: LoaderFunctionArgs) {
         return redirect("/error");
     }
 
-    return [datesJson, data];
+    let aiOverview = "AI Overview not available";
+    try {
+        const aiResp = await fetch(`${process.env.BACKEND_API}aiOverview`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                appName: data[0].app_name,
+                privacyData: data[1].privacy
+            })
+        });
+        const aiJson = await aiResp.json();
+        aiOverview = aiJson.summary || aiOverview;
+    } catch (err) {
+        console.error("Failed to fetch AI overview", err);
+    }
+
+    return [datesJson, data, aiOverview];
 };
 
 export default function searchApp() {
     const data = useLoaderData<typeof loader>();
     const app = data[1];
     const dates = data[0];
+    const aiOverview = data[2];
 
     // Search for a non-empty privacy index (determines if the horizontal timeline should be displayed)
     const firstNonEmptyPrivacyIndex = app[1].privacy?.findIndex(
@@ -59,7 +76,7 @@ export default function searchApp() {
 
     return (
         <div className={`items-start h-full`}>
-            <AppDetail data={app} dates={dates} firstIndex={firstNonEmptyPrivacyIndex} />
+            <AppDetail data={app} dates={dates} firstIndex={firstNonEmptyPrivacyIndex} aiOverview={aiOverview}/>
         </div>
     );
 }

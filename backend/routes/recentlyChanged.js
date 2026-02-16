@@ -1,12 +1,13 @@
 var express = require("express");
 var router = express.Router();
+const fs = require("fs");
 
 const client = require("./../client");
 const imageModule = require("./../utilities/imageLoader");
 const encodeUrl = imageModule.encodeUrl;
 const htmlRequest = imageModule.htmlRequest;
 const decode = imageModule.decoder;
-
+const CACHE_PATH = "./../recently_changed_cache.json"
 function extractPrivacyData(privacylabels) {
   const privacyTypes = [];
   if (!privacylabels || !privacylabels.privacyDetails) return privacyTypes;
@@ -82,6 +83,11 @@ async function getAppIconFromItunesById(appId) {
 
 router.get("/", async (req, res) => {
   try {
+    if (fs.existsSync(CACHE_PATH)) {
+      const cachedData = fs.readFileSync(CACHE_PATH, "utf8");
+      if (cachedData.length > 0)
+        return res.json(JSON.parse(cachedData));
+    }
     const changedApps = [];
     const latestRun = await getLatestRunIndex();
     const previousRun = getPreviousRun(latestRun);
@@ -147,7 +153,7 @@ router.get("/", async (req, res) => {
       });
       hits = response.hits.hits;
     }
-
+    fs.writeFileSync(CACHE_PATH, JSON.stringify(changedApps, null, 2));
     res.json(changedApps);
   } catch (error) {
     console.error("Error fetching recently changed apps:", error);

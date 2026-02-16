@@ -28,6 +28,7 @@ var downloadRouter = require("./routes/download")
 var cacheRouter = require("./routes/cacheList")
 var datesRouter = require("./routes/dates")
 var recentlyChangedRouter = require("./routes/recentlyChanged");
+var aiOverviewRouter = require("./routes/aiOverview");
 //var summaryRouter = require("./routes/appSumarizer")
 
 const client = require("./client")
@@ -103,6 +104,7 @@ app.use("/api/download", downloadRouter)
 app.use("/api/cache", cacheRouter)
 app.use("/api/dates", datesRouter)
 app.use("/api/recently-changed", recentlyChangedRouter);
+app.use("/api/aiOverview", aiOverviewRouter);
 //app.use("/api/summary", summaryRouter)
 
 
