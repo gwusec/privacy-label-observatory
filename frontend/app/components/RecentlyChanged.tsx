@@ -9,14 +9,17 @@ export default function RecentlyChanged({ cacheList }: { cacheList: Record<strin
                     <li key={app.app_id} className="border-b">
                         <Link 
                             to={`/app/${app.app_id}`} 
-                            className="flex items-center gap-4 p-2 hover:bg-gray-100 rounded-md transition duration-200">   
+                            className="flex items-center gap-4 p-2 rounded-md transition duration-200 hover:bg-gray-100 dark:hover:bg-gray-800">   
                             <span className="w-20 shrink-0 text-gray-500 text-sm">{app.latestRunDate} (est.)</span>
                             <img 
-                                className="w-12 h-12 rounded-xl" 
+                                className="w-12 h-12 rounded-xl shrink-0" 
                                 src={app.image_url} 
                                 alt={app.app_name} 
                             />
-                            <strong className="text-blue-600 ">{app.app_name}</strong> (ID: {app.app_id})
+                            <div className="flex items-center gap-1 min-w-0">
+                                <strong className="text-blue-600 truncate">{app.app_name}</strong> 
+                                <span className="whitespace-nowrap shrink-0">(ID: {app.app_id})</span>
+                            </div>
                         </Link>
                     </li>
                 ))}

@@ -1,12 +1,12 @@
 import { useTheme } from 'next-themes';
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Links, Meta, Scripts, ScrollRestoration, useNavigation, useLoaderData, useSubmit } from "@remix-run/react";
-import { useState, useRef, useEffect } from 'react';
+import { Form, useLoaderData, useNavigation, useNavigate } from "@remix-run/react";
 import { Link, Outlet } from '@remix-run/react';
 import { MetaFunction } from "@remix-run/node";
 import { FaSpinner } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
+import { useEffect, useState } from 'react';
 import AppSearch from '~/components/AppSelector';
 import RecentlyChanged from '~/components/RecentlyChanged';
 
@@ -47,108 +47,115 @@ export async function loader({ request }: LoaderFunctionArgs) {
         q
     });
 }
+
+
 export default function Search() {
-    const { theme } = useTheme();
-    const { state } = useNavigation()
+    const { state } = useNavigation();
+    const navigate = useNavigate();
     const { cachedApps, searchResults, recentlyChanged, q } = useLoaderData<typeof loader>();
-    const [isFocused, setIsFocused] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const submit = useSubmit();
-
-    useEffect(() => {
-        const searchField = document.getElementById("q");
-        if (searchField instanceof HTMLInputElement) {
-            searchField.value = q || "";
-        }
-    }, [q]);
-
+    const [searchValue, setSearchValue] = useState(q || "");
     return (
         <>
-            {state === "loading" ?
-                <div className="fixed inset-0 flex items-center justify-center z-50">
+            {state === "loading" && (
+                <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
                     <FaSpinner className="animate-spin" size={72} />
                 </div>
-                :
-                <div>
-                </div>
-            }
-            <div className='h-full'>
-                <div className={`flex justify-center`}>
-                    <div className="absolute top-20 w-full max-w-lg mx-auto p-4">
-                        <div className={`flex flex-col items-center shadow-lg rounded-lg p-4 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
-                            <h1 className="text-2xl font-bold mb-4">IOS Apps</h1>
-                            <Form id="search-form"
-                                role="search" className="w-full flex flex-col items-center">
-                                <div className='flex '>
-                                    <input
-                                        id="q"
-                                        aria-label="Search apps"
-                                        placeholder="Search apps"
-                                        type="search"
-                                        name="q"
-                                        defaultValue={q || ""}
-                                        className="px-4 py-2 border border-gray-300 rounded-md w-full min-w-40 text-black pr-10"
-                                    />
-                                    <button
-                                        type="submit"
-                                        aria-label="Search"
-                                        className="px-4 py-2 text-black rounded-r-md"
-                                    >
-                                        {theme === 'dark' ?
-                                            <FaSearch color='white' className="w-5 h-5" />
-                                            :
-                                            <FaSearch color='black' className="w-5 h-5" />
-                                        }
+            )}
+            <div className="min-h-screen py-6 lg:py-8">
+                <div className="w-full px-4 md:px-6 lg:px-8">
+                    <div className="lg:grid lg:grid-cols-[1fr_minmax(0,1fr)_1fr] lg:gap-8 flex flex-col gap-6">
+                        <div className="order-2 lg:order-none">
+                            <div className="lg:sticky lg:top-6">
+                                <AppSearch cacheList={cachedApps}/>
+                            </div>
+                        </div>
+                        <div className="w-full order-1 lg:order-none">
+                            <div className="mb-8 lg:mb-12">
+                                <div className="rounded-2xl shadow-md px-6 py-4 md:px-8 md:py-6 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100">
 
-                                    </button>
+                                    <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">
+                                        IOS Apps
+                                    </h1>
+                                    <Form id="search-form" role="search" className="w-full">
+                                        <div className="relative w-full">
+                                            <input
+                                                id="q"
+                                                aria-label="Search apps"
+                                                placeholder="Search apps"
+                                                type="text"
+                                                name="q"
+                                                value={searchValue}
+                                                onChange={(e) => setSearchValue(e.target.value)}
+                                                className="w-full px-4 py-3 pr-12 rounded-lg border transition bg-white text-gray-900 border-gray-300 focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 dark:focus:border-gray-400"/>  
+                                            {searchValue ? (
+                                                <button
+                                                    type="button"
+                                                    aria-label="Clear search"
+                                                    onClick={() => {
+                                                        setSearchValue("");
+                                                        navigate("/search");
+                                                    }}
+                                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                                                >
+                                                    ✕
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type="submit"
+                                                    aria-label="Search"
+                                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                                                >
+                                                    <FaSearch className="w-5 h-5" />
+                                                </button>
+                                            )}
+                                            {(searchResults.length > 0 || q) && (
+                                                <div className="absolute top-full left-0 right-0 mt-2 z-20">
+                                                    {searchResults.length > 0 ? (
+                                                        <ul
+                                                            className="rounded-lg border-2 shadow-lg max-h-80 overflow-y-auto bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                                                            {searchResults.map((app: any) => (
+                                                                <Link key={app.app_id} to={'/app/' + app.app_id}>
+                                                                    <li className="px-4 py-3 border-b cursor-pointer transition border-gray-200 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700">
+                                                                        {app.app_name}
+                                                                    </li>
+                                                                </Link>
+                                                            ))}
+                                                        </ul>
+                                                    ) : (
+                                                        <div
+                                                            className="rounded-lg border-2 px-4 py-3 shadow-lg bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                                                            No results found for "{q}"
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </Form>
                                 </div>
-                                <div ref={inputRef}>
-                                    {searchResults.length > 0 ? (
-                                        <ul
-                                            className={`absolute top-full left-0 right-0 mt-2 border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'
-                                                }`}
-                                        >
-                                            {searchResults.map((app: any, index: any) => (
-                                                <Link key={app.app_id} className="w-full" to={'/app/' + app.app_id}>
-                                                    <li
-                                                        className={`px-4 py-2 cursor-pointer ${theme === 'dark' ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'
-                                                            }`}
-                                                    >
-                                                        {app.app_name}
-                                                    </li>
-                                                </Link>
-                                            ))}
-                                        </ul>
-                                    ) : (
-                                        q && (
-                                            <div
-                                                className={`absolute top-full left-0 right-0 mt-2 px-4 py-2 border border-gray-300 rounded-md shadow-lg z-10 ${theme === 'dark' ? 'bg-grey text-white' : 'bg-white text-black'
-                                                    }`}
-                                            >
-                                                No results found.
-                                            </div>
-                                        )
-                                    )}
+                            </div>
+
+                       
+                            {(searchResults.length > 0 || q) && (
+                                <div className="mt-8">
+                                    <h2 className="text-gray-300 dark:text-gray-700">
+                                        Results ({searchResults.length})
+                                    </h2>
+                                    <Outlet />
                                 </div>
+                            )}
 
+                        </div>
 
-                            </Form>
+                
+                        <div className="order-3 lg:order-none">
+                            <div className="lg:sticky lg:top-6">
+                                <RecentlyChanged cacheList={recentlyChanged} />
+                            </div>
                         </div>
 
                     </div>
-                    <div className='hidden md:block pl-2 ml-2'>
-                        <AppSearch cacheList={cachedApps} />
-                    </div>
-                    <div className='pt-40 w-full'>
-                        <Outlet />
-                    </div>
-                    <div className='hidden md:block pl-2 ml-2'>
-                        <RecentlyChanged cacheList={recentlyChanged} />
-                    </div>
-                </div >
-
-            </div >
-
+                </div>
+            </div>
         </>
     );
 }

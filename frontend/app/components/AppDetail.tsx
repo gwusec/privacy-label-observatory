@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from 'react';
 import { useTheme } from "next-themes";
 import { useNavigate } from "@remix-run/react";
@@ -159,12 +161,7 @@ export default function AppDetail({ data, dates, firstIndex }: { data: any, date
           {firstIndex >= 0 ? (
               <div className={`flex justify-center items-center `}>
                   <div
-                      className={` p-4 mb-4 rounded-lg h-fit ml-2 w-fit ${
-                          theme === "dark"
-                              ? "bg-neutral-300 rounded-lg shadow"
-                              : ""
-                      }`}
-                  >
+                      className="p-4 mb-4 ml-2 w-fit h-fit rounded-lg shadow-md transform transition duration-200 bg-white text-gray-900 hover:bg-gray-100 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700">
                       <HorizontalTimeline
                           privtypes={privacy_types}
                           dates={dates}
@@ -184,24 +181,29 @@ export default function AppDetail({ data, dates, firstIndex }: { data: any, date
           )}
 
           {/* Toolbar buttons */}
-          <div className="flex flex-row justify-between items-end mr-4">
-              <Button className="ml-6" onClick={handleReturnToSearch}>
-                  Return to Search
-              </Button>
-              {privDetails.length > 0 ? (
-                  <Button
-                      onClick={() => expandAll()}
-                      className={`hidden text-cyan-500 lg:block hover:bg-cyan-300 ${
-                          theme === "dark" ? "bg-black" : "bg-white"
-                      } font-medium`}
-                  >
-                      {allColumns ? "Condense" : "Expand"}
-                  </Button>
-              ) : (
-                  <></>
-              )}
-          </div>
-
+          <div className="flex items-center w-full px-6 mt-4">
+             <div className="flex-1">
+                    <Button onClick={handleReturnToSearch}>
+                    Return to Search
+                    </Button>
+                </div>
+                 <div className="flex-1 hidden md:flex justify-center items-center text-sm text-gray-500 dark:text-gray-400">
+                <span className="inline-block w-3 h-3 rounded-full bg-yellow-400 border border-yellow-600 mr-2" />
+                        Highlighted items indicate changes
+                 </div>
+             <div className="flex-1 flex justify-end">
+                    {privDetails.length > 0 && (
+                    <Button
+                        onClick={expandAll}
+                        className="hidden lg:block font-medium
+                        bg-white dark:bg-gray-800
+                        text-cyan-500 hover:bg-cyan-100 dark:hover:bg-cyan-900"
+                    >
+                        {allColumns ? "Condense" : "Expand"}
+                    </Button>
+                    )}
+                </div>
+                </div>
           {/* Privacy Data Columns */}
           <div className="flex gap-4 mx-4 mt-4">
               {/* Show a column for each privacyTypes */}

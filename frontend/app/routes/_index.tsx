@@ -27,7 +27,6 @@ export default function Index() {
     navigate("/documentation");
   }
 
-  const { theme } = useTheme();
   return (
     <>
       {state === "loading" ?
@@ -35,7 +34,7 @@ export default function Index() {
           <FaSpinner className="animate-spin" size={72} />
         </div>
         :
-        <div className={`${theme === 'dark' ? 'bg-dark' : 'bg-light'} overflow-hidden`}>
+        <div  className="min-h-screen bg-white dark:bg-black text-black dark:text-white overflow-hidden">
           <div id="main-text">
 
             <div className="mb-20">
@@ -47,9 +46,9 @@ export default function Index() {
                 Explore our database:
               </h2>
               <div className="flex justify-center flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10 mt-20">
-                <button onClick={() => goToApps()}className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>Apps</button>
-                <button onClick={() => goToGraphs()} className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>Graphs</button>
-                <button onClick={() => goToInfo()} className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110 ${theme === 'dark' ? 'bg-black border border-slate-800 text-dred hover:shadow-lg hover:shadow-slate-800' : 'bg-white text-red border-grey '}`}>Documentation</button>
+                <button onClick={() => goToApps()}className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110  bg-white text-red-500 border border-gray-300 dark:bg-gray-900 dark:border-slate-800 dark:text-red-400 hover:shadow-lg dark:hover:shadow-slate-800`}>Apps</button>
+                <button onClick={() => goToGraphs()} className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110  bg-white text-red-500 border border-gray-300 dark:bg-gray-900 dark:border-slate-800 dark:text-red-400 hover:shadow-lg dark:hover:shadow-slate-800`}>Graphs</button>
+                <button onClick={() => goToInfo()} className={`px-5 py-3 text-xl font-semibold shadow-xl rounded-full transition-transform duration-200 transform hover:scale-110  bg-white text-red-500 border border-gray-300  dark:bg-gray-900 dark:border-slate-800 dark:text-red-400 hover:shadow-lg dark:hover:shadow-slate-800`}>Documentation</button>
               </div>
               </div>
 
