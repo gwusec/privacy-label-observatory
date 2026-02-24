@@ -1,3 +1,6 @@
 {
-  "YouTube: Watch, Listen, Stream": "Data Used to Track You:\nThe app introduced a tracking category that utilizes contact information such as physical addresses, phone numbers, and email, alongside device and user identifiers.\n\nData Linked to You:\nThe app expanded its collection of contact details for advertising purposes, while search history was removed from the data types used for app functionality."
+  "YouTube: Watch, Listen, Stream": "Data Used to Track You:\nThe app introduced a tracking category that utilizes contact information such as physical addresses, phone numbers, and email, alongside device and user identifiers.\n\nData Linked to You:\nThe app expanded its collection of contact details for advertising purposes, while search history was removed from the data types used for app functionality.",
+  "Brave Private Web Browser, VPN": "No changes in data collection or usage.",
+  "Dog Selfie Camera": "Data Used to Track You:\nThe developer uses your User ID and Device ID to track your activity across apps and websites owned by other companies.\n\nData Linked to You:\nDevice identifiers are collected and linked to your identity to support advertising, analytics, and core app functions.\n\nData Not Linked to You:\nThe app collects user identifiers for marketing, personalization, and analytics, but this data is not tied to your specific identity.",
+  "Color Block Jam": "No changes in data collection or usage."
 }
