@@ -6,6 +6,19 @@ const encodeUrl = imageModule.encodeUrl
 const htmlRequest = imageModule.htmlRequest
 const decode = imageModule.decoder
 
+async function getAppIconFromItunesById(appId) {
+  const url = `https://itunes.apple.com/lookup?id=${appId}`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data.results || data.results.length === 0) return null;
+
+  return (
+    data.results[0].artworkUrl100 ||
+    data.results[0].artworkUrl60
+  );
+}
+
 router.get("/", async function (req, res) {
     try {
 
@@ -30,7 +43,7 @@ router.get("/", async function (req, res) {
                     return {
                         app_id: hit._source.app_id,
                         app_name: hit._source.data[0].app_name,
-                        image_url: hit._source.data[0].image_url
+                        image_url: await getAppIconFromItunesById(hit._source.app_id)
                     };
                 })
             );
