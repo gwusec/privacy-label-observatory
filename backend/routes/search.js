@@ -39,33 +39,54 @@ router.get("/", async function (req, res) {
     }
 
     client.search({
-        "index": run,
-        "query": {
-            "bool": {
-                "should": [
-                    {
-                        "match_phrase": { // Exact match
-                            "app_name": {
-                                "query": q,
-                                "boost": 2 // Higher boost for exact matches
-                            }
-                        }
-                    },
-                    {
-                        "match_phrase_prefix": { // Prefix match
-                            "app_name": {
-                                "query": q,
-                                "boost": 1 // Lower boost for prefix matches
-                            }
+    "index": run,
+    "query": {
+        "bool": {
+            "should": [
+                // Exact App ID match (highest priority)
+                {
+                    "term": {
+                        "app_id.keyword": {
+                            "value": q,
+                            "boost": 6
                         }
                     }
-                ]
-            }
-        },
-        "size": 20,
-        "collapse": {
-            "field": "app_id.keyword" // Use the keyword subfield for collapsing
+                },
+                // Partial App ID match (if user types starting digits)
+                {
+                    "prefix": {
+                        "app_id.keyword": {
+                            "value": q,
+                            "boost": 4
+                        }
+                    }
+                },
+                // Exact App Name match
+                {
+                    "match_phrase": {
+                        "app_name": {
+                            "query": q,
+                            "boost": 3
+                        }
+                    }
+                },
+                // Partial App Name match
+                {
+                    "match_phrase_prefix": {
+                        "app_name": {
+                            "query": q,
+                            "boost": 2
+                        }
+                    }
+                }
+            ],
+            "minimum_should_match": 1
         }
+    },
+    "size": 20,
+    "collapse": {
+        "field": "app_id.keyword"
+    }
     }).then((r) => {
         const hits = r.hits.hits.map(hit => ({
             app_name: hit._source.app_name,

@@ -124,6 +124,7 @@ export default function AppDetail({ data, dates, firstIndex }: { data: any, date
   };
 
   useEffect(() => {
+    console.log(data);
     setPrivDetails(privacy_types[activeIndex]["privacy_types"]["privacyDetails"]["privacyTypes"]);
   }, [activeIndex])
 

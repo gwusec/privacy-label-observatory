@@ -54,6 +54,7 @@ export default function Search() {
     const navigate = useNavigate();
     const { cachedApps, searchResults, recentlyChanged, q } = useLoaderData<typeof loader>();
     const [searchValue, setSearchValue] = useState(q || "");
+
     return (
         <>
             {state === "loading" && (
@@ -81,7 +82,7 @@ export default function Search() {
                                             <input
                                                 id="q"
                                                 aria-label="Search apps"
-                                                placeholder="Search apps"
+                                                placeholder="Search by App Name or App ID"
                                                 type="text"
                                                 name="q"
                                                 value={searchValue}
