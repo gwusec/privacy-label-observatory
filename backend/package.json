@@ -1,7 +1,6 @@
 {
   "name": "small_runs",
   "version": "1.0.0",
-  "type": "module",
   "description": "Cone this repo to the location you want to run elastic search and kibana",
   "main": "index.js",
   "scripts": {

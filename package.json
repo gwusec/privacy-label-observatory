@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google/genai": "^1.43.0",
     "@syncfusion/ej2-react-layouts": "^25.2.3",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
