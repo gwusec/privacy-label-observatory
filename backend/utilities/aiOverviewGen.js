@@ -9,7 +9,7 @@ async function getAI() {
 }
 
 
-export async function generatePrivacySummary(appName, privacyData) {
+async function generatePrivacySummary(appName, privacyData) {
     try {
      const aiInstance = await getAI();
         const prompt = `
