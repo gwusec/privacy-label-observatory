@@ -1,15 +1,22 @@
-import { GoogleGenAI  } from "@google/genai";
+let ai;
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+async function getAI() {
+  if (!ai) {
+    const { GoogleGenAI } = await import("@google/genai");
+    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  }
+  return ai;
+}
+
 
 export async function generatePrivacySummary(appName, privacyData) {
     try {
+     const aiInstance = await getAI();
         const prompt = `
             You are analyzing app privacy labels from an app on the app store.
             Do NOT use Markdown formatting (no asterisks).
             Ensure each section starts on a new line.
             The app name is: ${appName}
-
             Privacy label data (JSON):
             ${JSON.stringify(privacyData, null, 2)}
 
@@ -27,7 +34,7 @@ export async function generatePrivacySummary(appName, privacyData) {
             Avoid legal language. Be concise.
             `;
 
-        const response = await ai.models.generateContent({
+        const response = await aiInstance.models.generateContent({
             model: "gemini-3-flash-preview",
             contents: [prompt],
             generationConfig: {
@@ -44,3 +51,4 @@ export async function generatePrivacySummary(appName, privacyData) {
         return "Unable to generate privacy summary at this time.";
     }
 }
+module.exports = { generatePrivacySummary };
