@@ -1,13 +1,14 @@
 var express = require("express");
 var router = express.Router();
 const fs = require("fs");
-
+const path = require("path");
 const client = require("./../client");
 const imageModule = require("./../utilities/imageLoader");
 const encodeUrl = imageModule.encodeUrl;
 const htmlRequest = imageModule.htmlRequest;
 const decode = imageModule.decoder;
-const CACHE_PATH = "./../recently_changed_cache.json"
+const CACHE_PATH = path.join(__dirname, "../recently_changed_cache.json");
+
 function extractPrivacyData(privacylabels) {
   const privacyTypes = [];
   if (!privacylabels || !privacylabels.privacyDetails) return privacyTypes;
@@ -84,9 +85,16 @@ async function getAppIconFromItunesById(appId) {
 router.get("/", async (req, res) => {
   try {
     if (fs.existsSync(CACHE_PATH)) {
-      const cachedData = fs.readFileSync(CACHE_PATH, "utf8");
-      if (cachedData.length > 0)
-        return res.json(JSON.parse(cachedData));
+      const fileContent = fs.readFileSync(CACHE_PATH, "utf8");
+        if (fileContent.trim().length > 0) {
+          const cachedData = JSON.parse(fileContent);
+          if (Array.isArray(cachedData) && 
+              cachedData.length > 0 && 
+              cachedData[0].latestRunDate === await getLatestRunDate()) {
+            console.log("Cache hit: Dates match.");
+            return res.json(cachedData);
+          }
+        }
     }
     const changedApps = [];
     const latestRun = await getLatestRunIndex();
