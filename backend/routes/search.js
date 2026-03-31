@@ -44,6 +44,14 @@ router.get("/", async function (req, res) {
             "bool": {
                 "should": [
                     {
+                        "term": { // id match
+                            "app_id": {
+                                "value": q,
+                                "boost": 3 
+                            }
+                        }
+                    },
+                    {
                         "match_phrase": { // Exact match
                             "app_name": {
                                 "query": q,
