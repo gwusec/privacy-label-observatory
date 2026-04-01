@@ -8,6 +8,7 @@ import { animate } from 'framer-motion';
 import { useFetcher } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import { display } from 'html2canvas/dist/types/css/property-descriptors/display';
+import { type TooltipItem } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, TimeScale);
 
@@ -28,7 +29,7 @@ interface RunData {
     data: RunData[];
     isExpanded: boolean;
   }
-
+  
 
 
 const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
@@ -82,6 +83,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         borderWidth: 3,  // Thicker line
         tension: 0.1,
         pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHitRadius: 16,
       },
       {
         label: 'Compliant Apps',
@@ -91,6 +94,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHitRadius: 16,
       },
       {
         label: 'Data Not Collected',
@@ -100,6 +105,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHitRadius: 16,
       },
       {
         label: 'Data Not Linked to You',
@@ -109,6 +116,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHitRadius: 16,
       },
       {
         label: 'Data Linked to You',
@@ -118,6 +127,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         borderWidth: 3,
         tension: 0.1,
         pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHitRadius: 16,
       },
       {
         label: 'Data Used to Track You',
@@ -126,6 +137,8 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 3,        tension: 0.1,
         pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHitRadius: 16,
       },
     ].filter(dataset => dataset.data.length > 0),
   };
@@ -180,9 +193,71 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
       datalabels: {
         color: theme === 'dark' ? '#ffffff' : '#000000',
         display: false,
-      }
+      },
+       tooltip: {
+      mode: 'index' as const,
+      intersect: false,
+      backgroundColor: theme === 'dark' ? '#1e1e1e' : '#ffffff',
+      titleColor: theme === 'dark' ? '#f1f1f1' : '#1e1e1e',
+      bodyColor: theme === 'dark' ? '#d1d1d1' : '#333333',
+      borderColor: theme === 'dark' ? '#444444' : '#cccccc',
+      borderWidth: 1,
+      padding: 12,
+      callbacks: {
+        // Format the tooltip title (date)
+        title: (items: TooltipItem<'line'>[]) => {
+          if (!items.length) return '';
+          const date = new Date(items[0].parsed.x);
+          return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+          });
+        },
+        // Format each dataset row — value + % of total
+        label: (item: TooltipItem<'line'>) => {
+          const value = item.parsed.y;
+          const formatted = value.toLocaleString();
+
+          // Calculate % of total (assumes first dataset is "Total Apps")
+          const totalDataset = item.chart.data.datasets[0];
+          const totalValue = (totalDataset.data[item.dataIndex] as number) ?? 0;
+          const pct =
+            item.datasetIndex === 0 || totalValue === 0
+              ? ''
+              : ` (${((value / totalValue) * 100).toFixed(1)}% of total)`;
+
+          return ` ${item.dataset.label}: ${formatted}${pct}`;
+        },
+        // Add compliance rate summary at the bottom
+        afterBody: (items: TooltipItem<'line'>[]) => {
+          if (!items.length) return [];
+          const idx = items[0].dataIndex;
+          const chart = items[0].chart;
+
+          const totalDataset = chart.data.datasets[0];
+          const compliantDataset = chart.data.datasets[1]; // assumes index 1 = "Compliant Apps"
+
+          const total = (totalDataset?.data[idx] as number) ?? 0;
+          const compliant = (compliantDataset?.data[idx] as number) ?? 0;
+
+          if (!total) return [];
+          const rate = ((compliant / total) * 100).toFixed(1);
+          return ['', `Compliance rate: ${rate}%`];
+        },
+      },
     },
-  };
+  },
+   interaction: {
+    mode: 'index' as const,
+    intersect: false,
+    axis: 'x' as const,
+  },
+  hover: {
+    mode: 'index' as const,
+    intersect: false,
+  },
+};
 
 
 //   <button className={`p-2 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-black'} hidden md:block rounded`} onClick={() => chartRef.current?.resetZoom()}>
