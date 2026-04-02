@@ -62,7 +62,7 @@ async function getLatestRunDate() {
 // }
 
 // get the previous available run from dates_runs_mapping
-async function getPreviousRun(latestRun) {
+async function getPreviousRun() {
   try {
     const response = await client.search({
       index: 'dates_runs_mapping',
@@ -109,7 +109,7 @@ router.get("/", async (req, res) => {
     }
     const changedApps = [];
     const latestRun = await getLatestRunIndex();
-    const previousRun = getPreviousRun(latestRun);
+    const previousRun = await getPreviousRun();
     const latestRunDate = await getLatestRunDate();
     console.log(`Comparing ${latestRun} vs ${previousRun}`);
 

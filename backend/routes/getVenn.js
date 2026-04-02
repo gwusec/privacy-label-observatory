@@ -17,7 +17,8 @@ router.get('/', async function (req, res) {
 
     res.json(result.hits.hits[0]._source)
   } catch (error){
-    console.error("Error querying for venn diagram")
+    console.error("Error querying for venn diagram", error)
+    res.status(500).json({ error: "Internal Server Error" })
   }
 
 })
