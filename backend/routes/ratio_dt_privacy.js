@@ -16,7 +16,8 @@ router.get('/', async function (req, res) {
     })
     res.json(result.hits.hits[0]._source.ratios)
   } catch (error){
-    console.error("Error querying")
+    console.error("Error querying ratio_data_types", error)
+    res.status(500).json({ error: "Internal Server Error" })
   }
 
 })
