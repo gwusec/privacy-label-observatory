@@ -56,9 +56,28 @@ async function getLatestRunDate() {
 }
 
 // get the previous run index (run_00115 if latest is run_00116)
-function getPreviousRun(latestRun) {
-  const num = parseInt(latestRun.split("_")[1], 10);
-  return `run_${String(num - 1).padStart(5, "0")}`;
+// function getPreviousRun(latestRun) {
+//   const num = parseInt(latestRun.split("_")[1], 10);
+//   return `run_${String(num - 1).padStart(5, "0")}`;
+// }
+
+// get the previous available run from dates_runs_mapping
+async function getPreviousRun(latestRun) {
+  try {
+    const response = await client.search({
+      index: 'dates_runs_mapping',
+      size: 2,
+      sort: [{ "run_number.keyword": "desc" }],
+      _source: ["run_number"]
+    });
+
+    const hits = response.hits.hits;
+    if (hits.length < 2) throw new Error("No previous run found in dates_runs_mapping.");
+    return hits[1]._source.run_number;
+  } catch (error) {
+    console.error("Error fetching previous run:", error);
+    throw error;
+  }
 }
 
 function isEnglish(str) {
