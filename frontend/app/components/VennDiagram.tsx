@@ -7,10 +7,16 @@ function VennDiagrams({ data }: { data: any }) {
     const { theme } = useTheme();
     const [isMobile, setIsMobile] = useState(false);
 
-    // Check once at mount if mobile view
+    // Keep diagram sizing in sync with the viewport so the SVG stays inside its section.
     useEffect(() => {
-        setIsMobile(window.innerWidth < 768);
-        // No event listener needed since we don't care about resize
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 1024);
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     // Create mappings for mobile/desktop
@@ -91,34 +97,41 @@ function VennDiagrams({ data }: { data: any }) {
         valueLabel: isMobile ? '10px' : '14px',
     };
 
-    return (
-        <div className="flex flex-col md:flex-row w-full bg-inherit p-5 justify-center items-center space-y-5 md:space-y-0 overflow-visible">
-            {/* Main Venn Diagram */}
-            <VennDiagram
-                sets={sets}
-                padding={isMobile ? 15 : 20}
-                combinations={combinations}
-                theme={theme === 'dark' ? 'dark' : 'light'}
-                width={isMobile ? 350 : 800}
-                height={isMobile ? 300 : 500}
-                strokeColor="blue"
-                fontSizes={fontSizes}
-                exportButtons={false}
-                className="z-10 bg-inherit overflow-visible"
-            />
+    const mainWidth = isMobile ? 320 : 720;
+    const mainHeight = isMobile ? 280 : 460;
+    const singularWidth = isMobile ? 240 : 320;
+    const singularHeight = isMobile ? 180 : 220;
 
-            {/* Singular Data Venn Diagram */}
-            <VennDiagram
-                sets={set}
-                combinations={combination}
-                width={isMobile ? 300 : 450}
-                height={isMobile ? 200 : 250}
-                strokeColor="rgba(255, 206, 86, 1)"
-                fontSizes={fontSizes}
-                theme={theme === 'dark' ? 'dark' : 'light'}
-                exportButtons={false}
-                className="w-fit bg-inherit overflow-visible md:-ml-28"
-            />
+    return (
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 overflow-hidden px-4 py-6 lg:flex-row lg:items-start">
+            <div className="flex w-full justify-center overflow-hidden rounded-2xl">
+                <VennDiagram
+                    sets={sets}
+                    padding={isMobile ? 15 : 20}
+                    combinations={combinations}
+                    theme={theme === 'dark' ? 'dark' : 'light'}
+                    width={mainWidth}
+                    height={mainHeight}
+                    strokeColor="blue"
+                    fontSizes={fontSizes}
+                    exportButtons={false}
+                    className="max-w-full bg-inherit"
+                />
+            </div>
+
+            <div className="flex w-full max-w-sm justify-center overflow-hidden rounded-2xl lg:w-auto lg:flex-none lg:self-center">
+                <VennDiagram
+                    sets={set}
+                    combinations={combination}
+                    width={singularWidth}
+                    height={singularHeight}
+                    strokeColor="rgba(255, 206, 86, 1)"
+                    fontSizes={fontSizes}
+                    theme={theme === 'dark' ? 'dark' : 'light'}
+                    exportButtons={false}
+                    className="max-w-full bg-inherit"
+                />
+            </div>
         </div>
     );
 }
