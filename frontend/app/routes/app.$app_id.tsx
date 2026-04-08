@@ -65,13 +65,11 @@ export default function searchApp() {
     const aiOverview = data[2];
 
     // Search for a non-empty privacy index (determines if the horizontal timeline should be displayed)
+    // Only hide the timeline if privacyTypes is completely absent — "Data Not Collected" still has an entry
     const firstNonEmptyPrivacyIndex = app[1].privacy?.findIndex(
         (privacy: any) =>
             privacy.privacy_types.privacyDetails.privacyTypes &&
-            privacy.privacy_types.privacyDetails.privacyTypes.length > 0 &&
-            privacy.privacy_types.privacyDetails.privacyTypes.some(
-                (type: any) => type.dataCategories.length > 0 || type.purposes.length > 0
-            )
+            privacy.privacy_types.privacyDetails.privacyTypes.length > 0
     );
 
     return (

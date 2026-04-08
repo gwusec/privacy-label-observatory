@@ -121,57 +121,51 @@ interface GraphPopupProps {
 //   );
 // };
 
+async function safeJson(url: string, fallback: any = null) {
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) {
+      console.error(`Dashboard fetch failed for ${url}: ${resp.status}`);
+      return fallback;
+    }
+    return await resp.json();
+  } catch (err) {
+    console.error(`Dashboard fetch error for ${url}:`, err);
+    return fallback;
+  }
+}
+
 export async function loader({ params }: LoaderFunctionArgs) {
   const latestRun = await fetch(process.env.BACKEND_API + "latestIndex");
   const runData: string = (await latestRun.json()).latestRun;
 
-  const venn = await fetch(process.env.BACKEND_API + "venn")
-  const vennDiagramData = await venn.json()
-
-
-  const percentage = await fetch(process.env.BACKEND_API + "price");
-  const percentageData = await percentage.json();
-
-
-  const dates = await fetch(process.env.BACKEND_API + "yearlyReleases");
-  const dateJson = await dates.json();
-
-
-  const response = await fetch(process.env.BACKEND_API + "longUpdated");
-  const longitude = await response.json();
-
-
-  const response2 = await fetch(process.env.BACKEND_API + "ratios");
-  const ratios = await response2.json();
-
-
-  const response3 = await fetch(process.env.BACKEND_API + "matrix");
-  const matrix = await response3.json();
-
-
-  const response4 = await fetch(process.env.BACKEND_API + "ratioDC");
-  const privacyTypes = await response4.json();
-
-
-  const response5 = await fetch(process.env.BACKEND_API + "ratioDT");
-  const dataTypes = await response5.json();
-
-
-  const response6 = await fetch(process.env.BACKEND_API + "appGenre");
-  const appGenre = await response6.json();
-
-
-  const version = await fetch(process.env.BACKEND_API + "version?run=" + runData);
-  const versionData = await version.json();
-
-
-  const rating = await fetch(process.env.BACKEND_API + "rating?run=" + runData);
-  const ratingData = await rating.json();
-
-
-  const size = await fetch(process.env.BACKEND_API + "size?run=" + runData);
-  const sizeData = await size.json();
-
+  const [
+    vennDiagramData,
+    percentageData,
+    dateJson,
+    longitude,
+    ratios,
+    matrix,
+    privacyTypes,
+    dataTypes,
+    appGenre,
+    versionData,
+    ratingData,
+    sizeData,
+  ] = await Promise.all([
+    safeJson(process.env.BACKEND_API + "venn", []),
+    safeJson(process.env.BACKEND_API + "price", []),
+    safeJson(process.env.BACKEND_API + "yearlyReleases", []),
+    safeJson(process.env.BACKEND_API + "longUpdated", {}),
+    safeJson(process.env.BACKEND_API + "ratios", []),
+    safeJson(process.env.BACKEND_API + "matrix", []),
+    safeJson(process.env.BACKEND_API + "ratioDC", []),
+    safeJson(process.env.BACKEND_API + "ratioDT", []),
+    safeJson(process.env.BACKEND_API + "appGenre", []),
+    safeJson(process.env.BACKEND_API + "version?run=" + runData, []),
+    safeJson(process.env.BACKEND_API + "rating?run=" + runData, []),
+    safeJson(process.env.BACKEND_API + "size?run=" + runData, []),
+  ]);
 
   return [vennDiagramData, percentageData, dateJson, longitude, ratios, matrix, privacyTypes, dataTypes, appGenre, versionData, ratingData, sizeData];
 }

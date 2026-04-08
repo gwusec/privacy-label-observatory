@@ -9,14 +9,33 @@ const htmlRequest = imageModule.htmlRequest;
 const decode = imageModule.decoder;
 const CACHE_PATH = "./../recently_changed_cache.json"
 function extractPrivacyData(privacylabels) {
-  const privacyTypes = [];
-  if (!privacylabels || !privacylabels.privacyDetails) return privacyTypes;
+  if (!privacylabels || !privacylabels.privacyDetails) return [];
+  return privacylabels.privacyDetails.privacyTypes || [];
+}
 
-  for (let j in privacylabels.privacyDetails) {
-    privacyTypes.push(privacylabels.privacyDetails.privacyTypes[j]);
-  }
-
-  return privacyTypes;
+function sortPrivacyTypes(privacyTypes) {
+  return privacyTypes
+    .map(pt => ({
+      identifier: pt.identifier,
+      purposes: (pt.purposes || [])
+        .map(p => ({
+          identifier: p.identifier,
+          dataCategories: (p.dataCategories || [])
+            .map(dc => ({
+              identifier: dc.identifier,
+              dataTypes: (dc.dataTypes || []).slice().sort(),
+            }))
+            .sort((a, b) => a.identifier.localeCompare(b.identifier)),
+        }))
+        .sort((a, b) => a.identifier.localeCompare(b.identifier)),
+      dataCategories: (pt.dataCategories || [])
+        .map(dc => ({
+          identifier: dc.identifier,
+          dataTypes: (dc.dataTypes || []).slice().sort(),
+        }))
+        .sort((a, b) => a.identifier.localeCompare(b.identifier)),
+    }))
+    .sort((a, b) => a.identifier.localeCompare(b.identifier));
 }
 
 // get the most recent run index (like run_00116)
@@ -102,13 +121,20 @@ async function getAppIconFromItunesById(appId) {
 
 router.get("/", async (req, res) => {
   try {
+    const latestRun = await getLatestRunIndex();
+
+    // Invalidate cache if the latest run has changed since it was built
     if (fs.existsSync(CACHE_PATH)) {
       const cachedData = fs.readFileSync(CACHE_PATH, "utf8");
-      if (cachedData.length > 0)
-        return res.json(JSON.parse(cachedData));
+      if (cachedData.length > 0) {
+        const parsed = JSON.parse(cachedData);
+        if (parsed.latestRun === latestRun && Array.isArray(parsed.apps)) {
+          return res.json(parsed.apps);
+        }
+      }
     }
+
     const changedApps = [];
-    const latestRun = await getLatestRunIndex();
     const previousRun = await getPreviousRun();
     const latestRunDate = await getLatestRunDate();
     console.log(`Comparing ${latestRun} vs ${previousRun}`);
@@ -143,8 +169,8 @@ router.get("/", async (req, res) => {
         
         const previousData = extractPrivacyData(prev.hits.hits[0]._source.privacylabels);
         
-        // compare JSON as string for the current runs privacy data vs previous run
-        if (JSON.stringify(currentData) !== JSON.stringify(previousData)) {
+        // compare sorted JSON to avoid false positives from field-ordering differences
+        if (JSON.stringify(sortPrivacyTypes(currentData)) !== JSON.stringify(sortPrivacyTypes(previousData))) {
           try {
             const image_url = await getAppIconFromItunesById(app_id);
 
@@ -172,7 +198,7 @@ router.get("/", async (req, res) => {
       });
       hits = response.hits.hits;
     }
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(changedApps, null, 2));
+    fs.writeFileSync(CACHE_PATH, JSON.stringify({ latestRun, apps: changedApps }, null, 2));
     res.json(changedApps);
   } catch (error) {
     console.error("Error fetching recently changed apps:", error);
