@@ -18,9 +18,9 @@
     "@nextui-org/dropdown": "^2.1.16",
     "@nextui-org/react": "^2.2.9",
     "@remix-run/css-bundle": "^2.5.1",
-    "@remix-run/node": "^2.5.1",
+    "@remix-run/node": "^2.17.4",
     "@remix-run/react": "^2.5.1",
-    "@remix-run/serve": "^2.5.1",
+    "@remix-run/serve": "^2.17.4",
     "@upsetjs/react": "^1.11.0",
     "chart.js": "^4.4.3",
     "chartjs-adapter-date-fns": "^3.0.0",
@@ -49,7 +49,7 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.5.1",
+    "@remix-run/dev": "^2.17.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
