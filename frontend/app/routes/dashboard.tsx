@@ -467,24 +467,28 @@ export default function Index() {
                     Ratio of App Genre for Each Privacy Type
                   </h1>
 
-                  <div className="flex flex-row justify-center gap-x-8 mt-10 mb-20">
-                    <div className="flex flex-col items-center w-full md:w-1/4">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                      <DataTypesChart data={appGenre.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
+                  {appGenre?.DATA_NOT_LINKED_TO_YOU ? (
+                    <div className="flex flex-row justify-center gap-x-8 mt-10 mb-20">
+                      <div className="flex flex-col items-center w-full md:w-1/4">
+                        <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
+                        <DataTypesChart data={appGenre.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
+                      </div>
+                      <div className="flex flex-col items-center w-full md:w-1/4">
+                        <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
+                        <DataTypesChart data={appGenre.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
+                      </div>
+                      <div className="flex flex-col items-center w-full md:w-1/4">
+                        <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
+                        <DataTypesChart data={appGenre.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
+                      </div>
+                      <div className="flex flex-col items-center w-full md:w-1/4">
+                        <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Collected</h1>
+                        <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" theme={theme} />
+                      </div>
                     </div>
-                    <div className="flex flex-col items-center w-full md:w-1/4">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                      <DataTypesChart data={appGenre.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
-                    </div>
-                    <div className="flex flex-col items-center w-full md:w-1/4">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                      <DataTypesChart data={appGenre.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
-                    </div>
-                    <div className="flex flex-col items-center w-full md:w-1/4">
-                      <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Collected</h1>
-                      <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" theme={theme} />
-                    </div>
-                  </div>
+                  ) : (
+                    <p className="text-center text-gray-500 mt-10">Genre data not available</p>
+                  )}
                 </div>
 
 

@@ -37,16 +37,13 @@ async function getGenre() {
                 "bool": {
                     "must": [
                         { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_LINKED_TO_YOU" } }
-                    ],
-                    "must_not": [
-                        { "term": { "metadata.app_store_genre_name.keyword": "" } }
                     ]
                 }
             },
             "aggs": {
                 "appGenre": {
                     "terms": {
-                        "field": "metadata.app_store_genre_name.keyword",
+                        "field": "metadata.genres.attributes.name.keyword",
                         "size": 15
                     }
                 }
@@ -58,16 +55,13 @@ async function getGenre() {
                 "bool": {
                     "must": [
                         { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_LINKED_TO_YOU" } }
-                    ],
-                    "must_not": [
-                        { "term": { "metadata.app_store_genre_name.keyword": "" } }
                     ]
                 }
             },
             "aggs": {
                 "appGenre": {
                     "terms": {
-                        "field": "metadata.app_store_genre_name.keyword",
+                        "field": "metadata.genres.attributes.name.keyword",
                         "size": 15
                     }
                 }
@@ -79,16 +73,13 @@ async function getGenre() {
                 "bool": {
                     "must": [
                         { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_USED_TO_TRACK_YOU" } }
-                    ],
-                    "must_not": [
-                        { "term": { "metadata.app_store_genre_name.keyword": "" } }
                     ]
                 }
             },
             "aggs": {
                 "appGenre": {
                     "terms": {
-                        "field": "metadata.app_store_genre_name.keyword",
+                        "field": "metadata.genres.attributes.name.keyword",
                         "size": 15
                     }
                 }
@@ -100,16 +91,13 @@ async function getGenre() {
                 "bool": {
                     "must": [
                         { "term": { "privacylabels.privacyDetails.privacyTypes.identifier.keyword": "DATA_NOT_COLLECTED" } }
-                    ],
-                    "must_not": [
-                        { "term": { "metadata.app_store_genre_name.keyword": "" } }
                     ]
                 }
             },
             "aggs": {
                 "appGenre": {
                     "terms": {
-                        "field": "metadata.app_store_genre_name.keyword",
+                        "field": "metadata.genres.attributes.name.keyword",
                         "size": 15
                     }
                 }
