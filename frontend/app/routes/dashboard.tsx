@@ -538,11 +538,11 @@ export default function Index() {
               >
                 <div className="flex flex-col items-center w-full md:w-1/2">
                   <h1 className="text-center text-lg md:text-xl">Data Not Linked to You</h1>
-                  <MatrixChart data={matrix.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," theme={theme} />
+                  <MatrixChart data={matrix[1]?.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235," theme={theme} />
                 </div>
                 <div className="flex flex-col items-center w-full md:w-1/2">
                   <h1 className="text-center text-lg md:text-xl">Data Linked to You</h1>
-                  <MatrixChart data={matrix.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme} />
+                  <MatrixChart data={matrix[0]?.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255," theme={theme} />
                 </div>
               </div>
 
@@ -650,24 +650,28 @@ export default function Index() {
 
             <div>
               <h1 className="text-center font-bold text-xl px-2 md:text-2xl" >Ratio of App Genre for Each Privacy Type</h1>
-              <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
-                <div className="flex flex-col items-center w-full md:w-1/4">
-                  <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
-                  <DataTypesChart data={appGenre.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
+              {appGenre?.DATA_NOT_LINKED_TO_YOU ? (
+                <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-10 mb-20">
+                  <div className="flex flex-col items-center w-full md:w-1/4">
+                    <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Linked to You</h1>
+                    <DataTypesChart data={appGenre.DATA_NOT_LINKED_TO_YOU} color="rgba(54, 162, 235, 1)" theme={theme} />
+                  </div>
+                  <div className="flex flex-col items-center w-full md:w-1/4">
+                    <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
+                    <DataTypesChart data={appGenre.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
+                  </div>
+                  <div className="flex flex-col items-center w-full md:w-1/4">
+                    <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
+                    <DataTypesChart data={appGenre.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
+                  </div>
+                  <div className="flex flex-col items-center w-full md:w-1/4">
+                    <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Collected</h1>
+                    <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" theme={theme} />
+                  </div>
                 </div>
-                <div className="flex flex-col items-center w-full md:w-1/4">
-                  <h1 className="text-center font-semibold text-lg md:text-xl">Data Linked to You</h1>
-                  <DataTypesChart data={appGenre.DATA_LINKED_TO_YOU} color="rgba(153, 102, 255, 1)" theme={theme} />
-                </div>
-                <div className="flex flex-col items-center w-full md:w-1/4">
-                  <h1 className="text-center font-semibold text-lg md:text-xl">Data Used to Track You</h1>
-                  <DataTypesChart data={appGenre.DATA_USED_TO_TRACK_YOU} color="rgba(75, 192, 192, 1)" theme={theme} />
-                </div>
-                <div className="flex flex-col items-center w-full md:w-1/4">
-                  <h1 className="text-center font-semibold text-lg md:text-xl">Data Not Collected</h1>
-                  <DataTypesChart data={appGenre.DATA_NOT_COLLECTED} color="rgba(245, 206, 39, 0.8)" theme={theme} />
-                </div>
-              </div>
+              ) : (
+                <p className="text-center text-gray-500 mt-10">Genre data not available</p>
+              )}
               <h3 className="pb-10 px-2 md:text-base md:justify-center">The ratios of top apps in app store genres for each of the four Privacy Types. The denominator is the number of apps
                 with the designated app store genre that have a privacy label. This includes only apps placed in the top in genre categories.</h3>
             </div>
