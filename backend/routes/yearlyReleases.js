@@ -10,13 +10,19 @@ router.get('/', async function (req, res) {
       body:{
         size: 1,
         sort: [
-            { "timestamp": { "order": "desc" } } 
+            { "timestamp": { "order": "desc" } }
           ]
       }
     })
+
+    if (!result.hits.hits.length) {
+      return res.status(404).json({ error: "No data found in yearly_release index" });
+    }
+
     res.json(result.hits.hits[0]._source.ratios)
   } catch (error){
-    console.error("Error querying")
+    console.error("Error querying yearly_release", error)
+    res.status(500).json({ error: "Internal Server Error" })
   }
 
 })

@@ -57,6 +57,9 @@ const createSampleData = (years: any, dataset: any, total: any, label: any, back
 
 function YearGraph({ data }: { data: any }) {
     const { theme } = useTheme();
+
+    if (!data || !data["totals"]) return null;
+
     const years = generateLabels(Object.keys(data["totals"]).length)
     const total = data["totals"]
 
