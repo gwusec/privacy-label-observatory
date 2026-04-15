@@ -1,3 +1,9 @@
+# notes:
+# might be a problem with data.tar (corrupted)
+# creates indices from scratch basically and defined the elasticsearch schema
+# then reads in the jsonl files in ../export/run*.jsonl where each file represents a different run, but some of the run files are empty?
+# also bulks the data into batches of 100 but the populated files are only 300 objects it seems like, maybe this is why it doesnt work
+# I don't think I ever got to the error messages when trying to initialize the sample data, but trying again would confirm
 import json
 import os
 import tarfile
@@ -11,7 +17,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Load environment variables from .env file
 load_dotenv()
-
 
 class ExportedDataImporter:
     def __init__(self, server_url, username, password):
@@ -179,7 +184,7 @@ class ExportedDataImporter:
                 initial_backoff=2,
                 max_backoff=600,
             )
-            if failed:
+            if failed: # note: when I tried to use the sample data the first time I dont think I ever got these messages
                 print(f"Failed to index {len(failed)} documents in {index_name}")
                 # Print first few failures for debugging
                 for i, error in enumerate(failed[:3]):

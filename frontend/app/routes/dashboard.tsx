@@ -128,7 +128,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const venn = await fetch(process.env.BACKEND_API + "venn")
   const vennDiagramData = await venn.json()
 
-
   const percentage = await fetch(process.env.BACKEND_API + "price");
   const percentageData = await percentage.json();
 

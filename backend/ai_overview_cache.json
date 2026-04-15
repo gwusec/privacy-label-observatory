@@ -2,5 +2,17 @@
   "YouTube: Watch, Listen, Stream": {
     "summary": "Data Used to Track You:\nThe app introduced a tracking section that uses contact details like your physical address, email, and phone number, as well as device and user identifiers, to monitor your activity across other companies apps and websites.\n\nData Linked to You:\nThe app expanded its data collection to link specific contact information to your identity for advertising and marketing purposes, though it removed search history from the app functionality category. Precise location and purchase history remain linked to your identity for personalization and analytics.",
     "date": "2025-04-08"
+  },
+  "Taste of Asia": {
+    "summary": "No changes in data collection or usage.",
+    "date": "2025-04-08"
+  },
+  "Jewellery Photo Editor New": {
+    "summary": "Data Used to Track You:\nThe app uses your device identifier to track your activity across apps and websites owned by other companies.\n\nData Linked to You:\nYour device ID is collected and linked to your identity for the purpose of third-party advertising.",
+    "date": "2025-04-08"
+  },
+  "VoicePrinter": {
+    "summary": "Data Used to Track You:\nVoicePrinter now tracks users across other companies' platforms using coarse location, device identifiers, and various usage and diagnostic data.\n\nData Linked to You:\nThe app collects and links device identifiers, coarse location, product interactions, and performance data to the user's identity for third-party advertising.",
+    "date": "2025-04-08"
   }
 }
