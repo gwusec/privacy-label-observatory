@@ -26,7 +26,10 @@
     "jquery-csv": "^1.0.21",
     "multer": "^2.1.1",
     "nodemon": "^3.0.3",
-    "papaparse": "^5.4.1"
+    "papaparse": "^5.4.1",
+    "path-to-regexp": "^0.1.13",
+    "picomatch": "^2.3.2",
+    "undici": "^6.24.0"
   },
   "devDependencies": {
     "minimatch": "^9.0.7"
