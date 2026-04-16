@@ -1,13 +1,14 @@
 var express = require("express");
 var router = express.Router();
 const fs = require("fs");
-
+const path = require("path");
 const client = require("./../client");
 const imageModule = require("./../utilities/imageLoader");
 const encodeUrl = imageModule.encodeUrl;
 const htmlRequest = imageModule.htmlRequest;
 const decode = imageModule.decoder;
-const CACHE_PATH = "./../recently_changed_cache.json"
+const CACHE_PATH = path.join(__dirname, "../recently_changed_cache.json");
+
 function extractPrivacyData(privacylabels) {
   if (!privacylabels || !privacylabels.privacyDetails) return [];
   return privacylabels.privacyDetails.privacyTypes || [];

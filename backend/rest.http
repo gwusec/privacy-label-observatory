@@ -3,30 +3,6 @@ Content-Type: application/json
 {
     "app_id": "1529135893"
 }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> main
-
-HTTP/1.1 404  - Not Found
-content-type: text/html; charset=utf-8
-vary: Accept-Encoding
-content-encoding: gzip
-date: Wed, 06 Nov 2024 21:36:23 GMT
-connection: close
-transfer-encoding: chunked
-###
-GET http://localhost:8017/appList?start=0
-###
-GET http://localhost:8080/search?q=k&run=duplicateapp_run1
-
-HTTP/1.1 404  - Not Found
-date: Wed, 06 Nov 2024 21:36:23 GMT
-server: Apache/2.4.56 (Debian)
-content-length: 273
-connection: close
-content-type: text/html; charset=iso-8859-1
 ###
 POST http://localhost:3000/api/search/app_id
 Content-Type: application/json
@@ -35,58 +11,27 @@ Content-Type: application/json
     "size": 20,
     "app_id": "1529135893"
 }
-
-<<<<<<< HEAD
-
-HTTP/1.1 404  - Not Found
-content-type: text/html; charset=utf-8
-vary: Accept-Encoding
-content-encoding: gzip
-date: Wed, 06 Nov 2024 21:36:23 GMT
-connection: close
-transfer-encoding: chunked
+###
+GET http://localhost:8017/appList?start=0
+###
+GET http://localhost:8017/appList?start=0&run=run_00069
 ###
 GET http://localhost:8017/runs
+###
+GET http://localhost:8017/getApp?id=1588684626
 ###
 POST http://localhost:8080/api/get/
 Content-Type: application/json
 {
     "app_id": "1529135893",
     "run_id": "run_00069"
-
 }
-<<<<<<< HEAD
-
-HTTP/1.1 404  - Not Found
-date: Wed, 06 Nov 2024 21:36:24 GMT
-server: Apache/2.4.56 (Debian)
-content-length: 273
-connection: close
-content-type: text/html; charset=iso-8859-1
-###
-GET http://localhost:8017/getApp?id=1588684626
 ###
 POST http://localhost:8080/api/search/app_name
 Content-Type: application/json
 {
     "app_name": "sen"
 }
-<<<<<<< HEAD
-
-HTTP/1.1 404  - Not Found
-date: Wed, 06 Nov 2024 21:36:24 GMT
-server: Apache/2.4.56 (Debian)
-content-length: 273
-connection: close
-content-type: text/html; charset=iso-8859-1
-###
-date: Wed, 03 Apr 2024 12:13:30 GMT
-connection: close
-###
-GET http://localhost:8017/appList?start=0&run=run_00069
->>>>>>> 1f41877 (Made a lot of changes to the horizontal timeline)
-
-=======
 ###
 GET http://localhost:8017/translateApp
 Content-Type: application/json
@@ -95,49 +40,13 @@ Content-Type: application/json
 }
 ###
 GET http://localhost:8017/graph14Helper?index=dnc
->>>>>>> main
-###
-http://localhost:8017/longitude
-=======
-content-length: 182
-etag: W/"b6-D/Kj9KglvadFkpSJhrofBJeUY4E"
-date: Wed, 31 Jul 2024 20:39:16 GMT
-connection: close
 ###
 GET http://localhost:8017/graph14
->>>>>>> main
-/*
-
-*/
 ###
 GET http://localhost:8017/graph15
-
-HTTP/1.1 200  - OK
-x-powered-by: Express
-access-control-allow-origin: *
-content-type: application/json; charset=utf-8
-content-length: 318
-etag: W/"13e-IPHbXfDdnij1GWBk2SZ+TAIxfrg"
-date: Sun, 17 Nov 2024 16:55:50 GMT
-connection: close
 ###
 GET http://localhost:8017/latestIndex
-
-HTTP/1.1 200  - OK
-x-powered-by: Express
-access-control-allow-origin: *
-content-type: application/json; charset=utf-8
-content-length: 25
-etag: W/"19-gRFCG/Ti8BZeGQII7NddccyXV60"
-date: Wed, 12 Feb 2025 17:21:02 GMT
-connection: close
+###
+GET http://localhost:8017/longitude
 ###
 GET http://localhost:4000/elastic-data
-
-HTTP/1.1 200  - OK
-x-powered-by: Express
-content-type: application/json; charset=utf-8
-content-length: 58
-etag: W/"3a-EHCPK+s+DqrXTEDIPpmPMZugFeo"
-date: Sun, 16 Feb 2025 21:26:37 GMT
-connection: close
