@@ -4,6 +4,8 @@ date_run_mapping.json
 /TransferScripts
 /final
 /.vscode
-/GraphUpload
+/GraphUploadgit rm -r --cached node_modules
 .env
 logs
+node_modules/
+**/node_modules/
