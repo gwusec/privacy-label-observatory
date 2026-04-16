@@ -11,7 +11,7 @@ services:
       - path.repo=/usr/share/elasticsearch/snapshots
     volumes:
       - ./es_data:/usr/share/elasticsearch/data        # persistent data volume
-      - ./es_snapshots:/usr/share/elasticsearch/snapshots
+      - ./elasticsearch_snapshots:/usr/share/elasticsearch/snapshots
     networks:
       - elastic
     ports:
