@@ -2,7 +2,7 @@
   "dependencies": {
     "@google/genai": "^1.43.0",
     "@syncfusion/ej2-react-layouts": "^25.2.3",
-    "axios": "^1.7.2",
+    "axios": "^1.15.0",
     "chart.js": "^4.4.3",
     "chartjs-plugin-datalabels": "^2.2.0",
     "react-chartjs-2": "^5.2.0",
