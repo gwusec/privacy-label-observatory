@@ -5,3 +5,4 @@ node_modules/*
 Misc/
 es_data/
 es_snapshots/
+elasticsearch_snapshots/
