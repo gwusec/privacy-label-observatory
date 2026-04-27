@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> c114b56 (Update .gitignore, ignore esdata and cache files fixed graph)
 {
   "latestRun": "run_00116",
   "apps": [
@@ -64,5 +67,9 @@
       "latestRunDate": "2025-04-08"
     }
   ]
+<<<<<<< HEAD
+}
+>>>>>>> c114b56 (Update .gitignore, ignore esdata and cache files fixed graph)
+=======
 }
 >>>>>>> c114b56 (Update .gitignore, ignore esdata and cache files fixed graph)
