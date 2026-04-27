@@ -138,7 +138,7 @@ async function safeJson(url: string, fallback: any = null) {
 export async function loader({ params }: LoaderFunctionArgs) {
   const latestRun = await fetch(process.env.BACKEND_API + "latestIndex");
   const runData: string = (await latestRun.json()).latestRun;
-  console.log("Latest run:", runData);
+
   const [
     vennDiagramData,
     percentageData,

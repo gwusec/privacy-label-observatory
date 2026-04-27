@@ -9,5 +9,3 @@ date_run_mapping.json
 logs
 node_modules/
 **/node_modules/
-backend/recently_changed_cache.json
-backend/esdata/

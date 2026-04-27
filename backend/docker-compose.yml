@@ -10,7 +10,7 @@ services:
       - discovery.type=single-node
       - path.repo=/usr/share/elasticsearch/snapshots
     volumes:
-      - ./esdata:/usr/share/elasticsearch/data        # persistent data volume
+      - ./es_data:/usr/share/elasticsearch/data        # persistent data volume
       - ./elasticsearch_snapshots:/usr/share/elasticsearch/snapshots
     networks:
       - elastic

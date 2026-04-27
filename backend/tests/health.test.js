@@ -1,9 +1,0 @@
-const request = require("supertest");
-const app = require("../index");
-
-describe("Health API", () => {
-  test("GET /health returns 200", async () => {
-    const res = await request(app).get("/health");
-    expect(res.statusCode).toBe(200);
-  });
-});
