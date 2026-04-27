@@ -108,9 +108,12 @@ app.use("/api/aiOverview", aiOverviewRouter);
 //app.use("/api/summary", summaryRouter)
 
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+  });
+}
+
 
 //use json encoded bodies
 app.use(express.json())
@@ -253,3 +256,8 @@ app.post("/api/search/app_name", function (req, res){
 
     return;
 })
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+module.exports = app;
