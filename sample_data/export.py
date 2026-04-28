@@ -1,3 +1,5 @@
+# I'm still not sure what exactly this file does but it seems to be sampling data from the elasticsearch instance and also putting them in the export directory
+# the empty files in there could be from this script or the first script I'm not sure
 import json
 import os
 import random

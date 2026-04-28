@@ -7,10 +7,12 @@
     "chart.js": "^4.4.3",
     "chartjs-plugin-datalabels": "^2.2.0",
     "estree-util-value-to-estree": "^3.3.3",
+    "flatted": "^3.4.2",
     "minimatch": "^9.0.7",
     "path-to-regexp": "^0.1.13",
     "react-chartjs-2": "^5.2.0",
     "react-swipeable": "^7.0.1",
+    "rollup": "^4.59.0",
     "tar": "^7.5.11"
   }
 }
