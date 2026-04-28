@@ -301,13 +301,12 @@ const LongitudeChart: React.FC<LineChartProps> = ({ data, isExpanded }) => {
         display: false,
       },
       tooltip: {
-        filter: (item: TooltipItem<'line'>) => {
-          const hoveredDate = item.parsed.x;
-          const inGap = gaps.some(
-            g => hoveredDate > g.start.getTime() && hoveredDate < g.end.getTime()
-          );
-          return !inGap && item.parsed.y !== null;
-        },
+       filter: (item: TooltipItem<'line'>) => {
+  const allNull = item.chart.data.datasets.every(
+    ds => ds.data[item.dataIndex] === null
+  );
+  return !allNull && item.parsed.y !== null;
+},
         mode: 'index' as const,
         intersect: false,
         backgroundColor: isDark ? 'rgba(30,30,30,1)' : 'rgba(255,255,255,1)',
