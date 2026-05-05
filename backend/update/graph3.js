@@ -164,7 +164,7 @@ async function processAndIndexData() {
                 let total = await countQuery(queries[0].query, runIndex);
 
                 // If we're not initializing (for local) and there are less than 700K apps in a run total, skip this run but log it
-                if (!isInitializeMode && total < 700000) {
+                if (!isInitializeMode && total < 600000) {
                     skippedRuns[runIndex] = { reason: "Less than 700K apps", count: total };
                     continue;
                 }
