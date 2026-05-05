@@ -21,7 +21,7 @@ const clientConfig = {
     }
 }
 
-if (isInitializeMode && process.env.ELASTIC_FINGERPRINT) {
+if (isInitializeMode && process.env.ELASTIC_ENDPOINT?.includes('https')) {
     clientConfig.caFingerprint = process.env.ELASTIC_FINGERPRINT;
     clientConfig.tls = {
         rejectUnauthorized: false,
