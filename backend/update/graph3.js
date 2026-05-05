@@ -21,8 +21,8 @@ const clientConfig = {
     }
 }
 
-if (isInitializeMode) {
-    clientConfig.caFingerprint = process.env.ELASTIC_FINGERPRINT,
+if (isInitializeMode && process.env.ELASTIC_FINGERPRINT) {
+    clientConfig.caFingerprint = process.env.ELASTIC_FINGERPRINT;
     clientConfig.tls = {
         rejectUnauthorized: false,
     }
