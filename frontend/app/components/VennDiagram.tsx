@@ -99,8 +99,8 @@ function VennDiagrams({ data }: { data: any }) {
 
     const mainWidth = isMobile ? 320 : 720;
     const mainHeight = isMobile ? 280 : 460;
-    const singularWidth = isMobile ? 240 : 320;
-    const singularHeight = isMobile ? 180 : 220;
+    const singularWidth = isMobile ? 240 : 380;
+    const singularHeight = isMobile ? 180 : 240;
 
     return (
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 overflow-hidden px-4 py-6 lg:flex-row lg:items-start">
@@ -119,7 +119,7 @@ function VennDiagrams({ data }: { data: any }) {
                 />
             </div>
 
-            <div className="flex w-full max-w-sm justify-center overflow-hidden rounded-2xl lg:w-auto lg:flex-none lg:self-center">
+            <div className="flex w-full max-w-sm justify-center rounded-2xl lg:w-auto lg:flex-none lg:self-center">
                 <VennDiagram
                     sets={set}
                     combinations={combination}
