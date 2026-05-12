@@ -103,7 +103,7 @@ function VennDiagrams({ data }: { data: any }) {
     const singularHeight = isMobile ? 180 : 240;
 
     return (
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 overflow-hidden px-4 py-6 lg:flex-row lg:items-start">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-2 overflow-hidden px-4 py-6 lg:flex-row lg:items-start">
             <div className="flex w-full justify-center overflow-hidden rounded-2xl">
                 <VennDiagram
                     sets={sets}
