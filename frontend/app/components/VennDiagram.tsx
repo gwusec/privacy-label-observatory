@@ -97,6 +97,7 @@ function VennDiagrams({ data }: { data: any }) {
         valueLabel: isMobile ? '10px' : '14px',
     };
 
+
     const mainWidth = isMobile ? 320 : 720;
     const mainHeight = isMobile ? 280 : 460;
     const singularWidth = isMobile ? 240 : 380;
@@ -125,6 +126,7 @@ function VennDiagrams({ data }: { data: any }) {
                     combinations={combination}
                     width={singularWidth}
                     height={singularHeight}
+                    padding={isMobile ? 20 : 40}
                     strokeColor="rgba(255, 206, 86, 1)"
                     fontSizes={fontSizes}
                     theme={theme === 'dark' ? 'dark' : 'light'}
